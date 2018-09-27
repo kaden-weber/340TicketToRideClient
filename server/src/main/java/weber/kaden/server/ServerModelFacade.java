@@ -1,5 +1,8 @@
 package weber.kaden.server;
 
+import weber.kaden.common.model.Model;
+
 public class ServerModelFacade {
-    // we can have the
+    private Model model;
+
 }

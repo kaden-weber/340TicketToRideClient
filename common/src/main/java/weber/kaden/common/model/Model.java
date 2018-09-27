@@ -1,4 +1,4 @@
-package weber.kaden.myapplication.model;
+package weber.kaden.common.model;
 
 
 public class Model {
