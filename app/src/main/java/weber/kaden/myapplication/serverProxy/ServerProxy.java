@@ -1,5 +1,8 @@
 package weber.kaden.myapplication.serverProxy;
 
+import weber.kaden.common.Results;
+import weber.kaden.common.command.CommandData;
+
 public class ServerProxy {
     private static ServerProxy single_instance = null;
     private ClientCommunicator ccom;
@@ -20,8 +23,8 @@ public class ServerProxy {
         ccom.setServerPort("8080");
     }
 
-    public main.java.weber.kaden.common.Results sendCommand(main.java.weber.kaden.common.command.CommandData requestInfo) {
+    public Results sendCommand(CommandData requestInfo) {
         //TODO: setup permissions for maybe seperate send methods?
-        return ccom.send(requestInfo);
+        return ccom.send(requestInfo, RequestType.POST);
     }
 }
