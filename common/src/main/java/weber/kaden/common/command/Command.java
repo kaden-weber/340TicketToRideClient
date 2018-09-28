@@ -1,6 +1,7 @@
 package weber.kaden.common.command;
 
-import main.java.weber.kaden.common.Results;
+
+import weber.kaden.common.Results;
 
 public interface Command {
 

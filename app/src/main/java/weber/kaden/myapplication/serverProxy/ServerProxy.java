@@ -24,7 +24,7 @@ public class ServerProxy {
     }
 
     public Results sendCommand(CommandData requestInfo) {
-        //TODO: setup permissions for maybe seperate send methods?
+        //TODO: setup permissions for maybe separate send methods?
         return ccom.send(requestInfo, RequestType.POST);
     }
 }
