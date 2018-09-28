@@ -1,4 +1,4 @@
 package weber.kaden.common;
 
-public class MyClass {
+public class Serializer {
 }

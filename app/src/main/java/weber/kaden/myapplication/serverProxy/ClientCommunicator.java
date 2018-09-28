@@ -1,5 +1,8 @@
 package weber.kaden.myapplication.serverProxy;
 
+import weber.kaden.common.command.CommandData;
+import weber.kaden.common.Results;
+
 public class ClientCommunicator {
     private static ClientCommunicator single_instance = null;
 
@@ -24,9 +27,8 @@ public class ClientCommunicator {
     public void setServerPort(String serverPort) {
         this.serverPort = serverPort;
     }
-
-    //TODO: potentially have a way to differentiate whether it's a GET request or a POST request
-    public main.java.weber.kaden.common.Results send(main.java.weber.kaden.common.command.CommandData requestInfo) {
+    
+    public Results sendPOST(CommandData requestInfo, RequestType requestType) {
         return null;
     }
 }

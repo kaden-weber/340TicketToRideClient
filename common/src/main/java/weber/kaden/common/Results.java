@@ -1,4 +1,4 @@
-package main.java.weber.kaden.common;
+package weber.kaden.common;
 
 public class Results {
 

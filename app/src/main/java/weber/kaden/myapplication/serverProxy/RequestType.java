@@ -1,4 +1,6 @@
 package weber.kaden.myapplication.serverProxy;
 
-public class Results {
+public enum RequestType {
+	GET,
+	POST
 }
