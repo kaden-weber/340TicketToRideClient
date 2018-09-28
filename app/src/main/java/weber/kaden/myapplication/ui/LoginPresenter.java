@@ -19,12 +19,8 @@ public class LoginPresenter {
          if facade throws exception, throw exception
          */
 
-        if (username.isEmpty() || password.isEmpty()) {
-            return;
-        } else {
-            //client.login(username, password); // throws exception if credentials are invalid
-            // either destroy the view or tell the view to destroy itself
-        }
+        //client.login(username, password); // throws exception if credentials are invalid
+        // either destroy the view or tell the view to destroy itself
     }
 
     public void register(String username, String password) throws Exception {
@@ -34,11 +30,7 @@ public class LoginPresenter {
          if facade tells me to throw an exception, tell view to display an error.
          */
 
-        if (username.isEmpty() || password.isEmpty()) {
-            return;
-        } else {
-            //client.register(username, password); // throws exception if user already exists
-            // either destroy the view or tell the view to destroy itself
-        }
+        //client.register(username, password); // throws exception if user already exists
+        // either destroy the view or tell the view to destroy itself
     }
 }
