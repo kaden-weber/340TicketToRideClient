@@ -1,4 +1,4 @@
-package main.java.weber.kaden.common.command;
+package weber.kaden.common.command;
 
 public class InvalidCommandParamsException extends Exception {
     public InvalidCommandParamsException(String message) {

@@ -1,4 +1,4 @@
-package main.java.weber.kaden.common.command;
+package weber.kaden.common.command;
 
 import java.util.List;
 

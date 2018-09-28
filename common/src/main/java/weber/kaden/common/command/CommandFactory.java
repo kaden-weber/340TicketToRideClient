@@ -1,4 +1,4 @@
-package main.java.weber.kaden.common.command;
+package weber.kaden.common.command;
 
 public class CommandFactory {
     private static CommandFactory commandFactory = null;

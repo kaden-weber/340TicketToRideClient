@@ -1,5 +1,4 @@
-package main.java.weber.kaden.common.command;
-
+package weber.kaden.common.command;
 
 import main.java.weber.kaden.common.Results;
 
