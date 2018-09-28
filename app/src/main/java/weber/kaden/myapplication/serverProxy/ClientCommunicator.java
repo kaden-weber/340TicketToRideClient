@@ -27,8 +27,8 @@ public class ClientCommunicator {
     public void setServerPort(String serverPort) {
         this.serverPort = serverPort;
     }
-    
-    public Results sendPOST(CommandData requestInfo, RequestType requestType) {
+
+    public Results send(CommandData requestInfo, RequestType requestType) {
         return null;
     }
 }
