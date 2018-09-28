@@ -1,8 +1,11 @@
 package weber.kaden.myapplication.ui;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import weber.kaden.myapplication.model.ClientFacade;
 
-public class GameListPresenter {
+public class GameListPresenter implements Observer {
     private GamesListActivity activity;
     private ClientFacade client;
 
@@ -22,4 +25,10 @@ public class GameListPresenter {
 //    public void joinGame(String username) throws Exception {
 //        client.joinGame(username);
 //    }
+
+
+    @Override
+    public void update(Observable o, Object arg) {
+        
+    }
 }

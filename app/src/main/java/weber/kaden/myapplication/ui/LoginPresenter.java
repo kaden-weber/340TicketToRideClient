@@ -1,8 +1,11 @@
 package weber.kaden.myapplication.ui;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import weber.kaden.myapplication.model.ClientFacade;
 
-public class LoginPresenter {
+public class LoginPresenter implements Observer {
 
     private LoginActivity activity;
     private ClientFacade client;
@@ -32,5 +35,10 @@ public class LoginPresenter {
 
         //client.register(username, password); // throws exception if user already exists
         // either destroy the view or tell the view to destroy itself
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
     }
 }
