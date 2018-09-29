@@ -5,5 +5,5 @@ import weber.kaden.common.Results;
 
 public interface Command {
 
-    public Results execute();
+    Results execute();
 }
