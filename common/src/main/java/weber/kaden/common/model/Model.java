@@ -44,6 +44,16 @@ public class Model extends Observable {
 
     public boolean hasPlayer(Player player) {return this.players.contains(player); }
 
+    public Player getPlayer(String username) {
+        Player toReturn = null;
+        for (int i = 0; i < this.players.size(); i++) {
+            if (username.equals(this.players.get(i).getID())) {
+                toReturn = this.players.get(i);
+            }
+        }
+        return toReturn;
+    }
+
     public boolean removePlayer(Player player) {
         this.removePlayerFromGames(player);
         return this.players.remove(player);
