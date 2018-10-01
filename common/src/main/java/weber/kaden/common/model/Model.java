@@ -82,4 +82,14 @@ public class Model extends Observable {
     public boolean removeGame(Game game) {
         return this.games.remove(game);
     }
+
+    public Game getGame(String gameID) {
+        Game toReturn = null;
+        for (int i = 0; i < this.getGames().size(); i++) {
+            if (this.games.get(i).getID().equals(gameID)) {
+                toReturn = this.games.get(i);
+            }
+        }
+        return toReturn;
+    }
 }
