@@ -5,6 +5,8 @@ package weber.kaden.common.command;
 import java.util.List;
 
 import weber.kaden.common.Results;
+import weber.kaden.common.model.Model;
+import weber.kaden.common.model.Player;
 
 public class LoginCommand implements Command {
 
@@ -18,6 +20,10 @@ public class LoginCommand implements Command {
 
     @Override
     public Results execute() {
-        return null;
+        if (Model.getInstance().hasPlayer(new Player(username, password))) {
+            return new Results(null, true, null);
+        } else {
+            return new Results(null, false, null);
+        }
     }
 }

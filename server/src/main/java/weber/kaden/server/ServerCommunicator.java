@@ -7,10 +7,10 @@ import java.net.InetSocketAddress;
 
 public class ServerCommunicator {
     private static final int MAX_WAITING_CONNECTIONS = 12;
-    private HttpServer httpServer;
 
     private void run(String portNumber){
         System.out.println("Initializing Http server");
+        HttpServer httpServer;
         try {
             httpServer = HttpServer.create(new InetSocketAddress(Integer.parseInt(portNumber)), MAX_WAITING_CONNECTIONS);
 

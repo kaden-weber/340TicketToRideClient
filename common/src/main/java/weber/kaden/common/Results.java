@@ -20,7 +20,7 @@ public class Results {
         this.data = data;
     }
 
-    public boolean isSuccess() {
+    public boolean success() {
         return success;
     }
 

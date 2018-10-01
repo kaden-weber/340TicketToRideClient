@@ -42,6 +42,8 @@ public class Model extends Observable {
         return this.players.add(player);
     }
 
+    public boolean hasPlayer(Player player) {return this.players.contains(player); }
+
     public boolean removePlayer(Player player) {
         this.removePlayerFromGames(player);
         return this.players.remove(player);
