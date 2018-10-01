@@ -1,9 +1,10 @@
 package weber.kaden.common.command;
 
 
-import main.java.weber.kaden.common.Results;
 
 import java.util.List;
+
+import weber.kaden.common.Results;
 
 public class StartGameCommand implements Command {
 
