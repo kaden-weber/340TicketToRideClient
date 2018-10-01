@@ -1,10 +1,10 @@
 package weber.kaden.common.command;
 
-
-
 import java.util.List;
 
 import weber.kaden.common.Results;
+import weber.kaden.common.model.Model;
+import weber.kaden.common.model.Player;
 
 public class RegisterCommand implements Command {
 
@@ -18,6 +18,11 @@ public class RegisterCommand implements Command {
 
     @Override
     public Results execute() {
-        return null;
+        if(Model.getInstance().addPlayer(new Player(username, password))){
+            return new Results(null, true, null);
+        } else {
+            // At this point if the player can't be added, the username must already be taken
+            return new Results(null, false, "Username taken");
+        }
     }
 }
