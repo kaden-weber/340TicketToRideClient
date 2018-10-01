@@ -4,6 +4,7 @@ package weber.kaden.common.command;
 import weber.kaden.common.Results;
 
 import java.util.List;
+import java.util.UUID;
 
 public class CreateGameCommand implements Command {
 
@@ -12,7 +13,11 @@ public class CreateGameCommand implements Command {
 
     public CreateGameCommand(List<String> params) {
         this.playerID = params.get(0);
-        this.gameID = params.get(1);
+        if (params.size() > 1) {
+            this.gameID = params.get(1);
+        } else {
+            this.gameID = UUID.randomUUID().toString();
+        }
     }
 
     @Override
