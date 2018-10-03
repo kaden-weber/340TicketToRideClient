@@ -1,6 +1,5 @@
 package weber.kaden.common.model;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -39,6 +38,9 @@ public class Model extends Observable {
     }
 
     public boolean addPlayer(Player player) {
+        if (this.players.contains(player)) {
+            return false;
+        }
         return this.players.add(player);
     }
 
@@ -60,6 +62,9 @@ public class Model extends Observable {
     }
 
     public boolean addPlayerToGame(Player player, Game game) {
+        if (game.hasPlayer(player)) {
+            return false;
+        }
         return this.games.get(this.games.indexOf(game)).addPlayer(player);
     }
 
@@ -76,6 +81,9 @@ public class Model extends Observable {
     }
 
     public boolean addGame(Game game) {
+        if (this.games.contains(game)) {
+            return false;
+        }
         return this.games.add(game);
     }
 
