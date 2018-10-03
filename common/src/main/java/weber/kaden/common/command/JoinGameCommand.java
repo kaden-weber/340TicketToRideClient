@@ -4,7 +4,12 @@ package weber.kaden.common.command;
 
 import java.util.List;
 
+import javax.jws.WebParam;
+
 import weber.kaden.common.Results;
+import weber.kaden.common.model.Game;
+import weber.kaden.common.model.Model;
+import weber.kaden.common.model.Player;
 
 public class JoinGameCommand implements Command {
 
@@ -18,6 +23,13 @@ public class JoinGameCommand implements Command {
 
     @Override
     public Results execute() {
-        return null;
+        Model model = Model.getInstance();
+        Player player = model.getPlayer(playerID);
+        Game game = model.getGame(gameID);
+        if (model.addPlayerToGame(player, game)) {
+            return new Results(null, true, null);
+        } else {
+            return new Results(null, false, null);
+        }
     }
 }

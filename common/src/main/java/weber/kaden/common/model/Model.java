@@ -42,6 +42,18 @@ public class Model extends Observable {
         return this.players.add(player);
     }
 
+    public boolean hasPlayer(Player player) {return this.players.contains(player); }
+
+    public Player getPlayer(String username) {
+        Player toReturn = null;
+        for (int i = 0; i < this.players.size(); i++) {
+            if (username.equals(this.players.get(i).getID())) {
+                toReturn = this.players.get(i);
+            }
+        }
+        return toReturn;
+    }
+
     public boolean removePlayer(Player player) {
         this.removePlayerFromGames(player);
         return this.players.remove(player);
@@ -69,5 +81,15 @@ public class Model extends Observable {
 
     public boolean removeGame(Game game) {
         return this.games.remove(game);
+    }
+
+    public Game getGame(String gameID) {
+        Game toReturn = null;
+        for (int i = 0; i < this.getGames().size(); i++) {
+            if (this.games.get(i).getID().equals(gameID)) {
+                toReturn = this.games.get(i);
+            }
+        }
+        return toReturn;
     }
 }
