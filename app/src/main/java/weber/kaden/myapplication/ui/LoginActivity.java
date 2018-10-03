@@ -30,6 +30,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -425,6 +426,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         private final String mEmail;
         private final String mPassword;
         private final String mconfirmPassword;
+        //error string in case login/register fails
+        private String errorString = "";
 
 
         UserRegisterTask(String email, String password, String confirmPassword) {
@@ -440,6 +443,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             try {
                 loginPresenter.register(mEmail, mPassword, mconfirmPassword);
             } catch (Exception e) {
+                errorString = e.toString();
                 return false;
             }
             return true;
@@ -457,6 +461,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
+                Toast.makeText(instance, errorString, Toast.LENGTH_LONG).show();
             }
         }
 

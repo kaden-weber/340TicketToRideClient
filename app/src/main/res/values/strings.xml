@@ -17,6 +17,8 @@
     <string name="error_field_required">This field is required</string>
     <string name="create_game_button">Create Game</string>
     <string name="join_game_button">Join Game</string>
+    <string name="start_game_button">Start Game</string>
+    <string name="exit_game_button">Quit Game</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
