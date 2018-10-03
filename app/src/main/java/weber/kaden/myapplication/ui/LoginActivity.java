@@ -382,6 +382,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mEmail;
         private final String mPassword;
+        private String errorString = "";
 
 
 
@@ -397,6 +398,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             try {
                 loginPresenter.login(mEmail, mPassword);
             } catch (Exception e) {
+                errorString = e.getMessage();
                 return false;
             }
             return true;
@@ -412,8 +414,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 intent.putExtra("USERNAME", mEmail);
                 startActivity(intent);
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+                Toast.makeText(instance, errorString, Toast.LENGTH_LONG).show();
             }
         }
 
@@ -461,8 +462,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 intent.putExtra("USERNAME", mEmail);
                 startActivity(intent);
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
                 Toast.makeText(instance, errorString, Toast.LENGTH_LONG).show();
             }
         }
