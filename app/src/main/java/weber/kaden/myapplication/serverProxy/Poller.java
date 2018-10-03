@@ -4,20 +4,22 @@ public class Poller {
     private ClientCommunicator ccom;
     private int waitTime;
 
+    private Thread runningThread;
+
     public Poller(int miliseconds) {
         waitTime = miliseconds;
         ccom = ClientCommunicator.getInstance();
     }
 
     public void startPolling() {
-        //TODO: use the commandgetter class in a thread to periodically call and return stuff
+
     }
 
     public void stopPolling() {
 
     }
 
-    private class CommandsGetter implements Runnable {
+    private class CommandsGetter extends Thread {
         @Override
         public void run() {
 

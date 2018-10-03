@@ -2,5 +2,5 @@ package weber.kaden.common.command;
 
 
 public enum CommandType {
-    LOGIN, REGISTER, CREATEGAME, JOINGAME, STARTGAME
+    LOGIN, REGISTER, CREATEGAME, JOINGAME, STARTGAME, GETTURNS
 }
