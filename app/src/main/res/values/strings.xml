@@ -3,6 +3,7 @@
     <string name="title_activity_game_lobby_test">GameLobbyActivityTest</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_login">Welcome to Ticket to Ride!</string>
+    <string name="title_gamelist">Game List</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Username</string>
     <string name="prompt_password">Password (required)</string>
@@ -14,6 +15,8 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
+    <string name="create_game_button">Create Game</string>
+    <string name="join_game_button">Join Game</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
