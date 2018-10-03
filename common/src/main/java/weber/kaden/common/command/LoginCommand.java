@@ -13,7 +13,7 @@ public class LoginCommand implements Command {
     private String username = null;
     private String password = null;
 
-    LoginCommand(List<String> params) {
+    public LoginCommand(List<String> params) {
         this.username = params.get(0);
         this.password = params.get(1);
     }
