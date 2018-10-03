@@ -14,10 +14,5 @@ public class ClientFacade {
 
         return false;
     }
-    public boolean register(String username, String password) throws Exception {
-        ServerProxy.getInstance().register(username, password);
-
-        return false;
-    }
 
 }
