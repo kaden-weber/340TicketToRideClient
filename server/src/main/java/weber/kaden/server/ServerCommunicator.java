@@ -26,8 +26,6 @@ public class ServerCommunicator {
         System.out.println("Starting server");
         httpServer.start();
         System.out.println("Server started");
-        System.out.println(httpServer.getAddress().getHostName());
-
     }
 
     public static void main(String[] args){
