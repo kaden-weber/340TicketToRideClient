@@ -11,7 +11,7 @@ public class RegisterCommand implements Command {
     private String username = null;
     private String password = null;
 
-    public RegisterCommand(List<String> params) {
+    RegisterCommand(List<String> params) {
         this.username = params.get(0);
         this.password = params.get(1);
     }

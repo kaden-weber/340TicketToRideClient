@@ -4,8 +4,6 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 import weber.kaden.common.Results;
 import weber.kaden.common.Serializer;
@@ -31,8 +29,6 @@ public class ExecHandler implements HttpHandler {
             String serializedResults = serializer.serializeResults(results);
             streamProcessor.writeString(serializedResults, exchange.getResponseBody());
             exchange.close();
-        } catch (NumberFormatException e) {
-            throw new IOException("Number");
         } catch (Exception e) {
             throw new IOException();
         }
