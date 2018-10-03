@@ -15,7 +15,7 @@ public class CreateGameCommand implements Command {
     private String playerID = null;
     private String gameID = null;
 
-    public CreateGameCommand(List<String> params) {
+    CreateGameCommand(List<String> params) {
         this.playerID = params.get(0);
         if (params.size() > 1) {
             this.gameID = params.get(1);
