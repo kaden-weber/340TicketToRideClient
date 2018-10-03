@@ -19,7 +19,7 @@ public class LoginPresenter implements Observer {
         return client.login(username, password); // throws exception if credentials are invalid
     }
 
-    public void register(String username, String password) throws Exception {
+    public void register(String username, String password, String confirmPassword) throws Exception {
         /*
          receive credentials, pass them to the facade if valid.
          if facade tells me to destroy, do I destroy? or do I tell view to destroy itself?
