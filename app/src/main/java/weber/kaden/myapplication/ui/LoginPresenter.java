@@ -1,9 +1,17 @@
 package weber.kaden.myapplication.ui;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import weber.kaden.common.command.Command;
+import weber.kaden.common.command.CommandData;
+import weber.kaden.common.command.CommandFactory;
+import weber.kaden.common.command.CommandType;
 import weber.kaden.myapplication.model.ClientFacade;
+import weber.kaden.myapplication.serverProxy.ServerProxy;
 
 public class LoginPresenter implements Observer {
 
@@ -16,19 +24,18 @@ public class LoginPresenter implements Observer {
     }
 
     public boolean login(String username, String password) throws Exception {
-        return client.login(username, password); // throws exception if credentials are invalid
+       client.login(username,password);
+
+        return true;
     }
 
     public void register(String username, String password, String confirmPassword) throws Exception {
-        /*
-         receive credentials, pass them to the facade if valid.
-         if facade tells me to destroy, do I destroy? or do I tell view to destroy itself?
-         if facade tells me to throw an exception, tell view to display an error.
-         */
+        if (!password.equals(confirmPassword)) {
+            throw new Exception("Passwords do not match");
+        } else {
+            client.register(username,password);
+        }
 
-        client.register(username, password); // throws exception if user already exists
-        //throw new Exception("Registration failed");
-        // either destroy the view or tell the view to destroy itself
     }
 
     @Override
