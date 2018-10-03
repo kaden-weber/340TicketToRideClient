@@ -42,5 +42,7 @@ public class ServerProxy {
         Command command = CommandFactory.getInstance().getCommand(commandData);
 
         return null;
+
+        //return ccom.send(command, RequestType.GET);
     }
 }
