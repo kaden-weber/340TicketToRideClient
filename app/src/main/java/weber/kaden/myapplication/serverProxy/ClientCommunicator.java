@@ -27,6 +27,8 @@ public class ClientCommunicator {
     }
 
     private ClientCommunicator() {
+    	serverIP = ServerConnectionInfo.getServerIPAddress();
+    	serverPort = ServerConnectionInfo.getServerPort();
     }
 
     public void setServerIP(String serverIP) {
