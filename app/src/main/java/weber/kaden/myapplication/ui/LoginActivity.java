@@ -49,13 +49,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private static final int REQUEST_READ_CONTACTS = 0;
 
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
     /**vhj
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -187,7 +180,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (!isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -243,14 +236,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (!isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
         }
         // Check for a valid confirmed password, if the user entered one.
-        if (!TextUtils.isEmpty(confirmPassword) && !isConfirmPasswordValid(password, confirmPassword)) {
-            mconfirmPasswordView.setError(getString(R.string.error_invalid_password));
+        if (!isConfirmPasswordValid(password, confirmPassword)) {
+            mconfirmPasswordView.setError("The passwords don't match");
             focusView = mconfirmPasswordView;
             cancel = true;
         }
@@ -278,12 +271,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
         return email.length() > 4;
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
         return password.length() > 4;
     }
     private boolean isConfirmPasswordValid(String password, String confirmPassword) {
@@ -414,7 +405,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                //finish();
                 Intent intent = new Intent(instance, GameListActivity.class);
                 intent.putExtra("USERNAME", mEmail);
                 startActivity(intent);
@@ -461,7 +451,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                finish();
+                Intent intent = new Intent(instance, GameListActivity.class);
+                intent.putExtra("USERNAME", mEmail);
+                startActivity(intent);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
