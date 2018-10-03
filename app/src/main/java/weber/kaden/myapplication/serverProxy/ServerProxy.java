@@ -43,4 +43,11 @@ public class ServerProxy {
 
         return null;
     }
+    public Results register(String username, String password) throws Exception {
+        List<String> credentials = Arrays.asList(username, password);
+        CommandData commandData = new CommandData(credentials, CommandType.REGISTER);
+        Command command = CommandFactory.getInstance().getCommand(commandData);
+
+        return null;
+    }
 }

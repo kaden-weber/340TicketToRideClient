@@ -26,7 +26,8 @@ public class LoginPresenter implements Observer {
          if facade tells me to throw an exception, tell view to display an error.
          */
 
-        //client.register(username, password); // throws exception if user already exists
+        client.register(username, password); // throws exception if user already exists
+        //throw new Exception("Registration failed");
         // either destroy the view or tell the view to destroy itself
     }
 
