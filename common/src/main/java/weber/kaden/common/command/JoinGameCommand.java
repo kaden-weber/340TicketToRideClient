@@ -1,10 +1,7 @@
 package weber.kaden.common.command;
 
 
-
 import java.util.List;
-
-import javax.jws.WebParam;
 
 import weber.kaden.common.Results;
 import weber.kaden.common.model.Game;
@@ -16,7 +13,7 @@ public class JoinGameCommand implements Command {
     private String playerID = null;
     private String gameID = null;
 
-    public JoinGameCommand(List<String> params) {
+    JoinGameCommand(List<String> params) {
         this.playerID = params.get(0);
         this.gameID = params.get(1);
     }
