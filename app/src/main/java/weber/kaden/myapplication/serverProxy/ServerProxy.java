@@ -30,7 +30,6 @@ public class ServerProxy {
 	        	return ccom.send(requestInfo, RequestType.POST);
             // When implementing new commands, decide whether they are post or get
         }
-
         return null;
     }
 }
