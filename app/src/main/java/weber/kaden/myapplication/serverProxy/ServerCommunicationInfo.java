@@ -1,7 +1,7 @@
 package weber.kaden.myapplication.serverProxy;
 
 public class ServerCommunicationInfo {
-	private static String serverIPAddress = "0.0.0.0";
+	private static String serverIPAddress = "10.0.2.2";
 	private static String serverPort = "8080";
 
 	public static String getServerIPAddress() {

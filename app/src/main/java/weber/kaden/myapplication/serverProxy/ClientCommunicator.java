@@ -15,8 +15,8 @@ import weber.kaden.common.Results;
 public class ClientCommunicator {
     private static ClientCommunicator single_instance = null;
 
-    private String serverIP = "192.168.2.2";
-    private String serverPort = "8080";
+    private String serverIP;
+    private String serverPort;
 
     public static ClientCommunicator getInstance() {
         if (single_instance == null) {
@@ -27,6 +27,8 @@ public class ClientCommunicator {
     }
 
     private ClientCommunicator() {
+        setServerIP(ServerCommunicationInfo.getServerIPAddress());
+        setServerPort(ServerCommunicationInfo.getServerPort());
     }
 
     public void setServerIP(String serverIP) {
@@ -39,7 +41,7 @@ public class ClientCommunicator {
 
     public Results send(CommandData requestInfo, RequestType requestType) {
     	try {
-		    URL url = new URL("http://" + serverIP + ":" + serverPort + "/" + requestType + "/");
+		    URL url = new URL("http://" + serverIP + ":" + serverPort + "/");
 		    Serializer serializer = new Serializer();
 		    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		    switch (requestType) {
