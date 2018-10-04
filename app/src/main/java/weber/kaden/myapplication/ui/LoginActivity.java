@@ -208,15 +208,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
-            /*
-            I really don't think we should handle it here, I already put it in background -- Moises
-            try {
-                if (presenter.login(email, password)) {
-                    // destroy view
-                }
-            } catch (Exception e) {
-                // login failed, display toast
-            }*/
 
         }
     }

@@ -2,6 +2,8 @@ package weber.kaden.myapplication.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import weber.kaden.common.Results;
 import weber.kaden.common.command.Command;
 import weber.kaden.common.command.CommandData;
 import weber.kaden.common.command.CommandFactory;
@@ -17,7 +19,10 @@ private LoginPresenter presenter;
         CommandData commandData = new CommandData(credentials, CommandType.LOGIN);
         Command command = CommandFactory.getInstance().getCommand(commandData);
         command.execute();
-        ServerProxy.getInstance().sendCommand(commandData);
+        Results results = ServerProxy.getInstance().sendCommand(commandData);
+        if(!results.success()){
+            throw new Exception(results.getErrorInfo());
+        }
         return true;
         }
     public boolean register(String username, String password) throws Exception {
@@ -25,7 +30,10 @@ private LoginPresenter presenter;
         CommandData commandData = new CommandData(credentials, CommandType.REGISTER);
         Command command = CommandFactory.getInstance().getCommand(commandData);
         command.execute();
-        ServerProxy.getInstance().sendCommand(commandData);
+        Results results = ServerProxy.getInstance().sendCommand(commandData);
+        if(!results.success()){
+            throw new Exception(results.getErrorInfo());
+        }
         return true;
     }
 }

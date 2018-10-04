@@ -23,7 +23,7 @@ public class LoginCommand implements Command {
         if (Model.getInstance().hasPlayer(new Player(username, password))) {
             return new Results(null, true, null);
         } else {
-            return new Results(null, false, null);
+            return new Results(null, false, "Username does not exist");
         }
     }
 }

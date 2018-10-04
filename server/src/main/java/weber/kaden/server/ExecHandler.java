@@ -20,6 +20,7 @@ public class ExecHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
+        System.out.println("Connection received!");
         serializer = new Serializer();
         StreamProcessor streamProcessor = new StreamProcessor();
         String requestString = streamProcessor.getString(exchange.getRequestBody());
