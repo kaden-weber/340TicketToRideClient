@@ -65,7 +65,7 @@ public class Game {
 
     public Results start() {
         if (this.getPlayers().size() < 2 || this.getPlayers().size() > 5) {
-            return new Results(null, false, null);
+            return new Results(null, false, "incorrect number of players in game");
         }
         return new Results(null, true, null);
     }
