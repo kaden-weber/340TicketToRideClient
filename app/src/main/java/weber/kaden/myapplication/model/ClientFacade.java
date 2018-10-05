@@ -11,14 +11,13 @@ import weber.kaden.common.command.CommandType;
 import weber.kaden.common.model.Model;
 import weber.kaden.myapplication.serverProxy.ServerProxy;
 import weber.kaden.myapplication.ui.LoginPresenter;
+
 public class ClientFacade {
 
 private LoginPresenter presenter;
     public boolean login(String username, String password) throws Exception {
         List<String> credentials = new ArrayList<>(Arrays.asList(username, password));
         CommandData commandData = new CommandData(credentials, CommandType.LOGIN);
-        Command command = CommandFactory.getInstance().getCommand(commandData);
-        command.execute();
         Results results = ServerProxy.getInstance().sendCommand(commandData);
         if(!results.success()){
             throw new Exception(results.getErrorInfo());
@@ -28,8 +27,6 @@ private LoginPresenter presenter;
     public boolean register(String username, String password) throws Exception {
         List<String> credentials = new ArrayList<>(Arrays.asList(username, password));
         CommandData commandData = new CommandData(credentials, CommandType.REGISTER);
-        Command command = CommandFactory.getInstance().getCommand(commandData);
-        command.execute();
         Results results = ServerProxy.getInstance().sendCommand(commandData);
         if(!results.success()){
             throw new Exception(results.getErrorInfo());

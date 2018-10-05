@@ -1,9 +1,5 @@
 package weber.kaden.myapplication.serverProxy;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import weber.kaden.common.Results;
 import weber.kaden.common.command.CommandData;
 
@@ -32,7 +28,7 @@ public class ServerProxy {
 		    case STARTGAME:
 		    case CREATEGAME:
 			    return ccom.send(requestInfo, RequestType.POST);
-		    case GETTURNS:
+		    case GETCOMMANDS:
 			    return ccom.send(requestInfo, RequestType.GET);
 	    }
 	    return null;
