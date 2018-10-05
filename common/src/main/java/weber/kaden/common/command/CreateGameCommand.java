@@ -34,7 +34,7 @@ public class CreateGameCommand implements Command {
         if (Model.getInstance().addGame(game)) {
             toReturn = new Results(game, true, null);
         } else {
-            toReturn = new Results(null, false, null);
+            toReturn = new Results(null, false, "unable to add game to model");
         }
         return toReturn;
     }

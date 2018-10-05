@@ -29,7 +29,7 @@ public class JoinGameCommand implements Command {
         if (model.addPlayerToGame(player, game)) {
             return new Results(null, true, null);
         } else {
-            return new Results(null, false, null);
+            return new Results(null, false, "cannot add player to game");
         }
     }
 }

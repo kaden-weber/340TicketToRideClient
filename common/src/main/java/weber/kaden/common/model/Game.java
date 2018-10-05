@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import weber.kaden.common.Results;
+
 public class Game {
     private List<Player> players;
     private String ID;
@@ -59,5 +61,12 @@ public class Game {
     @Override
     public int hashCode() {
         return Objects.hash(players, ID);
+    }
+
+    public Results start() {
+        if (this.getPlayers().size() < 2 || this.getPlayers().size() > 5) {
+            return new Results(null, false, "incorrect number of players in game");
+        }
+        return new Results(null, true, null);
     }
 }

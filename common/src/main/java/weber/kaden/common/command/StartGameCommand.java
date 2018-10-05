@@ -5,6 +5,7 @@ package weber.kaden.common.command;
 import java.util.List;
 
 import weber.kaden.common.Results;
+import weber.kaden.common.model.Model;
 
 public class StartGameCommand implements Command {
 
@@ -18,6 +19,6 @@ public class StartGameCommand implements Command {
 
     @Override
     public Results execute() {
-        return null;
+        return Model.getInstance().getGame(gameID).start();
     }
 }

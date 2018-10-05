@@ -8,24 +8,21 @@ import java.io.IOException;
 import weber.kaden.common.Results;
 import weber.kaden.common.Serializer;
 import weber.kaden.common.StreamProcessor;
-import weber.kaden.common.command.Command;
 import weber.kaden.common.command.CommandData;
-import weber.kaden.common.command.CommandFactory;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
 public class ExecHandler implements HttpHandler {
 
-    private Serializer serializer;
-
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         System.out.println("Connection received!");
-        serializer = new Serializer();
+        Serializer serializer = new Serializer();
         StreamProcessor streamProcessor = new StreamProcessor();
         String requestString = streamProcessor.getString(exchange.getRequestBody());
         try {
-            Results results = processString(requestString);
+            CommandData commandData = serializer.deserializeCommandData(requestString);
+            Results results = CommandManager.getInstance().processCommand(commandData);
             exchange.sendResponseHeaders(HTTP_OK, 0);
             String serializedResults = serializer.serializeResults(results);
             streamProcessor.writeString(serializedResults, exchange.getResponseBody());
@@ -33,12 +30,6 @@ public class ExecHandler implements HttpHandler {
         } catch (Exception e) {
             throw new IOException();
         }
-    }
-
-    private Results processString(String requestString) throws Exception {
-        CommandData commandData = serializer.deserializeCommandData(requestString);
-        Command command = CommandFactory.getCommand(commandData);
-        return command.execute();
     }
 
 }
