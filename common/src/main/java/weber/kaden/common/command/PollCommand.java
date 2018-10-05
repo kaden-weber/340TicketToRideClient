@@ -12,9 +12,9 @@ public class PollCommand implements Command {
     private iCommandManager commandManager;
 
     public PollCommand(List<String> params, iCommandManager commandManager) {
-        this.username = username;
-        this.pollType = pollType;
-        this.info = info;
+        this.username = params.get(0);
+        this.pollType = params.get(1);
+        this.info = params.get(2);
         this.commandManager = commandManager;
     }
 
@@ -22,12 +22,10 @@ public class PollCommand implements Command {
     public Results execute() {
         if (pollType.equals("gamesList")) {
             return commandManager.gamesList();
-        } else if (pollType.equals("gameLobby")) {
-            return commandManager.gameLobby();
-        } else if (pollType.equals("game")) {
-            return commandManager.game();
+        } else if (pollType.equals("currentGame")) {
+            return commandManager.currentGame(info);
         } else {
-            return new Results(null, false, "incorrect polltype, please use: 'gamesList', 'gameLobby', or 'game'");
+            return new Results(null, false, "incorrect polltype, please use: 'gamesList' or 'currentGame'");
         }
     }
 }

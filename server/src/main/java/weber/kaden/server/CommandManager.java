@@ -40,18 +40,8 @@ public class CommandManager implements iCommandManager {
     }
 
     @Override
-    public Results gameLobby() {
-
-        return null;
+    public Results currentGame(String gameID) {
+        Game game = Model.getInstance().getGame(gameID);
+        return new Results(game, true, null);
     }
-
-    @Override
-    public Results game() {
-        //Game game = Model.getInstance().getGame()
-        return null;
-    }
-
-// return games list and current game
-
-
 }

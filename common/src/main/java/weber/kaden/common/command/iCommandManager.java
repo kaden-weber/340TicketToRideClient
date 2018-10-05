@@ -6,7 +6,5 @@ public interface iCommandManager {
     
     Results gamesList();
     
-    Results gameLobby();
-
-    Results game();
+    Results currentGame(String gameID);
 }
