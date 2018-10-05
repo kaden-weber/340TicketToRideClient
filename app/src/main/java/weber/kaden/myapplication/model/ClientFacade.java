@@ -8,6 +8,7 @@ import weber.kaden.common.command.Command;
 import weber.kaden.common.command.CommandData;
 import weber.kaden.common.command.CommandFactory;
 import weber.kaden.common.command.CommandType;
+import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Model;
 import weber.kaden.myapplication.serverProxy.ServerProxy;
 import weber.kaden.myapplication.ui.LoginPresenter;
@@ -35,5 +36,10 @@ private LoginPresenter presenter;
             throw new Exception(results.getErrorInfo());
         }
         return true;
+    }
+    public List<Game> getGames(){
+        List<Game> list = new ArrayList<>();
+
+        return list;
     }
 }
