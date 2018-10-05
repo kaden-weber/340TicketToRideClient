@@ -20,8 +20,13 @@ public class LoginCommand implements Command {
 
     @Override
     public Results execute() {
-        if (Model.getInstance().hasPlayer(new Player(username, password))) {
-            return new Results(null, true, null);
+        Player player = Model.getInstance().getPlayer(username);
+        if (player != null) {
+            if (player.getPassword().equals(password)) {
+                return new Results(null, true, null);
+            } else {
+                return new Results(null, false, "Incorrect password");
+            }
         } else {
             return new Results(null, false, "Username does not exist");
         }

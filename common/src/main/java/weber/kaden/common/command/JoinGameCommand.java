@@ -15,10 +15,12 @@ public class JoinGameCommand implements Command {
 
     private String playerID = null;
     private String gameID = null;
+    private String commandID = null;
 
-    public JoinGameCommand(List<String> params) {
+    public JoinGameCommand(List<String> params, String commandID) {
         this.playerID = params.get(0);
         this.gameID = params.get(1);
+        this.commandID = commandID;
     }
 
     @Override
