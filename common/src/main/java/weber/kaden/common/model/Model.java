@@ -79,6 +79,9 @@ public class Model extends Observable {
         if (game.hasPlayer(player)) {
             return false;
         }
+        if (game.getPlayers().size() >=  5) {
+            return false;
+        }
         if (this.games.get(this.games.indexOf(game)).addPlayer(player)) {
             notifyObservers(this.games);
             return true;
