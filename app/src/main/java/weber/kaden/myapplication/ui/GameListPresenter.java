@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import weber.kaden.common.Results;
 import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Model;
 import weber.kaden.myapplication.model.ClientFacade;
@@ -22,18 +23,19 @@ public class GameListPresenter implements Observer {
     public List<Game> displayGames() {
         return client.getGames();
     }
-    /*
-    public void createGame(String username) throws Exception {
-        client.createGame(username);
+
+    public Game createGame(String username) throws Exception {
+        Results results = client.createGame(username);
+        return (Game) results.getData();
     }
 
-    public void joinGame(String username) throws Exception {
-        client.joinGame(username);
-    } */
+    public void joinGame(String username, String gameID) throws Exception {
+        client.joinGame(username, gameID);
+    }
 
 
     @Override
     public void update(Observable o, Object arg) {
-
+        // activity.updateGames((List<Game> arg);
     }
 }

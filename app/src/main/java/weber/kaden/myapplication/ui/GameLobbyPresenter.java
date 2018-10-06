@@ -16,16 +16,16 @@ public class GameLobbyPresenter implements Observer {
         this.client = client;
     }
 
-    public void exitLobby(String username) throws Exception {
-        //client.exitLobby(userName);
+    public void exitLobby(String username, String gameID) throws Exception {
+        client.exitLobby(username, gameID);
     }
 
-    public void startGame() throws Exception {
-        //client.startGame();
+    public void startGame(String username, String gameID) throws Exception {
+        client.startGame(username, gameID);
     }
 
     @Override
     public void update(Observable o, Object arg) {
-
+        //activity.updateGame((List<Game>) arg);
     }
 }
