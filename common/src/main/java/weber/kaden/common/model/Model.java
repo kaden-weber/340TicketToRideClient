@@ -50,6 +50,15 @@ public class Model extends Observable {
 
     public boolean hasPlayer(Player player) {return this.players.contains(player); }
 
+    public boolean hasPlayer(String playerID) {
+        for (int i = 0; i < this.players.size(); i++) {
+            if (this.players.get(i).getID().equals(playerID)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Player getPlayer(String username) {
         Player toReturn = null;
         for (int i = 0; i < this.players.size(); i++) {
@@ -89,11 +98,12 @@ public class Model extends Observable {
         return false;
     }
 
-    public boolean removePlayerFromGame(Player player, Game game) {
-        if (!game.hasPlayer(player) || !this.players.contains(player)) {
+    public boolean removePlayerFromGame(String playerID, String gameID) {
+        Game game = this.getGame(gameID);
+        if (!game.hasPlayer(playerID) || !this.hasPlayer(playerID)) {
             return false;
         }
-        if(this.games.get(this.games.indexOf(game)).removePlayer(player)) {
+        if(this.games.get(this.games.indexOf(game)).removePlayer(playerID)) {
             notifyObservers(this.games);
             return true;
         }

@@ -45,8 +45,36 @@ public class Game {
         return this.players.remove(player);
     }
 
+    public boolean removePlayer(String playerID) {
+        for (int i = 0; i < this.players.size(); i++) {
+            if (this.players.get(i).getID().equals(playerID)) {
+                this.players.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean hasPlayer(Player player) {
         return this.players.contains(player);
+    }
+
+    public boolean hasPlayer(String playerID) {
+        for (int i = 0; i < this.players.size(); i++) {
+            if (this.players.get(i).getID().equals(playerID)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Player getPlayer(String playerID) {
+        for (int i = 0; i < this.players.size(); i++) {
+            if (this.players.get(i).getID().equals(playerID)) {
+                return this.players.get(i);
+            }
+        }
+        return null;
     }
 
     @Override
