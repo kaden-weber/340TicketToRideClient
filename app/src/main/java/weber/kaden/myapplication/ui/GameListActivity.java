@@ -1,5 +1,6 @@
 package weber.kaden.myapplication.ui;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,7 +37,10 @@ public class GameListActivity extends AppCompatActivity implements GameListAdapt
     }
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Joining " + adapter.getItem(position), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(instance, GameLobbyActivity.class);
+        intent.putExtra("GAME_ID", adapter.getItem(position));
+        startActivity(intent);
     }
 
 

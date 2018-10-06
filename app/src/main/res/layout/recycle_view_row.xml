@@ -7,9 +7,15 @@
     android:padding="10dp">
 
     <TextView
-        android:id="@+id/tvAnimalName"
+        android:id="@+id/gameName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"/>
+
+    <Button
+        android:id="@+id/join_game_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/join_game_button" />
 
 </LinearLayout>

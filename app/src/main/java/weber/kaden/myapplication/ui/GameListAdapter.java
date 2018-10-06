@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
@@ -45,11 +46,13 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
-
+        Button mButton;
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.tvAnimalName);
-            itemView.setOnClickListener(this);
+            myTextView = itemView.findViewById(R.id.gameName);
+            //itemView.setOnClickListener(this);
+            mButton = itemView.findViewById(R.id.join_game_button);
+            mButton.setOnClickListener(this);
         }
 
         @Override
