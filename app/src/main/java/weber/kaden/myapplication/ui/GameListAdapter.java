@@ -10,16 +10,18 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import weber.kaden.common.model.Game;
+import weber.kaden.common.model.Player;
 import weber.kaden.myapplication.R;
 
 public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHolder> {
 
-    private List<String> mData;
+    private List<Game> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    GameListAdapter(Context context, List<String> data) {
+    GameListAdapter(Context context, List<Game> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -30,12 +32,21 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
         View view = mInflater.inflate(R.layout.recycle_view_row, parent, false);
         return new ViewHolder(view);
     }
-
+    public String playersToString(List<Player> players){
+        String playerString = "";
+        for(Player player : players){
+            playerString += player.getID();
+        }
+        playerString += "  ";
+        return playerString;
+    }
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String animal = mData.get(position);
-        holder.myTextView.setText(animal);
+
+        String gameInfo = "Game ID: " + mData.get(position).getID() + " Players: " +
+                playersToString(mData.get(position).getPlayers());
+        holder.myTextView.setText(gameInfo);
     }
 
     // total number of rows
@@ -50,7 +61,6 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
         ViewHolder(View itemView) {
             super(itemView);
             myTextView = itemView.findViewById(R.id.gameName);
-            //itemView.setOnClickListener(this);
             mButton = itemView.findViewById(R.id.join_game_button);
             mButton.setOnClickListener(this);
         }
@@ -63,7 +73,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
 
     // convenience method for getting data at click position
     String getItem(int id) {
-        return mData.get(id);
+        return mData.get(id).getID();
     }
 
     // allows clicks events to be caught

@@ -9,7 +9,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import weber.kaden.common.model.Game;
 import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
 
@@ -22,16 +24,12 @@ public class GameListActivity extends AppCompatActivity implements GameListAdapt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_list);
-        ArrayList<String> animalNames = new ArrayList<>();
-        animalNames.add("Game 1");
-        animalNames.add("Game 2");
-        animalNames.add("Game 3");
-        animalNames.add("Game 4");
+        List<Game> gamesList = gameListPresenter.displayGames();
 
         // set up the RecyclerView
         RecyclerView recyclerView = findViewById(R.id.gamelist_layout);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new GameListAdapter(this, animalNames);
+        adapter = new GameListAdapter(this, gamesList);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
     }

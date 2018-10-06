@@ -1,7 +1,5 @@
 package weber.kaden.myapplication.ui;
 
-import android.view.Display;
-
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
