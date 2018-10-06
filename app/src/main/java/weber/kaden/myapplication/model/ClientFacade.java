@@ -80,12 +80,13 @@ private LoginPresenter presenter;
     }
 
     public void exitLobby(String username, String gameID) throws Exception {
-//        List<String> params = new ArrayList<>((Arrays.asList(username, gameID)));
-//        CommandData commandData = new CommandData(params, CommandType.LEAVEGAME);
-//        Command command = CommandFactory.getInstance().getCommand(commandData);
-//        command.execute();
-//        Results results = ServerProxy.getInstance().sendCommand(commandData);
-//        if(!results.success()) {
-//            throw new Exception(results.getErrorInfo());
+        List<String> params = new ArrayList<>((Arrays.asList(username, gameID)));
+        CommandData commandData = new CommandData(params, CommandType.LEAVEGAME);
+        Command command = CommandFactory.getInstance().getCommand(commandData);
+        command.execute();
+        Results results = ServerProxy.getInstance().sendCommand(commandData);
+        if(!results.success()) {
+            throw new Exception(results.getErrorInfo());
+        }
     }
 }
