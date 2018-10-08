@@ -20,6 +20,7 @@ import java.util.List;
 import weber.kaden.common.model.Game;
 import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
+import weber.kaden.myapplication.serverProxy.Poller;
 
 public class GameListActivity extends AppCompatActivity implements GameListAdapter.ItemClickListener{
     private GameListActivity instance = this;
@@ -75,6 +76,20 @@ public class GameListActivity extends AppCompatActivity implements GameListAdapt
             }
         });
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Poller.getInstance().startGamesListPolling();
+
+    }
+
+    @Override
+    public void onPause() {
+        Poller.getInstance().stopPolling();
+        super.onPause();
+    }
+
     @Override
     public void onItemClick(View view, int position) {
         Toast.makeText(this, "Joining " + adapter.getItem(position), Toast.LENGTH_SHORT).show();
