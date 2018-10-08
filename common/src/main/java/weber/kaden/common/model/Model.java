@@ -108,12 +108,14 @@ public class Model extends Observable {
     }
 
     public boolean removePlayerFromGame(String playerID, String gameID) {
-        Game game = this.getGame(gameID);
-        if (!game.hasPlayer(playerID) || !this.hasPlayer(playerID)) {
+        if (!this.getGame(gameID).hasPlayer(playerID) || !this.hasPlayer(playerID)) {
             return false;
         }
-        if(this.games.get(this.games.indexOf(game)).removePlayer(playerID)) {
+        if(this.getGame(gameID).removePlayer(playerID)) {
             notifyObservers(this.games);
+            if (this.getGame(gameID).getPlayers().size() == 0) {
+                this.removeGame(this.getGame(gameID));
+            }
             return true;
         }
         return false;
