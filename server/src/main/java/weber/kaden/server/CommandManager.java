@@ -34,14 +34,12 @@ public class CommandManager implements iCommandManager {
     }
 
     @Override
-    public Results gamesList() {
-        List<Game> games = Model.getInstance().getGames();
-        return new Results(games, true, null);
+    public List<Game> gamesList() {
+        return Model.getInstance().getGames();
     }
 
     @Override
-    public Results currentGame(String gameID) {
-        Game game = Model.getInstance().getGame(gameID);
-        return new Results(game, true, null);
+    public Game currentGame(String gameID) {
+        return Model.getInstance().getGame(gameID);
     }
 }
