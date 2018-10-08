@@ -35,7 +35,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
     public String playersToString(List<Player> players){
         String playerString = "";
         for(Player player : players){
-            playerString += player.getID();
+            //playerString += player.getID();
         }
         playerString += "  ";
         return playerString;
@@ -44,7 +44,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        String gameInfo = "Game ID: " + mData.get(position).getID() + " Players: " +
+        String gameInfo = "Game ID: " + mData.get(position).getGameName() + " Players: " +
                 playersToString(mData.get(position).getPlayers());
         holder.myTextView.setText(gameInfo);
     }

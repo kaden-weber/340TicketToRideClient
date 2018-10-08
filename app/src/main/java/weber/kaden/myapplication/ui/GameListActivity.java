@@ -58,7 +58,7 @@ public class GameListActivity extends AppCompatActivity implements GameListAdapt
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             m_Text = input.getText().toString();
-                            CreateGameTask createGameTask = new CreateGameTask(getIntent().getStringExtra("USERNAME"), "GAMENAME");
+                            CreateGameTask createGameTask = new CreateGameTask(getIntent().getStringExtra("USERNAME"), m_Text);
                             createGameTask.execute((Void) null);
                         }
                     });
@@ -92,7 +92,8 @@ public class GameListActivity extends AppCompatActivity implements GameListAdapt
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(this, "Joining " + adapter.getItem(position), Toast.LENGTH_SHORT).show();
+        System.out.println("POSITION " + position);
+        Toast.makeText(this, "Joining " + adapter.getItem(0), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(instance, GameLobbyActivity.class);
         intent.putExtra("GAME_ID", adapter.getItem(position));
         startActivity(intent);
