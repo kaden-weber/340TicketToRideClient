@@ -44,6 +44,7 @@ public class Model extends Observable {
 
     public void setGames(List<Game> games) {
         this.games = games;
+        notifyObservers(this.games);
     }
 
     public boolean addPlayer(Player player) {
