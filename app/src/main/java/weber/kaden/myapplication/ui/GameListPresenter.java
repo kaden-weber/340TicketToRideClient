@@ -19,7 +19,7 @@ public class GameListPresenter implements Observer {
     }
 
     public List<Game> displayGames() {
-        return client.getGames();
+        return model.getGames();
     }
 
     public Game createGame(String username) throws Exception {
