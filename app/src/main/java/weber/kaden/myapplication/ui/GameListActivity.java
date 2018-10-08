@@ -99,12 +99,12 @@ public class GameListActivity extends AppCompatActivity implements GameListAdapt
     }
     public class CreateGameTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
+        private final String mUsername;
         private final String mgameName;
         private String errorString = "";
 
-        CreateGameTask(String email, String gameName) {
-            mEmail = email;
+        CreateGameTask(String username, String gameName) {
+            mUsername = username;
             mgameName = gameName;
         }
         @Override
@@ -112,7 +112,7 @@ public class GameListActivity extends AppCompatActivity implements GameListAdapt
             ClientFacade clientFacade = new ClientFacade();
             GameListPresenter gameListPresenter = new GameListPresenter(instance, clientFacade);
             try {
-                Game game = gameListPresenter.createGame(mEmail);
+                Game game = gameListPresenter.createGame(mUsername, mgameName);
                 System.out.println(game.getGameName());
             } catch (Exception e) {
                 errorString = e.getMessage();

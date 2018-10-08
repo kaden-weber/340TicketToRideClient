@@ -24,9 +24,9 @@ public class GameListPresenter implements Observer {
         return model.getGames();
     }
 
-    public Game createGame(String username) throws Exception {
+    public Game createGame(String username, String gameName) throws Exception {
         System.out.println("creating game in presenter");
-        Results results = client.createGame(username);
+        Results results = client.createGame(username, gameName);
 
         return (Game) results.getData();
     }
