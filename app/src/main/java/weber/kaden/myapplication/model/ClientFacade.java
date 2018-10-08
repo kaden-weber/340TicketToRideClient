@@ -63,8 +63,8 @@ public class ClientFacade {
     }
 
     public List<Game> getGames(){
-        List<String> params = new ArrayList<>(Arrays.asList("username", "gameList", ""));
-        CommandData commandData = new CommandData(params, CommandType.POLL);
+        List<String> params = new ArrayList<>(Arrays.asList(Model.getInstance().getCurrentUser()));
+        CommandData commandData = new CommandData(params, CommandType.POLLGAMESLIST);
         Results results = ServerProxy.getInstance().sendCommand(commandData);
         if (results == null || results.getData() == null) {
             return new ArrayList<>();
