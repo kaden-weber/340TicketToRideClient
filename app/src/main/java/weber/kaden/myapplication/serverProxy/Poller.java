@@ -18,7 +18,7 @@ public class Poller {
         ccom = ClientCommunicator.getInstance();
     }
 
-    public void startPolling() {
+    public void startGamesListPolling() {
 		runningThread = new CommandsGetter();
 		runningThread.start();
     }
@@ -37,24 +37,7 @@ public class Poller {
         		try {
 			        Thread.sleep(waitTime);
 
-			        CommandData commandData = new CommandData(null, CommandType.POLL);
-			        Results results = ccom.send(commandData, RequestType.GET);
 
-			        if (results.success()) {
-				        List<CommandData> commandsList = (List<CommandData>) results.getData();
-
-				        for (int i = 0; i < commandsList.size(); i++) {
-				        	CommandData indexedCommandData = commandsList.get(i);
-							switch (indexedCommandData.getType()) {
-								case LOGIN:
-									new ClientFacade().login(indexedCommandData.getData().get(0), indexedCommandData.getData().get(1));
-									break;
-								case REGISTER:
-									new ClientFacade().register(indexedCommandData.getData().get(0), indexedCommandData.getData().get(1));
-									break;
-							}
-				        }
-			        }
 		        }
 		        catch (Exception e) {
         			e.printStackTrace();
