@@ -95,6 +95,8 @@ public class ClientFacade {
         if(!results.success()) {
             throw new Exception(results.getErrorInfo());
         }
+
+        Model.getInstance().setCurrentGame((Game)results.getData());
     }
 
     public void startGame(String username, String gameID) throws Exception {
@@ -117,5 +119,11 @@ public class ClientFacade {
         if(!results.success()) {
             throw new Exception(results.getErrorInfo());
         }
+
+        Model.getInstance().setCurrentGame(null);
+    }
+
+    public Game getCurrentGame() {
+    	return Model.getInstance().getCurrentGame();
     }
 }

@@ -9,6 +9,7 @@ public class Model extends Observable {
     private List<Player> players;
     private List<Game> games;
     private String currentUser;
+    private Game currentGame;
 
     public static Model getInstance() {
         if (model == null) {
@@ -30,7 +31,15 @@ public class Model extends Observable {
         this.currentUser = currentUser;
     }
 
-    public List<Player> getPlayers() {
+	public Game getCurrentGame() {
+		return currentGame;
+	}
+
+	public void setCurrentGame(Game currentGame) {
+		this.currentGame = currentGame;
+	}
+
+	public List<Player> getPlayers() {
         return players;
     }
 
