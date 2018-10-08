@@ -51,16 +51,16 @@ public class ClientFacade {
         return true;
     }
 
-//    public boolean executeLocalCommand(CommandData commandData) throws Exception {
-//        Command command = CommandFactory.getCommand(commandData);
-//        Results results = command.execute();
-//        if (!results.success()) {
-//            throw new Exception(results.getErrorInfo());
-//        }
-//
-//        return true;
-//
-//    }
+    public boolean executeLocalCommand(CommandData commandData) throws Exception {
+        Command command = CommandFactory.getInstance().getCommand(commandData);
+        Results results = command.execute();
+        if (!results.success()) {
+            throw new Exception(results.getErrorInfo());
+        }
+
+        return true;
+
+    }
 
     public List<Game> getGames(){
         List<Game> list = new ArrayList<>();
