@@ -17,6 +17,7 @@ public class CommandManager implements iCommandManager {
     public static CommandManager getInstance(){
         if (sCommandManager == null) {
             sCommandManager = new CommandManager();
+            CommandFactory.setCommandManager(sCommandManager);
         }
         return sCommandManager;
     }
