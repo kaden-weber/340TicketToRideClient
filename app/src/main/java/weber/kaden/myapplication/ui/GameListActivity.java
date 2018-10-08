@@ -86,7 +86,7 @@ public class GameListActivity extends AppCompatActivity implements GameListAdapt
 
     @Override
     public void onPause() {
-        Poller.getInstance().stopPolling();
+        Poller.getInstance().stopGamesListPolling();
         super.onPause();
     }
 

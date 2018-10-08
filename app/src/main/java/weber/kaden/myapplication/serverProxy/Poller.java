@@ -23,7 +23,9 @@ public class Poller {
     private ClientFacade clientFacade;
     private long waitTime;
 
-    private Thread runningThread;
+    private Thread runningGamesListThread;
+    private Thread runningGameThread;
+    private boolean running = false;
 
     private Poller(long milliseconds) {
         waitTime = milliseconds;
@@ -32,30 +34,41 @@ public class Poller {
     }
 
     public void startGamesPolling() {
-    	stopPolling();
+    	stopGamesPolling();
 
-		runningThread = new GameCommandsGetter();
-		runningThread.start();
+    	if (runningGameThread == null) {
+		    runningGameThread = new GameCommandsGetter();
+	    }
+		runningGameThread.start();
     }
 
     public void startGamesListPolling() {
-    	stopPolling();
+    	stopGamesListPolling();
 
-    	runningThread = new GamesListGetter();
-    	runningThread.start();
+    	if (runningGamesListThread == null) {
+		    runningGamesListThread = new GamesListGetter();
+	    }
+
+    	runningGamesListThread.start();
     }
 
-    public void stopPolling() {
-		if (runningThread != null) {
-			runningThread.stop();
+    public void stopGamesListPolling() {
+		if (runningGamesListThread != null) {
+			runningGamesListThread.interrupt();
 		}
+    }
+
+    public void stopGamesPolling() {
+    	if (runningGameThread != null) {
+    		runningGameThread.interrupt();
+	    }
     }
 
     private class GamesListGetter extends Thread {
 
     	@Override
 	    public void run() {
-    		while(true) {
+    		while(!this.isInterrupted()) {
     			try {
 				    Thread.sleep(waitTime);
 
@@ -74,7 +87,7 @@ public class Poller {
 
         @Override
         public void run() {
-        	while (true) {
+        	while (!this.isInterrupted()) {
         		try {
 			        Thread.sleep(waitTime);
 
