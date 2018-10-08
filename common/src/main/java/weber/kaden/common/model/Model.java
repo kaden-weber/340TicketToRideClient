@@ -187,9 +187,9 @@ public class Model extends Observable {
         return toReturn;
     }
 
-    public Game updateGame(Game game, String gameID) {
+    public Game updateGame(Game game) {
         for (int i = 0; i < this.games.size(); i++) {
-            if (this.games.get(i).getID().equals(gameID)) {
+            if (this.games.get(i).getID().equals(game.getID())) {
                 this.games.set(i, game);
                 setChanged();
                 notifyObservers(this.games.get(i));

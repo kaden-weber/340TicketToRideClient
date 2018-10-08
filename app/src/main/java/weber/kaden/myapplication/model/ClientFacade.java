@@ -130,4 +130,8 @@ public class ClientFacade {
     public String getCurrentUser() {
         return Model.getInstance().getCurrentUser();
     }
+
+    public Game getUpdatedGame(Game game) {
+        return Model.getInstance().updateGame(game);
+    }
 }

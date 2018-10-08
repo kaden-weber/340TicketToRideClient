@@ -90,7 +90,8 @@ public class Poller {
         	while (!this.isInterrupted()) {
         		try {
 			        Thread.sleep(waitTime);
-
+					Game updatedGame = clientFacade.getUpdatedGame(Model.getInstance().getCurrentGame());
+					Model.getInstance().updateGame(updatedGame);
 					//TODO: When we implement playing games, implement this
 		        }
 		        catch (Exception e) {
