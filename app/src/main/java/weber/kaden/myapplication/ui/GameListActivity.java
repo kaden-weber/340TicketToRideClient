@@ -28,11 +28,11 @@ public class GameListActivity extends AppCompatActivity implements GameListAdapt
     private String m_Text = "";
     GameListAdapter adapter;
     GameListPresenter gameListPresenter = new GameListPresenter(instance, clientFacade);
+    List<Game> gamesList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_list);
-        List<Game> gamesList = new ArrayList<>();//gameListPresenter.displayGames();
 
         // set up the RecyclerView
         RecyclerView recyclerView = findViewById(R.id.gamelist_layout);
