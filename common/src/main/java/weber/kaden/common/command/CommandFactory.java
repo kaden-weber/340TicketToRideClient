@@ -1,17 +1,22 @@
 package weber.kaden.common.command;
 
+import weber.kaden.common.model.Model;
+
 public class CommandFactory {
     private static CommandFactory commandFactory = null;
     private static iCommandManager commandManager;
+    private Integer lastID;
 
     public static CommandFactory getInstance() {
         if (commandFactory == null) {
-            commandFactory = new CommandFactory();
+            commandFactory = new CommandFactory(0);
         }
         return commandFactory;
     }
 
-    private CommandFactory() {}
+    private CommandFactory(Integer lastID) {
+        this.lastID = lastID;
+    }
 
     public static iCommandManager getCommandManager() {
         return commandManager;
@@ -21,7 +26,7 @@ public class CommandFactory {
         commandManager = commandManager;
     }
 
-    public static Command getCommand(CommandData data) throws InvalidCommandParamsException {
+    public Command getCommand(CommandData data) throws InvalidCommandParamsException {
         switch (data.getType()) {
             case LOGIN:
                 if (data.getData().size() < 2) {
@@ -37,17 +42,17 @@ public class CommandFactory {
                 if (data.getData().size() < 2) {
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
                 }
-                return new CreateGameCommand(data.getData());
+                return new CreateGameCommand(data.getData(), newCommandID());
             case JOINGAME:
                 if (data.getData().size() < 2) {
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
                 }
-                return new JoinGameCommand(data.getData());
+                return new JoinGameCommand(data.getData(), newCommandID());
             case STARTGAME:
                 if (data.getData().size() < 2) {
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
                 }
-                return new StartGameCommand(data.getData());
+                return new StartGameCommand(data.getData(), newCommandID());
             case POLL:
                 if (data.getData().size() < 3) {
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
@@ -56,6 +61,10 @@ public class CommandFactory {
             default:
                 return null;
         }
+    }
+
+    private String newCommandID() {
+        return Model.getInstance().getCurrentUser() + Integer.toString(this.lastID);
     }
 }
 

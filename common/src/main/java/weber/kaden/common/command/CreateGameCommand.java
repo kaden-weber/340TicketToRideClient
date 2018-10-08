@@ -14,14 +14,16 @@ public class CreateGameCommand implements Command {
 
     private String playerID = null;
     private String gameID = null;
+    private String ID = null;
 
-    public CreateGameCommand(List<String> params) {
+    public CreateGameCommand(List<String> params, String ID) {
         this.playerID = params.get(0);
         if (params.size() > 1) {
             this.gameID = params.get(1);
         } else {
             this.gameID = UUID.randomUUID().toString();
         }
+        this.ID = ID;
     }
 
     @Override
@@ -38,4 +40,6 @@ public class CreateGameCommand implements Command {
         }
         return toReturn;
     }
+
+
 }
