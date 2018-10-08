@@ -31,7 +31,7 @@ public class GameListActivity extends AppCompatActivity implements GameListAdapt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_list);
-        List<Game> gamesList = gameListPresenter.displayGames();
+        List<Game> gamesList = new ArrayList<>();//gameListPresenter.displayGames();
 
         // set up the RecyclerView
         RecyclerView recyclerView = findViewById(R.id.gamelist_layout);
@@ -97,9 +97,11 @@ public class GameListActivity extends AppCompatActivity implements GameListAdapt
             ClientFacade clientFacade = new ClientFacade();
             GameListPresenter gameListPresenter = new GameListPresenter(instance, clientFacade);
             try {
-                gameListPresenter.createGame(mEmail);
+                Game game = gameListPresenter.createGame(mEmail);
+                System.out.println(game.getGameName());
             } catch (Exception e) {
                 errorString = e.getMessage();
+                System.out.println(errorString);
                 return false;
             }
             return true;
@@ -107,16 +109,7 @@ public class GameListActivity extends AppCompatActivity implements GameListAdapt
 
         @Override
         protected void onPostExecute(final Boolean success) {
-            /*mAuthTask = null;
-            showProgress(false);
 
-            if (success) {
-                Intent intent = new Intent(instance, GameListActivity.class);
-                intent.putExtra("USERNAME", mEmail);
-                startActivity(intent);
-            } else {
-                Toast.makeText(instance, errorString, Toast.LENGTH_LONG).show();
-            }*/
         }
 
         @Override
