@@ -11,11 +11,11 @@ public class StreamProcessor {
     public StreamProcessor() {
     }
 
-    public String getString(InputStream inputStream) throws IOException {
+    public static String getString(InputStream inputStream) throws IOException {
         return readString(inputStream);
     }
 
-    public void writeString(String serializedData, OutputStream os) throws IOException {
+    public static void writeString(String serializedData, OutputStream os) throws IOException {
         OutputStreamWriter sw = new OutputStreamWriter(os);
         sw.write(serializedData);
         sw.flush();

@@ -10,14 +10,23 @@ import weber.kaden.common.model.Model;
 import weber.kaden.myapplication.model.ClientFacade;
 
 public class Poller {
+	private static final long FIVE_SECONDS = 5000;
+	private static Poller mPoller;
+
+	public static Poller getInstance() {
+		if (mPoller == null) {
+			mPoller = new Poller(FIVE_SECONDS);
+		}
+		return mPoller;
+	}
     private ClientCommunicator ccom;
     private ClientFacade clientFacade;
     private long waitTime;
 
     private Thread runningThread;
 
-    public Poller(long miliseconds) {
-        waitTime = miliseconds;
+    private Poller(long milliseconds) {
+        waitTime = milliseconds;
         ccom = ClientCommunicator.getInstance();
         clientFacade = new ClientFacade();
     }

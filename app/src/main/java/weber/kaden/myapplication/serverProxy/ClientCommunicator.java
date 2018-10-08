@@ -1,21 +1,20 @@
 package weber.kaden.myapplication.serverProxy;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 import weber.kaden.common.Serializer;
+import weber.kaden.common.StreamProcessor;
 import weber.kaden.common.command.CommandData;
 import weber.kaden.common.Results;
 
 public class ClientCommunicator {
     private static ClientCommunicator single_instance = null;
 
-    private String serverIP = "192.168.2.2";//"13.59.120.155";
+    private String serverIP = "10.0.2.2";//"13.59.120.155";
     private String serverPort = "8080";
 
 
@@ -58,7 +57,7 @@ public class ClientCommunicator {
 
 		    OutputStream reqBody = conn.getOutputStream();
 		    String serializedData = serializer.serializeCommandData(requestInfo);
-		    reqBody.write(serializedData.getBytes());
+		    StreamProcessor.writeString(serializedData, reqBody);
 		    reqBody.close();
 
 		    conn.connect();
@@ -66,19 +65,15 @@ public class ClientCommunicator {
 		    if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
 			    InputStream responseBody = conn.getInputStream();
 
-			    BufferedReader in = new BufferedReader(new InputStreamReader(responseBody));
-
-			    String inputLine;
-			    String output = "";
-			    while ((inputLine = in.readLine()) != null) {
-				    output += inputLine;
-			    }
+			    String output = StreamProcessor.getString(responseBody);
 
 			    responseBody.close();
 			    conn.disconnect();
 
 			    return serializer.deserializeResults(output);
 		    }
+
+		    conn.disconnect();
 	    }
 	    catch (IOException e) {
     		e.printStackTrace();
