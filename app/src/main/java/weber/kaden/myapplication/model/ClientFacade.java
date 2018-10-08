@@ -119,6 +119,8 @@ public class ClientFacade {
         if(!results.success()) {
             throw new Exception(results.getErrorInfo());
         }
+
+        Model.getInstance().setCurrentGame(null);
     }
 
     public Game getCurrentGame() {
