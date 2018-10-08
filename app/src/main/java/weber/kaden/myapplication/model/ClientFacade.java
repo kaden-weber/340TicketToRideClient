@@ -63,8 +63,8 @@ public class ClientFacade {
     }
 
     public List<Game> getGames(){
-        List<String> params = new ArrayList<>(Arrays.asList("username", "gameList", ""));
-        CommandData commandData = new CommandData(params, CommandType.POLL);
+        List<String> params = new ArrayList<>(Arrays.asList(Model.getInstance().getCurrentUser()));
+        CommandData commandData = new CommandData(params, CommandType.POLLGAMESLIST);
         Results results = ServerProxy.getInstance().sendCommand(commandData);
         if (results == null || results.getData() == null) {
             return new ArrayList<>();
@@ -75,6 +75,7 @@ public class ClientFacade {
     public Results createGame(String username) throws Exception {
         List<String> params = new ArrayList<>((Arrays.asList(username, "GAME NAME", UUID.randomUUID().toString())));
         CommandData commandData = new CommandData(params, CommandType.CREATEGAME);
+        System.out.println("Creating game in clientFacade");
         Command command = CommandFactory.getInstance().getCommand(commandData);
         String gameID = ((Game)command.execute().getData()).getID();
         params.add(gameID);

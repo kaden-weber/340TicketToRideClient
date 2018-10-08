@@ -1,10 +1,11 @@
 package weber.kaden.common.command;
 
-import weber.kaden.common.Results;
+import java.util.List;
+import weber.kaden.common.model.Game;
 
 public interface iCommandManager {
     
-    Results gamesList();
+    List<Game> gamesList();
     
-    Results currentGame(String gameID);
+    Game currentGame(String gameID);
 }

@@ -21,15 +21,6 @@ public class ServerProxy {
     }
 
     public Results sendCommand(CommandData requestInfo) {
-	    switch (requestInfo.getType()) {
-		    case LOGIN:
-		    case REGISTER:
-		    case JOINGAME:
-		    case STARTGAME:
-		    case CREATEGAME:
-            case POLL:
-			    return ccom.send(requestInfo, RequestType.POST);
-	    }
-	    return null;
+	    return ccom.send(requestInfo, RequestType.POST);
     }
 }
