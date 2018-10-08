@@ -4,7 +4,7 @@ import weber.kaden.common.model.Model;
 
 public class CommandFactory {
     private static CommandFactory commandFactory = null;
-    private static iCommandManager commandManager;
+    private static iCommandManager mCommandManager;
     private Integer lastID;
 
     public static CommandFactory getInstance() {
@@ -19,11 +19,11 @@ public class CommandFactory {
     }
 
     public static iCommandManager getCommandManager() {
-        return commandManager;
+        return mCommandManager;
     }
 
     public static void setCommandManager(iCommandManager commandManager) {
-        commandManager = commandManager;
+        mCommandManager = commandManager;
     }
 
     public Command getCommand(CommandData data) throws InvalidCommandParamsException {
@@ -57,12 +57,12 @@ public class CommandFactory {
                 if (data.getData().size() < 1) {
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
                 }
-                return new PollGamesListCommand(data.getData(), commandManager);
+                return new PollGamesListCommand(data.getData(), mCommandManager);
 	        case POLLGAME:
 	        	if (data.getData().size() < 2) {
 	        		throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
 		        }
-		        return new PollGameCommand(data.getData(), commandManager);
+		        return new PollGameCommand(data.getData(), mCommandManager);
             default:
                 return null;
         }
