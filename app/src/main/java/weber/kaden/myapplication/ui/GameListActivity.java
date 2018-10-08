@@ -112,7 +112,7 @@ public class GameListActivity extends AppCompatActivity implements GameListAdapt
             ClientFacade clientFacade = new ClientFacade();
             GameListPresenter gameListPresenter = new GameListPresenter(instance, clientFacade);
             try {
-                Game game = gameListPresenter.createGame(mEmail);
+                Game game = gameListPresenter.createGame(mEmail, mgameName);
                 System.out.println(game.getGameName());
             } catch (Exception e) {
                 errorString = e.getMessage();
