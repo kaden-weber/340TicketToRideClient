@@ -26,6 +26,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.GameListActivity"></activity>
+        <activity android:name=".ui.GameLobbyActivity"></activity>
     </application>
 
 </manifest>
