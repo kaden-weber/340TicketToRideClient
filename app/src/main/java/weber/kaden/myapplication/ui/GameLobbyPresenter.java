@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Model;
 import weber.kaden.myapplication.model.ClientFacade;
 
@@ -37,6 +38,8 @@ public class GameLobbyPresenter implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        //activity.updateGame((List<Game>) arg);
+        if (arg instanceof Game) {
+            //activity.updateGame((Game) arg);
+        }
     }
 }

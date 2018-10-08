@@ -35,7 +35,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
     public String playersToString(List<Player> players){
         String playerString = "";
         for(Player player : players){
-            //playerString += player.getID();
+            playerString += player.getID();
         }
         playerString += "  ";
         return playerString;

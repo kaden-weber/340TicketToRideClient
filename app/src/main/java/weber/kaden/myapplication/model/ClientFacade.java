@@ -32,6 +32,9 @@ public class ClientFacade {
         }
 
 	    Model.getInstance().setCurrentUser(username);
+        if (Model.getInstance().getPlayer(username) == null) {
+            Model.getInstance().addPlayer(new Player(username,password));
+        }
 
         return true;
     }
@@ -39,6 +42,7 @@ public class ClientFacade {
     public boolean register(String username, String password) throws Exception {
         List<String> credentials = new ArrayList<>(Arrays.asList(username, password));
         CommandData commandData = new CommandData(credentials, CommandType.REGISTER);
+        executeLocalCommand(commandData);
         Results results = ServerProxy.getInstance().sendCommand(commandData);
         if (results == null) {
         	throw new Exception("Register resulted in null");
