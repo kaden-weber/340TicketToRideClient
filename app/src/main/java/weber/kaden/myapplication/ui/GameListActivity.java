@@ -113,6 +113,7 @@ public class GameListActivity extends AppCompatActivity implements GameListAdapt
             GameListPresenter gameListPresenter = new GameListPresenter(instance, clientFacade);
             try {
                 Game game = gameListPresenter.createGame(mUsername, mgameName);
+
                 System.out.println(game.getGameName());
             } catch (Exception e) {
                 errorString = e.getMessage();
