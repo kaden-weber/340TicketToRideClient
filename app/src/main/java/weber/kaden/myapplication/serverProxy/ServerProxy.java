@@ -27,9 +27,8 @@ public class ServerProxy {
 		    case JOINGAME:
 		    case STARTGAME:
 		    case CREATEGAME:
+            case POLL:
 			    return ccom.send(requestInfo, RequestType.POST);
-		    case POLL:
-			    return ccom.send(requestInfo, RequestType.GET);
 	    }
 	    return null;
     }
