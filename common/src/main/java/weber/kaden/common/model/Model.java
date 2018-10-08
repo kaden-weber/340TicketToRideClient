@@ -186,4 +186,16 @@ public class Model extends Observable {
         }
         return toReturn;
     }
+
+    public Game updateGame(Game game, String gameID) {
+        for (int i = 0; i < this.games.size(); i++) {
+            if (this.games.get(i).getID().equals(gameID)) {
+                this.games.set(i, game);
+                setChanged();
+                notifyObservers(this.games.get(i));
+                return game;
+            }
+        }
+        return null;
+    }
 }
