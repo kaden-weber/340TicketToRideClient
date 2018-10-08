@@ -63,11 +63,13 @@ public class ClientFacade {
     }
 
     public List<Game> getGames(){
-        List<Game> list = new ArrayList<>();
-        List<Player> players = new ArrayList<>();
-        players.add(new Player("id", "password"));
-        list.add(new Game(players, "GAME 1"));
-        return list;
+        List<String> params = new ArrayList<>(Arrays.asList("username", "gameList", ""));
+        CommandData commandData = new CommandData(params, CommandType.POLL);
+        Results results = ServerProxy.getInstance().sendCommand(commandData);
+        if (results == null || results.getData() == null) {
+            return new ArrayList<>();
+        }
+        return (List<Game>) (results.getData());
     }
 
     public Results createGame(String username) throws Exception {
