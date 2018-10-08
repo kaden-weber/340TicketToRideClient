@@ -53,6 +53,7 @@ public class Model extends Observable {
 
     public void setGames(List<Game> games) {
         this.games = games;
+        setChanged();
         notifyObservers(this.games);
     }
 
@@ -61,10 +62,12 @@ public class Model extends Observable {
             return false;
         }
         if (this.players.add(player)) {
+            setChanged();
             notifyObservers(this.games);
             return true;
         }
         return false;
+
     }
 
     public boolean hasPlayer(Player player) {return this.players.contains(player); }
@@ -94,6 +97,7 @@ public class Model extends Observable {
         }
         this.removePlayerFromGames(player);
         if (this.players.remove(player)) {
+            setChanged();
             notifyObservers(this.games);
             return true;
         }
@@ -111,6 +115,7 @@ public class Model extends Observable {
             return false;
         }
         if (this.games.get(this.games.indexOf(game)).addPlayer(player)) {
+            setChanged();
             notifyObservers(this.games);
             return true;
         }
@@ -122,9 +127,11 @@ public class Model extends Observable {
             return false;
         }
         if(this.getGame(gameID).removePlayer(playerID)) {
+            setChanged();
             notifyObservers(this.games);
             if (this.getGame(gameID).getPlayers().size() == 0) {
                 this.removeGame(this.getGame(gameID));
+                setChanged();
                 notifyObservers(this.games);
             }
             return true;
@@ -141,6 +148,7 @@ public class Model extends Observable {
                 game.removePlayer(player);
             }
         }
+        setChanged();
         notifyObservers(this.games);
         return true;
     }
@@ -150,6 +158,7 @@ public class Model extends Observable {
             return false;
         }
         if (this.games.add(game)) {
+            setChanged();
             notifyObservers(this.games);
             return true;
         }
@@ -161,6 +170,7 @@ public class Model extends Observable {
             return false;
         }
         if (this.games.remove(game)) {
+            setChanged();
             notifyObservers(this.games);
             return true;
         }

@@ -27,7 +27,7 @@ public class GameListPresenter implements Observer {
     public Game createGame(String username) throws Exception {
         System.out.println("creating game in presenter");
         Results results = client.createGame(username);
-        System.out.println(results.getData());
+
         return (Game) results.getData();
     }
 
@@ -38,7 +38,9 @@ public class GameListPresenter implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
+
         List<Game>  games = (ArrayList<Game>) arg;
+
 
     }
 }
