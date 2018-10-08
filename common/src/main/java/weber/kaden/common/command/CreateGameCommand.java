@@ -15,11 +15,13 @@ public class CreateGameCommand implements Command {
     private String playerID = null;
     private String gameID = null;
     private String ID = null;
+    private String gameName;
 
     public CreateGameCommand(List<String> params, String ID) {
         this.playerID = params.get(0);
-        if (params.size() > 1) {
-            this.gameID = params.get(1);
+        this.gameName = params.get(1);
+        if (params.size() > 2) {
+            this.gameID = params.get(2);
         } else {
             this.gameID = UUID.randomUUID().toString();
         }
@@ -31,7 +33,7 @@ public class CreateGameCommand implements Command {
         Player firstPlayer = Model.getInstance().getPlayer(playerID);
         List<Player> players = new ArrayList<Player>();
         players.add(firstPlayer);
-        Game game = new Game(players, gameID);
+        Game game = new Game(players, gameID, gameName);
         Results toReturn = null;
         if (Model.getInstance().addGame(game)) {
             toReturn = new Results(game, true, null);

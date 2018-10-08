@@ -10,15 +10,17 @@ import weber.kaden.common.Results;
 public class Game {
     private List<Player> players;
     private String ID;
+    private String gameName;
 
     public Game() {
         this.players = new ArrayList<Player>();
         this.ID = UUID.randomUUID().toString();
     }
 
-    public Game(List<Player> players, String ID) {
+    public Game(List<Player> players, String ID, String gameName) {
         this.players = players;
         this.ID = ID;
+        this.gameName = gameName;
     }
 
     public List<Player> getPlayers() {
@@ -43,6 +45,14 @@ public class Game {
 
     public boolean removePlayer(Player player) {
         return this.players.remove(player);
+    }
+
+    public String getGameName() {
+        return gameName;
+    }
+
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
     }
 
     public boolean removePlayer(String playerID) {
