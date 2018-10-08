@@ -1,6 +1,13 @@
 package weber.kaden.myapplication.serverProxy;
 
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.view.Display;
+import android.widget.Toast;
+
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import weber.kaden.common.Results;
 import weber.kaden.common.command.CommandData;
@@ -8,6 +15,8 @@ import weber.kaden.common.command.CommandType;
 import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Model;
 import weber.kaden.myapplication.model.ClientFacade;
+import weber.kaden.myapplication.ui.GameListActivity;
+import weber.kaden.myapplication.ui.LoginPresenter;
 
 public class Poller {
 	private static final long FIVE_SECONDS = 5000;
@@ -25,16 +34,21 @@ public class Poller {
 
     private Thread runningGamesListThread;
     private Thread runningGameThread;
-    private boolean running = false;
+    private final boolean runGamesList = true;
+    private final boolean runGame = true;
+    private final Queue<List<Game>> gamesList;
+    private final Queue<Game> updatedGames;
 
     private Poller(long milliseconds) {
         waitTime = milliseconds;
         ccom = ClientCommunicator.getInstance();
         clientFacade = new ClientFacade();
+        gamesList = new ConcurrentLinkedQueue<>();
+        updatedGames = new ConcurrentLinkedQueue<>();
     }
 
     public void startGamesPolling() {
-    	stopGamesPolling();
+    	stopPolling();
 
     	if (runningGameThread == null) {
 		    runningGameThread = new GameCommandsGetter();
@@ -43,7 +57,7 @@ public class Poller {
     }
 
     public void startGamesListPolling() {
-    	stopGamesListPolling();
+        stopPolling();
 
     	if (runningGamesListThread == null) {
 		    runningGamesListThread = new GamesListGetter();
@@ -60,25 +74,29 @@ public class Poller {
 
     public void stopGamesPolling() {
     	if (runningGameThread != null) {
-    		runningGameThread.interrupt();
-	    }
+    	    runningGameThread.interrupt();
+        }
+    }
+
+    public void stopPolling() {
+        stopGamesListPolling();
+        stopGamesPolling();
     }
 
     private class GamesListGetter extends Thread {
 
-    	@Override
+        @Override
 	    public void run() {
     		while(!this.isInterrupted()) {
     			try {
 				    Thread.sleep(waitTime);
-
 				    List<Game> newGamesList = clientFacade.getGames();
-				    Model.getInstance().setGames(newGamesList);
+                    //gamesList.add(newGamesList);
+                    Model.getInstance().setGames(newGamesList);
 			    }
 			    catch (Exception e) {
     				e.printStackTrace();
 			    }
-
 		    }
 	    }
     }
@@ -91,8 +109,7 @@ public class Poller {
         		try {
 			        Thread.sleep(waitTime);
 					Game updatedGame = clientFacade.getUpdatedGame(Model.getInstance().getCurrentGame());
-					Model.getInstance().updateGame(updatedGame);
-					//TODO: When we implement playing games, implement this
+					//updatedGames.add(updatedGame);
 		        }
 		        catch (Exception e) {
         			e.printStackTrace();
@@ -100,4 +117,5 @@ public class Poller {
 	        }
         }
     }
+
 }

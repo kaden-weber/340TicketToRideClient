@@ -5,16 +5,13 @@ import java.util.List;
 import java.util.Observable;
 
 public class Model extends Observable {
-    private static Model model = null;
+    private final static Model model = new Model();
     private List<Player> players;
     private List<Game> games;
     private String currentUser;
     private Game currentGame;
 
     public static Model getInstance() {
-        if (model == null) {
-            model = new Model();
-        }
         return model;
     }
 

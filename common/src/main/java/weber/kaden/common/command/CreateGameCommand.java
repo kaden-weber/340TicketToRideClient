@@ -1,6 +1,7 @@
 package weber.kaden.common.command;
 
 
+import weber.kaden.common.GameResults;
 import weber.kaden.common.Results;
 import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Model;
@@ -36,9 +37,9 @@ public class CreateGameCommand implements Command {
         Game game = new Game(players, gameID, gameName);
         Results toReturn = null;
         if (Model.getInstance().addGame(game)) {
-            toReturn = new Results(game, true, null);
+            toReturn = new GameResults(game, true, null);
         } else {
-            toReturn = new Results(null, false, "unable to add game to model");
+            toReturn = new GameResults(null, false, "unable to add game to model");
         }
         return toReturn;
     }

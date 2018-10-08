@@ -1,38 +1,14 @@
 package weber.kaden.common;
 
-public class Results {
+public interface Results {
 
-    private Object data;
-    private boolean success;
-    private String errorInfo;
+    public Object getData();
 
-    public Results(Object data, boolean success, String errorInfo) {
-        this.data = data;
-        this.success = success;
-        this.errorInfo = errorInfo;
-    }
+    public boolean success();
 
-    public Object getData() {
-        return data;
-    }
+    public void setSuccess(boolean success);
 
-    public void setData(Object data) {
-        this.data = data;
-    }
+    public String getErrorInfo();
 
-    public boolean success() {
-        return success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
-    public String getErrorInfo() {
-        return errorInfo;
-    }
-
-    public void setErrorInfo(String errorInfo) {
-        this.errorInfo = errorInfo;
-    }
+    public void setErrorInfo(String errorInfo);
 }

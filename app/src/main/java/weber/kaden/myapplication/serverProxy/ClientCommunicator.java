@@ -10,6 +10,7 @@ import weber.kaden.common.Serializer;
 import weber.kaden.common.StreamProcessor;
 import weber.kaden.common.command.CommandData;
 import weber.kaden.common.Results;
+import weber.kaden.common.command.CommandType;
 
 public class ClientCommunicator {
     private static ClientCommunicator single_instance = null;
@@ -70,7 +71,7 @@ public class ClientCommunicator {
 			    responseBody.close();
 			    conn.disconnect();
 
-			    return serializer.deserializeResults(output);
+			    return serializer.deserializeResults(output, requestInfo.getType());
 		    }
 
 		    conn.disconnect();

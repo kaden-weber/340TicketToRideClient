@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.jws.WebParam;
 
+import weber.kaden.common.GameResults;
 import weber.kaden.common.Results;
 import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Model;
@@ -29,9 +30,9 @@ public class JoinGameCommand implements Command {
         Player player = model.getPlayer(playerID);
         Game game = model.getGame(gameID);
         if (model.addPlayerToGame(player, game)) {
-            return new Results(model.getGame(game.getID()), true, null);
+            return new GameResults(model.getGame(game.getID()), true, null);
         } else {
-            return new Results(null, false, "cannot add player to game");
+            return new GameResults(null, false, "cannot add player to game");
         }
     }
 }

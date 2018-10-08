@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import weber.kaden.common.GameResults;
 import weber.kaden.common.Results;
 
 public class Game {
@@ -103,8 +104,8 @@ public class Game {
 
     public Results start() {
         if (this.getPlayers().size() < 2 || this.getPlayers().size() > 5) {
-            return new Results(null, false, "incorrect number of players in game");
+            return new GameResults(null, false, "incorrect number of players in game");
         }
-        return new Results(null, true, null);
+        return new GameResults(null, true, null);
     }
 }

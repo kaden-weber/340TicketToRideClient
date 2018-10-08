@@ -2,6 +2,7 @@ package weber.kaden.common.command;
 
 import java.util.List;
 
+import weber.kaden.common.ListResults;
 import weber.kaden.common.Results;
 import weber.kaden.common.model.Game;
 
@@ -19,9 +20,9 @@ public class PollGamesListCommand implements Command {
     public Results execute() {
         List<Game> games = commandManager.gamesList();
         if (games == null) {
-            return new Results(null, false, "incorrect polltype, please use: 'gamesList' or 'currentGame'");
+            return new ListResults(null, false, "incorrect polltype, please use: 'gamesList' or 'currentGame'");
         } else {
-        	return new Results(games, true, "");
+        	return new ListResults(games, true, "");
         }
     }
 }

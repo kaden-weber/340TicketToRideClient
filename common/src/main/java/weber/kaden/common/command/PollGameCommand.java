@@ -2,6 +2,7 @@ package weber.kaden.common.command;
 
 import java.util.List;
 
+import weber.kaden.common.GameResults;
 import weber.kaden.common.Results;
 import weber.kaden.common.model.Game;
 
@@ -20,10 +21,10 @@ public class PollGameCommand implements Command{
 	public Results execute() {
 		Game game = commandManager.currentGame(this.gameID);
 		if (game == null) {
-			return new Results(null, false, "Game not fetched");
+			return new GameResults(null, false, "Game not fetched");
 		}
 		else {
-			return new Results(game, true, "");
+			return new GameResults(game, true, "");
 		}
 	}
 }
