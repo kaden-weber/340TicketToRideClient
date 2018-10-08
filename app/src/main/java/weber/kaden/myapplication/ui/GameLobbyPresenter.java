@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import weber.kaden.common.model.Model;
 import weber.kaden.myapplication.model.ClientFacade;
 
 public class GameLobbyPresenter implements Observer {
@@ -16,12 +17,22 @@ public class GameLobbyPresenter implements Observer {
         this.client = client;
     }
 
-    public void exitLobby(String username, String gameID) throws Exception {
-        client.exitLobby(username, gameID);
+    public void exitLobby() throws Exception {
+        if (client.getCurrentGame() == null) {
+            throw new Exception("Not currently in a game");
+        } else if (client.getCurrentUser() == null) {
+            throw new Exception("Error starting game");
+        }
+        client.exitLobby(client.getCurrentUser(), client.getCurrentGame().getID());
     }
 
-    public void startGame(String username, String gameID) throws Exception {
-        client.startGame(username, gameID);
+    public void startGame() throws Exception {
+        if (client.getCurrentGame() == null) {
+            throw new Exception("Not currently in a game");
+        } else if (client.getCurrentUser() == null) {
+            throw new Exception("Error starting game");
+        }
+        client.startGame(client.getCurrentUser(), client.getCurrentGame().getID());
     }
 
     @Override

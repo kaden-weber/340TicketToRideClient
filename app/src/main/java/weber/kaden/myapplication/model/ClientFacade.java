@@ -126,4 +126,8 @@ public class ClientFacade {
     public Game getCurrentGame() {
     	return Model.getInstance().getCurrentGame();
     }
+
+    public String getCurrentUser() {
+        return Model.getInstance().getCurrentUser();
+    }
 }
