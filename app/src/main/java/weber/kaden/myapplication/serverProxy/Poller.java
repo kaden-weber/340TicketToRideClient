@@ -37,7 +37,7 @@ public class Poller {
         		try {
 			        Thread.sleep(waitTime);
 
-			        CommandData commandData = new CommandData(null, CommandType.GETCOMMANDS);
+			        CommandData commandData = new CommandData(null, CommandType.POLL);
 			        Results results = ccom.send(commandData, RequestType.GET);
 
 			        if (results.success()) {

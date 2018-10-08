@@ -28,7 +28,7 @@ public class CommandManager implements iCommandManager {
     }
 
     Results processCommand(CommandData commandData) throws Exception {
-        Command command = CommandFactory.getCommand(commandData);
+        Command command = CommandFactory.getInstance().getCommand(commandData);
         mCommandDataList.add(commandData);
         return command.execute();
     }
