@@ -25,6 +25,8 @@ public class Serializer {
                 return deserializeResultsGame(string);
             case POLLGAME:
                 return deserializeResultsGame(string);
+            case JOINGAME:
+                return deserializeResultsGame(string);
             default:
                 return deserializeResults(string);
         }
