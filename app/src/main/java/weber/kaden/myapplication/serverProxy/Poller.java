@@ -1,32 +1,23 @@
 package weber.kaden.myapplication.serverProxy;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.view.Display;
-import android.widget.Toast;
 
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import weber.kaden.common.Results;
-import weber.kaden.common.command.CommandData;
-import weber.kaden.common.command.CommandType;
 import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Model;
 import weber.kaden.myapplication.model.ClientFacade;
-import weber.kaden.myapplication.ui.GameListActivity;
-import weber.kaden.myapplication.ui.LoginPresenter;
 
 public class Poller {
-	private static final long FIVE_SECONDS = 5000;
+	private static final long DELAY = 3000; //1000 equals 1 second
 	private static Poller mPoller;
 	private Activity callingActivity;
 
 	public static Poller getInstance(Activity callingActivity) {
 		if (mPoller == null) {
-			mPoller = new Poller(FIVE_SECONDS);
+			mPoller = new Poller(DELAY);
 		}
 		mPoller.callingActivity = callingActivity;
 		return mPoller;
