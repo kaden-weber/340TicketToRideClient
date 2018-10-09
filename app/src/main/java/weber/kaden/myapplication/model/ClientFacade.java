@@ -94,13 +94,13 @@ public class ClientFacade {
     public void joinGame(String username, String gameID) throws Exception {
         List<String> params = new ArrayList<>((Arrays.asList(username, gameID)));
         CommandData commandData = new CommandData(params, CommandType.JOINGAME);
-        Command command = CommandFactory.getInstance().getCommand(commandData);
-        command.execute();
+        //Command command = CommandFactory.getInstance().getCommand(commandData);
+        //command.execute();
         Results results = ServerProxy.getInstance().sendCommand(commandData);
         if(!results.success()) {
             throw new Exception(results.getErrorInfo());
         }
-
+        Model.getInstance().updateGame((Game)results.getData());
         Model.getInstance().setCurrentGame((Game)results.getData());
     }
 
@@ -124,7 +124,7 @@ public class ClientFacade {
         if(!results.success()) {
             throw new Exception(results.getErrorInfo());
         }
-
+        Model.getInstance().updateGame(Model.getInstance().getGame(gameID));
         Model.getInstance().setCurrentGame(null);
     }
 
