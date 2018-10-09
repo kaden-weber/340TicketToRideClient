@@ -102,15 +102,18 @@ public class Game {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Game)) return false;
         Game game = (Game) o;
-        return ID == game.ID &&
-                Objects.equals(players, game.players);
+        return started == game.started &&
+                Objects.equals(players, game.players) &&
+                Objects.equals(ID, game.ID) &&
+                Objects.equals(gameName, game.gameName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(players, ID);
+
+        return Objects.hash(players, ID, gameName, started);
     }
 
     public Results start() {
