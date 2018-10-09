@@ -1,5 +1,6 @@
 package weber.kaden.myapplication.serverProxy;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.Display;
@@ -21,11 +22,13 @@ import weber.kaden.myapplication.ui.LoginPresenter;
 public class Poller {
 	private static final long FIVE_SECONDS = 5000;
 	private static Poller mPoller;
+	private Activity callingActivity;
 
-	public static Poller getInstance() {
+	public static Poller getInstance(Activity callingActivity) {
 		if (mPoller == null) {
 			mPoller = new Poller(FIVE_SECONDS);
 		}
+		mPoller.callingActivity = callingActivity;
 		return mPoller;
 	}
     private ClientCommunicator ccom;
@@ -90,9 +93,16 @@ public class Poller {
     		while(!this.isInterrupted()) {
     			try {
 				    Thread.sleep(waitTime);
-				    List<Game> newGamesList = clientFacade.getGames();
-                    //gamesList.add(newGamesList);
-                    Model.getInstance().setGames(newGamesList);
+
+				    callingActivity.runOnUiThread(new Runnable() {
+					    List<Game> newGamesList = clientFacade.getGames();
+
+					    @Override
+					    public void run() {
+						    Model.getInstance().setGames(newGamesList);
+					    }
+				    });
+
 			    }
 			    catch (Exception e) {
     				e.printStackTrace();
