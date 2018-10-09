@@ -24,8 +24,8 @@ public class GameLobbyActivity  extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_lobby);
-        String gameId= getIntent().getStringExtra("GAME_ID");
-        setTitle(gameId);
+        String gameName= getIntent().getStringExtra("GAME_NAME");
+        setTitle(gameName);
         final Button quitButton = (Button) findViewById(R.id.exit_game);
         Button startButton = (Button) findViewById(R.id.start_game);
         quitButton.setOnClickListener(new View.OnClickListener() {

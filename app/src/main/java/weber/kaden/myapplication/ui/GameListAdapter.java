@@ -75,6 +75,9 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
     String getItem(int id) {
         return mData.get(id).getID();
     }
+    String getGameName(int id) {
+        return mData.get(id).getGameName();
+    }
 
     // allows clicks events to be caught
     void setClickListener(ItemClickListener itemClickListener) {

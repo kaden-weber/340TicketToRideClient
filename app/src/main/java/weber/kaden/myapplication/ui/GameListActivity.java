@@ -94,7 +94,8 @@ public class GameListActivity extends AppCompatActivity implements GameListAdapt
         System.out.println("POSITION " + position);
         Toast.makeText(this, "Joining " + adapter.getItem(0), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(instance, GameLobbyActivity.class);
-        intent.putExtra("GAME_ID", adapter.getItem(position));
+        intent.putExtra("GAME_NAME", adapter.getGameName(position));
+        intent.putExtra("GAME_ID",adapter.getItem(position));
         startActivity(intent);
     }
     public class CreateGameTask extends AsyncTask<Void, Void, Boolean> {
