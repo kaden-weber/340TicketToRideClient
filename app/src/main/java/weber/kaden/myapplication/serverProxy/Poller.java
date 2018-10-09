@@ -44,18 +44,16 @@ public class Poller {
     public void startGamesPolling() {
     	stopPolling();
 
-    	if (runningGameThread == null) {
-		    runningGameThread = new GameCommandsGetter();
-	    }
+    	runningGameThread = new GameCommandsGetter();
+
 		runningGameThread.start();
     }
 
     public void startGamesListPolling() {
         stopPolling();
 
-    	if (runningGamesListThread == null) {
-		    runningGamesListThread = new GamesListGetter();
-	    }
+    	runningGamesListThread = new GamesListGetter();
+
 
     	runningGamesListThread.start();
     }
