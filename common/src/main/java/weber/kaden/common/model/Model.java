@@ -105,7 +105,7 @@ public class Model extends Observable {
         if (!this.players.contains(player)) {
             return false;
         }
-        if (game.getPlayers().size() >=  5) {
+        if (game.getPlayers().size() >=  5 || game.isStarted()) {
             return false;
         }
         if (this.games.get(this.games.indexOf(game)).addPlayer(player)) {
