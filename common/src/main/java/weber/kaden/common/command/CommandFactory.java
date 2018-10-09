@@ -67,7 +67,7 @@ public class CommandFactory {
                 if (data.getData().size() < 2) {
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
                 }
-                return new LeaveGameCommand(data.getData().get(0),data.getData().get(0));
+                return new LeaveGameCommand(data.getData().get(0),data.getData().get(1));
             default:
                 return null;
         }
@@ -77,4 +77,3 @@ public class CommandFactory {
         return Model.getInstance().getCurrentUser() + Integer.toString(this.lastID);
     }
 }
-
