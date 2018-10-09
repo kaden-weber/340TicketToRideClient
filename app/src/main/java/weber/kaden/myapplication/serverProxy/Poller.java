@@ -45,7 +45,6 @@ public class Poller {
     	stopPolling();
 
     	runningGameThread = new GameCommandsGetter();
-
 		runningGameThread.start();
     }
 
@@ -53,8 +52,6 @@ public class Poller {
         stopPolling();
 
     	runningGamesListThread = new GamesListGetter();
-
-
     	runningGamesListThread.start();
     }
 

@@ -54,7 +54,7 @@ public class GameLobbyActivity  extends AppCompatActivity {
 
     @Override
     public void onPause() {
-        Poller.getInstance(this).stopGamesPolling();
+        Poller.getInstance(this).stopPolling();
         super.onPause();
     }
 
