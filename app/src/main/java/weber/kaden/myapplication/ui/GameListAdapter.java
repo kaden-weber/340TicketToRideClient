@@ -45,7 +45,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         String gameInfo = "Game ID: " + mData.get(position).getGameName() + " Players: " +
-                playersToString(mData.get(position).getPlayers());
+                playersToString(mData.get(position).getPlayers()) + "Status: " + (mData.get(position).isStarted() ? "Started" : "Not Started");
         holder.myTextView.setText(gameInfo);
     }
 
