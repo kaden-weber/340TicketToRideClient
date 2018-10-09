@@ -63,6 +63,11 @@ public class CommandFactory {
 	        		throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
 		        }
 		        return new PollGameCommand(data.getData(), mCommandManager);
+            case LEAVEGAME:
+                if (data.getData().size() < 2) {
+                    throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
+                }
+                return new LeaveGameCommand(data.getData().get(0),data.getData().get(0));
             default:
                 return null;
         }

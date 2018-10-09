@@ -22,7 +22,6 @@ public class ServerCommunicator {
 
         System.out.println("Creating contexts");
         httpServer.createContext("/", new ExecHandler());
-
         System.out.println("Starting server");
         httpServer.start();
         System.out.println("Server started");

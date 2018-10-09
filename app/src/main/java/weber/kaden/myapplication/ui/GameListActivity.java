@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import weber.kaden.common.model.Game;
+import weber.kaden.common.model.Model;
 import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
 import weber.kaden.myapplication.serverProxy.Poller;
@@ -93,8 +94,11 @@ public class GameListActivity extends AppCompatActivity implements GameListAdapt
     public void onItemClick(View view, int position) {
         System.out.println("POSITION " + position);
         Toast.makeText(this, "Joining " + adapter.getItem(0), Toast.LENGTH_SHORT).show();
+        //set current game to game
+        Model model = Model.getInstance();
+        model.setCurrentGame(adapter.getItem(position));
         Intent intent = new Intent(instance, GameLobbyActivity.class);
-        intent.putExtra("GAME_ID", adapter.getItem(position));
+        intent.putExtra("GAME_ID", adapter.getItem(position).getGameName());
         startActivity(intent);
     }
     public class CreateGameTask extends AsyncTask<Void, Void, Boolean> {
@@ -113,8 +117,6 @@ public class GameListActivity extends AppCompatActivity implements GameListAdapt
             GameListPresenter gameListPresenter = new GameListPresenter(instance, clientFacade);
             try {
                 Game game = gameListPresenter.createGame(mUsername, mgameName);
-
-                System.out.println(game.getGameName());
             } catch (Exception e) {
                 errorString = e.getMessage();
                 System.out.println(errorString);
