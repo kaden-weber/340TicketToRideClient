@@ -80,10 +80,10 @@ public class ClientFacade {
     public Results createGame(String username, String gameName) throws Exception {
         List<String> params = new ArrayList<>((Arrays.asList(username, gameName, UUID.randomUUID().toString())));
         CommandData commandData = new CommandData(params, CommandType.CREATEGAME);
-        Command command = CommandFactory.getInstance().getCommand(commandData);
-        String gameID = ((Game)command.execute().getData()).getID();
-        params.add(gameID);
-        Results results = ServerProxy.getInstance().sendCommand(new CommandData(params, CommandType.CREATEGAME));
+//        Command command = CommandFactory.getInstance().getCommand(commandData);
+//        String gameID = ((Game)command.execute().getData()).getID();
+//        params.add(gameID);
+        Results results = ServerProxy.getInstance().sendCommand(commandData);
         if(!results.success()){
             throw new Exception(results.getErrorInfo());
         }
