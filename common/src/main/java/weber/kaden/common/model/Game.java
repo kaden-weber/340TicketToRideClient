@@ -115,9 +115,9 @@ public class Game {
 
     public Results start() {
         if (this.getPlayers().size() < 2 || this.getPlayers().size() > 5) {
-            setStarted(true);
             return new GameResults(null, false, "incorrect number of players in game");
         }
+        setStarted(true);
         return new GameResults(null, true, null);
     }
 }
