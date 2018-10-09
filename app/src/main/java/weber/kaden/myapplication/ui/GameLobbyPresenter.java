@@ -17,6 +17,7 @@ public class GameLobbyPresenter implements Observer {
     public GameLobbyPresenter(GameLobbyActivity activity, ClientFacade client) {
         this.activity = activity;
         this.client = client;
+        Model.getInstance().addObserver(this);
     }
 
     public void exitLobby() throws Exception {
