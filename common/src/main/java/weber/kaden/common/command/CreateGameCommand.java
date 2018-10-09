@@ -33,7 +33,7 @@ public class CreateGameCommand implements Command {
     public Results execute() {
         Player firstPlayer = Model.getInstance().getPlayer(playerID);
         List<Player> players = new ArrayList<Player>();
-        players.add(firstPlayer);
+        //players.add(firstPlayer);
         Game game = new Game(players, gameID, gameName);
         Results toReturn = null;
         if (Model.getInstance().addGame(game)) {
