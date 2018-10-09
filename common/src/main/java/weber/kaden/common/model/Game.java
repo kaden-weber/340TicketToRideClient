@@ -44,7 +44,7 @@ public class Game {
     }
 
     public boolean addPlayer(Player player) {
-        return this.players.add(player);
+        return this.players.contains(player) || this.players.add(player);
     }
 
     public boolean removePlayer(Player player) {
