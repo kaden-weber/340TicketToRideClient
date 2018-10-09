@@ -49,12 +49,12 @@ public class GameLobbyActivity  extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        Poller.getInstance(this).startGamesListPolling();
+        Poller.getInstance(this).startGamesPolling();
     }
 
     @Override
     public void onPause() {
-        Poller.getInstance(this).stopGamesListPolling();
+        Poller.getInstance(this).stopGamesPolling();
         super.onPause();
     }
 
@@ -93,6 +93,10 @@ public class GameLobbyActivity  extends AppCompatActivity {
             startGameTask = null;
             //showProgress(false);
         }
+    }
+
+    public void startGame() {
+        Toast.makeText(GameLobbyActivity.this, "Game Started!", Toast.LENGTH_SHORT).show();
     }
 
     public class QuitGameTask extends AsyncTask<Void, Void, Boolean> {

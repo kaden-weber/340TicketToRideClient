@@ -109,8 +109,14 @@ public class Poller {
         	while (!this.isInterrupted()) {
         		try {
 			        Thread.sleep(waitTime);
-					Game updatedGame = clientFacade.getUpdatedGame(Model.getInstance().getCurrentGame());
-					//updatedGames.add(updatedGame);
+					callingActivity.runOnUiThread(new Runnable() {
+						Game updatedGame = clientFacade.getUpdatedGame(Model.getInstance().getCurrentGame());
+
+						@Override
+						public void run() {
+							Model.getInstance().updateGame(updatedGame);
+						}
+					});
 		        }
 		        catch (Exception e) {
         			e.printStackTrace();
