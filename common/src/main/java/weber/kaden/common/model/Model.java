@@ -186,7 +186,7 @@ public class Model extends Observable {
 
     public Game updateGame(Game game) {
         for (int i = 0; i < this.games.size(); i++) {
-            if (this.games.get(i).getID().equals(game.getID())) {
+            if (!this.games.get(i).getID().equals(game.getID())) {
                 if (this.games.get(i).equals(game)) {
                     this.games.set(i, game);
                     setChanged();
