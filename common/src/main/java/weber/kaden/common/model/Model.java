@@ -197,4 +197,13 @@ public class Model extends Observable {
         }
         return null;
     }
+
+    public Game startGame(String gameID) {
+        Game game = Model.getInstance().getGame(gameID);
+        if (game.start()) {
+            return updateGame(game);
+        } else {
+            return null;
+        }
+    }
 }

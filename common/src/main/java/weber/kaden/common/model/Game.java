@@ -116,11 +116,11 @@ public class Game {
         return Objects.hash(players, ID, gameName, started);
     }
 
-    public Results start() {
+    public boolean start() {
         if (this.getPlayers().size() < 2 || this.getPlayers().size() > 5) {
-            return new GameResults(null, false, "incorrect number of players in game");
+            return false;
         }
         setStarted(true);
-        return new GameResults(null, true, null);
+        return true;
     }
 }

@@ -4,7 +4,10 @@ package weber.kaden.common.command;
 
 import java.util.List;
 
+import weber.kaden.common.GameResults;
+import weber.kaden.common.GenericResults;
 import weber.kaden.common.Results;
+import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Model;
 
 public class StartGameCommand implements Command {
@@ -21,6 +24,11 @@ public class StartGameCommand implements Command {
 
     @Override
     public Results execute() {
-        return Model.getInstance().getGame(gameID).start();
+        Game game = Model.getInstance().startGame(gameID);
+        if (game == null) {
+            return new GenericResults (null, false, "game not started");
+        } else {
+            return new GameResults(game, true, "");
+        }
     }
 }
