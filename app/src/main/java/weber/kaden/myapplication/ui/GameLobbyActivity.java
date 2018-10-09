@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
+import weber.kaden.myapplication.serverProxy.Poller;
 
 public class GameLobbyActivity  extends AppCompatActivity {
 
@@ -43,6 +44,18 @@ public class GameLobbyActivity  extends AppCompatActivity {
                 startGameTask.execute((Void) null);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Poller.getInstance(this).startGamesListPolling();
+    }
+
+    @Override
+    public void onPause() {
+        Poller.getInstance(this).stopGamesListPolling();
+        super.onPause();
     }
 
     public class StartGameTask extends AsyncTask<Void, Void, Boolean> {
