@@ -187,15 +187,15 @@ public class Model extends Observable {
     public Game updateGame(Game game) {
         for (int i = 0; i < this.games.size(); i++) {
             if (this.games.get(i).getID().equals(game.getID())) {
-                if (!this.games.get(i).equals(game)) {
-                    this.games.set(i, game);
+                if (this.games.get(i).isStarted() != game.isStarted()) {
                     setChanged();
-                    notifyObservers(this.games.get(i));
-                    return game;
                 }
-                else {
-                    return game;
+                if (!this.games.get(i).getPlayers().equals(game.getPlayers())) {
+                    setChanged();
                 }
+                this.games.set(i, game);
+                notifyObservers(this.games.get(i));
+                return game;
             }
         }
         return null;
