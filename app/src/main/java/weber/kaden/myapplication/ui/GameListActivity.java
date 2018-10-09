@@ -92,11 +92,11 @@ public class GameListActivity extends AppCompatActivity implements GameListAdapt
 
     @Override
     public void onItemClick(View view, int position) {
-        System.out.println("POSITION " + position);
         Toast.makeText(this, "Joining " + adapter.getItem(0), Toast.LENGTH_SHORT).show();
         //set current game to game
         Model model = Model.getInstance();
         model.setCurrentGame(adapter.getItem(position));
+        JoinGameTask joinGameTask = new JoinGameTask(Model.getInstance().getCurrentUser(), Model.getInstance().getCurrentGame().getID());
         Intent intent = new Intent(instance, GameLobbyActivity.class);
         intent.putExtra("GAME_NAME", adapter.getGameName(position));
         intent.putExtra("GAME_ID", adapter.getItem(position).getGameName());
@@ -136,6 +136,39 @@ public class GameListActivity extends AppCompatActivity implements GameListAdapt
 
         }
     }
+    public class JoinGameTask extends AsyncTask<Void, Void, Boolean> {
 
+        private final String mUsername;
+        private final String mgameName;
+        private String errorString = "";
+
+        JoinGameTask(String username, String gameName) {
+            mUsername = username;
+            mgameName = gameName;
+        }
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            ClientFacade clientFacade = new ClientFacade();
+            GameListPresenter gameListPresenter = new GameListPresenter(instance, clientFacade);
+            try {
+                gameListPresenter.joinGame(mUsername, mgameName);
+            } catch (Exception e) {
+                errorString = e.getMessage();
+                System.out.println(errorString);
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+
+        }
+
+        @Override
+        protected void onCancelled() {
+
+        }
+    }
 }
 
