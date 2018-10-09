@@ -1,5 +1,6 @@
 package weber.kaden.myapplication.ui;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -38,8 +39,8 @@ public class GameLobbyPresenter implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        if (arg instanceof Game) {
-            //activity.updateGame((Game) arg);
+        if (arg instanceof Game && ((Game) arg).isStarted()) {
+            activity.startGame();
         }
     }
 }

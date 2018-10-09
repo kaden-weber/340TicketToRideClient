@@ -12,16 +12,19 @@ public class Game {
     private List<Player> players;
     private String ID;
     private String gameName;
+    private boolean started;
 
     public Game() {
         this.players = new ArrayList<Player>();
         this.ID = UUID.randomUUID().toString();
+        this.started = false;
     }
 
     public Game(List<Player> players, String ID, String gameName) {
         this.players = players;
         this.ID = ID;
         this.gameName = gameName;
+        this.started = false;
     }
 
     public List<Player> getPlayers() {
@@ -54,6 +57,14 @@ public class Game {
 
     public void setGameName(String gameName) {
         this.gameName = gameName;
+    }
+
+    public boolean isStarted() {
+        return started;
+    }
+
+    public void setStarted(boolean started) {
+        this.started = started;
     }
 
     public boolean removePlayer(String playerID) {
@@ -104,6 +115,7 @@ public class Game {
 
     public Results start() {
         if (this.getPlayers().size() < 2 || this.getPlayers().size() > 5) {
+            setStarted(true);
             return new GameResults(null, false, "incorrect number of players in game");
         }
         return new GameResults(null, true, null);

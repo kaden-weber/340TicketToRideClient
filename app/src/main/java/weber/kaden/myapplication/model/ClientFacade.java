@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import weber.kaden.common.GameResults;
 import weber.kaden.common.GenericResults;
 import weber.kaden.common.Results;
 import weber.kaden.common.command.Command;
@@ -117,8 +118,8 @@ public class ClientFacade {
     public void exitLobby(String username, String gameID) throws Exception {
         List<String> params = new ArrayList<>((Arrays.asList(username, gameID)));
         CommandData commandData = new CommandData(params, CommandType.LEAVEGAME);
-        Command command = CommandFactory.getInstance().getCommand(commandData);
-        command.execute();
+//        Command command = CommandFactory.getInstance().getCommand(commandData);
+//        command.execute();
         Results results = ServerProxy.getInstance().sendCommand(commandData);
         if(!results.success()) {
             throw new Exception(results.getErrorInfo());
@@ -135,7 +136,15 @@ public class ClientFacade {
         return Model.getInstance().getCurrentUser();
     }
 
-    public Game getUpdatedGame(Game game) {
-        return Model.getInstance().updateGame(game);
+    public Game getUpdatedGame(Game game) throws Exception{
+        List<String> params = new ArrayList<String>();
+        params.add(getCurrentUser());
+        params.add(game.getID());
+        CommandData commandData = new CommandData(params, CommandType.POLLGAME);
+        Results results = ServerProxy.getInstance().sendCommand(commandData);
+        if (!results.success()) {
+            throw new Exception(results.getErrorInfo());
+        }
+        return (Game) results.getData();
     }
 }
