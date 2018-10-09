@@ -18,12 +18,16 @@ public class Serializer {
     public CommandData deserializeCommandData(String data) {return gson.fromJson(data, CommandData.class); }
 
     public Results deserializeResults(String string, CommandType type) {
-        if (type.equals(CommandType.POLLGAMESLIST)) {
-            return deserializeResultsList(string);
-        } else if (type.equals(CommandType.CREATEGAME)) {
-            return deserializeResultsGame(string);
+        switch (type) {
+            case POLLGAMESLIST:
+                return deserializeResultsList(string);
+            case CREATEGAME:
+                return deserializeResultsGame(string);
+            case POLLGAME:
+                return deserializeResultsGame(string);
+            default:
+                return deserializeResults(string);
         }
-        return deserializeResults(string);
     }
 
     public Results deserializeResults(String string){
