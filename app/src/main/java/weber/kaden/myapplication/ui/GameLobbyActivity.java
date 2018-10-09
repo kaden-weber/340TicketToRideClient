@@ -95,6 +95,10 @@ public class GameLobbyActivity  extends AppCompatActivity {
         }
     }
 
+    public void startGame() {
+        Toast.makeText(GameLobbyActivity.this, "Game Started!", Toast.LENGTH_SHORT).show();
+    }
+
     public class QuitGameTask extends AsyncTask<Void, Void, Boolean> {
 
         private String errorString = "";
