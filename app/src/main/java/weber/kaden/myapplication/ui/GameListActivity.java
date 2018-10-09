@@ -97,6 +97,7 @@ public class GameListActivity extends AppCompatActivity implements GameListAdapt
         Model model = Model.getInstance();
         model.setCurrentGame(adapter.getItem(position));
         JoinGameTask joinGameTask = new JoinGameTask(Model.getInstance().getCurrentUser(), Model.getInstance().getCurrentGame().getID());
+        joinGameTask.execute((Void) null);
         Intent intent = new Intent(instance, GameLobbyActivity.class);
         intent.putExtra("GAME_NAME", adapter.getGameName(position));
         intent.putExtra("GAME_ID", adapter.getItem(position).getGameName());
