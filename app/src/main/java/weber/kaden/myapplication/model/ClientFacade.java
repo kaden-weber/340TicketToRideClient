@@ -107,8 +107,8 @@ public class ClientFacade {
     public void startGame(String username, String gameID) throws Exception {
         List<String> params = new ArrayList<>((Arrays.asList(username, gameID)));
         CommandData commandData = new CommandData(params, CommandType.STARTGAME);
-        Command command = CommandFactory.getInstance().getCommand(commandData);
-        command.execute();
+        //Command command = CommandFactory.getInstance().getCommand(commandData);
+        //command.execute();
         Results results = ServerProxy.getInstance().sendCommand(commandData);
         if(!results.success()) {
             throw new Exception(results.getErrorInfo());
