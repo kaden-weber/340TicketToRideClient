@@ -49,12 +49,12 @@ public class GameLobbyActivity  extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        Poller.getInstance(this).startGamesListPolling();
+        Poller.getInstance(this).startGamesPolling();
     }
 
     @Override
     public void onPause() {
-        Poller.getInstance(this).stopGamesListPolling();
+        Poller.getInstance(this).stopGamesPolling();
         super.onPause();
     }
 
