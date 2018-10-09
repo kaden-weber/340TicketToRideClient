@@ -24,7 +24,7 @@ public class GameLobbyPresenter implements Observer {
         if (client.getCurrentGame() == null) {
             throw new Exception("Not currently in a game");
         } else if (client.getCurrentUser() == null) {
-            throw new Exception("Error starting game");
+            throw new Exception("Error leaving game");
         }
         client.exitLobby(client.getCurrentUser(), client.getCurrentGame().getID());
     }
