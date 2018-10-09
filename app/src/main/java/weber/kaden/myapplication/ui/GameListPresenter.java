@@ -37,10 +37,11 @@ public class GameListPresenter implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        List<Game>  games = (ArrayList<Game>) arg;
-        activity.gamesList.clear();
-        activity.gamesList.addAll(games);
-        activity.adapter.notifyDataSetChanged();
-
+        if (arg instanceof ArrayList<?> && ((ArrayList<Game>)arg).size() > 0 && ((ArrayList<Game>)arg).get(0) instanceof Game) {
+            List<Game> games = (ArrayList<Game>) arg;
+            activity.gamesList.clear();
+            activity.gamesList.addAll(games);
+            activity.adapter.notifyDataSetChanged();
+        }
     }
 }
