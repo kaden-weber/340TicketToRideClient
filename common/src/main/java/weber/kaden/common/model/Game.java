@@ -117,7 +117,7 @@ public class Game {
     }
 
     public boolean start() {
-        if (this.getPlayers().size() < 2 || this.getPlayers().size() > 5) {
+        if (this.getPlayers().size() < 2 || this.getPlayers().size() > 5 || this.isStarted()) {
             return false;
         }
         setStarted(true);
