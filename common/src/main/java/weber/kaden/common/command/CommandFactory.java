@@ -68,6 +68,16 @@ public class CommandFactory {
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
                 }
                 return new LeaveGameCommand(data.getData().get(0),data.getData().get(1));
+            case CHAT:
+                if (data.getData().size() < 3) {
+                    throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
+                }
+                return new ChatCommand(data.getData());
+            case DRAWDESTINATIONCARDS:
+                if (data.getData().size() < 4) {
+                    throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
+                }
+                return new DrawDestinationCards(data.getData());
             default:
                 return null;
         }

@@ -13,6 +13,7 @@ public class Game {
     private String ID;
     private String gameName;
     private boolean started;
+    private List<ChatMessage> chat;
 
     public Game() {
         this.players = new ArrayList<Player>();
@@ -43,12 +44,12 @@ public class Game {
         this.ID = ID;
     }
 
-    public boolean addPlayer(Player player) {
-        return this.players.contains(player) || this.players.add(player);
+    public List<ChatMessage> getChat() {
+        return chat;
     }
 
-    public boolean removePlayer(Player player) {
-        return this.players.remove(player);
+    public void setChat(List<ChatMessage> chat) {
+        this.chat = chat;
     }
 
     public String getGameName() {
@@ -65,6 +66,14 @@ public class Game {
 
     public void setStarted(boolean started) {
         this.started = started;
+    }
+
+    public boolean addPlayer(Player player) {
+        return this.players.contains(player) || this.players.add(player);
+    }
+
+    public boolean removePlayer(Player player) {
+        return this.players.remove(player);
     }
 
     public boolean removePlayer(String playerID) {
@@ -97,6 +106,10 @@ public class Game {
             }
         }
         return null;
+    }
+
+    public boolean addChat(ChatMessage chat) {
+        return this.chat.add(chat);
     }
 
     @Override
