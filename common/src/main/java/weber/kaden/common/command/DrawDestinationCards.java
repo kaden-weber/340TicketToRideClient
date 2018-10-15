@@ -11,11 +11,11 @@ public class DrawDestinationCards implements Command {
     private List<DestinationCard> cardsKept;
     private List<DestinationCard> cardsDiscarded;
 
-    public DrawDestinationCards(List<Object> params) {
-        this.gameID = (String)params.get(0);
-        this.playerID = (String)params.get(1);
-        this.cardsKept = (List<DestinationCard>)params.get(2);
-        this.cardsDiscarded = (List<DestinationCard>)params.get(3);
+    public DrawDestinationCards(String gameID, String playerID, List<DestinationCard> cardsKept, List<DestinationCard> cardsDiscarded) {
+        this.gameID = gameID;
+        this.playerID = playerID;
+        this.cardsKept = cardsKept;
+        this.cardsDiscarded = cardsDiscarded;
     }
 
     @Override

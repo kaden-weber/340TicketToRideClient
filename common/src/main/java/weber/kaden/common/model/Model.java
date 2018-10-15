@@ -187,12 +187,12 @@ public class Model extends Observable {
                 for (int i = 0; i < this.games.size(); i++) {
                     if (this.games.get(i).getID().equals(game.getID())) {
                         this.games.set(i, game);
-                        return game;
                     }
                 }
                 currentGame = game;
                 setChanged();
                 notifyObservers(game);
+                return game;
             }
         }
         return null;

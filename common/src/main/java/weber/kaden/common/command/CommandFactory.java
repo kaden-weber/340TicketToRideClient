@@ -1,5 +1,8 @@
 package weber.kaden.common.command;
 
+import java.util.List;
+
+import weber.kaden.common.model.DestinationCard;
 import weber.kaden.common.model.Model;
 
 public class CommandFactory {
@@ -29,55 +32,55 @@ public class CommandFactory {
     public Command getCommand(CommandData data) throws InvalidCommandParamsException {
         switch (data.getType()) {
             case LOGIN:
-                if (data.getData().size() < 2) {
+                if (data.getParams().size() < 2) {
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
                 }
-                return new LoginCommand(data.getData());
+                return new LoginCommand(data.getParams());
             case REGISTER:
-                if (data.getData().size() < 2) {
+                if (data.getParams().size() < 2) {
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
                 }
-                return new RegisterCommand(data.getData());
+                return new RegisterCommand(data.getParams());
             case CREATEGAME:
-                if (data.getData().size() < 2) {
+                if (data.getParams().size() < 2) {
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
                 }
-                return new CreateGameCommand(data.getData(), newCommandID());
+                return new CreateGameCommand(data.getParams(), newCommandID());
             case JOINGAME:
-                if (data.getData().size() < 2) {
+                if (data.getParams().size() < 2) {
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
                 }
-                return new JoinGameCommand(data.getData(), newCommandID());
+                return new JoinGameCommand(data.getParams(), newCommandID());
             case STARTGAME:
-                if (data.getData().size() < 2) {
+                if (data.getParams().size() < 2) {
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
                 }
-                return new StartGameCommand(data.getData(), newCommandID());
+                return new StartGameCommand(data.getParams(), newCommandID());
             case POLLGAMESLIST:
-                if (data.getData().size() < 1) {
+                if (data.getParams().size() < 1) {
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
                 }
-                return new PollGamesListCommand(data.getData(), mCommandManager);
+                return new PollGamesListCommand(data.getParams(), mCommandManager);
 	        case POLLGAME:
-	        	if (data.getData().size() < 2) {
+	        	if (data.getParams().size() < 2) {
 	        		throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
 		        }
-		        return new PollGameCommand(data.getData(), mCommandManager);
+		        return new PollGameCommand(data.getParams(), mCommandManager);
             case LEAVEGAME:
-                if (data.getData().size() < 2) {
+                if (data.getParams().size() < 2) {
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
                 }
-                return new LeaveGameCommand(data.getData().get(0),data.getData().get(1));
+                return new LeaveGameCommand(data.getParams());
             case CHAT:
-                if (data.getData().size() < 3) {
+                if (data.getParams().size() < 3) {
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
                 }
-                return new ChatCommand(data.getData());
+                return new ChatCommand(data.getParams());
             case DRAWDESTINATIONCARDS:
-                if (data.getData().size() < 4) {
+                if (data.getParams().size() < 2 && data.getData().size() < 2) {
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
                 }
-                return new DrawDestinationCards(data.getData());
+                return new DrawDestinationCards(data.getParams().get(0), data.getParams().get(1), (List<DestinationCard>)data.getData().get(0), (List<DestinationCard>)data.getData().get(1));
             default:
                 return null;
         }
