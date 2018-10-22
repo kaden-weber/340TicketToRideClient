@@ -1,10 +1,6 @@
 package weber.kaden.myapplication.ui;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -49,14 +45,7 @@ public class GameLobbyActivity  extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        Poller.getInstance(this).startGamesPolling();
-    }
-
-    @Override
-    public void onPause() {
-        //Poller.getInstance(this).stopPolling();
-        Poller.getInstance(this).stopGamesPolling();
-        super.onPause();
+        Poller.getInstance(this).pollGame();
     }
 
     public class StartGameTask extends AsyncTask<Void, Void, Boolean> {
