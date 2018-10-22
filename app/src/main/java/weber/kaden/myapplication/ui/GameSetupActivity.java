@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import weber.kaden.myapplication.R;
 
-public class GameSetup extends AppCompatActivity {
+public class GameSetupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

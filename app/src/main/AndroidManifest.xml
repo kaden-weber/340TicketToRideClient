@@ -27,8 +27,12 @@
         </activity>
         <activity android:name=".ui.GameListActivity" />
         <activity android:name=".ui.GameLobbyActivity" />
-        <activity android:name=".ui.GameSetup" />
+        <activity android:name=".ui.GameSetupActivity" />
         <activity android:name=".ui.GameActivity"></activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDCu8uFgODdDhIUa3UUyZEB4UMRcWrnwLQ"/>
+
     </application>
 
 </manifest>
