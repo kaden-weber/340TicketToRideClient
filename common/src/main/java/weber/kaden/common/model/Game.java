@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import javax.print.attribute.standard.NumberUp;
+
 import weber.kaden.common.GameResults;
 import weber.kaden.common.Results;
 
@@ -14,6 +16,8 @@ public class Game {
     private String gameName;
     private boolean started;
     private List<ChatMessage> chat;
+    private List<DestinationCard> destinationCardDeck;
+    private List<DestinationCard> destinationCardDiscard;
 
     public Game() {
         this.players = new ArrayList<Player>();
@@ -133,7 +137,42 @@ public class Game {
         if (this.getPlayers().size() < 2 || this.getPlayers().size() > 5 || this.isStarted()) {
             return false;
         }
+        InitalizeDestinationCards();
+        DealDestinationCardsToPlayers();
         setStarted(true);
         return true;
+    }
+
+    private void InitalizeDestinationCards() {
+        this.destinationCardDeck = InitialDecks.getDestinationCards();
+    }
+
+    private void DealDestinationCardsToPlayers() {
+        for (int i = 0; i < this.players.size(); i++) {
+            DealDestinationCardsToPlayer(this.players.get(i));
+        }
+    }
+
+    private void DealDestinationCardsToPlayer (Player player) {
+        int NumCards = 3;
+        if (this.destinationCardDeck.size() < NumCards) {
+            NumCards = this.destinationCardDeck.size();
+        }
+        List<DestinationCard> cards = new ArrayList<DestinationCard>();
+        for (int i = 0; i < NumCards; i++) {
+            cards.add(this.destinationCardDeck.get(i));
+        }
+        for (int i = 0; i < NumCards; i++) {
+            this.destinationCardDeck.remove(0);
+        }
+        player.DealDestinationCards(cards);
+    }
+
+    public boolean PlayerDrawDestinationCards(String playerID, List<DestinationCard> cards) {
+        return this.getPlayer(playerID).DrawDestinationCards(cards);
+    }
+
+    public boolean DiscardDestionationCards(List<DestinationCard> cards) {
+        return this.destinationCardDiscard.addAll(cards);
     }
 }

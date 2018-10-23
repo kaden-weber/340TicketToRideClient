@@ -2,8 +2,11 @@ package weber.kaden.common.command;
 
 import java.util.List;
 
+import weber.kaden.common.GameResults;
+import weber.kaden.common.GenericResults;
 import weber.kaden.common.Results;
 import weber.kaden.common.model.DestinationCard;
+import weber.kaden.common.model.Model;
 
 public class DrawDestinationCards implements Command {
     private String gameID;
@@ -20,6 +23,12 @@ public class DrawDestinationCards implements Command {
 
     @Override
     public Results execute() {
-        return null;
+        if (Model.getInstance().getGame(gameID).PlayerDrawDestinationCards(playerID, cardsKept) &&
+                Model.getInstance().getGame(gameID).DiscardDestionationCards(cardsDiscarded)
+                ) {
+            return new GameResults(Model.getInstance().getGame(gameID), true, null);
+        } else {
+            return new GenericResults(null, false, "Error in Draw Destination Cards Command");
+        }
     }
 }
