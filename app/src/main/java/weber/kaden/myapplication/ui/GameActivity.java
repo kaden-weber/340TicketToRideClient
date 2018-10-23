@@ -16,6 +16,7 @@ public class GameActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     //map Constants
     //consider using a resource file
+    //define minimum zoom
     private static final float DEFAULT_ZOOM = (float) 4.2;
     private static final double DEFAULT_VIEW_LAT = 37;
     private static final double DEFAULT_VIEW_LONG = -92;
