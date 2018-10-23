@@ -18,13 +18,16 @@ public class ExecHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-	    System.out.println("[" + new SimpleDateFormat("HH.mm.ss").format(new Date()) + "] " + "Connection received!");
+	    System.out.print("[" + new SimpleDateFormat("HH.mm.ss").format(new Date()) + "] " + "Connection received: ");
 
         Serializer serializer = new Serializer();
         String requestString = StreamProcessor.getString(exchange.getRequestBody());
 
         try {
             CommandData commandData = serializer.deserializeCommandData(requestString);
+
+            System.out.println(commandData.getType().toString() + " Command");
+
             Results results = CommandManager.getInstance().processCommand(commandData);
             exchange.sendResponseHeaders(HTTP_OK, 0);
             String serializedResults = serializer.serializeResults(results);

@@ -33,7 +33,7 @@ public class Poller {
         waitTime = milliseconds;
         ccom = ClientCommunicator.getInstance();
         clientFacade = new ClientFacade();
-        currentState = null;
+        setState(new PollGamesListState());
     }
 
     public void pollGame() {
