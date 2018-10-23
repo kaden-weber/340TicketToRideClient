@@ -23,6 +23,7 @@
         <!--this is the activity that will be shown on startup-->
         <activity
             android:name=".ui.GameActivity"
+            android:screenOrientation="landscape"
             android:label="@string/title_activity_login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
