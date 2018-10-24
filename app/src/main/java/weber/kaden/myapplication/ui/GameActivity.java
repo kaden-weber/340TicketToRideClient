@@ -11,7 +11,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import weber.kaden.myapplication.R;
 
-public class GameActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class GameActivity extends AppCompatActivity implements OnMapReadyCallback, GameViewInterface {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

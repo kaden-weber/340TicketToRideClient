@@ -15,7 +15,7 @@ import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
 import weber.kaden.myapplication.serverProxy.Poller;
 
-public class GameLobbyActivity  extends AppCompatActivity {
+public class GameLobbyActivity  extends AppCompatActivity implements GameLobbyViewInterface {
 
     private StartGameTask startGameTask = null;
     private QuitGameTask quitGameTask = null;

@@ -11,7 +11,7 @@ import weber.kaden.myapplication.model.ClientFacade;
 
 public class GameLobbyPresenter implements Observer {
 
-    private GameLobbyActivity activity;
+    private GameLobbyViewInterface activity;
     private ClientFacade client;
 
     public GameLobbyPresenter(GameLobbyActivity activity, ClientFacade client) {
