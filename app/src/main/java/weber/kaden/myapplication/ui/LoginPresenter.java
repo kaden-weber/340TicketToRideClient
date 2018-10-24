@@ -15,7 +15,7 @@ import weber.kaden.myapplication.serverProxy.ServerProxy;
 
 public class LoginPresenter implements Observer {
 
-    private LoginActivity activity;
+    private LoginViewInterface activity;
     private ClientFacade client;
 
     public LoginPresenter(LoginActivity activity, ClientFacade client) {

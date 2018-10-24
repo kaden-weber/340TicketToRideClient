@@ -1,9 +1,11 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Ticket to Ride</string>
+
     <string name="title_activity_game_lobby_test">GameLobbyActivityTest</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_login">Ticket to Ride</string>
     <string name="title_gamelist">Game List</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Username</string>
     <string name="prompt_password">Password (required)</string>
@@ -15,11 +17,23 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
+
+    <!--game Lobby-->
     <string name="create_game_button">Create Game</string>
     <string name="join_game_button">Join Game</string>
     <string name="start_game_button">Start Game</string>
     <string name="exit_game_button">Quit Game</string>
+
     <string name="permission_rationale">"Contacts permissions are needed for providing username
         completions."
     </string>
+
+    <!--game setup-->
+    <string name="setup_travel_question">How Many Countries + States have you visited?</string>
+    <string name="setup_travel_answer_hint">5</string>
+
+    <!--map-->
+    <!--city names-->
+    <string name="city_chicago">Chicago</string>
+
 </resources>

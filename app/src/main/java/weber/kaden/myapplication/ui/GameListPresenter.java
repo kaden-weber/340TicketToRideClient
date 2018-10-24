@@ -11,7 +11,7 @@ import weber.kaden.common.model.Model;
 import weber.kaden.myapplication.model.ClientFacade;
 
 public class GameListPresenter implements Observer {
-    private GameListActivity activity;
+    private GameListViewInterface activity;
     private ClientFacade client;
     private Model model = Model.getInstance();
     public GameListPresenter(GameListActivity activity, ClientFacade client) {
