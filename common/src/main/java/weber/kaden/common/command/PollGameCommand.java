@@ -19,7 +19,7 @@ public class PollGameCommand implements Command{
 
 	@Override
 	public Results execute() {
-		Game game = commandManager.currentGame(this.gameID);
+		Game game = commandManager.getGameByID(this.gameID);
 		if (game == null) {
 			return new GameResults(null, false, "Game not fetched");
 		}
