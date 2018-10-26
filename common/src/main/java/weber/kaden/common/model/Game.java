@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import javax.print.attribute.standard.NumberUp;
+
 import weber.kaden.common.GameResults;
 import weber.kaden.common.Results;
 
@@ -13,6 +15,11 @@ public class Game {
     private String ID;
     private String gameName;
     private boolean started;
+    private List<ChatMessage> chat;
+    private List<DestinationCard> destinationCardDeck;
+    private List<DestinationCard> destinationCardDiscard;
+    private List<TrainCard> trainCardDeck;
+    private List<TrainCard> trainCardDiscard;
 
     public Game() {
         this.players = new ArrayList<Player>();
@@ -43,12 +50,12 @@ public class Game {
         this.ID = ID;
     }
 
-    public boolean addPlayer(Player player) {
-        return this.players.contains(player) || this.players.add(player);
+    public List<ChatMessage> getChat() {
+        return chat;
     }
 
-    public boolean removePlayer(Player player) {
-        return this.players.remove(player);
+    public void setChat(List<ChatMessage> chat) {
+        this.chat = chat;
     }
 
     public String getGameName() {
@@ -65,6 +72,14 @@ public class Game {
 
     public void setStarted(boolean started) {
         this.started = started;
+    }
+
+    public boolean addPlayer(Player player) {
+        return this.players.contains(player) || this.players.add(player);
+    }
+
+    public boolean removePlayer(Player player) {
+        return this.players.remove(player);
     }
 
     public boolean removePlayer(String playerID) {
@@ -99,6 +114,10 @@ public class Game {
         return null;
     }
 
+    public boolean addChat(ChatMessage chat) {
+        return this.chat.add(chat);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -121,7 +140,58 @@ public class Game {
         if (this.getPlayers().size() < 1 || this.getPlayers().size() > 5) {
             return false;
         }
+        InitalizeDecks();
+        DealTrainCardsToPlayers();
+        DealDestinationCardsToPlayers();
         setStarted(true);
         return true;
+    }
+
+    private void InitalizeDecks() {
+        this.destinationCardDeck = InitialDecks.getDestinationCards();
+        this.destinationCardDiscard = new ArrayList<DestinationCard>();
+
+        this.trainCardDeck = InitialDecks.getTrainCards();
+        this.trainCardDiscard = new ArrayList<TrainCard>();
+    }
+
+    private void DealDestinationCardsToPlayers() {
+        for (int i = 0; i < this.players.size(); i++) {
+            DealDestinationCardsToPlayer(this.players.get(i));
+        }
+    }
+
+    private void DealTrainCardsToPlayers() {
+        for (int i = 0; i < this.players.size(); i++) {
+            List<TrainCard> cards = new ArrayList<TrainCard>();
+            for (int t = 0; t < 4; t++) {
+                cards.add(this.trainCardDeck.get(0));
+                this.trainCardDeck.remove(0);
+            }
+            this.players.get(i).DealTrainCards(cards);
+        }
+    }
+
+    private void DealDestinationCardsToPlayer (Player player) {
+        int NumCards = 3;
+        if (this.destinationCardDeck.size() < NumCards) {
+            NumCards = this.destinationCardDeck.size();
+        }
+        List<DestinationCard> cards = new ArrayList<DestinationCard>();
+        for (int i = 0; i < NumCards; i++) {
+            cards.add(this.destinationCardDeck.get(i));
+        }
+        for (int i = 0; i < NumCards; i++) {
+            this.destinationCardDeck.remove(0);
+        }
+        player.DealDestinationCards(cards);
+    }
+
+    public boolean PlayerDrawDestinationCards(String playerID, List<DestinationCard> cards) {
+        return this.getPlayer(playerID).DrawDestinationCards(cards);
+    }
+
+    public boolean DiscardDestionationCards(List<DestinationCard> cards) {
+        return this.destinationCardDiscard.addAll(cards);
     }
 }

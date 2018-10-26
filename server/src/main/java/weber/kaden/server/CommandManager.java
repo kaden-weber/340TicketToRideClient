@@ -40,7 +40,7 @@ public class CommandManager implements iCommandManager {
     }
 
     @Override
-    public Game currentGame(String gameID) {
+    public Game getGameByID(String gameID) {
         return Model.getInstance().getGame(gameID);
     }
 }
