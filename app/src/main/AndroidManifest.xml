@@ -23,7 +23,8 @@
         <!--this is the activity that will be shown on startup-->
         <activity
             android:name=".ui.LoginActivity"
-            android:label="@string/title_activity_login">
+            android:label="@string/title_activity_login"
+            android:theme="@style/AppTheme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
