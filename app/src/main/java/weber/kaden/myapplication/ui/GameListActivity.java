@@ -23,13 +23,13 @@ import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
 import weber.kaden.myapplication.serverProxy.Poller;
 
-public class GameListActivity extends AppCompatActivity implements GameListAdapter.ItemClickListener{
+public class GameListActivity extends AppCompatActivity implements GameListAdapter.ItemClickListener, GameListViewInterface{
     private GameListActivity instance = this;
     private ClientFacade clientFacade = new ClientFacade();
-    private String m_Text = "";
+    String m_Text = "";
     GameListAdapter adapter;
     GameListPresenter gameListPresenter = new GameListPresenter(instance, clientFacade);
-    List<Game> gamesList = new ArrayList<>();
+    private List<Game> gamesList = new ArrayList<>();
     String currentGameName = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,14 +82,7 @@ public class GameListActivity extends AppCompatActivity implements GameListAdapt
     @Override
     public void onResume() {
         super.onResume();
-        Poller.getInstance(this).startGamesListPolling();
-    }
-
-    @Override
-    public void onPause() {
-        //Poller.getInstance(this).stopPolling();
-        Poller.getInstance(this).startGamesListPolling();
-        super.onPause();
+        Poller.getInstance(this).pollGamesList();
     }
 
     @Override
