@@ -35,7 +35,7 @@ public class GameListActivity extends AppCompatActivity implements GameListAdapt
     @Override
     public void updateGamesList(List<Game> games) {
         gamesList.clear();
-        gamesList = games;
+        gamesList.addAll(games);
         adapter.notifyDataSetChanged();
     }
 
@@ -121,7 +121,6 @@ public class GameListActivity extends AppCompatActivity implements GameListAdapt
                 Game game = gameListPresenter.createGame(mUsername, mgameName);
             } catch (Exception e) {
                 errorString = e.getMessage();
-                System.out.println(errorString);
                 return false;
             }
             return true;
