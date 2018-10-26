@@ -148,7 +148,10 @@ public class Game {
 
     private void InitalizeDecks() {
         this.destinationCardDeck = InitialDecks.getDestinationCards();
+        this.destinationCardDiscard = new ArrayList<DestinationCard>();
+
         this.trainCardDeck = InitialDecks.getTrainCards();
+        this.trainCardDiscard = new ArrayList<TrainCard>();
     }
 
     private void DealDestinationCardsToPlayers() {

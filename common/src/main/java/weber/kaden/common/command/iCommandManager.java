@@ -7,5 +7,5 @@ public interface iCommandManager {
     
     List<Game> gamesList();
     
-    Game currentGame(String gameID);
+    Game getGameByID(String gameID);
 }
