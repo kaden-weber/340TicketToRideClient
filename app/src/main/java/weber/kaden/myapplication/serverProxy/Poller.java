@@ -9,7 +9,7 @@ import weber.kaden.common.model.Model;
 import weber.kaden.myapplication.model.ClientFacade;
 
 public class Poller {
-	private static final long DELAY = 1000; //1000 equals 1 second
+	private static final long DELAY = 3000; //1000 equals 1 second
 	private static Poller mPoller;
 	private Activity callingActivity;
 

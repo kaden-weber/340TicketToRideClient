@@ -31,6 +31,14 @@ public class GameListActivity extends AppCompatActivity implements GameListAdapt
     GameListPresenter gameListPresenter = new GameListPresenter(instance, clientFacade);
     private List<Game> gamesList = new ArrayList<>();
     String currentGameName = "";
+
+    @Override
+    public void updateGamesList(List<Game> games) {
+        gamesList.clear();
+        gamesList = games;
+        adapter.notifyDataSetChanged();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
