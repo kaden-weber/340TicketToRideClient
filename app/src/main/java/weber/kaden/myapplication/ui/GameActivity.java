@@ -17,9 +17,9 @@ public class GameActivity extends AppCompatActivity implements OnMapReadyCallbac
     //map Constants
     //consider using a resource file
     //define minimum zoom
-    private static final float DEFAULT_ZOOM = (float) 4.2;
-    private static final double DEFAULT_VIEW_LAT = 37;
-    private static final double DEFAULT_VIEW_LONG = -92;
+    private static final float DEFAULT_ZOOM = (float) 4.1;
+    private static final double DEFAULT_VIEW_LAT = 40;
+    private static final double DEFAULT_VIEW_LONG = -93;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
