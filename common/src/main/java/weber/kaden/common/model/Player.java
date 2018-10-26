@@ -9,19 +9,22 @@ public class Player {
     private String password;
     private List<DestinationCard> dealtDestinationCards;
     private List<DestinationCard> destinationCardHand;
+    private List<TrainCard> trainCards;
 
     public Player(String ID, String password) {
         this.ID = ID;
         this.password = password;
         this.dealtDestinationCards = new ArrayList<DestinationCard>();
         this.destinationCardHand = new ArrayList<DestinationCard>();
+        this.trainCards = new ArrayList<TrainCard>();
     }
 
-    public Player(String ID, String password, List<DestinationCard> dealtDestinationCards, List<DestinationCard> destinationCardHand) {
+    public Player(String ID, String password, List<DestinationCard> dealtDestinationCards, List<DestinationCard> destinationCardHand, List<TrainCard> trainCards) {
         this.ID = ID;
         this.password = password;
         this.dealtDestinationCards = dealtDestinationCards;
         this.destinationCardHand = destinationCardHand;
+        this.trainCards = trainCards;
     }
 
     public String getID() {
@@ -77,5 +80,17 @@ public class Player {
 
     public boolean DealDestinationCards(List<DestinationCard> cards) {
         return this.dealtDestinationCards.addAll(cards);
+    }
+
+    public boolean DealTrainCards(List<TrainCard> cards) {
+        return this.trainCards.addAll(cards);
+    }
+
+    public boolean DrawTrainCard(TrainCard card) {
+        return this.trainCards.add(card);
+    }
+
+    public boolean DiscardTrainCard(TrainCard card) {
+        return this.trainCards.remove(card);
     }
 }

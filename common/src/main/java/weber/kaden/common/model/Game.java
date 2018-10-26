@@ -18,6 +18,8 @@ public class Game {
     private List<ChatMessage> chat;
     private List<DestinationCard> destinationCardDeck;
     private List<DestinationCard> destinationCardDiscard;
+    private List<TrainCard> trainCardDeck;
+    private List<TrainCard> trainCardDiscard;
 
     public Game() {
         this.players = new ArrayList<Player>();
@@ -137,19 +139,32 @@ public class Game {
         if (this.getPlayers().size() < 2 || this.getPlayers().size() > 5 || this.isStarted()) {
             return false;
         }
-        InitalizeDestinationCards();
+        InitalizeDecks();
+        DealTrainCardsToPlayers();
         DealDestinationCardsToPlayers();
         setStarted(true);
         return true;
     }
 
-    private void InitalizeDestinationCards() {
+    private void InitalizeDecks() {
         this.destinationCardDeck = InitialDecks.getDestinationCards();
+        this.trainCardDeck = InitialDecks.getTrainCards();
     }
 
     private void DealDestinationCardsToPlayers() {
         for (int i = 0; i < this.players.size(); i++) {
             DealDestinationCardsToPlayer(this.players.get(i));
+        }
+    }
+
+    private void DealTrainCardsToPlayers() {
+        for (int i = 0; i < this.players.size(); i++) {
+            List<TrainCard> cards = new ArrayList<TrainCard>();
+            for (int t = 0; t < 4; t++) {
+                cards.add(this.trainCardDeck.get(0));
+                this.trainCardDeck.remove(0);
+            }
+            this.players.get(i).DealTrainCards(cards);
         }
     }
 

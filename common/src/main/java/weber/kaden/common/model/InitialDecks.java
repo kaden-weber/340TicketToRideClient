@@ -39,4 +39,26 @@ public class InitialDecks {
     ));
 
     public static List<DestinationCard> getDestinationCards() {return destinationCards;}
+
+    public static List<TrainCard> getTrainCards () {
+
+        List<TrainCard> trainCards = new ArrayList<TrainCard>();
+
+        for (int i = 0; i < 12; i++) {
+            trainCards.add(new TrainCard(TrainCardType.BOX));
+            trainCards.add(new TrainCard(TrainCardType.PASSENGER));
+            trainCards.add(new TrainCard(TrainCardType.TANKER));
+            trainCards.add(new TrainCard(TrainCardType.REEFER));
+            trainCards.add(new TrainCard(TrainCardType.FREIGHT));
+            trainCards.add(new TrainCard(TrainCardType.HOPPER));
+            trainCards.add(new TrainCard(TrainCardType.COAL));
+            trainCards.add(new TrainCard(TrainCardType.CABOOSE));
+            trainCards.add(new TrainCard(TrainCardType.LOCOMOTIVE));
+        }
+
+        trainCards.add(new TrainCard(TrainCardType.LOCOMOTIVE));
+        trainCards.add(new TrainCard(TrainCardType.LOCOMOTIVE));
+
+        return trainCards;
+    }
 }
