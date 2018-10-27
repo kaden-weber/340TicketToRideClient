@@ -36,4 +36,8 @@
     <!--city names-->
     <string name="city_chicago">Chicago</string>
 
+    <!--chat_fragment-->
+    <string name="prompt_send_message">Write message here: </string>
+    <string name="action_send_message">Send</string>
+
 </resources>
