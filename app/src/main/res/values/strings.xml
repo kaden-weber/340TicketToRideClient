@@ -40,4 +40,12 @@
     <string name="prompt_send_message">Write message here: </string>
     <string name="action_send_message">Send</string>
 
+    <!--turn_menu-->
+    <string name="destination_card">Choose Destnation Cards</string>
+    <string name="train_card">Choose Train Cards</string>
+    <string name="claim_route">Claim Route</string>
+    <string name="see_other_players">See Other Players</string>
+    <string name="turn_header">Select Turn Action:</string>
+    <string name="chat_header">Chat</string>
+
 </resources>
