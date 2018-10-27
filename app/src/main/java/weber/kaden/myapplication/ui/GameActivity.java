@@ -1,8 +1,10 @@
 package weber.kaden.myapplication.ui;
 
+import android.app.ActionBar;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -22,14 +24,14 @@ import weber.kaden.myapplication.R;
 public class GameActivity extends AppCompatActivity implements OnMapReadyCallback, GameViewInterface {
 
     //map Constants
-    private static final float DEFAULT_ZOOM = (float) 4.1;
-    private static final float MIN_ZOOM = (float) 4.1;
+    private static final float DEFAULT_ZOOM = (float) 4.4;
+    private static final float MIN_ZOOM = (float) 4.4;
     private static final float MAX_ZOOM = (float) 5.2;
-    private static final double DEFAULT_VIEW_LAT = 40.5;
-    private static final double DEFAULT_VIEW_LONG = -94;
-    private static final double MAX_NORTH = 48;
-    private static final double MAX_EAST = -80;
-    private static final double MAX_SOUTH = 30;
+    private static final double DEFAULT_VIEW_LAT = 40;
+    private static final double DEFAULT_VIEW_LONG = -95;
+    private static final double MAX_NORTH = 46;
+    private static final double MAX_EAST = -83;
+    private static final double MAX_SOUTH = 34;
     private static final double MAX_WEST = -110;
 
 
@@ -39,6 +41,21 @@ public class GameActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        View decorView = getWindow().getDecorView();
+        // Hide both the navigation bar and the status bar.
+        int uiOptions =
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        decorView.setSystemUiVisibility(uiOptions);
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
+
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);

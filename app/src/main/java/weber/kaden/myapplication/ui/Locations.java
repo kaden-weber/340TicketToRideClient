@@ -49,7 +49,6 @@ public class Locations {
         locations.add(new Location(new LatLng(49.2827,-123.1207), "Vancouver"));
         locations.add(new Location(new LatLng(38.9072,-77.0369), "Washington"));
         locations.add(new Location(new LatLng(49.8951,-97.1384), "Winnipeg"));
-        locations.add(new Location(new LatLng(24,-93), R.string.city_chicago));
 
     }
 
