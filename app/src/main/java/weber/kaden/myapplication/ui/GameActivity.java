@@ -2,8 +2,14 @@ package weber.kaden.myapplication.ui;
 
 import android.app.ActionBar;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDialogFragment;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -20,6 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import weber.kaden.myapplication.R;
+import weber.kaden.myapplication.ui.turnmenu.ChooseDestinationCardsFragment;
+import weber.kaden.myapplication.ui.turnmenu.ChooseTrainCardsFragment;
+import weber.kaden.myapplication.ui.turnmenu.SeeOtherPlayersFragment;
 
 public class GameActivity extends AppCompatActivity implements OnMapReadyCallback, GameViewInterface {
 
@@ -34,8 +43,9 @@ public class GameActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final double MAX_SOUTH = 34;
     private static final double MAX_WEST = -110;
 
-
     Locations mLocations;
+
+    DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +70,37 @@ public class GameActivity extends AppCompatActivity implements OnMapReadyCallbac
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         mLocations = new Locations();
+
+        //Nav Drawer
+        mDrawerLayout = findViewById(R.id.activity_game_layout);
+
+        NavigationView navigationView = findViewById(R.id.turn_nav_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                mDrawerLayout.closeDrawers();
+
+                switch (item.getItemId()) {
+                    case R.id.turn_menu_destination_cards:
+                        DialogFragment chooseDestinationCardsFragment = new ChooseDestinationCardsFragment();
+                        chooseDestinationCardsFragment.show(getSupportFragmentManager(), "ChooseDestinationCardsFragment");
+                        break;
+                    case R.id.turn_menu_train_cards:
+                        DialogFragment chooseTrainCardsFragment = new ChooseTrainCardsFragment();
+                        chooseTrainCardsFragment.show(getSupportFragmentManager(), "ChooseTrainCardsFragment");
+                        break;
+                    case R.id.turn_menu_claim_route:
+                        //Claim route is different since we're not opening up a dialog, we're using the map
+                        break;
+                    case R.id.turn_menu_see_other_players:
+                        DialogFragment seeOtherPlayersFragment = new SeeOtherPlayersFragment();
+                        seeOtherPlayersFragment.show(getSupportFragmentManager(), "ChooseTrainCardsFragment");
+                        break;
+                }
+
+                return true;
+            }
+        });
     }
 
     @Override

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.GameActivity"
-    android:screenOrientation="landscape">
+    android:screenOrientation="landscape"
+    android:id="@+id/activity_game_layout">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -23,6 +24,7 @@
     </FrameLayout>
 
     <android.support.design.widget.NavigationView
+        android:id="@+id/turn_nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
