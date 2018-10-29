@@ -105,7 +105,7 @@ public class Model extends Observable {
         if (!this.players.contains(player)) {
             return false;
         }
-        if (game.getPlayers().size() >=  5 || game.isStarted()) {
+        if (game.getPlayers().size() >=  5 || game.isInStartUp()) {
             return false;
         }
         if (this.games.get(this.games.indexOf(game)).addPlayer(player)) {
@@ -201,6 +201,15 @@ public class Model extends Observable {
     public Game startGame(String gameID) {
         Game game = Model.getInstance().getGame(gameID);
         if (game.start()) {
+            return game;
+        } else {
+            return null;
+        }
+    }
+
+    public Game setUpGame(String gameID) {
+        Game game = Model.getInstance().getGame(gameID);
+        if (game.setUp()) {
             return game;
         } else {
             return null;

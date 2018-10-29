@@ -83,11 +83,16 @@ public class CommandFactory {
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
                 }
                 return new DrawDestinationCardsCommand(data.getParams().get(0), data.getParams().get(1), (List<DestinationCard>)data.getData().get(0), (List<DestinationCard>)data.getData().get(1));
-            case DRAWTRAINCARDS:
+            case DRAWTRAINCARDFROMDECK:
+                if (data.getParams().size() < 2){
+                    throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
+                }
+                return new DrawTrainCardFromDeckCommand(data.getParams());
+            case DRAWTRAINCARDFROMFACEUP:
                 if (data.getParams().size() < 2 && data.getData().size() < 1){
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
                 }
-                return new DrawTrainCardsCommand(data.getParams(), (List<TrainCard>) data.getData().get(0));
+                return new DrawTrainCardFromFaceUpCommand(data.getParams(), (Integer)data.getData().get(0));
             case CLAIMROUTE:
                 if (data.getParams().size() < 2 && data.getData().size() < 1){
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");

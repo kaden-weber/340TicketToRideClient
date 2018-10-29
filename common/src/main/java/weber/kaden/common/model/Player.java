@@ -13,6 +13,8 @@ public class Player {
     private List<Route> routesClaimed;
     private Integer trainPieces;
     private Integer score;
+    private PlayerColors color;
+    private Integer TravelRate = null;
 
     public Player(String ID, String password) {
         this.ID = ID;
@@ -50,6 +52,14 @@ public class Player {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public PlayerColors getColor() {
+        return color;
+    }
+
+    public void setColor(PlayerColors color) {
+        this.color = color;
     }
 
     public List<DestinationCard> getDealtDestinationCards() {
@@ -114,6 +124,17 @@ public class Player {
         } else {
             return false;
         }
+    }
 
+    public List<Route> getRoutesClaimed() {
+        return routesClaimed;
+    }
+
+    public Integer getTravelRate() {
+        return TravelRate;
+    }
+
+    public void setTravelRate(Integer travelRate) {
+        TravelRate = travelRate;
     }
 }

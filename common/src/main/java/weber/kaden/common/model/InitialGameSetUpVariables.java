@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class InitialDecks {
+public class InitialGameSetUpVariables {
     private static List<DestinationCard> destinationCards = new ArrayList<DestinationCard>(Arrays.asList(
             new DestinationCard(City.DENVER, City.EL_PASO, 4),
             new DestinationCard(City.KANSAS_CITY, City.HOUSTON, 5),
