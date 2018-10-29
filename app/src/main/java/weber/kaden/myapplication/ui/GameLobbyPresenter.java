@@ -35,16 +35,15 @@ public class GameLobbyPresenter implements Observer {
         } else if (client.getCurrentUser() == null) {
             throw new Exception("Error starting game");
         }
-        client.startGame(client.getCurrentUser(), client.getCurrentGame().getID());
+        client.setupGame(client.getCurrentUser(), client.getCurrentGame().getID());
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        if(arg instanceof Game &&  !((Game) arg).isStarted()){
-            System.out.println("HEREEEEEEEEEEE 2: ->" + arg);
-        }
         if (arg instanceof Game && ((Game) arg).isStarted()) {
             activity.startGame();
+        } else if (arg instanceof Game){
+            System.out.println("HEREEEEEEEEEEE 2: ->" + arg);
         }
     }
 }

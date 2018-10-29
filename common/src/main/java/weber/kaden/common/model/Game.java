@@ -151,8 +151,8 @@ public class Game {
         if (this.getPlayers().size() < 1 || this.getPlayers().size() > 5) {
             return false;
         }
-        InitalizeDecks();
-        AssignColors();
+        //InitalizeDecks();
+        //AssignColors();
         setSetup(true);
         return true;
     }
