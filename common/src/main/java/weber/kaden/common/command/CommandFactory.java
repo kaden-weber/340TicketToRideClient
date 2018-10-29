@@ -4,6 +4,7 @@ import java.util.List;
 
 import weber.kaden.common.model.DestinationCard;
 import weber.kaden.common.model.Model;
+import weber.kaden.common.model.Route;
 import weber.kaden.common.model.TrainCard;
 
 public class CommandFactory {
@@ -87,6 +88,11 @@ public class CommandFactory {
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
                 }
                 return new DrawTrainCardsCommand(data.getParams(), (List<TrainCard>) data.getData().get(0));
+            case CLAIMROUTE:
+                if (data.getParams().size() < 2 && data.getData().size() < 1){
+                    throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
+                }
+                return new ClaimRouteCommand(data.getParams(), (Route) data.getData().get(0));
             default:
                 return null;
         }
