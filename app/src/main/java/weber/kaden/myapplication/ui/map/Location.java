@@ -1,4 +1,4 @@
-package weber.kaden.myapplication.ui;
+package weber.kaden.myapplication.ui.map;
 
 import com.google.android.gms.maps.model.LatLng;
 

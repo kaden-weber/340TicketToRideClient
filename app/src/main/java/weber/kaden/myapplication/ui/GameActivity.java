@@ -8,7 +8,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatDialogFragment;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -16,32 +15,38 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Dash;
+import com.google.android.gms.maps.model.Gap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PatternItem;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import weber.kaden.myapplication.R;
+import weber.kaden.myapplication.ui.map.Location;
+import weber.kaden.myapplication.ui.map.Locations;
 import weber.kaden.myapplication.ui.turnmenu.ChooseDestinationCardsFragment;
 import weber.kaden.myapplication.ui.turnmenu.ChooseTrainCardsFragment;
 import weber.kaden.myapplication.ui.turnmenu.SeeOtherPlayersFragment;
 
-public class GameActivity extends AppCompatActivity implements OnMapReadyCallback, GameViewInterface {
+public class GameActivity extends AppCompatActivity
+        implements OnMapReadyCallback, GoogleMap.OnPolylineClickListener, GameViewInterface {
 
     //map Constants
-    private static final float DEFAULT_ZOOM = (float) 4.4;
-    private static final float MIN_ZOOM = (float) 4.4;
+    private static final float DEFAULT_ZOOM = (float) 4.0;
+    private static final float MIN_ZOOM = (float) 4.0;
     private static final float MAX_ZOOM = (float) 5.2;
     private static final double DEFAULT_VIEW_LAT = 40;
     private static final double DEFAULT_VIEW_LONG = -95;
     private static final double MAX_NORTH = 46;
     private static final double MAX_EAST = -83;
     private static final double MAX_SOUTH = 34;
-    private static final double MAX_WEST = -110;
+    private static final double MAX_WEST = -113;
 
     Locations mLocations;
 
@@ -52,8 +57,8 @@ public class GameActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        View decorView = getWindow().getDecorView();
         // Hide both the navigation bar and the status bar.
+        View decorView = getWindow().getDecorView();
         int uiOptions =
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -65,7 +70,7 @@ public class GameActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (actionBar != null) {
             actionBar.hide();
         }
-
+        //add map
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -114,19 +119,31 @@ public class GameActivity extends AppCompatActivity implements OnMapReadyCallbac
         //constrain map to game area
         LatLngBounds bounds = new LatLngBounds(new LatLng(MAX_SOUTH, MAX_WEST), new LatLng(MAX_NORTH, MAX_EAST));
         googleMap.setLatLngBoundsForCameraTarget(bounds);
-
         //add city markers
         for (Location location : mLocations.getLocations()) {
             googleMap.addMarker(new MarkerOptions().position(location.getCoords()).title(location.getCity()));
         }
-
-        //TODO: Add routes (Add route Dotting?)
+        List<PatternItem> pattern = Arrays.<PatternItem>asList(
+                new Gap(10), new Dash(70) );
+        //TODO: Add routes
         Polyline CalgaryWinnipeg = googleMap.addPolyline(new PolylineOptions().clickable(true)
-            .add(mLocations.coords("Calgary"), mLocations.coords("Winnipeg")));
+            .add(mLocations.coords("Calgary"), mLocations.coords("Winnipeg"))
+                .width(24)
+                .geodesic(true)
+                .pattern(pattern)
+                .color(Color.WHITE));
+
         CalgaryWinnipeg.setTag("6");
-        CalgaryWinnipeg.setColor(Color.WHITE);
 
+        //make routes clickable
+        googleMap.setOnPolylineClickListener(this);
 
+    }
+
+    @Override
+    public void onPolylineClick(Polyline polyline) {
+        //check if the route can be claimed
+        //otherwise display route length
     }
 
 }
