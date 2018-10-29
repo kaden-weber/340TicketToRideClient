@@ -1,11 +1,9 @@
-package weber.kaden.myapplication.ui;
+package weber.kaden.myapplication.ui.map;
 
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import weber.kaden.myapplication.R;
 
 public class Locations {
     private List<Location> locations;
