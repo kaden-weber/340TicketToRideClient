@@ -22,6 +22,7 @@ public class Game {
     private List<TrainCard> trainCardDeck;
     private List<TrainCard> trainCardDiscard;
     private List<TrainCard> faceupTrainCardDeck;
+    private List<Route> routesClaimed;
 
     public Game() {
         this.players = new ArrayList<Player>();
@@ -162,6 +163,8 @@ public class Game {
             this.faceupTrainCardDeck.add(this.trainCardDeck.get(0));
             this.trainCardDeck.remove(0);
         }
+
+        this.routesClaimed = new ArrayList<Route>();
     }
 
     private void DealDestinationCardsToPlayers() {
@@ -218,5 +221,16 @@ public class Game {
             }
         }
         return true;
+    }
+
+    public boolean PlayerClaimRoute(String playerID, Route routeClaimed) {
+        if (this.routesClaimed.contains(routeClaimed)) {
+            return false;
+        }
+        if(this.getPlayer(playerID).ClaimRoute(routeClaimed)) {
+            this.routesClaimed.add(routeClaimed);
+            return true;
+        }
+        return false;
     }
 }

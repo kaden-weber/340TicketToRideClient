@@ -10,6 +10,9 @@ public class Player {
     private List<DestinationCard> dealtDestinationCards;
     private List<DestinationCard> destinationCardHand;
     private List<TrainCard> trainCards;
+    private List<Route> routesClaimed;
+    private Integer trainPieces;
+    private Integer score;
 
     public Player(String ID, String password) {
         this.ID = ID;
@@ -17,14 +20,20 @@ public class Player {
         this.dealtDestinationCards = new ArrayList<DestinationCard>();
         this.destinationCardHand = new ArrayList<DestinationCard>();
         this.trainCards = new ArrayList<TrainCard>();
+        this.routesClaimed = new ArrayList<Route>();
+        this.trainPieces = 40;
+        this.score = 0;
     }
 
-    public Player(String ID, String password, List<DestinationCard> dealtDestinationCards, List<DestinationCard> destinationCardHand, List<TrainCard> trainCards) {
+    public Player(String ID, String password, List<DestinationCard> dealtDestinationCards, List<DestinationCard> destinationCardHand, List<TrainCard> trainCards, List<Route> routes, Integer trainPieces, Integer score) {
         this.ID = ID;
         this.password = password;
         this.dealtDestinationCards = dealtDestinationCards;
         this.destinationCardHand = destinationCardHand;
         this.trainCards = trainCards;
+        this.routesClaimed = routes;
+        this.trainPieces = trainPieces;
+        this.score = score;
     }
 
     public String getID() {
@@ -92,5 +101,19 @@ public class Player {
 
     public boolean DiscardTrainCard(TrainCard card) {
         return this.trainCards.remove(card);
+    }
+
+    public boolean ClaimRoute(Route routeClaimed) {
+        if (routeClaimed.getCost() > this.trainPieces) {
+            return false;
+        }
+        if(this.routesClaimed.add(routeClaimed)) {
+            this.trainPieces -= routeClaimed.getCost();
+            this.score += routeClaimed.getScore();
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }
