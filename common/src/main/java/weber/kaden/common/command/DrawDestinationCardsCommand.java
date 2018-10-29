@@ -8,13 +8,13 @@ import weber.kaden.common.Results;
 import weber.kaden.common.model.DestinationCard;
 import weber.kaden.common.model.Model;
 
-public class DrawDestinationCards implements Command {
+public class DrawDestinationCardsCommand implements Command {
     private String gameID;
     private String playerID;
     private List<DestinationCard> cardsKept;
     private List<DestinationCard> cardsDiscarded;
 
-    public DrawDestinationCards(String gameID, String playerID, List<DestinationCard> cardsKept, List<DestinationCard> cardsDiscarded) {
+    public DrawDestinationCardsCommand(String gameID, String playerID, List<DestinationCard> cardsKept, List<DestinationCard> cardsDiscarded) {
         this.gameID = gameID;
         this.playerID = playerID;
         this.cardsKept = cardsKept;

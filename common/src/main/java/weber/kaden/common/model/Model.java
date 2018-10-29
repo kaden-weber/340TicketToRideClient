@@ -201,7 +201,7 @@ public class Model extends Observable {
     public Game startGame(String gameID) {
         Game game = Model.getInstance().getGame(gameID);
         if (game.start()) {
-            return updateGame(game);
+            return game;
         } else {
             return null;
         }

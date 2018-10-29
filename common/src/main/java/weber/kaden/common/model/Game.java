@@ -1,6 +1,7 @@
 package weber.kaden.common.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -20,6 +21,7 @@ public class Game {
     private List<DestinationCard> destinationCardDiscard;
     private List<TrainCard> trainCardDeck;
     private List<TrainCard> trainCardDiscard;
+    private List<TrainCard> faceupTrainCardDeck;
 
     public Game() {
         this.players = new ArrayList<Player>();
@@ -152,7 +154,14 @@ public class Game {
         this.destinationCardDiscard = new ArrayList<DestinationCard>();
 
         this.trainCardDeck = InitialDecks.getTrainCards();
+        Collections.shuffle(this.trainCardDeck);
         this.trainCardDiscard = new ArrayList<TrainCard>();
+        this.faceupTrainCardDeck = new ArrayList<TrainCard>();
+
+        for (int i = 0; i < 5; i++) {
+            this.faceupTrainCardDeck.add(this.trainCardDeck.get(0));
+            this.trainCardDeck.remove(0);
+        }
     }
 
     private void DealDestinationCardsToPlayers() {
@@ -193,5 +202,21 @@ public class Game {
 
     public boolean DiscardDestionationCards(List<DestinationCard> cards) {
         return this.destinationCardDiscard.addAll(cards);
+    }
+
+    public void reshuffleDiscardedTrainCards() {
+        Collections.shuffle(this.trainCardDiscard);
+        this.trainCardDeck.addAll(this.trainCardDiscard);
+        this.trainCardDiscard.clear();
+    }
+
+    public boolean PlayerDrawTrainCards(String playerID, List<TrainCard> cards) {
+        for (int i = 0; i < cards.size(); i++) {
+            if (!this.getPlayer(playerID).DrawTrainCard(cards.get(i)))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
