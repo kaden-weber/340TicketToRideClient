@@ -40,6 +40,9 @@ public class GameLobbyPresenter implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
+        if(arg instanceof Game &&  !((Game) arg).isStarted()){
+            System.out.println("HEREEEEEEEEEEE 2: ->" + arg);
+        }
         if (arg instanceof Game && ((Game) arg).isStarted()) {
             activity.startGame();
         }

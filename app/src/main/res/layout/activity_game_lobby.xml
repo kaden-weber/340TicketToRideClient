@@ -1,43 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.GameListActivity">
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:weightSum="10">
 
-    <ScrollView
-        android:id="@+id/gamelist_layout"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/gamelobby_players"
+        android:layout_weight = "8.5"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <LinearLayout
-        android:id="@+id/gamelist_linear_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-    <LinearLayout
+        android:layout_height="0dp"
+        tools:context=".ui.GameLobbyActivity" />
+    <Button
+        android:id="@+id/start_game"
+        style="?android:textAppearanceSmall"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_gravity="center">
-        <Button
-            android:id="@+id/start_game"
-            style="?android:textAppearanceSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/start_game_button"
-            android:textStyle="bold" />
-        <Button
-            android:id="@+id/exit_game"
-            style="?android:textAppearanceSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/exit_game_button"
-            android:textStyle="bold" />
-    </LinearLayout>
-    </LinearLayout>
-    </ScrollView>
-</android.support.constraint.ConstraintLayout>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/start_game_button"
+        android:textStyle="bold" />
+    <Button
+        android:id="@+id/exit_game"
+        style="?android:textAppearanceSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/exit_game_button"
+        android:textStyle="bold" />
+</LinearLayout>
