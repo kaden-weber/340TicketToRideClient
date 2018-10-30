@@ -69,8 +69,8 @@ public class Game {
         this.gameName = gameName;
     }
 
-    public boolean isInStartUp() {
-        return started;
+    public boolean isSetup() {
+        return setup;
     }
 
     public void setSetup(boolean setup) {
