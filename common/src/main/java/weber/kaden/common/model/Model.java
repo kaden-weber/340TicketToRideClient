@@ -125,6 +125,7 @@ public class Model extends Observable {
             notifyObservers(this.games);
             if (this.getGame(gameID).getPlayers().size() == 0) {
                 this.removeGame(this.getGame(gameID));
+                this.currentGame = null;
                 setChanged();
                 notifyObservers(this.games);
             }
