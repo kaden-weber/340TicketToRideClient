@@ -14,11 +14,12 @@ public class LeaveGameCommand implements Command {
 
     public LeaveGameCommand(List<String> params) {
         this.playerID = params.get(0);
-        this.gameID = params.get(0);
+        this.gameID = params.get(1);
     }
 
     @Override
     public Results execute() {
+
         if (Model.getInstance().removePlayerFromGame(playerID, gameID)) {
             return new GenericResults(null, true, null);
         }
