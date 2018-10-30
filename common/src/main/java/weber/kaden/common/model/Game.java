@@ -12,7 +12,7 @@ public class Game {
     private String gameName;
     private boolean started;
     private boolean setup;
-    private boolean destinationCardsSelected;
+    private boolean destinationCardsDealt;
     private List<ChatMessage> chat;
     private List<DestinationCard> destinationCardDeck;
     private List<DestinationCard> destinationCardDiscard;
@@ -28,7 +28,7 @@ public class Game {
         this.ID = UUID.randomUUID().toString();
         this.started = false;
         this.setup = false;
-        this.destinationCardsSelected = false;
+        this.destinationCardsDealt = false;
     }
 
     public Game(List<Player> players, String ID, String gameName) {
@@ -37,7 +37,7 @@ public class Game {
         this.gameName = gameName;
         this.started = false;
         this.setup = false;
-        this.destinationCardsSelected = false;
+        this.destinationCardsDealt = false;
     }
 
     public List<Player> getPlayers() {
@@ -88,12 +88,12 @@ public class Game {
         this.started = started;
     }
 
-    public boolean isDestinationCardsSelected() {
-        return destinationCardsSelected;
+    public boolean isDestinationCardsDealt() {
+        return destinationCardsDealt;
     }
 
-    public void setDestinationCardsSelected(boolean destinationCardsSelected) {
-        this.destinationCardsSelected = destinationCardsSelected;
+    public void setDestinationCardsDealt(boolean destinationCardsDealt) {
+        this.destinationCardsDealt = destinationCardsDealt;
     }
 
     public boolean addPlayer(Player player) {
@@ -161,7 +161,7 @@ public class Game {
         DealTrainCardsToPlayers();
         DealDestinationCardsToPlayers();
         setFirstPlayer();
-        setDestinationCardsSelected(true);
+        setDestinationCardsDealt(true);
         return true;
     }
 
