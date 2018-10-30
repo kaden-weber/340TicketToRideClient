@@ -110,8 +110,11 @@ public class GameLobbyActivity  extends AppCompatActivity implements GameLobbyVi
         }
     }
 
-    public void startGame() {
-        Toast.makeText(GameLobbyActivity.this, "Game Started!", Toast.LENGTH_SHORT).show();
+    public void setupGame() {
+        //Toast.makeText(GameLobbyActivity.this, "Game Started!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(instance, GameSetupActivity.class);
+        startActivity(intent);
+
     }
 
     public class QuitGameTask extends AsyncTask<Void, Void, Boolean> {

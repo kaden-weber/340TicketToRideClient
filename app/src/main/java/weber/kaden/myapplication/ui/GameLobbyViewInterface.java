@@ -6,6 +6,6 @@ import java.util.List;
 import weber.kaden.common.model.Player;
 
 public interface GameLobbyViewInterface {
-    void startGame();
+    void setupGame();
     void updatePlayersList(List<Player> players);
 }

@@ -11,11 +11,13 @@ public class GameLobbyPresenter implements Observer {
 
     private GameLobbyViewInterface activity;
     private ClientFacade client;
+    private boolean gameState = false;
 
     public GameLobbyPresenter(GameLobbyActivity activity, ClientFacade client) {
         this.activity = activity;
         this.client = client;
         Model.getInstance().addObserver(this);
+
     }
 
     public void exitLobby() throws Exception {
@@ -38,13 +40,12 @@ public class GameLobbyPresenter implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        if (arg instanceof Game && ((Game) arg).isSetup()) {
-            System.out.println("IN HERE BABYYY");
-            activity.startGame();
+        if (arg instanceof Game && ((Game) arg).isSetup() && !gameState) {
+            activity.setupGame();
+            gameState = true;
         } else if (arg instanceof Game){
             Game game = (Game) arg;
             activity.updatePlayersList(game.getPlayers());
         }
-        System.out.println("YOU BE GETTING A" + arg);
     }
 }
