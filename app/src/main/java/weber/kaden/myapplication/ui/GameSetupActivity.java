@@ -1,8 +1,6 @@
 package weber.kaden.myapplication.ui;
 
-import android.app.DialogFragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 
 import android.os.Bundle;
@@ -18,5 +16,8 @@ public class GameSetupActivity extends FragmentActivity implements GameSetupView
 
         setContentView(R.layout.activity_game_setup);
     }
-
+    public void startGameActivity(){
+        Intent intent = new Intent(this, GameActivity.class);
+        startActivity(intent);
+    }
 }
