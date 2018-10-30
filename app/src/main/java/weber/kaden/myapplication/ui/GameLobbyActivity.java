@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import weber.kaden.common.model.Game;
+import weber.kaden.common.model.Model;
 import weber.kaden.common.model.Player;
 import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
@@ -31,6 +32,7 @@ public class GameLobbyActivity  extends AppCompatActivity implements GameLobbyVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        playerList.addAll(Model.getInstance().getCurrentGame().getPlayers());
         setContentView(R.layout.activity_game_lobby);
         // set up the RecyclerView
         RecyclerView recyclerView = findViewById(R.id.gamelobby_players);
