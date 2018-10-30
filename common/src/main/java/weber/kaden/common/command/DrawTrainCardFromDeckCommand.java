@@ -11,7 +11,6 @@ import weber.kaden.common.model.TrainCard;
 public class DrawTrainCardFromDeckCommand implements Command {
     private String gameID;
     private String playerID;
-    private TrainCard card;
 
     public DrawTrainCardFromDeckCommand(List<String> params) {
         this.gameID = params.get(0);
@@ -26,5 +25,10 @@ public class DrawTrainCardFromDeckCommand implements Command {
         else {
             return new GenericResults(null, false, "DrawTrainCardFromDeckCommand failed");
         }
+    }
+
+    @Override
+    public boolean hasID() {
+        return true;
     }
 }

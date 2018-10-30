@@ -12,12 +12,10 @@ public class SetUpGameCommand implements Command {
 
     private String playerID = null;
     private String gameID = null;
-    private String commandID = null;
 
-    public SetUpGameCommand(List<String> params, String commandID) {
+    public SetUpGameCommand(List<String> params) {
         this.playerID = params.get(0);
         this.gameID = params.get(1);
-        this.commandID = commandID;
     }
 
     @Override
@@ -30,4 +28,8 @@ public class SetUpGameCommand implements Command {
         }
     }
 
+    @Override
+    public boolean hasID() {
+        return false;
+    }
 }
