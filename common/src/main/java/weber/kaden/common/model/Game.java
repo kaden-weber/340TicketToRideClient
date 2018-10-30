@@ -130,17 +130,6 @@ public class Game {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Game)) return false;
-        Game game = (Game) o;
-        return started == game.started &&
-                Objects.equals(players, game.players) &&
-                Objects.equals(ID, game.ID) &&
-                Objects.equals(gameName, game.gameName);
-    }
-
-    @Override
     public int hashCode() {
 
         return Objects.hash(players, ID, gameName, started);
@@ -315,5 +304,26 @@ public class Game {
             this.start();
         }
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Game)) return false;
+        Game game = (Game) o;
+        return started == game.started &&
+                setup == game.setup &&
+                currentPlayer == game.currentPlayer &&
+                Objects.equals(players, game.players) &&
+                Objects.equals(ID, game.ID) &&
+                Objects.equals(gameName, game.gameName) &&
+                Objects.equals(chat, game.chat) &&
+                Objects.equals(destinationCardDeck, game.destinationCardDeck) &&
+                Objects.equals(destinationCardDiscard, game.destinationCardDiscard) &&
+                Objects.equals(trainCardDeck, game.trainCardDeck) &&
+                Objects.equals(trainCardDiscard, game.trainCardDiscard) &&
+                Objects.equals(faceupTrainCardDeck, game.faceupTrainCardDeck) &&
+                Objects.equals(claimedRoutes, game.claimedRoutes) &&
+                Objects.equals(unclaimedRoute, game.unclaimedRoute);
     }
 }

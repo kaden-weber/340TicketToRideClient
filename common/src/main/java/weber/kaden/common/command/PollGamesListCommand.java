@@ -25,4 +25,9 @@ public class PollGamesListCommand implements Command {
         	return new ListResults(games, true, "");
         }
     }
+
+    @Override
+    public boolean hasID() {
+        return false;
+    }
 }

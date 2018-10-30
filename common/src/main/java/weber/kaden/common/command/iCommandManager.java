@@ -8,4 +8,6 @@ public interface iCommandManager {
     List<Game> gamesList();
     
     Game getGameByID(String gameID);
+
+    List<CommandData> getLatestCommands(String gameID, String lastID);
 }

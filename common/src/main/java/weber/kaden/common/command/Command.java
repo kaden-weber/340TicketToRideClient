@@ -6,4 +6,6 @@ import weber.kaden.common.Results;
 public interface Command {
 
     Results execute();
+
+    boolean hasID();
 }

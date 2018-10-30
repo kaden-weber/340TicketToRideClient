@@ -32,4 +32,9 @@ public class LoginCommand implements Command {
             return new GenericResults(null, false, "Username does not exist");
         }
     }
+
+    @Override
+    public boolean hasID() {
+        return false;
+    }
 }

@@ -26,4 +26,9 @@ public class LeaveGameCommand implements Command {
             return new GenericResults(null, false, "Player not removed from game");
         }
     }
+
+    @Override
+    public boolean hasID() {
+        return false;
+    }
 }
