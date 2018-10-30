@@ -1,6 +1,8 @@
 package weber.kaden.common.model;
 
-public class TrainCard {
+import java.io.Serializable;
+
+public class TrainCard implements Serializable {
     private TrainCardType type;
 
     public TrainCard(TrainCardType type) {

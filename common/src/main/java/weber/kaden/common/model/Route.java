@@ -7,12 +7,14 @@ public class Route {
     private City city2;
     private Integer score;
     private Integer cost;
+    private TrainCardType type;
 
-    public Route(City city1, City city2, Integer score, Integer cost) {
+    public Route(City city1, City city2, Integer score, Integer cost, TrainCardType type) {
         this.city1 = city1;
         this.city2 = city2;
         this.score = score;
         this.cost = cost;
+        this.type = type;
     }
 
     public City getCity1() {

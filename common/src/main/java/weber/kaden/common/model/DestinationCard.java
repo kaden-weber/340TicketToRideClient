@@ -1,6 +1,9 @@
 package weber.kaden.common.model;
 
-public class DestinationCard {
+
+import java.io.Serializable;
+
+public class DestinationCard implements Serializable {
     private City startCity;
     private City endCity;
     private Integer points;

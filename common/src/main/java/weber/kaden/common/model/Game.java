@@ -6,28 +6,27 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-import javax.print.attribute.standard.NumberUp;
-
-import weber.kaden.common.GameResults;
-import weber.kaden.common.Results;
-
 public class Game {
     private List<Player> players;
     private String ID;
     private String gameName;
     private boolean started;
+    private boolean setup;
     private List<ChatMessage> chat;
     private List<DestinationCard> destinationCardDeck;
     private List<DestinationCard> destinationCardDiscard;
     private List<TrainCard> trainCardDeck;
     private List<TrainCard> trainCardDiscard;
     private List<TrainCard> faceupTrainCardDeck;
-    private List<Route> routesClaimed;
+    private List<Route> claimedRoutes;
+    private List<Route> unclaimedRoute;
+    private int currentPlayer;
 
     public Game() {
         this.players = new ArrayList<Player>();
         this.ID = UUID.randomUUID().toString();
         this.started = false;
+        this.setup = false;
     }
 
     public Game(List<Player> players, String ID, String gameName) {
@@ -35,6 +34,7 @@ public class Game {
         this.ID = ID;
         this.gameName = gameName;
         this.started = false;
+        this.setup = false;
     }
 
     public List<Player> getPlayers() {
@@ -67,6 +67,14 @@ public class Game {
 
     public void setGameName(String gameName) {
         this.gameName = gameName;
+    }
+
+    public boolean isInStartUp() {
+        return started;
+    }
+
+    public void setSetup(boolean setup) {
+        this.setup = setup;
     }
 
     public boolean isStarted() {
@@ -138,23 +146,45 @@ public class Game {
         return Objects.hash(players, ID, gameName, started);
     }
 
-    public boolean start() {
+    public boolean setUp() {
         // TESTING ONLY, CHANGE 1 to 2
         if (this.getPlayers().size() < 1 || this.getPlayers().size() > 5) {
             return false;
         }
-        InitalizeDecks();
+        //InitalizeDecks();
+        //AssignColors();
+        setSetup(true);
+        return true;
+    }
+
+    public boolean start() {
         DealTrainCardsToPlayers();
         DealDestinationCardsToPlayers();
+        setFirstPlayer();
         setStarted(true);
         return true;
     }
 
+    private void AssignColors() {
+        this.players.get(0).setColor(PlayerColors.BLACK);
+        this.players.get(1).setColor(PlayerColors.BLUE);
+        if (this.players.size() > 2) {
+            this.players.get(2).setColor(PlayerColors.GREEN);
+            if (this.players.size() > 3) {
+                this.players.get(3).setColor(PlayerColors.RED);
+                if (this.players.size() > 4) {
+                    this.players.get(4).setColor(PlayerColors.YELLOW);
+                }
+            }
+        }
+
+    }
+
     private void InitalizeDecks() {
-        this.destinationCardDeck = InitialDecks.getDestinationCards();
+        this.destinationCardDeck = InitialGameSetUpVariables.getDestinationCards();
         this.destinationCardDiscard = new ArrayList<DestinationCard>();
 
-        this.trainCardDeck = InitialDecks.getTrainCards();
+        this.trainCardDeck = InitialGameSetUpVariables.getTrainCards();
         Collections.shuffle(this.trainCardDeck);
         this.trainCardDiscard = new ArrayList<TrainCard>();
         this.faceupTrainCardDeck = new ArrayList<TrainCard>();
@@ -164,7 +194,7 @@ public class Game {
             this.trainCardDeck.remove(0);
         }
 
-        this.routesClaimed = new ArrayList<Route>();
+        this.claimedRoutes = new ArrayList<Route>();
     }
 
     private void DealDestinationCardsToPlayers() {
@@ -208,29 +238,81 @@ public class Game {
     }
 
     public void reshuffleDiscardedTrainCards() {
+        if (this.trainCardDiscard.size() == 0) {
+            return;
+        }
         Collections.shuffle(this.trainCardDiscard);
         this.trainCardDeck.addAll(this.trainCardDiscard);
         this.trainCardDiscard.clear();
     }
 
-    public boolean PlayerDrawTrainCards(String playerID, List<TrainCard> cards) {
-        for (int i = 0; i < cards.size(); i++) {
-            if (!this.getPlayer(playerID).DrawTrainCard(cards.get(i)))
-            {
-                return false;
+    public boolean PlayerDrawTrainCardFromDeck(String playerID) {
+        if (this.getPlayer(playerID).DrawTrainCard(this.trainCardDeck.remove(0))) {
+            if (this.trainCardDeck.size() == 0) {
+                reshuffleDiscardedTrainCards();
             }
-        }
-        return true;
-    }
-
-    public boolean PlayerClaimRoute(String playerID, Route routeClaimed) {
-        if (this.routesClaimed.contains(routeClaimed)) {
-            return false;
-        }
-        if(this.getPlayer(playerID).ClaimRoute(routeClaimed)) {
-            this.routesClaimed.add(routeClaimed);
             return true;
         }
         return false;
+    }
+
+    public boolean PlayerDrawTrainCardFromFaceUp(String playerID, Integer cardIndex) {
+        if (this.getPlayer(playerID).DrawTrainCard(this.faceupTrainCardDeck.get(cardIndex))) {
+            if (this.trainCardDeck.size() > 0) {
+                this.faceupTrainCardDeck.set(cardIndex, this.trainCardDeck.remove(0));
+            } else {
+                this.faceupTrainCardDeck.remove(cardIndex);
+            }
+        }
+        return false;
+    }
+
+    public boolean PlayerClaimRoute(String playerID, Route routeClaimed) {
+        if (this.claimedRoutes.contains(routeClaimed)) {
+            return false;
+        }
+        if(this.getPlayer(playerID).ClaimRoute(routeClaimed)) {
+            this.claimedRoutes.add(routeClaimed);
+            return true;
+        }
+        return false;
+    }
+
+    public List<Route> RoutesClaimedByPlayer(String playerID) {
+        return this.getPlayer(playerID).getRoutesClaimed();
+    }
+
+    public Player getCurrentPlayer() {
+        return this.players.get(currentPlayer);
+    }
+
+    private void finishTurn() {
+        this.currentPlayer = this.players.indexOf(currentPlayer) + 1;
+        if (currentPlayer == this.players.size()) {
+            currentPlayer = 0;
+        }
+    }
+
+    private void setFirstPlayer() {
+        this.currentPlayer = 0;
+        for (int i = 0; i < this.players.size(); i++) {
+            if (this.players.get(i).getTravelRate() > this.players.get(this.currentPlayer).getTravelRate()) {
+                currentPlayer = i;
+            }
+        }
+    }
+
+    public boolean setPlayerTravelRate(String playerID, int travelRate) {
+        this.getPlayer(playerID).setTravelRate(travelRate);
+        boolean startGame = true;
+        for (int i = 0; i < this.players.size(); i++) {
+            if (this.players.get(i).getTravelRate() == null) {
+                startGame = false;
+            }
+        }
+        if (startGame) {
+            this.start();
+        }
+        return true;
     }
 }

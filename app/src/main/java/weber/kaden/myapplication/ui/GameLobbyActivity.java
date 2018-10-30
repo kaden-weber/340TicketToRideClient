@@ -1,12 +1,20 @@
 package weber.kaden.myapplication.ui;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import weber.kaden.common.model.Game;
+import weber.kaden.common.model.Player;
 import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
 import weber.kaden.myapplication.serverProxy.Poller;
@@ -16,11 +24,18 @@ public class GameLobbyActivity  extends AppCompatActivity implements GameLobbyVi
     private StartGameTask startGameTask = null;
     private QuitGameTask quitGameTask = null;
     GameLobbyActivity instance = this;
-
+    GameLobbyAdapter adapter;
+    private List<Player> playerList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_lobby);
+        // set up the RecyclerView
+        RecyclerView recyclerView = findViewById(R.id.gamelobby_players);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new GameLobbyAdapter(this, playerList);
+        recyclerView.setAdapter(adapter);
+
         String gameName= getIntent().getStringExtra("GAME_NAME");
         setTitle(gameName);
         final Button quitButton = (Button) findViewById(R.id.exit_game);
@@ -59,6 +74,8 @@ public class GameLobbyActivity  extends AppCompatActivity implements GameLobbyVi
 
             try {
                 gameLobbyPresenter.startGame();
+                Intent intent = new Intent(instance, GameSetupActivity.class);
+                startActivity(intent);
             } catch (Exception e) {
                 errorString = e.getMessage();
                 return false;
