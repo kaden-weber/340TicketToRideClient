@@ -14,7 +14,7 @@ public class Locations {
         locations.add(new Location(new LatLng(33.7490,-84.3880), "Atlanta"));
         locations.add(new Location(new LatLng(42.3601,-71.0589), "Boston"));
         locations.add(new Location(new LatLng(51.0486,-114.0708), "Calgary"));
-        locations.add(new Location(new LatLng(40.7128,-74.0060), "Charleston"));
+        locations.add(new Location(new LatLng(32.7846,-79.9409), "Charleston"));
         locations.add(new Location(new LatLng(41.87,-87.62), "Chicago"));
         locations.add(new Location(new LatLng(32.7767,-96.7970), "Dallas"));
         locations.add(new Location(new LatLng(39.7392,-104.9903), "Denver"));
@@ -59,7 +59,18 @@ public class Locations {
         return new LatLng(0,0);
     }
 
+    Location getLocation(String city){
+        for(Location location: locations){
+            if(location.getCity().equals(city)){
+                return location;
+            }
+        }
+        return new Location(new LatLng(0,0), "null");
+    }
+
     public List<Location> getLocations(){
         return locations;
     }
+
+
 }

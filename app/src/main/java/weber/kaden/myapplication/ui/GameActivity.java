@@ -15,6 +15,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.Dash;
 import com.google.android.gms.maps.model.Gap;
 import com.google.android.gms.maps.model.LatLng;
@@ -28,6 +29,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import weber.kaden.myapplication.R;
+import weber.kaden.myapplication.ui.map.DisplayRoute;
+import weber.kaden.myapplication.ui.map.DisplayRoutes;
 import weber.kaden.myapplication.ui.map.Location;
 import weber.kaden.myapplication.ui.map.Locations;
 import weber.kaden.myapplication.ui.turnmenu.ChooseDestinationCardsFragment;
@@ -43,10 +46,15 @@ public class GameActivity extends AppCompatActivity
     private static final float MAX_ZOOM = (float) 5.2;
     private static final double DEFAULT_VIEW_LAT = 40;
     private static final double DEFAULT_VIEW_LONG = -95;
+    private static final float DEFAULT_VIEW_BEARING = 9;
     private static final double MAX_NORTH = 46;
     private static final double MAX_EAST = -83;
     private static final double MAX_SOUTH = 34;
     private static final double MAX_WEST = -113;
+
+    private static final float ROUTE_WIDTH = 22;
+    private static final int ORANGE = Color.parseColor("#FFA500");
+    private static final int PURPLE = Color.parseColor("#EE82EE");
 
     Locations mLocations;
 
@@ -56,7 +64,6 @@ public class GameActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
         // Hide both the navigation bar and the status bar.
         View decorView = getWindow().getDecorView();
         int uiOptions =
@@ -114,8 +121,8 @@ public class GameActivity extends AppCompatActivity
         googleMap.setMinZoomPreference(MIN_ZOOM);
         googleMap.setMaxZoomPreference(MAX_ZOOM);
         // Move to initial view
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                new LatLng(DEFAULT_VIEW_LAT, DEFAULT_VIEW_LONG), DEFAULT_ZOOM));
+        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(
+                new LatLng(DEFAULT_VIEW_LAT, DEFAULT_VIEW_LONG), DEFAULT_ZOOM, 0, DEFAULT_VIEW_BEARING)));
         //constrain map to game area
         LatLngBounds bounds = new LatLngBounds(new LatLng(MAX_SOUTH, MAX_WEST), new LatLng(MAX_NORTH, MAX_EAST));
         googleMap.setLatLngBoundsForCameraTarget(bounds);
@@ -123,21 +130,50 @@ public class GameActivity extends AppCompatActivity
         for (Location location : mLocations.getLocations()) {
             googleMap.addMarker(new MarkerOptions().position(location.getCoords()).title(location.getCity()));
         }
+        //make route pattern
         List<PatternItem> pattern = Arrays.<PatternItem>asList(
                 new Gap(10), new Dash(70) );
-        //TODO: Add routes
-        Polyline CalgaryWinnipeg = googleMap.addPolyline(new PolylineOptions().clickable(true)
-            .add(mLocations.coords("Calgary"), mLocations.coords("Winnipeg"))
-                .width(24)
+//        List<PatternItem> doublePattern = Arrays.<PatternItem>asList(
+//                new Dash(70), new Gap(10) );
+
+        //add routes TODO: Fix parallel routes
+        DisplayRoutes routes = new DisplayRoutes(mLocations);
+        for ( DisplayRoute route : routes.getRoutes()){
+            Polyline line = googleMap.addPolyline(new PolylineOptions().clickable(true)
+                .add(route.getCity1().getCoords(), route.getCity2().getCoords())
+                .width(ROUTE_WIDTH)
                 .geodesic(true)
                 .pattern(pattern)
-                .color(Color.WHITE));
-
-        CalgaryWinnipeg.setTag("6");
-
+                .color(getRouteColor(route.getColor())));
+            line.setTag(route.getLength());
+        }
         //make routes clickable
         googleMap.setOnPolylineClickListener(this);
 
+    }
+
+    private int getRouteColor(String color) {
+        switch (color){
+            case "White":
+                return Color.WHITE;
+            case "Black":
+                return Color.BLACK;
+            case "Blue":
+                return Color.BLUE;
+            case "Green":
+                return Color.GREEN;
+            case "Red":
+                return Color.RED;
+            case "Purple":
+                return PURPLE;
+            case "Orange":
+                return ORANGE;
+            case "Yellow":
+                return Color.YELLOW;
+            case "Gray":
+                return Color.GRAY;
+        }
+        return Color.GRAY;
     }
 
     @Override
