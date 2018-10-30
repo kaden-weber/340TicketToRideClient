@@ -1,7 +1,5 @@
 package weber.kaden.myapplication.ui;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -13,11 +11,13 @@ public class GameLobbyPresenter implements Observer {
 
     private GameLobbyViewInterface activity;
     private ClientFacade client;
+    private boolean gameState = false;
 
     public GameLobbyPresenter(GameLobbyActivity activity, ClientFacade client) {
         this.activity = activity;
         this.client = client;
         Model.getInstance().addObserver(this);
+
     }
 
     public void exitLobby() throws Exception {
@@ -40,10 +40,12 @@ public class GameLobbyPresenter implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        if (arg instanceof Game && ((Game) arg).isStarted()) {
-            activity.startGame();
+        if (arg instanceof Game && ((Game) arg).isSetup() && !gameState) {
+            activity.setupGame();
+            gameState = true;
         } else if (arg instanceof Game){
-            System.out.println("HEREEEEEEEEEEE 2: ->" + arg);
+            Game game = (Game) arg;
+            activity.updatePlayersList(game.getPlayers());
         }
     }
 }

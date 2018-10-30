@@ -26,4 +26,9 @@ public class RegisterCommand implements Command {
             return new GenericResults(null, false, "Username taken");
         }
     }
+
+    @Override
+    public boolean hasID() {
+        return false;
+    }
 }

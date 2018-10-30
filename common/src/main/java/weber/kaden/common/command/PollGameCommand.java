@@ -27,4 +27,9 @@ public class PollGameCommand implements Command{
 			return new GameResults(game, true, "");
 		}
 	}
+
+	@Override
+	public boolean hasID() {
+		return false;
+	}
 }

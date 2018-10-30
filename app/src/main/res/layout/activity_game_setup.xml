@@ -11,5 +11,10 @@
         android:layout_height="wrap_content">
 
     </FrameLayout>
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="Please wait while we setup the game!"
+        android:textSize="20sp"/>
 </android.support.constraint.ConstraintLayout>

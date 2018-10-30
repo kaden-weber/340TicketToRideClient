@@ -39,6 +39,7 @@
     <!--chat_fragment-->
     <string name="prompt_send_message">Write message here: </string>
     <string name="action_send_message">Send</string>
+    <string name="action_cancel_message">Cancel</string>
 
     <!--turn_menu-->
     <string name="destination_card">Choose Destination Cards</string>

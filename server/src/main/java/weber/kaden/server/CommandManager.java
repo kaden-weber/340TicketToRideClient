@@ -30,7 +30,9 @@ public class CommandManager implements iCommandManager {
 
     Results processCommand(CommandData commandData) throws Exception {
         Command command = CommandFactory.getInstance().getCommand(commandData);
-        mCommandDataList.add(commandData);
+        if (command.hasID()) {
+            mCommandDataList.add(commandData);
+        }
         return command.execute();
     }
 
@@ -42,5 +44,21 @@ public class CommandManager implements iCommandManager {
     @Override
     public Game getGameByID(String gameID) {
         return Model.getInstance().getGame(gameID);
+    }
+
+    @Override
+    public List<CommandData> getLatestCommands(String gameID, String lastID) {
+        List<CommandData> toReturn = new ArrayList<CommandData>();
+        int index = 0;
+        for (int i = 0; i < mCommandDataList.size(); i++) {
+            if (this.mCommandDataList.get(i).getCommandID().equals(lastID)) {
+                index = i;
+                break;
+            }
+        }
+        for (int i = index + 1; i < mCommandDataList.size(); i++) {
+            toReturn.add(mCommandDataList.get(i));
+        }
+        return toReturn;
     }
 }

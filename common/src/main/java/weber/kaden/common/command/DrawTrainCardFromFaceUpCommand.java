@@ -27,4 +27,9 @@ public class DrawTrainCardFromFaceUpCommand implements Command {
             return new GenericResults(null, false, "DrawTrainCardFromFaceUpCommand failed");
         }
     }
+
+    @Override
+    public boolean hasID() {
+        return true;
+    }
 }

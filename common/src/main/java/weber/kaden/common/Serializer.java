@@ -27,6 +27,8 @@ public class Serializer {
                 return deserializeResultsGame(string);
             case JOINGAME:
                 return deserializeResultsGame(string);
+            case POLLCOMMANDS:
+                return deserializeResultsCommandList(string);
             default:
                 return deserializeResults(string);
         }
@@ -42,6 +44,10 @@ public class Serializer {
 
     public Results deserializeResultsGame(String string) {
         return gson.fromJson(string, GameResults.class);
+    }
+
+    public Results deserializeResultsCommandList(String string) {
+        return gson.fromJson(string, CommandListResults.class);
     }
 
     public String serializeResults(Results r){

@@ -31,4 +31,9 @@ public class DrawDestinationCardsCommand implements Command {
             return new GenericResults(null, false, "Error in Draw Destination Cards Command");
         }
     }
+
+    @Override
+    public boolean hasID() {
+        return true;
+    }
 }

@@ -28,4 +28,9 @@ public class ClaimRouteCommand implements Command {
             return new GenericResults(null, false, "ClaimRouteCommand failed");
         }
     }
+
+    @Override
+    public boolean hasID() {
+        return true;
+    }
 }

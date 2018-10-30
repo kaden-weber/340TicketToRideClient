@@ -3,8 +3,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import weber.kaden.common.GameResults;
-import weber.kaden.common.GenericResults;
 import weber.kaden.common.Results;
 import weber.kaden.common.command.Command;
 import weber.kaden.common.command.CommandData;
@@ -14,14 +12,11 @@ import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Model;
 import weber.kaden.common.model.Player;
 import weber.kaden.myapplication.serverProxy.ServerProxy;
-import weber.kaden.myapplication.ui.LoginPresenter;
 import java.util.UUID;
 
 public class ClientFacade {
 
-	private LoginPresenter presenter;
-
-    public boolean login(String username, String password) throws Exception {
+    public void login(String username, String password) throws Exception {
         List<String> credentials = new ArrayList<>(Arrays.asList(username, password));
         CommandData commandData = new CommandData(credentials, CommandType.LOGIN);
         Results results = ServerProxy.getInstance().sendCommand(commandData);
@@ -36,11 +31,9 @@ public class ClientFacade {
         if (Model.getInstance().getPlayer(username) == null) {
             Model.getInstance().addPlayer(new Player(username,password));
         }
-
-        return true;
     }
 
-    public boolean register(String username, String password) throws Exception {
+    public void register(String username, String password) throws Exception {
         List<String> credentials = new ArrayList<>(Arrays.asList(username, password));
         CommandData commandData = new CommandData(credentials, CommandType.REGISTER);
         executeLocalCommand(commandData);
@@ -53,19 +46,14 @@ public class ClientFacade {
         }
 
         Model.getInstance().setCurrentUser(username);
-
-        return true;
     }
 
-    public boolean executeLocalCommand(CommandData commandData) throws Exception {
+    private void executeLocalCommand(CommandData commandData) throws Exception {
         Command command = CommandFactory.getInstance().getCommand(commandData);
         Results results = command.execute();
         if (!results.success()) {
             throw new Exception(results.getErrorInfo());
         }
-
-        return true;
-
     }
 
     public List<Game> getGames(){
@@ -81,9 +69,6 @@ public class ClientFacade {
     public Results createGame(String username, String gameName) throws Exception {
         List<String> params = new ArrayList<>((Arrays.asList(username, gameName, UUID.randomUUID().toString())));
         CommandData commandData = new CommandData(params, CommandType.CREATEGAME);
-//        Command command = CommandFactory.getInstance().getCommand(commandData);
-//        String gameID = ((Game)command.execute().getData()).getID();
-//        params.add(gameID);
         Results results = ServerProxy.getInstance().sendCommand(commandData);
         if(!results.success()){
             throw new Exception(results.getErrorInfo());
@@ -94,8 +79,6 @@ public class ClientFacade {
     public void joinGame(String username, String gameID) throws Exception {
         List<String> params = new ArrayList<>((Arrays.asList(username, gameID)));
         CommandData commandData = new CommandData(params, CommandType.JOINGAME);
-        //Command command = CommandFactory.getInstance().getCommand(commandData);
-        //command.execute();
         Results results = ServerProxy.getInstance().sendCommand(commandData);
         if(!results.success()) {
             throw new Exception(results.getErrorInfo());
@@ -107,8 +90,6 @@ public class ClientFacade {
     public void startGame(String username, String gameID) throws Exception {
         List<String> params = new ArrayList<>((Arrays.asList(username, gameID)));
         CommandData commandData = new CommandData(params, CommandType.STARTGAME);
-        //Command command = CommandFactory.getInstance().getCommand(commandData);
-        //command.execute();
         Results results = ServerProxy.getInstance().sendCommand(commandData);
         if(!results.success()) {
             throw new Exception(results.getErrorInfo());
@@ -126,8 +107,6 @@ public class ClientFacade {
     public void exitLobby(String username, String gameID) throws Exception {
         List<String> params = new ArrayList<>((Arrays.asList(username, gameID)));
         CommandData commandData = new CommandData(params, CommandType.LEAVEGAME);
-//        Command command = CommandFactory.getInstance().getCommand(commandData);
-//        command.execute();
         Results results = ServerProxy.getInstance().sendCommand(commandData);
         if(!results.success()) {
             throw new Exception(results.getErrorInfo());
@@ -145,7 +124,7 @@ public class ClientFacade {
     }
 
     public Game getUpdatedGame(Game game) throws Exception{
-        List<String> params = new ArrayList<String>();
+        List<String> params = new ArrayList<>();
         params.add(getCurrentUser());
         params.add(game.getID());
         CommandData commandData = new CommandData(params, CommandType.POLLGAME);
@@ -154,5 +133,14 @@ public class ClientFacade {
             throw new Exception(results.getErrorInfo());
         }
         return (Game) results.getData();
+    }
+
+    public void sendMessage(String gameId, String userId, String message) throws Exception{
+        List<String> params = new ArrayList<>((Arrays.asList(gameId, userId, message)));
+        CommandData commandData = new CommandData(params, CommandType.CHAT);
+        Results results = ServerProxy.getInstance().sendCommand(commandData);
+        if(!results.success()) {
+            throw new Exception(results.getErrorInfo());
+        }
     }
 }

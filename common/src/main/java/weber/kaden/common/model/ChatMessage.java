@@ -24,4 +24,9 @@ public class ChatMessage {
         this.playerID = playerID;
         this.chatMessage = chatMessage;
     }
+
+    @Override
+    public String toString() {
+        return playerID + ": " + chatMessage;
+    }
 }

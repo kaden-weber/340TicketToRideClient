@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import weber.kaden.common.model.Game;
+import weber.kaden.common.model.Model;
 import weber.kaden.common.model.Player;
 import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
@@ -25,10 +26,13 @@ public class GameLobbyActivity  extends AppCompatActivity implements GameLobbyVi
     private QuitGameTask quitGameTask = null;
     GameLobbyActivity instance = this;
     GameLobbyAdapter adapter;
+    ClientFacade clientFacade = new ClientFacade();
+    GameLobbyPresenter gameLobbyPresenter = new GameLobbyPresenter(this, clientFacade);
     private List<Player> playerList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        playerList.addAll(Model.getInstance().getCurrentGame().getPlayers());
         setContentView(R.layout.activity_game_lobby);
         // set up the RecyclerView
         RecyclerView recyclerView = findViewById(R.id.gamelobby_players);
@@ -61,6 +65,12 @@ public class GameLobbyActivity  extends AppCompatActivity implements GameLobbyVi
     public void onResume() {
         super.onResume();
         Poller.getInstance(this).pollGame();
+    }
+    @Override
+    public void updatePlayersList(List<Player> players) {
+        playerList.clear();
+        playerList.addAll(players);
+        adapter.notifyDataSetChanged();
     }
 
     public class StartGameTask extends AsyncTask<Void, Void, Boolean> {
@@ -102,8 +112,11 @@ public class GameLobbyActivity  extends AppCompatActivity implements GameLobbyVi
         }
     }
 
-    public void startGame() {
-        Toast.makeText(GameLobbyActivity.this, "Game Started!", Toast.LENGTH_SHORT).show();
+    public void setupGame() {
+        //Toast.makeText(GameLobbyActivity.this, "Game Started!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(instance, GameSetupActivity.class);
+        startActivity(intent);
+
     }
 
     public class QuitGameTask extends AsyncTask<Void, Void, Boolean> {

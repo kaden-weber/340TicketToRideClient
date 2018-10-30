@@ -16,7 +16,6 @@ import weber.kaden.myapplication.R;
 public class GameLobbyAdapter extends RecyclerView.Adapter<GameLobbyAdapter.ViewHolder> {
     private List<Player> mData;
     private LayoutInflater mInflater;
-    private GameListAdapter.ItemClickListener mClickListener;
 
     // data is passed into the constructor
     GameLobbyAdapter(Context context, List<Player> data) {
@@ -27,14 +26,13 @@ public class GameLobbyAdapter extends RecyclerView.Adapter<GameLobbyAdapter.View
     // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.recycle_view_row, parent, false);
+        View view = mInflater.inflate(R.layout.player_row, parent, false);
         return new ViewHolder(view);
     }
 
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
         String player =  (mData.get(position).getID());
         holder.myTextView.setText(player);
     }
@@ -44,27 +42,14 @@ public class GameLobbyAdapter extends RecyclerView.Adapter<GameLobbyAdapter.View
     public int getItemCount() {
         return mData.size();
     }
-    // stores and recycles views as they are scrolled off screen
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView myTextView;
-        Button mButton;
         ViewHolder(View itemView) {
             super(itemView);
             myTextView = itemView.findViewById(R.id.playerName);
-            mButton.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
-        }
     }
-    // convenience method for getting data at click position
-    Player getItem(int id) {
-        return mData.get(id);
-    }
-    String getGameName(int id) {
-        return mData.get(id).getID();
-    }
-
 }

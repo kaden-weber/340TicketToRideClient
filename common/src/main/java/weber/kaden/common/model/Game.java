@@ -12,6 +12,7 @@ public class Game {
     private String gameName;
     private boolean started;
     private boolean setup;
+    private boolean destinationCardsDealt;
     private List<ChatMessage> chat;
     private List<DestinationCard> destinationCardDeck;
     private List<DestinationCard> destinationCardDiscard;
@@ -27,6 +28,7 @@ public class Game {
         this.ID = UUID.randomUUID().toString();
         this.started = false;
         this.setup = false;
+        this.destinationCardsDealt = false;
     }
 
     public Game(List<Player> players, String ID, String gameName) {
@@ -35,6 +37,7 @@ public class Game {
         this.gameName = gameName;
         this.started = false;
         this.setup = false;
+        this.destinationCardsDealt = false;
     }
 
     public List<Player> getPlayers() {
@@ -69,8 +72,8 @@ public class Game {
         this.gameName = gameName;
     }
 
-    public boolean isInStartUp() {
-        return started;
+    public boolean isSetup() {
+        return setup;
     }
 
     public void setSetup(boolean setup) {
@@ -83,6 +86,14 @@ public class Game {
 
     public void setStarted(boolean started) {
         this.started = started;
+    }
+
+    public boolean isDestinationCardsDealt() {
+        return destinationCardsDealt;
+    }
+
+    public void setDestinationCardsDealt(boolean destinationCardsDealt) {
+        this.destinationCardsDealt = destinationCardsDealt;
     }
 
     public boolean addPlayer(Player player) {
@@ -130,17 +141,6 @@ public class Game {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Game)) return false;
-        Game game = (Game) o;
-        return started == game.started &&
-                Objects.equals(players, game.players) &&
-                Objects.equals(ID, game.ID) &&
-                Objects.equals(gameName, game.gameName);
-    }
-
-    @Override
     public int hashCode() {
 
         return Objects.hash(players, ID, gameName, started);
@@ -151,40 +151,46 @@ public class Game {
         if (this.getPlayers().size() < 1 || this.getPlayers().size() > 5) {
             return false;
         }
-        //InitalizeDecks();
-        //AssignColors();
+        InitalizeDecks();
+        AssignColors();
         setSetup(true);
         return true;
     }
 
-    public boolean start() {
+    public boolean dealDestinationCards() {
         DealTrainCardsToPlayers();
         DealDestinationCardsToPlayers();
         setFirstPlayer();
+        setDestinationCardsDealt(true);
+        return true;
+    }
+
+    public boolean start() {
         setStarted(true);
         return true;
     }
 
     private void AssignColors() {
         this.players.get(0).setColor(PlayerColors.BLACK);
-        this.players.get(1).setColor(PlayerColors.BLUE);
-        if (this.players.size() > 2) {
-            this.players.get(2).setColor(PlayerColors.GREEN);
-            if (this.players.size() > 3) {
-                this.players.get(3).setColor(PlayerColors.RED);
-                if (this.players.size() > 4) {
-                    this.players.get(4).setColor(PlayerColors.YELLOW);
+        if (this.players.size() > 1) {
+            this.players.get(1).setColor(PlayerColors.BLUE);
+            if (this.players.size() > 2) {
+                this.players.get(2).setColor(PlayerColors.GREEN);
+                if (this.players.size() > 3) {
+                    this.players.get(3).setColor(PlayerColors.RED);
+                    if (this.players.size() > 4) {
+                        this.players.get(4).setColor(PlayerColors.YELLOW);
+                    }
                 }
             }
         }
-
     }
 
     private void InitalizeDecks() {
-        this.destinationCardDeck = InitialGameSetUpVariables.getDestinationCards();
+        this.destinationCardDeck = new ArrayList<DestinationCard>(InitialGameSetUpVariables.getDestinationCards());
         this.destinationCardDiscard = new ArrayList<DestinationCard>();
 
-        this.trainCardDeck = InitialGameSetUpVariables.getTrainCards();
+        this.trainCardDeck = new ArrayList<TrainCard>(InitialGameSetUpVariables.getTrainCards());
         Collections.shuffle(this.trainCardDeck);
         this.trainCardDiscard = new ArrayList<TrainCard>();
         this.faceupTrainCardDeck = new ArrayList<TrainCard>();
@@ -230,6 +236,17 @@ public class Game {
     }
 
     public boolean PlayerDrawDestinationCards(String playerID, List<DestinationCard> cards) {
+        if (!isStarted()) {
+            boolean startGame = true;
+            for (int i = 0; i < this.players.size(); i++) {
+                if (this.players.get(i).getDestinationCardHand().size() == 0) {
+                    startGame = false;
+                }
+            }
+            if (startGame) {
+                this.start();
+            }
+        }
         return this.getPlayer(playerID).DrawDestinationCards(cards);
     }
 
@@ -304,15 +321,36 @@ public class Game {
 
     public boolean setPlayerTravelRate(String playerID, int travelRate) {
         this.getPlayer(playerID).setTravelRate(travelRate);
-        boolean startGame = true;
+        boolean dealDestinationCards = true;
         for (int i = 0; i < this.players.size(); i++) {
             if (this.players.get(i).getTravelRate() == null) {
-                startGame = false;
+                dealDestinationCards = false;
             }
         }
-        if (startGame) {
-            this.start();
+        if (dealDestinationCards) {
+            this.dealDestinationCards();
         }
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Game)) return false;
+        Game game = (Game) o;
+        return started == game.started &&
+                setup == game.setup &&
+                currentPlayer == game.currentPlayer &&
+                Objects.equals(players, game.players) &&
+                Objects.equals(ID, game.ID) &&
+                Objects.equals(gameName, game.gameName) &&
+                Objects.equals(chat, game.chat) &&
+                Objects.equals(destinationCardDeck, game.destinationCardDeck) &&
+                Objects.equals(destinationCardDiscard, game.destinationCardDiscard) &&
+                Objects.equals(trainCardDeck, game.trainCardDeck) &&
+                Objects.equals(trainCardDiscard, game.trainCardDiscard) &&
+                Objects.equals(faceupTrainCardDeck, game.faceupTrainCardDeck) &&
+                Objects.equals(claimedRoutes, game.claimedRoutes) &&
+                Objects.equals(unclaimedRoute, game.unclaimedRoute);
     }
 }

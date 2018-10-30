@@ -27,4 +27,9 @@ public class SetTravelRateByPlayerCommand implements Command {
             return new GenericResults(null, false, "SetTravelRateByPlayerCommand failed");
         }
     }
+
+    @Override
+    public boolean hasID() {
+        return false;
+    }
 }

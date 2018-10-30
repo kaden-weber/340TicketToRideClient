@@ -28,4 +28,9 @@ public class ChatCommand implements Command {
             return new GenericResults(null, false, "Chat not added");
         }
     }
+
+    @Override
+    public boolean hasID() {
+        return true;
+    }
 }
