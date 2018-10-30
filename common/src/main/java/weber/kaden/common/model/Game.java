@@ -151,8 +151,8 @@ public class Game {
         if (this.getPlayers().size() < 1 || this.getPlayers().size() > 5) {
             return false;
         }
-        //InitalizeDecks();
-        //AssignColors();
+        InitalizeDecks();
+        AssignColors();
         setSetup(true);
         return true;
     }
@@ -167,24 +167,25 @@ public class Game {
 
     private void AssignColors() {
         this.players.get(0).setColor(PlayerColors.BLACK);
-        this.players.get(1).setColor(PlayerColors.BLUE);
-        if (this.players.size() > 2) {
-            this.players.get(2).setColor(PlayerColors.GREEN);
-            if (this.players.size() > 3) {
-                this.players.get(3).setColor(PlayerColors.RED);
-                if (this.players.size() > 4) {
-                    this.players.get(4).setColor(PlayerColors.YELLOW);
+        if (this.players.size() > 1) {
+            this.players.get(1).setColor(PlayerColors.BLUE);
+            if (this.players.size() > 2) {
+                this.players.get(2).setColor(PlayerColors.GREEN);
+                if (this.players.size() > 3) {
+                    this.players.get(3).setColor(PlayerColors.RED);
+                    if (this.players.size() > 4) {
+                        this.players.get(4).setColor(PlayerColors.YELLOW);
+                    }
                 }
             }
         }
-
     }
 
     private void InitalizeDecks() {
-        this.destinationCardDeck = InitialGameSetUpVariables.getDestinationCards();
+        this.destinationCardDeck = new ArrayList<DestinationCard>(InitialGameSetUpVariables.getDestinationCards());
         this.destinationCardDiscard = new ArrayList<DestinationCard>();
 
-        this.trainCardDeck = InitialGameSetUpVariables.getTrainCards();
+        this.trainCardDeck = new ArrayList<TrainCard>(InitialGameSetUpVariables.getTrainCards());
         Collections.shuffle(this.trainCardDeck);
         this.trainCardDiscard = new ArrayList<TrainCard>();
         this.faceupTrainCardDeck = new ArrayList<TrainCard>();
