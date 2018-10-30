@@ -33,6 +33,11 @@ public class CommandFactory {
 
     public Command getCommand(CommandData data) throws InvalidCommandParamsException {
         switch (data.getType()) {
+            case SETTRAVELERRATE:
+                if(data.getParams().size() < 3){
+                    throw new InvalidCommandParamsException("Not enough params provided");
+                }
+                return new SetTravelRateByPlayerCommand(data.getParams());
             case SETUPGAME:
                 if(data.getParams().size() < 2){
                     throw new InvalidCommandParamsException("Not enough params provided");

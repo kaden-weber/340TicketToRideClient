@@ -143,4 +143,13 @@ public class ClientFacade {
             throw new Exception(results.getErrorInfo());
         }
     }
+    public void setTravelRateByPlayer(String gameId, String playerId, String numPlaces) throws Exception{
+        List<String> params = new ArrayList<>((Arrays.asList(gameId, playerId, numPlaces)));
+        CommandData commandData = new CommandData(params, CommandType.SETTRAVELERRATE);
+        Results results = ServerProxy.getInstance().sendCommand(commandData);
+        if(!results.success()){
+            throw new Exception(results.getErrorInfo());
+        }
+
+    }
 }

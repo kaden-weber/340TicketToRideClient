@@ -12,10 +12,10 @@ public class SetTravelRateByPlayerCommand implements Command {
     private String gameID;
     private int TravelRate;
 
-    public SetTravelRateByPlayerCommand(List<String> params, int travelRate) {
+    public SetTravelRateByPlayerCommand(List<String> params) {
         this.gameID = params.get(0);
         this.playerID = params.get(1);
-        TravelRate = travelRate;
+        this.TravelRate = Integer.parseInt(params.get(2));
     }
 
     @Override
