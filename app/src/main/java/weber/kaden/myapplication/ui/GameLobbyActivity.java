@@ -25,6 +25,8 @@ public class GameLobbyActivity  extends AppCompatActivity implements GameLobbyVi
     private QuitGameTask quitGameTask = null;
     GameLobbyActivity instance = this;
     GameLobbyAdapter adapter;
+    ClientFacade clientFacade = new ClientFacade();
+    GameLobbyPresenter gameLobbyPresenter = new GameLobbyPresenter(this, clientFacade);
     private List<Player> playerList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,13 @@ public class GameLobbyActivity  extends AppCompatActivity implements GameLobbyVi
     public void onResume() {
         super.onResume();
         Poller.getInstance(this).pollGame();
+    }
+    @Override
+    public void updatePlayersList(List<Player> players) {
+        System.out.println("OH YEAH ALMOST THERE" + players);
+        playerList.clear();
+        playerList.addAll(players);
+        adapter.notifyDataSetChanged();
     }
 
     public class StartGameTask extends AsyncTask<Void, Void, Boolean> {
