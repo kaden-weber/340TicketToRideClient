@@ -66,7 +66,6 @@ public class GameLobbyActivity  extends AppCompatActivity implements GameLobbyVi
     }
     @Override
     public void updatePlayersList(List<Player> players) {
-        System.out.println("OH YEAH ALMOST THERE" + players);
         playerList.clear();
         playerList.addAll(players);
         adapter.notifyDataSetChanged();
