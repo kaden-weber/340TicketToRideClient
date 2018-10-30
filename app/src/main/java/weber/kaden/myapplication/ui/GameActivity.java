@@ -20,6 +20,7 @@ import com.google.android.gms.maps.model.Dash;
 import com.google.android.gms.maps.model.Gap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PatternItem;
 import com.google.android.gms.maps.model.Polyline;
@@ -53,8 +54,16 @@ public class GameActivity extends AppCompatActivity
     private static final double MAX_WEST = -113;
 
     private static final float ROUTE_WIDTH = 22;
+    private static final double SECOND_ROUTE_OFFSET = 0.5;
+
+    //TODO: move colors to colors.xml
     private static final int ORANGE = Color.parseColor("#FFA500");
     private static final int PURPLE = Color.parseColor("#EE82EE");
+    private static final int BLUE = Color.parseColor("#33A5FF");
+    private static final int GREEN = Color.parseColor("#90FB3B");
+    private static final int YELLOW = Color.parseColor("#FEFB3A");
+    private static final int RED = Color.parseColor("#C70039");
+
 
     Locations mLocations;
 
@@ -117,6 +126,8 @@ public class GameActivity extends AppCompatActivity
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        //set map style
+        googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.style_json));
         //set min and max zoom
         googleMap.setMinZoomPreference(MIN_ZOOM);
         googleMap.setMaxZoomPreference(MAX_ZOOM);
@@ -139,17 +150,43 @@ public class GameActivity extends AppCompatActivity
         //add routes TODO: Fix parallel routes
         DisplayRoutes routes = new DisplayRoutes(mLocations);
         for ( DisplayRoute route : routes.getRoutes()){
+            String routeColor = route.getColor();
+            if(routeColor.contains(",")){
+                createDoubleRoute(route);
+                routeColor = getFirstColor(routeColor);
+            }
             Polyline line = googleMap.addPolyline(new PolylineOptions().clickable(true)
                 .add(route.getCity1().getCoords(), route.getCity2().getCoords())
                 .width(ROUTE_WIDTH)
                 .geodesic(true)
                 .pattern(pattern)
-                .color(getRouteColor(route.getColor())));
+                .color(getRouteColor(routeColor)));
             line.setTag(route.getLength());
         }
         //make routes clickable
         googleMap.setOnPolylineClickListener(this);
 
+    }
+
+    private String getFirstColor(String routeColor) {
+        return routeColor.substring(0, routeColor.indexOf(","));
+    }
+
+    private void createDoubleRoute(DisplayRoute route) {
+        String color = getSecondColor(route.getColor());
+        double slope = slope(route.getCity1(), route.getCity2());
+        double perpendicularSlope = -1 / slope;
+
+    }
+
+    private double slope(Location location1, Location location2){
+        double slope = (location2.getCoords().longitude - location1.getCoords().longitude)
+            / (location2.getCoords().latitude - location1.getCoords().longitude);
+        return slope;
+    }
+
+    private String getSecondColor(String routeColor) {
+        return routeColor.substring(routeColor.indexOf(" ") + 1);
     }
 
     private int getRouteColor(String color) {
@@ -159,17 +196,17 @@ public class GameActivity extends AppCompatActivity
             case "Black":
                 return Color.BLACK;
             case "Blue":
-                return Color.BLUE;
+                return BLUE;
             case "Green":
-                return Color.GREEN;
+                return GREEN;
             case "Red":
-                return Color.RED;
+                return RED;
             case "Purple":
                 return PURPLE;
             case "Orange":
                 return ORANGE;
             case "Yellow":
-                return Color.YELLOW;
+                return YELLOW;
             case "Gray":
                 return Color.GRAY;
         }
