@@ -12,6 +12,7 @@ public class Game {
     private String gameName;
     private boolean started;
     private boolean setup;
+    private boolean destinationCardsSelected;
     private List<ChatMessage> chat;
     private List<DestinationCard> destinationCardDeck;
     private List<DestinationCard> destinationCardDiscard;
@@ -27,6 +28,7 @@ public class Game {
         this.ID = UUID.randomUUID().toString();
         this.started = false;
         this.setup = false;
+        this.destinationCardsSelected = false;
     }
 
     public Game(List<Player> players, String ID, String gameName) {
@@ -35,6 +37,7 @@ public class Game {
         this.gameName = gameName;
         this.started = false;
         this.setup = false;
+        this.destinationCardsSelected = false;
     }
 
     public List<Player> getPlayers() {
@@ -83,6 +86,14 @@ public class Game {
 
     public void setStarted(boolean started) {
         this.started = started;
+    }
+
+    public boolean isDestinationCardsSelected() {
+        return destinationCardsSelected;
+    }
+
+    public void setDestinationCardsSelected(boolean destinationCardsSelected) {
+        this.destinationCardsSelected = destinationCardsSelected;
     }
 
     public boolean addPlayer(Player player) {
@@ -146,10 +157,15 @@ public class Game {
         return true;
     }
 
-    public boolean start() {
+    public boolean dealDestinationCards() {
         DealTrainCardsToPlayers();
         DealDestinationCardsToPlayers();
         setFirstPlayer();
+        setDestinationCardsSelected(true);
+        return true;
+    }
+
+    public boolean start() {
         setStarted(true);
         return true;
     }
@@ -220,6 +236,17 @@ public class Game {
     }
 
     public boolean PlayerDrawDestinationCards(String playerID, List<DestinationCard> cards) {
+        if (!isStarted()) {
+            boolean startGame = true;
+            for (int i = 0; i < this.players.size(); i++) {
+                if (this.players.get(i).getDestinationCardHand().size() == 0) {
+                    startGame = false;
+                }
+            }
+            if (startGame) {
+                this.start();
+            }
+        }
         return this.getPlayer(playerID).DrawDestinationCards(cards);
     }
 
@@ -294,14 +321,14 @@ public class Game {
 
     public boolean setPlayerTravelRate(String playerID, int travelRate) {
         this.getPlayer(playerID).setTravelRate(travelRate);
-        boolean startGame = true;
+        boolean dealDestinationCards = true;
         for (int i = 0; i < this.players.size(); i++) {
             if (this.players.get(i).getTravelRate() == null) {
-                startGame = false;
+                dealDestinationCards = false;
             }
         }
-        if (startGame) {
-            this.start();
+        if (dealDestinationCards) {
+            this.dealDestinationCards();
         }
         return true;
     }
