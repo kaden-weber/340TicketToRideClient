@@ -49,6 +49,14 @@ public class Route {
         this.cost = cost;
     }
 
+    public TrainCardType getType() {
+        return type;
+    }
+
+    public void setType(TrainCardType type) {
+        this.type = type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
