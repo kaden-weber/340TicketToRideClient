@@ -87,6 +87,7 @@ public class ClientFacade {
         Model.getInstance().setCurrentGame((Game)results.getData());
     }
 
+    @Deprecated
     public void startGame(String username, String gameID) throws Exception {
         List<String> params = new ArrayList<>((Arrays.asList(username, gameID)));
         CommandData commandData = new CommandData(params, CommandType.STARTGAME);
@@ -95,6 +96,7 @@ public class ClientFacade {
             throw new Exception(results.getErrorInfo());
         }
     }
+
     public void setupGame(String username, String gameID) throws Exception {
         List<String> params = new ArrayList<>((Arrays.asList(username, gameID)));
         CommandData commandData = new CommandData(params, CommandType.SETUPGAME);
@@ -104,6 +106,7 @@ public class ClientFacade {
             throw new Exception(results.getErrorInfo());
         }
     }
+
     public void exitLobby(String username, String gameID) throws Exception {
         List<String> params = new ArrayList<>((Arrays.asList(username, gameID)));
         CommandData commandData = new CommandData(params, CommandType.LEAVEGAME);

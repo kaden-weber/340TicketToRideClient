@@ -1,34 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/choose_destination_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
         android:text="@string/destination_card"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
-    <Button
-        android:id="@+id/choose_destination_cancel"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/choose_destination_header"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="0dp"
         android:layout_marginTop="30dp"
-        android:text="@string/cancel" />
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
 
-    <Button
-        android:id="@+id/choose_destination_ok"
-        android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/destination_card_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Test"
+            android:layout_marginEnd="5dp"/>
+        <Button
+            android:id="@+id/destination_card_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:text="Test" />
+        <Button
+            android:id="@+id/destination_card_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:text="Test"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/choose_destination_header"
-        android:layout_alignParentEnd="true"
+        android:orientation="horizontal"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="0dp"
-        android:text="@string/ok" />
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/choose_destination_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancel" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"/>
+
+        <Button
+            android:id="@+id/choose_destination_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/ok" />
+
+    </LinearLayout>
+
+</LinearLayout>
