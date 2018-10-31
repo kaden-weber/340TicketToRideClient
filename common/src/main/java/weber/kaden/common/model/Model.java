@@ -215,4 +215,12 @@ public class Model extends Observable {
             return null;
         }
     }
+
+    public boolean PlayerCanClaimRoute(int number, TrainCardType type) {
+        return this.currentGame.getPlayer(currentUser).hasTrainCards(number, type);
+    }
+
+    public List<DestinationCard> getDealtDestinationCards() {
+        return this.currentGame.getCurrentPlayer().getDealtDestinationCards();
+    }
 }

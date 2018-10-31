@@ -137,4 +137,18 @@ public class Player {
     public void setTravelRate(Integer travelRate) {
         TravelRate = travelRate;
     }
+
+    public boolean hasTrainCards(int number, TrainCardType type) {
+        int num = 0;
+        for (int i = 0; i < this.trainCards.size(); i++) {
+            if (this.trainCards.get(i).getType().equals(type) || this.trainCards.get(i).getType().equals(TrainCardType.LOCOMOTIVE))
+            {
+                num++;
+            }
+        }
+        if (num >= number) {
+            return true;
+        }
+        return false;
+    }
 }

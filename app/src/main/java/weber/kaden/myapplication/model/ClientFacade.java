@@ -8,9 +8,11 @@ import weber.kaden.common.command.Command;
 import weber.kaden.common.command.CommandData;
 import weber.kaden.common.command.CommandFactory;
 import weber.kaden.common.command.CommandType;
+import weber.kaden.common.model.DestinationCard;
 import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Model;
 import weber.kaden.common.model.Player;
+import weber.kaden.common.model.TrainCardType;
 import weber.kaden.myapplication.serverProxy.ServerProxy;
 import java.util.UUID;
 
@@ -154,5 +156,13 @@ public class ClientFacade {
             throw new Exception(results.getErrorInfo());
         }
 
+    }
+
+    public List<DestinationCard> getDealtDestinationCardsForCurrentPlayer() {
+        return Model.getInstance().getDealtDestinationCards();
+    }
+
+    public boolean PlayerCanClaimRoute(int number, TrainCardType type) {
+        return Model.getInstance().PlayerCanClaimRoute(number, type);
     }
 }

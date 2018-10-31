@@ -1,9 +1,5 @@
 package weber.kaden.common.model;
 
-enum TrainCardType {
+public enum TrainCardType {
     BOX, PASSENGER, TANKER, REEFER, FREIGHT, HOPPER, COAL, CABOOSE, LOCOMOTIVE
-}
-
-enum TrainCardColor {
-    
 }
