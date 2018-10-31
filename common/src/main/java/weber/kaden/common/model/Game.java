@@ -212,8 +212,7 @@ public class Game {
         for (int i = 0; i < this.players.size(); i++) {
             List<TrainCard> cards = new ArrayList<TrainCard>();
             for (int t = 0; t < 4; t++) {
-                cards.add(this.trainCardDeck.get(0));
-                this.trainCardDeck.remove(0);
+                cards.add(this.trainCardDeck.remove(0));
             }
             this.players.get(i).DealTrainCards(cards);
         }
@@ -226,10 +225,7 @@ public class Game {
         }
         List<DestinationCard> cards = new ArrayList<DestinationCard>();
         for (int i = 0; i < NumCards; i++) {
-            cards.add(this.destinationCardDeck.get(i));
-        }
-        for (int i = 0; i < NumCards; i++) {
-            this.destinationCardDeck.remove(0);
+            cards.add(this.destinationCardDeck.remove(0));
         }
         player.DealDestinationCards(cards);
     }
