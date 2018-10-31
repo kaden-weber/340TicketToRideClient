@@ -181,4 +181,8 @@ public class ClientFacade {
             throw new Exception(results.getErrorInfo());
         }
     }
+
+    public boolean isCurrentPlayer() {
+        return Model.getInstance().isCurrentPlayer();
+    }
 }
