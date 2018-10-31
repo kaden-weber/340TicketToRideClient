@@ -226,10 +226,7 @@ public class Game {
         }
         List<DestinationCard> cards = new ArrayList<DestinationCard>();
         for (int i = 0; i < NumCards; i++) {
-            cards.add(this.destinationCardDeck.get(i));
-        }
-        for (int i = 0; i < NumCards; i++) {
-            this.destinationCardDeck.remove(0);
+            cards.add(this.destinationCardDeck.remove(0));
         }
         player.DealDestinationCards(cards);
     }
