@@ -1,4 +1,6 @@
 package weber.kaden.myapplication.model;
+import android.view.Display;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -160,6 +162,9 @@ public class ClientFacade {
 
     public List<DestinationCard> getDealtDestinationCardsForCurrentPlayer() {
         return Model.getInstance().getDealtDestinationCards();
+    }
+    public List<DestinationCard> getDestinationCardsForTurn(){
+        return Model.getInstance().getCurrentGame().getTopOfDestinationCardDeck();
     }
 
     public boolean PlayerCanClaimRoute(int number, TrainCardType type) {

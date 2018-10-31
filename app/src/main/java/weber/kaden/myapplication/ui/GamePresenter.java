@@ -40,8 +40,8 @@ public class GamePresenter implements Observer {
     }
 
     public List<DestinationCard> getDrawableDestinationCards() {
-        Model model = Model.getInstance();
-        return model.getPlayer(model.getCurrentUser()).getDealtDestinationCards();
+
+        return new ClientFacade().getDestinationCardsForTurn();
     }
 
     public boolean chooseDestinationCards(List<DestinationCard> drawnCards, List<DestinationCard> discardedCards) {

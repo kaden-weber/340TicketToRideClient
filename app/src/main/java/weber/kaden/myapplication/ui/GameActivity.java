@@ -2,6 +2,7 @@ package weber.kaden.myapplication.ui;
 
 import android.app.ActionBar;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.DialogFragment;
@@ -32,6 +33,8 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
+import weber.kaden.common.model.DestinationCard;
+import weber.kaden.common.model.Game;
 import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
 import weber.kaden.myapplication.ui.map.DisplayRoute;
@@ -44,6 +47,7 @@ import weber.kaden.myapplication.ui.turnmenu.SeeOtherPlayersFragment;
 
 public class GameActivity extends AppCompatActivity
         implements OnMapReadyCallback, GoogleMap.OnPolylineClickListener, GameViewInterface {
+    GameActivity instance = this;
 
     //map Constants
     private static final float DEFAULT_ZOOM = (float) 4.0;
@@ -106,13 +110,8 @@ public class GameActivity extends AppCompatActivity
 
                 switch (item.getItemId()) {
                     case R.id.turn_menu_destination_cards:
-                        DialogFragment chooseDestinationCardsFragment = new ChooseDestinationCardsFragment();
-
-                        Bundle chooseDestinationCardsArgs = new Bundle();
-                        chooseDestinationCardsArgs.putSerializable("cards", (Serializable) mPresenter.getDrawableDestinationCards());
-                        chooseDestinationCardsFragment.setArguments(chooseDestinationCardsArgs);
-
-                        chooseDestinationCardsFragment.show(getSupportFragmentManager(), "ChooseDestinationCardsFragment");
+                        DestinationCardsTask destinationCardsTask = new DestinationCardsTask();
+                        destinationCardsTask.execute();
                         break;
                     case R.id.turn_menu_train_cards:
                         DialogFragment chooseTrainCardsFragment = new ChooseTrainCardsFragment();
@@ -261,5 +260,42 @@ public class GameActivity extends AppCompatActivity
         //otherwise display route length
         Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()), Toast.LENGTH_SHORT).show();
     }
+    public class DestinationCardsTask extends AsyncTask<Void, Void, Boolean> {
+        private String errorString = "";
+        private List<DestinationCard> destinationCards;
+        DestinationCardsTask() {
+        }
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            ClientFacade clientFacade = new ClientFacade();
+            GamePresenter gameListPresenter = new GamePresenter(instance, clientFacade);
+            try {
+                destinationCards = gameListPresenter.getDrawableDestinationCards();
+            } catch (Exception e) {
+                errorString = e.getMessage();
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            if(success){
+                DialogFragment chooseDestinationCardsFragment = new ChooseDestinationCardsFragment();
+                Bundle chooseDestinationCardsArgs = new Bundle();
+                chooseDestinationCardsArgs.putSerializable("cards", (Serializable) destinationCards);
+                chooseDestinationCardsFragment.setArguments(chooseDestinationCardsArgs);
+                chooseDestinationCardsFragment.show(getSupportFragmentManager(), "ChooseDestinationCardsFragment");
+            } else {
+                Toast.makeText(instance, errorString, Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+
+        }
+    }
+
 
 }
