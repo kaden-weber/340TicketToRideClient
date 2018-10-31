@@ -51,5 +51,6 @@ public class GamePresenter implements Observer {
     @Override
     public void update(Observable observable, Object o) {
         //Idk what to do here
+
     }
 }
