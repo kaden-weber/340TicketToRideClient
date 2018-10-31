@@ -22,7 +22,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.recycle_view_row, parent, false);
+        View view = inflater.inflate(R.layout.chat_recycle_view_row, parent, false);
         return new ViewHolder(view);
     }
 
@@ -39,9 +39,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView messageWindow;
+
         ViewHolder(View itemView) {
             super(itemView);
-            messageWindow = itemView.findViewById(R.id.chat_window);
+            messageWindow = itemView.findViewById(R.id.message_row);
         }
 
         @Override
