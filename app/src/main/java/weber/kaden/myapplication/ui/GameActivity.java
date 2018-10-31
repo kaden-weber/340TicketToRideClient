@@ -225,23 +225,23 @@ public class GameActivity extends AppCompatActivity
     private int getRouteColor(String color) {
         switch (color){
             case "White":
-                return R.color.Passenger;
+                return getResources().getColor(R.color.Passenger);
             case "Black":
-                return R.color.Hopper;
+                return getResources().getColor(R.color.Hopper);
             case "Blue":
-                return R.color.Tanker;
+                return getResources().getColor(R.color.Tanker);
             case "Green":
-                return R.color.Caboose;
+                return getResources().getColor(R.color.Caboose);
             case "Red":
-                return R.color.Coal;
+                return getResources().getColor(R.color.Coal);
             case "Purple":
-                return R.color.Box;
+                return getResources().getColor(R.color.Box);
             case "Orange":
-                return R.color.Freight;
+                return getResources().getColor(R.color.Freight);
             case "Yellow":
-                return R.color.Reefer;
+                return getResources().getColor(R.color.Reefer);
             case "Gray":
-                return R.color.Gray;
+                return getResources().getColor(R.color.Gray);
         }
         return R.color.Gray;
     }
