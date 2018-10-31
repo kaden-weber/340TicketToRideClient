@@ -17,7 +17,7 @@
         android:id="@+id/see_other_players_other_players"
         android:layout_weight = "8.5"
         android:layout_width="match_parent"
-        android:layout_height="10dp"
+        android:layout_height="wrap_content"
         tools:context=".ui.turnmenu.SeeOtherPlayersFragment" />
 
     <Button
