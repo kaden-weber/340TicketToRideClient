@@ -1,5 +1,6 @@
 package weber.kaden.myapplication.ui;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import weber.kaden.common.model.ChatMessage;
 import weber.kaden.myapplication.R;
+import weber.kaden.myapplication.model.ClientFacade;
 
 public class ChatFragment extends DialogFragment implements ChatViewInterface {
 
@@ -24,6 +26,8 @@ public class ChatFragment extends DialogFragment implements ChatViewInterface {
     private List<ChatMessage> messages;
     private RecyclerView chatWindow;
     private ChatPresenter presenter;
+    private SendChatTask chatTask;
+    private ChatFragment instance = this;
 
     public ChatFragment() {}
 
@@ -32,7 +36,6 @@ public class ChatFragment extends DialogFragment implements ChatViewInterface {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat_, container, false);
 
-        presenter = new ChatPresenter(this);
         chatWindow = view.findViewById(R.id.chat_window);
         chatWindow.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new ChatAdapter(getContext(), messages);
@@ -51,7 +54,6 @@ public class ChatFragment extends DialogFragment implements ChatViewInterface {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: close dialog
                 getDialog().dismiss();
             }
         });
@@ -80,11 +82,47 @@ public class ChatFragment extends DialogFragment implements ChatViewInterface {
 
     @Override
     public void sendChat(String message) {
-        presenter.sendMessage(message);
+        chatTask = new SendChatTask(message);
+        chatTask.execute((Void) null);
     }
 
     @Override
     public void printChatError(String message) {
         Toast.makeText(getContext(), "Error: chat did not send", Toast.LENGTH_LONG).show();
+    }
+
+    public class SendChatTask extends AsyncTask<Void, Void, Boolean> {
+
+        private String message;
+        private String errorMessage;
+
+        SendChatTask(String message) {
+            this.message = message;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            ClientFacade client = new ClientFacade();
+            presenter = new ChatPresenter(instance, client);
+            try {
+                presenter.sendMessage(message);
+            } catch (Exception e) {
+                errorMessage = e.getMessage();
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            super.onPostExecute(success);
+            printChatError(errorMessage);
+        }
+
+        @Override
+        protected void onCancelled() {
+            chatTask = null;
+            super.onCancelled();
+        }
     }
 }
