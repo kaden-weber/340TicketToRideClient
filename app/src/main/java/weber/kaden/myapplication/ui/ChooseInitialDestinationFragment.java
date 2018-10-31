@@ -98,9 +98,7 @@ public class ChooseInitialDestinationFragment extends DialogFragment implements 
             @Override
             public void onClick(View view) {
                 //TODO: Make this send data back
-<<<<<<< HEAD
                 //getDialog().dismiss();
-=======
                 getDialog().dismiss();
                 List<DestinationCard> chosenList = new ArrayList<>();
                 List<DestinationCard> discardedList = new ArrayList<>();
@@ -113,7 +111,6 @@ public class ChooseInitialDestinationFragment extends DialogFragment implements 
                     }
                 }
                 sendCards(chosenList, discardedList);
->>>>>>> 128fc33e0ed6d667902235af2ce63c46a5443d30
                 Intent intent = new Intent(getActivity(), GameActivity.class);
                 startActivity(intent);
             }
