@@ -318,7 +318,7 @@ public class Game {
         return this.players.get(currentPlayer);
     }
 
-    private void finishTurn() {
+    public void finishTurn() {
         this.currentPlayer = this.players.indexOf(currentPlayer) + 1;
         if (currentPlayer == this.players.size()) {
             currentPlayer = 0;
