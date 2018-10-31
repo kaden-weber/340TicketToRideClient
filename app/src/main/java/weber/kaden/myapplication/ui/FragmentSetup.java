@@ -5,6 +5,7 @@ import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,12 +28,14 @@ public class FragmentSetup extends DialogFragment {
     Button submit;
     FragmentSetup instance = this;
     EditText editText;
+    FragmentManager fm;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game_setup_question, container, false);
         editText = view.findViewById(R.id.numPlacesText);
         submit = view.findViewById(R.id.button);
+        fm = getFragmentManager();
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,7 +56,7 @@ public class FragmentSetup extends DialogFragment {
         }
         args.putSerializable("cards", (Serializable) dealtCards);
         chooseCards.setArguments(args);
-        chooseCards.show(getFragmentManager(), "ChooseCardFragment");
+        chooseCards.show(fm, "ChooseCardFragment");
     }
     public class SendNumberPlaces extends AsyncTask<Void, Void, Boolean> {
 
