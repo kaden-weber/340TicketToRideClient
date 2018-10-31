@@ -261,6 +261,9 @@ public class Game {
     }
 
     public boolean DiscardDestionationCards(List<DestinationCard> cards) {
+        if (cards.size() == 0) {
+            return true;
+        }
         this.destinationCardDeck.removeAll(cards);
         return this.destinationCardDiscard.addAll(cards);
     }
