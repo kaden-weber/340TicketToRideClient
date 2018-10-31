@@ -63,7 +63,7 @@ public class Player {
     }
 
     public List<DestinationCard> getDealtDestinationCards() {
-        return dealtDestinationCards;
+        return this.dealtDestinationCards;
     }
 
     public void setDealtDestinationCards(List<DestinationCard> dealtDestinationCards) {

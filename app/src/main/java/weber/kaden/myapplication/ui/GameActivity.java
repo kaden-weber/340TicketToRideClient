@@ -64,14 +64,6 @@ public class GameActivity extends AppCompatActivity
     private static final float ROUTE_WIDTH = 22;
     private static final double SECOND_ROUTE_OFFSET = 0.2;
 
-    //TODO: move colors to colors.xml
-    private static final int ORANGE = Color.parseColor("#FFA500");
-    private static final int PURPLE = Color.parseColor("#EE82EE");
-    private static final int BLUE = Color.parseColor("#33A5FF");
-    private static final int GREEN = Color.parseColor("#90FB3B");
-    private static final int YELLOW = Color.parseColor("#FEFB3A");
-    private static final int RED = Color.parseColor("#C70039");
-
 
     Locations mLocations;
     GamePresenter mPresenter = new GamePresenter(this, new ClientFacade());
@@ -233,25 +225,25 @@ public class GameActivity extends AppCompatActivity
     private int getRouteColor(String color) {
         switch (color){
             case "White":
-                return Color.WHITE;
+                return getResources().getColor(R.color.Passenger);
             case "Black":
-                return Color.BLACK;
+                return getResources().getColor(R.color.Hopper);
             case "Blue":
-                return BLUE;
+                return getResources().getColor(R.color.Tanker);
             case "Green":
-                return GREEN;
+                return getResources().getColor(R.color.Caboose);
             case "Red":
-                return RED;
+                return getResources().getColor(R.color.Coal);
             case "Purple":
-                return PURPLE;
+                return getResources().getColor(R.color.Box);
             case "Orange":
-                return ORANGE;
+                return getResources().getColor(R.color.Freight);
             case "Yellow":
-                return YELLOW;
+                return getResources().getColor(R.color.Reefer);
             case "Gray":
-                return Color.GRAY;
+                return getResources().getColor(R.color.Gray);
         }
-        return Color.GRAY;
+        return R.color.Gray;
     }
 
     @Override
@@ -260,6 +252,7 @@ public class GameActivity extends AppCompatActivity
         //otherwise display route length
         Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()), Toast.LENGTH_SHORT).show();
     }
+
     public class DestinationCardsTask extends AsyncTask<Void, Void, Boolean> {
         private String errorString = "";
         private List<DestinationCard> destinationCards;

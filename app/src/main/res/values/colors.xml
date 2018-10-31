@@ -3,4 +3,19 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!--train card types-->
+    <color name="Passenger">#FFFFFF</color>
+    <color name="Box">#DE72DE</color>
+    <color name="Tanker">#33A5FF</color>
+    <color name="Reefer">#FEFB3A</color>
+    <color name="Freight">#FFA500</color>
+    <color name="Hopper">#000000</color>
+    <color name="Coal">#C70039</color>
+    <color name="Caboose">#90FB3B</color>
+    <color name="Locomotive">#FF66B3</color>
+
+    <color name="Gray">#656565</color>
+
+
 </resources>
