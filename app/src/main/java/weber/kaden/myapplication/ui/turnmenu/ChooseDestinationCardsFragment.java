@@ -105,7 +105,6 @@ public class ChooseDestinationCardsFragment extends DialogFragment implements Ga
         mActionOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getDialog().dismiss();
                 List<DestinationCard> chosenList = new ArrayList<>();
                 List<DestinationCard> discardedList = new ArrayList<>();
                 for (int i = 0; i < chosenCards.size(); i++) {
