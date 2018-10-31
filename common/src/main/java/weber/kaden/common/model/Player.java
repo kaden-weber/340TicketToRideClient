@@ -118,6 +118,23 @@ public class Player {
             return false;
         }
         if(this.routesClaimed.add(routeClaimed)) {
+            int numberOfCards = routeClaimed.getCost();
+            for (int i = 0; i < this.trainCards.size(); i++) {
+                if (numberOfCards > 0 && this.trainCards.get(i).getType().equals(routeClaimed.getType())) {
+                    this.trainCards.remove(i);
+                    numberOfCards--;
+                    i--;
+                }
+            }
+            if (numberOfCards > 0) {
+                for (int i = 0; i < this.trainCards.size(); i++) {
+                    if (numberOfCards > 0 && this.trainCards.get(i).getType().equals(TrainCardType.LOCOMOTIVE)) {
+                        this.trainCards.remove(i);
+                        numberOfCards--;
+                        i--;
+                    }
+                }
+            }
             this.trainPieces -= routeClaimed.getCost();
             this.score += routeClaimed.getScore();
             return true;
@@ -136,5 +153,19 @@ public class Player {
 
     public void setTravelRate(Integer travelRate) {
         TravelRate = travelRate;
+    }
+
+    public boolean hasTrainCards(int number, TrainCardType type) {
+        int num = 0;
+        for (int i = 0; i < this.trainCards.size(); i++) {
+            if (this.trainCards.get(i).getType().equals(type) || this.trainCards.get(i).getType().equals(TrainCardType.LOCOMOTIVE))
+            {
+                num++;
+            }
+        }
+        if (num >= number) {
+            return true;
+        }
+        return false;
     }
 }

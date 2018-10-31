@@ -12,6 +12,7 @@ import weber.kaden.common.model.DestinationCard;
 import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Model;
 import weber.kaden.common.model.Player;
+import weber.kaden.common.model.TrainCardType;
 import weber.kaden.myapplication.serverProxy.ServerProxy;
 import java.util.UUID;
 
@@ -155,6 +156,14 @@ public class ClientFacade {
             throw new Exception(results.getErrorInfo());
         }
 
+    }
+
+    public List<DestinationCard> getDealtDestinationCardsForCurrentPlayer() {
+        return Model.getInstance().getDealtDestinationCards();
+    }
+
+    public boolean PlayerCanClaimRoute(int number, TrainCardType type) {
+        return Model.getInstance().PlayerCanClaimRoute(number, type);
     }
     public void sendDestinationCards(String playerId, String gameId, List<DestinationCard> keptCards, List<DestinationCard> discarded) throws Exception{
         List<String> params = new ArrayList<>((Arrays.asList(gameId, playerId)));

@@ -71,7 +71,7 @@ public class FragmentSetup extends DialogFragment {
                 android.support.v4.app.DialogFragment chooseCards = new ChooseInitialDestinationFragment();
 
                 Bundle args = new Bundle();
-                List<DestinationCard> dealtCards = Model.getInstance().getPlayer(Model.getInstance().getCurrentUser()).getDealtDestinationCards();
+                List<DestinationCard> dealtCards = new ClientFacade().getDealtDestinationCardsForCurrentPlayer();
                 if (dealtCards.size() == 0) {
                     dealtCards = Model.getInstance().getGame(Model.getInstance().getCurrentGame().getID()).getTopOfDestinationCardDeck();
                 }
