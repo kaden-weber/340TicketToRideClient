@@ -16,9 +16,9 @@ public class ChatPresenter implements Observer {
     private ClientFacade client;
     private Model model;
 
-    public ChatPresenter(ChatFragment view) {
+    public ChatPresenter(ChatFragment view, ClientFacade client) {
         this.view = view;
-        client = new ClientFacade();
+        this.client = client;
         model = Model.getInstance();
     }
 

@@ -13,7 +13,6 @@ public class GameSetupActivity extends FragmentActivity implements GameSetupView
         super.onCreate(savedInstanceState);
         android.support.v4.app.DialogFragment fragmentSetup = new FragmentSetup();
         fragmentSetup.show(getSupportFragmentManager(), "GameSetupFragment");
-
         setContentView(R.layout.activity_game_setup);
     }
     public void startGameActivity(){
