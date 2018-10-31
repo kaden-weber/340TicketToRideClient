@@ -22,6 +22,7 @@ public class ClaimRouteCommand implements Command {
     @Override
     public Results execute() {
         if (Model.getInstance().getGame(this.gameID).PlayerClaimRoute(this.playerID, this.routeClaimed)) {
+            Model.getInstance().getGame(this.gameID).finishTurn();
             return new GameResults(null, true, null);
         }
         else {

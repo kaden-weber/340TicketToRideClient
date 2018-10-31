@@ -21,6 +21,7 @@ public class DrawTrainCardFromFaceUpCommand implements Command {
     @Override
     public Results execute() {
         if (Model.getInstance().getGame(gameID).PlayerDrawTrainCardFromFaceUp(this.playerID, this.cardIndex)) {
+            Model.getInstance().getGame(gameID).finishTurn();
             return new GameResults(null, true, null);
         }
         else {
