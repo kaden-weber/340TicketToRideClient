@@ -36,7 +36,8 @@
         <activity android:name=".ui.GameLobbyActivity" />
         <activity android:name=".ui.GameSetupActivity" />
         <activity android:name=".ui.GameActivity"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
 
         </activity>
 

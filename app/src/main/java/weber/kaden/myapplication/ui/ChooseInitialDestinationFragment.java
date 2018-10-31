@@ -35,7 +35,7 @@ public class ChooseInitialDestinationFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 //TODO: Make this send data back
-                getDialog().dismiss();
+                //getDialog().dismiss();
                 Intent intent = new Intent(getActivity(), GameActivity.class);
                 startActivity(intent);
             }

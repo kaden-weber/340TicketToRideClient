@@ -51,5 +51,7 @@
     <string name="cancel">Cancel</string>
     <string name="ok">Ok</string>
     <string name="other_players">Other Players</string>
+    <string name="chat_menu">Chat</string>
+
 
 </resources>
