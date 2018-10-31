@@ -62,6 +62,16 @@ public class Player {
         this.color = color;
     }
 
+    public Integer getScore() {
+        return score;
+    }
+
+    public Integer getNumberOfTrainCards() {return this.trainCards.size();}
+
+    public Integer getNumberOfTrains() {return this.trainPieces;}
+
+    public Integer getNumberOfDestinationCards() {return this.destinationCardHand.size();}
+
     public List<DestinationCard> getDealtDestinationCards() {
         return this.dealtDestinationCards;
     }

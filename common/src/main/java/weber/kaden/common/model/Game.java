@@ -170,15 +170,15 @@ public class Game {
     }
 
     private void AssignColors() {
-        this.players.get(0).setColor(PlayerColors.BLACK);
+        this.players.get(0).setColor(PlayerColors.PLAYER_BLACK);
         if (this.players.size() > 1) {
-            this.players.get(1).setColor(PlayerColors.BLUE);
+            this.players.get(1).setColor(PlayerColors.PLAYER_BLUE);
             if (this.players.size() > 2) {
-                this.players.get(2).setColor(PlayerColors.GREEN);
+                this.players.get(2).setColor(PlayerColors.PLAYER_GREEN);
                 if (this.players.size() > 3) {
-                    this.players.get(3).setColor(PlayerColors.RED);
+                    this.players.get(3).setColor(PlayerColors.PLAYER_RED);
                     if (this.players.size() > 4) {
-                        this.players.get(4).setColor(PlayerColors.YELLOW);
+                        this.players.get(4).setColor(PlayerColors.PLAYER_YELLOW);
                     }
                 }
             }
