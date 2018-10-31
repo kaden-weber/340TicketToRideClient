@@ -8,6 +8,7 @@ import weber.kaden.common.command.Command;
 import weber.kaden.common.command.CommandData;
 import weber.kaden.common.command.CommandFactory;
 import weber.kaden.common.command.CommandType;
+import weber.kaden.common.model.DestinationCard;
 import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Model;
 import weber.kaden.common.model.Player;
@@ -154,5 +155,16 @@ public class ClientFacade {
             throw new Exception(results.getErrorInfo());
         }
 
+    }
+    public void sendDestinationCards(String playerId, String gameId, List<DestinationCard> keptCards, List<DestinationCard> discarded) throws Exception{
+        List<String> params = new ArrayList<>((Arrays.asList(gameId, playerId)));
+        List<Object> data = new ArrayList<>();
+        data.add(keptCards);
+        data.add(discarded);
+        CommandData commandData = new CommandData(params, CommandType.DRAWDESTINATIONCARDS, data);
+        Results results = ServerProxy.getInstance().sendCommand(commandData);
+        if(!results.success()){
+            throw new Exception(results.getErrorInfo());
+        }
     }
 }
