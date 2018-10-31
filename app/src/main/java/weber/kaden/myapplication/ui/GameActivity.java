@@ -16,6 +16,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.Dash;
 import com.google.android.gms.maps.model.Gap;
@@ -47,14 +48,14 @@ public class GameActivity extends AppCompatActivity
     //map Constants
     private static final float DEFAULT_ZOOM = (float) 4.0;
     private static final float MIN_ZOOM = (float) 4.0;
-    private static final float MAX_ZOOM = (float) 6.0;
+    private static final float MAX_ZOOM = (float) 5.5;
     private static final double DEFAULT_VIEW_LAT = 40;
-    private static final double DEFAULT_VIEW_LONG = -95;
+    private static final double DEFAULT_VIEW_LONG = -98;
     private static final float DEFAULT_VIEW_BEARING = 9;
     private static final double MAX_NORTH = 46;
     private static final double MAX_EAST = -83;
     private static final double MAX_SOUTH = 34;
-    private static final double MAX_WEST = -113;
+    private static final double MAX_WEST = -115;
 
     private static final float ROUTE_WIDTH = 22;
     private static final double SECOND_ROUTE_OFFSET = 0.2;
@@ -152,13 +153,13 @@ public class GameActivity extends AppCompatActivity
         LatLngBounds bounds = new LatLngBounds(new LatLng(MAX_SOUTH, MAX_WEST), new LatLng(MAX_NORTH, MAX_EAST));
         googleMap.setLatLngBoundsForCameraTarget(bounds);
 
-//        //add city markers TODO: Change marker icon
-//        for (Location location : mLocations.getLocations()) {
-//            googleMap.addMarker(new MarkerOptions().position(location.getCoords())
-//                    .title(location.getCity())
-//
-//                    );
-//        }
+        //add city markers TODO: Change marker icon
+        for (Location location : mLocations.getLocations()) {
+            googleMap.addMarker(new MarkerOptions().position(location.getCoords())
+                    .title(location.getCity())
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.steamtrain_dark))
+            );
+        }
 
         //make route pattern
         List<PatternItem> pattern = Arrays.<PatternItem>asList(
@@ -209,8 +210,16 @@ public class GameActivity extends AppCompatActivity
     }
 
     private LatLng offsetCoords(LatLng input, double perpendicularSlope){
-        return new LatLng(input.latitude + (SECOND_ROUTE_OFFSET / perpendicularSlope),
-                input.longitude + (SECOND_ROUTE_OFFSET * perpendicularSlope));
+        double x = input.longitude;
+        double y = input.latitude;
+        double intercept = y - (perpendicularSlope * x);
+        double newX = x + SECOND_ROUTE_OFFSET / perpendicularSlope;
+        double newY = perpendicularSlope * newX + intercept;
+
+        return new LatLng(newY, newX);
+
+//        return new LatLng(input.latitude + (SECOND_ROUTE_OFFSET / perpendicularSlope),
+//                input.longitude + (SECOND_ROUTE_OFFSET * perpendicularSlope));
     }
 
     private double slope(Location location1, Location location2){

@@ -35,7 +35,8 @@
         <activity android:name=".ui.GameListActivity" />
         <activity android:name=".ui.GameLobbyActivity" />
         <activity android:name=".ui.GameSetupActivity" />
-        <activity android:name=".ui.GameActivity">
+        <activity android:name=".ui.GameActivity"
+            android:screenOrientation="landscape" >
 
         </activity>
 
