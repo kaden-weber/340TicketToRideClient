@@ -47,7 +47,7 @@ public class GameActivity extends AppCompatActivity
     //map Constants
     private static final float DEFAULT_ZOOM = (float) 4.0;
     private static final float MIN_ZOOM = (float) 4.0;
-    private static final float MAX_ZOOM = (float) 5.2;
+    private static final float MAX_ZOOM = (float) 6.0;
     private static final double DEFAULT_VIEW_LAT = 40;
     private static final double DEFAULT_VIEW_LONG = -95;
     private static final float DEFAULT_VIEW_BEARING = 9;
@@ -76,19 +76,18 @@ public class GameActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
         // Hide both the navigation bar and the status bar.
         View decorView = getWindow().getDecorView();
-        int uiOptions =
-                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
         decorView.setSystemUiVisibility(uiOptions);
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
+
         //add map
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -126,6 +125,7 @@ public class GameActivity extends AppCompatActivity
                         break;
                     case R.id.turn_menu_claim_route:
                         //Claim route is different since we're not opening up a dialog, we're using the map
+                        //TODO: MAKE A FLAG TO SET AND THEN ON POLYLINE CLICK WILL BE CALLED
                         break;
                     case R.id.turn_menu_see_other_players:
                         DialogFragment seeOtherPlayersFragment = new SeeOtherPlayersFragment();
@@ -151,13 +151,15 @@ public class GameActivity extends AppCompatActivity
         //constrain map to game area
         LatLngBounds bounds = new LatLngBounds(new LatLng(MAX_SOUTH, MAX_WEST), new LatLng(MAX_NORTH, MAX_EAST));
         googleMap.setLatLngBoundsForCameraTarget(bounds);
-        //add city markers TODO: Change marker icon
-        for (Location location : mLocations.getLocations()) {
-            googleMap.addMarker(new MarkerOptions().position(location.getCoords())
-                    .title(location.getCity())
 
-                    );
-        }
+//        //add city markers TODO: Change marker icon
+//        for (Location location : mLocations.getLocations()) {
+//            googleMap.addMarker(new MarkerOptions().position(location.getCoords())
+//                    .title(location.getCity())
+//
+//                    );
+//        }
+
         //make route pattern
         List<PatternItem> pattern = Arrays.<PatternItem>asList(
                 new Gap(10), new Dash(70) );
