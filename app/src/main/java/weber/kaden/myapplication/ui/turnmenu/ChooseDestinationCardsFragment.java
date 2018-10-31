@@ -115,8 +115,9 @@ public class ChooseDestinationCardsFragment extends DialogFragment implements Ga
                         discardedList.add(dealtCards.get(i));
                     }
                 }
-                SendChosenCards sendChosenCards = new SendChosenCards(Model.getInstance().getCurrentUser(),
-                        Model.getInstance().getCurrentGame().getID(), chosenList, discardedList);
+                ClientFacade clientFacade = new ClientFacade();
+                SendChosenCards sendChosenCards = new SendChosenCards(clientFacade.getCurrentUser(),
+                        clientFacade.getCurrentGame().getID(), chosenList, discardedList);
                 sendChosenCards.execute();
 
                 Intent intent = new Intent(getActivity(), GameActivity.class);
