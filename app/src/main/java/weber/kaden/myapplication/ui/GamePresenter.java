@@ -44,9 +44,8 @@ public class GamePresenter implements Observer {
         return new ClientFacade().getDestinationCardsForTurn();
     }
 
-    public boolean chooseDestinationCards(List<DestinationCard> drawnCards, List<DestinationCard> discardedCards) {
-
-    	return false;
+    public void chooseDestinationCards(String username, String gameId, List<DestinationCard> drawnCards, List<DestinationCard> discardedCards) throws Exception{
+        client.sendDestinationCards(username, gameId, drawnCards, discardedCards);
     }
 
     @Override

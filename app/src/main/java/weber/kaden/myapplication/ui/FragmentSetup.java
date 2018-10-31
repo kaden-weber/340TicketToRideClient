@@ -84,20 +84,7 @@ public class FragmentSetup extends DialogFragment {
         @Override
         protected void onPostExecute(final Boolean success) {
             if (success){
-
                 getDialog().dismiss();
-                /*
-                android.support.v4.app.DialogFragment chooseCards = new ChooseInitialDestinationFragment();
-
-                Bundle args = new Bundle();
-                List<DestinationCard> dealtCards = new ClientFacade().getDealtDestinationCardsForCurrentPlayer();
-                if (dealtCards.size() == 0) {
-                    dealtCards = Model.getInstance().getGame(Model.getInstance().getCurrentGame().getID()).getTopOfDestinationCardDeck();
-                }
-                args.putSerializable("cards", (Serializable) dealtCards);
-                chooseCards.setArguments(args);
-
-                chooseCards.show(getFragmentManager(), "ChooseCardFragment");*/
             }else {
                 Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
             }
