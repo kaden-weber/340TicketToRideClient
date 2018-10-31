@@ -147,8 +147,7 @@ public class Game {
     }
 
     public boolean setUp() {
-        // TESTING ONLY, CHANGE 1 to 2
-        if (this.getPlayers().size() < 1 || this.getPlayers().size() > 5) {
+        if (this.getPlayers().size() < 2 || this.getPlayers().size() > 5) {
             return false;
         }
         InitalizeDecks();
