@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -54,7 +55,7 @@ public class GameActivity extends AppCompatActivity
     private static final double MAX_WEST = -113;
 
     private static final float ROUTE_WIDTH = 22;
-    private static final double SECOND_ROUTE_OFFSET = 0.5;
+    private static final double SECOND_ROUTE_OFFSET = 0.2;
 
     //TODO: move colors to colors.xml
     private static final int ORANGE = Color.parseColor("#FFA500");
@@ -137,9 +138,12 @@ public class GameActivity extends AppCompatActivity
         //constrain map to game area
         LatLngBounds bounds = new LatLngBounds(new LatLng(MAX_SOUTH, MAX_WEST), new LatLng(MAX_NORTH, MAX_EAST));
         googleMap.setLatLngBoundsForCameraTarget(bounds);
-        //add city markers
+        //add city markers TODO: Change marker icon
         for (Location location : mLocations.getLocations()) {
-            googleMap.addMarker(new MarkerOptions().position(location.getCoords()).title(location.getCity()));
+            googleMap.addMarker(new MarkerOptions().position(location.getCoords())
+                    .title(location.getCity())
+
+                    );
         }
         //make route pattern
         List<PatternItem> pattern = Arrays.<PatternItem>asList(
@@ -147,14 +151,16 @@ public class GameActivity extends AppCompatActivity
 //        List<PatternItem> doublePattern = Arrays.<PatternItem>asList(
 //                new Dash(70), new Gap(10) );
 
-        //add routes TODO: Fix parallel routes
+        //add routes TODO: Fix double routes
         DisplayRoutes routes = new DisplayRoutes(mLocations);
         for ( DisplayRoute route : routes.getRoutes()){
             String routeColor = route.getColor();
+            //check for double route
             if(routeColor.contains(",")){
-                createDoubleRoute(route);
+                createDoubleRoute(googleMap, route, pattern);
                 routeColor = getFirstColor(routeColor);
             }
+            //add regular route
             Polyline line = googleMap.addPolyline(new PolylineOptions().clickable(true)
                 .add(route.getCity1().getCoords(), route.getCity2().getCoords())
                 .width(ROUTE_WIDTH)
@@ -172,17 +178,29 @@ public class GameActivity extends AppCompatActivity
         return routeColor.substring(0, routeColor.indexOf(","));
     }
 
-    private void createDoubleRoute(DisplayRoute route) {
+    private void createDoubleRoute(GoogleMap googleMap, DisplayRoute route, List<PatternItem> pattern) {
         String color = getSecondColor(route.getColor());
         double slope = slope(route.getCity1(), route.getCity2());
         double perpendicularSlope = -1 / slope;
+        LatLng newCity1 = offsetCoords(route.getCity1().getCoords(), perpendicularSlope);
+        LatLng newCity2 = offsetCoords(route.getCity2().getCoords(), perpendicularSlope);
+        Polyline line = googleMap.addPolyline(new PolylineOptions().clickable(true)
+            .add(newCity1, newCity2)
+            .width(ROUTE_WIDTH)
+            .geodesic(true)
+            .pattern(pattern)
+            .color(getRouteColor(color)));
+        line.setTag(route.getLength());
+    }
 
+    private LatLng offsetCoords(LatLng input, double perpendicularSlope){
+        return new LatLng(input.latitude + (SECOND_ROUTE_OFFSET / perpendicularSlope),
+                input.longitude + (SECOND_ROUTE_OFFSET * perpendicularSlope));
     }
 
     private double slope(Location location1, Location location2){
-        double slope = (location2.getCoords().longitude - location1.getCoords().longitude)
-            / (location2.getCoords().latitude - location1.getCoords().longitude);
-        return slope;
+        return (location2.getCoords().latitude - location1.getCoords().latitude)
+               / (location2.getCoords().longitude - location1.getCoords().longitude);
     }
 
     private String getSecondColor(String routeColor) {
@@ -217,6 +235,7 @@ public class GameActivity extends AppCompatActivity
     public void onPolylineClick(Polyline polyline) {
         //check if the route can be claimed
         //otherwise display route length
+        Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()), Toast.LENGTH_SHORT).show();
     }
 
 }
