@@ -43,6 +43,18 @@ public class FragmentSetup extends DialogFragment {
 
         return view;
     }
+    public void startCardSelection(){
+        android.support.v4.app.DialogFragment chooseCards = new ChooseInitialDestinationFragment();
+
+        Bundle args = new Bundle();
+        List<DestinationCard> dealtCards = new ClientFacade().getDealtDestinationCardsForCurrentPlayer();
+        if (dealtCards.size() == 0) {
+            dealtCards = Model.getInstance().getGame(Model.getInstance().getCurrentGame().getID()).getTopOfDestinationCardDeck();
+        }
+        args.putSerializable("cards", (Serializable) dealtCards);
+        chooseCards.setArguments(args);
+        chooseCards.show(getFragmentManager(), "ChooseCardFragment");
+    }
     public class SendNumberPlaces extends AsyncTask<Void, Void, Boolean> {
 
         private final String numPlaces;
@@ -57,6 +69,7 @@ public class FragmentSetup extends DialogFragment {
             GameSetupPresenter gameSetupPresenter = new GameSetupPresenter(instance, clientFacade);
             try {
                 gameSetupPresenter.sendNumPlaces(Model.getInstance().getCurrentGame().getID(), Model.getInstance().getCurrentUser(), numPlaces);
+                gameSetupPresenter.setGotTravelRate(true);
             } catch (Exception e) {
                 errorMessage = e.getMessage();
                 return false;
@@ -67,7 +80,9 @@ public class FragmentSetup extends DialogFragment {
         @Override
         protected void onPostExecute(final Boolean success) {
             if (success){
+
                 getDialog().dismiss();
+                /*
                 android.support.v4.app.DialogFragment chooseCards = new ChooseInitialDestinationFragment();
 
                 Bundle args = new Bundle();
@@ -78,7 +93,7 @@ public class FragmentSetup extends DialogFragment {
                 args.putSerializable("cards", (Serializable) dealtCards);
                 chooseCards.setArguments(args);
 
-                chooseCards.show(getFragmentManager(), "ChooseCardFragment");
+                chooseCards.show(getFragmentManager(), "ChooseCardFragment");*/
             }else {
                 Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
             }
