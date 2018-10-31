@@ -17,8 +17,8 @@ public class InitialDestinationCardPresenter implements Observer {
         this.activity = activity;
         this.client = client;
     }
-    public List<DestinationCard> sendCards(String playerId, String gameId, List<DestinationCard> kept, List<DestinationCard> discarded) throws Exception {
-        return client.sendDestinationCards(playerId, gameId, kept, discarded);
+    public void sendCards(String playerId, String gameId, List<DestinationCard> kept, List<DestinationCard> discarded) throws Exception {
+        client.sendDestinationCards(playerId, gameId, kept, discarded);
     }
 
     @Override
