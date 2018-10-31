@@ -22,7 +22,7 @@
 
         <!--this is the activity that will be shown on startup-->
         <activity
-            android:name=".ui.GameActivity"
+            android:name=".ui.LoginActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.Launcher">
             <intent-filter>
@@ -35,8 +35,7 @@
         <activity android:name=".ui.GameListActivity" />
         <activity android:name=".ui.GameLobbyActivity" />
         <activity android:name=".ui.GameSetupActivity" />
-        <activity android:name=".ui.GameActivity">
-        <activity android:name=".ui.LoginActivity"
+        <activity android:name=".ui.GameActivity"
             android:screenOrientation="landscape" >
 
         </activity>
