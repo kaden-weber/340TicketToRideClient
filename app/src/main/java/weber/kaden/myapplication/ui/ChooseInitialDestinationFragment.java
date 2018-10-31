@@ -20,7 +20,6 @@ import weber.kaden.common.model.DestinationCard;
 import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
 
-public class ChooseInitialDestinationFragment extends DialogFragment {
 public class ChooseInitialDestinationFragment extends DialogFragment implements GameViewInterface {
     //widgets
     private Button mActionCancel, mActionOk;
