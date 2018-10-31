@@ -64,7 +64,7 @@ public class FragmentSetup extends DialogFragment {
         protected void onPostExecute(final Boolean success) {
             if (success){
                 getDialog().dismiss();
-                android.support.v4.app.DialogFragment chooseCards = new ChooseDestinationCardsFragment();
+                android.support.v4.app.DialogFragment chooseCards = new ChooseInitialDestinationFragment();
                 chooseCards.show(getFragmentManager(), "ChooseCardFragment");
             }else {
                 Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
