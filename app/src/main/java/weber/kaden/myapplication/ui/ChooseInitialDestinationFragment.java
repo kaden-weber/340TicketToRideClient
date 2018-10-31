@@ -132,6 +132,12 @@ public class ChooseInitialDestinationFragment extends DialogFragment implements 
 
         return view;
     }
+
+    @Override
+    public void sendMessage(String message) {
+
+    }
+
     public class SendChosenCards extends AsyncTask<Void, Void, Boolean> {
 
         private final String username;

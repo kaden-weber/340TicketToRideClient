@@ -53,4 +53,9 @@ public class GamePresenter implements Observer {
         //Idk what to do here
 
     }
+
+    public void runPhase2Test() {
+        //TODO Run test list
+        view.sendMessage("Running Tests");
+    }
 }
