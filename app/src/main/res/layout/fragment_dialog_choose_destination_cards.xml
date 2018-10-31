@@ -20,29 +20,38 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp">
 
-        <Button
+        <ToggleButton
             android:id="@+id/destination_card_0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minHeight="100dp"
             android:layout_weight="1"
-            android:text="Test"
-            android:layout_marginEnd="5dp"/>
-        <Button
+            android:textSize="12sp"
+            android:layout_marginEnd="5dp"
+            android:textOn="Test"
+            android:textOff="Test"/>
+        <ToggleButton
             android:id="@+id/destination_card_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minHeight="100dp"
             android:layout_weight="1"
+            android:textSize="12sp"
             android:layout_marginEnd="5dp"
             android:layout_marginStart="5dp"
-            android:text="Test" />
-        <Button
+            android:textOn="Test"
+            android:textOff="Test"/>
+        <ToggleButton
             android:id="@+id/destination_card_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minHeight="100dp"
             android:layout_weight="1"
+            android:textSize="12sp"
             android:layout_marginEnd="5dp"
             android:layout_marginStart="5dp"
-            android:text="Test"/>
+            android:textOn="Test"
+            android:textOff="Test"/>
     </LinearLayout>
 
     <LinearLayout
