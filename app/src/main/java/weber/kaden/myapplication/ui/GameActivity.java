@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -71,6 +72,9 @@ public class GameActivity extends AppCompatActivity
     List<PatternItem> mClaimedPattern;
     GamePresenter mPresenter = new GamePresenter(this, new ClientFacade());
     DrawerLayout mDrawerLayout;
+
+    //TEMP FOR PHASE 2
+    Button mTestButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +141,15 @@ public class GameActivity extends AppCompatActivity
                  new Dash(100) );
         //init route list
         mRoutes = new ArrayList<>();
+
+        //init test button
+        mTestButton = findViewById(R.id.tempTestButton);
+        mTestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.runPhase2Test();
+            }
+        });
     }
 
     @Override
@@ -252,6 +265,9 @@ public class GameActivity extends AppCompatActivity
         Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()), Toast.LENGTH_SHORT).show();
     }
 
+    public void sendMessage(String message){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 
 
     public class DestinationCardsTask extends AsyncTask<Void, Void, Boolean> {
