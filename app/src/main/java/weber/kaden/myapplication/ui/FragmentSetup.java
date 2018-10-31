@@ -33,7 +33,7 @@ public class FragmentSetup extends DialogFragment {
             @Override
             public void onClick(View view) {
                 SendNumberPlaces sendNumberPlaces = new SendNumberPlaces(editText.getText().toString());
-                sendNumberPlaces.doInBackground();
+                sendNumberPlaces.execute();
             }
         });
 
