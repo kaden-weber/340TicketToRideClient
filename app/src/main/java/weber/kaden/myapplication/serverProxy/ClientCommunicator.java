@@ -15,7 +15,7 @@ import weber.kaden.common.command.CommandType;
 public class ClientCommunicator {
     private static ClientCommunicator single_instance = null;
 
-    private String serverIP = "18.222.165.210";
+    private String serverIP = "10.0.2.2";
     private String serverPort = "8080";
 
 

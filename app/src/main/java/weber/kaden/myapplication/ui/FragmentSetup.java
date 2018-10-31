@@ -13,6 +13,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.Serializable;
+import java.util.List;
+
+import weber.kaden.common.model.DestinationCard;
 import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Model;
 import weber.kaden.myapplication.R;
@@ -65,6 +69,15 @@ public class FragmentSetup extends DialogFragment {
             if (success){
                 getDialog().dismiss();
                 android.support.v4.app.DialogFragment chooseCards = new ChooseInitialDestinationFragment();
+
+                Bundle args = new Bundle();
+                List<DestinationCard> dealtCards = Model.getInstance().getPlayer(Model.getInstance().getCurrentUser()).getDealtDestinationCards();
+                if (dealtCards.size() == 0) {
+                    dealtCards = Model.getInstance().getGame(Model.getInstance().getCurrentGame().getID()).getTopOfDestinationCardDeck();
+                }
+                args.putSerializable("cards", (Serializable) dealtCards);
+                chooseCards.setArguments(args);
+
                 chooseCards.show(getFragmentManager(), "ChooseCardFragment");
             }else {
                 Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();

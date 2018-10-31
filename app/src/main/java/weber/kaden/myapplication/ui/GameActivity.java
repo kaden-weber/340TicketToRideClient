@@ -29,10 +29,12 @@ import com.google.android.gms.maps.model.PatternItem;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
 import weber.kaden.myapplication.R;
+import weber.kaden.myapplication.model.ClientFacade;
 import weber.kaden.myapplication.ui.map.DisplayRoute;
 import weber.kaden.myapplication.ui.map.DisplayRoutes;
 import weber.kaden.myapplication.ui.map.Location;
@@ -69,7 +71,7 @@ public class GameActivity extends AppCompatActivity
 
 
     Locations mLocations;
-
+    GamePresenter mPresenter = new GamePresenter(this, new ClientFacade());
     DrawerLayout mDrawerLayout;
 
     @Override
@@ -114,10 +116,21 @@ public class GameActivity extends AppCompatActivity
                 switch (item.getItemId()) {
                     case R.id.turn_menu_destination_cards:
                         DialogFragment chooseDestinationCardsFragment = new ChooseDestinationCardsFragment();
+
+                        Bundle chooseDestinationCardsArgs = new Bundle();
+                        chooseDestinationCardsArgs.putSerializable("cards", (Serializable) mPresenter.getDrawableDestinationCards());
+                        chooseDestinationCardsFragment.setArguments(chooseDestinationCardsArgs);
+
                         chooseDestinationCardsFragment.show(getSupportFragmentManager(), "ChooseDestinationCardsFragment");
                         break;
                     case R.id.turn_menu_train_cards:
                         DialogFragment chooseTrainCardsFragment = new ChooseTrainCardsFragment();
+
+                        Bundle chooseTrainCardArgs = new Bundle();
+                        chooseTrainCardArgs.putSerializable("faceUpCards", (Serializable) mPresenter.getFaceUpTrainCards());
+                        chooseTrainCardArgs.putSerializable("deck", (Serializable) mPresenter.getTrainCardsDeck());
+                        chooseTrainCardsFragment.setArguments(chooseTrainCardArgs);
+
                         chooseTrainCardsFragment.show(getSupportFragmentManager(), "ChooseTrainCardsFragment");
                         break;
                     case R.id.turn_menu_claim_route:

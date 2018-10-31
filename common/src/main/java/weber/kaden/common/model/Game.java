@@ -147,8 +147,7 @@ public class Game {
     }
 
     public boolean setUp() {
-        // TESTING ONLY, CHANGE 1 to 2
-        if (this.getPlayers().size() < 1 || this.getPlayers().size() > 5) {
+        if (this.getPlayers().size() < 2 || this.getPlayers().size() > 5) {
             return false;
         }
         InitalizeDecks();
@@ -247,10 +246,26 @@ public class Game {
                 this.start();
             }
         }
+        this.destinationCardDeck.removeAll(cards);
         return this.getPlayer(playerID).DrawDestinationCards(cards);
     }
 
+    public List<DestinationCard> getTopOfDestinationCardDeck() {
+        List<DestinationCard> toReturn = new ArrayList<DestinationCard>();
+        if (this.destinationCardDeck.size() == 0) {
+            return null;
+        } else if (this.destinationCardDeck.size() > 0) {
+            toReturn.add(this.destinationCardDeck.get(0));
+        } if (this.destinationCardDeck.size() > 1) {
+            toReturn.add(this.destinationCardDeck.get(1));
+        } if (this.destinationCardDeck.size() > 2) {
+            toReturn.add(this.destinationCardDeck.get(2));
+        }
+        return toReturn;
+    }
+
     public boolean DiscardDestionationCards(List<DestinationCard> cards) {
+        this.destinationCardDeck.removeAll(cards);
         return this.destinationCardDiscard.addAll(cards);
     }
 
