@@ -29,13 +29,16 @@ public class ChooseInitialDestinationFragment extends DialogFragment implements 
     //widgets
     private Button mActionCancel, mActionOk;
     private ChooseInitialDestinationFragment instance = this;
+    private int numSelected = 0;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dialog_choose_destination_cards, container, false);
+        setCancelable(false); // NOT CANCELABLE BY CLICKING OUTSIDE OF SCREEN
         mActionCancel = view.findViewById(R.id.choose_destination_cancel);
         mActionOk = view.findViewById(R.id.choose_destination_ok);
+        mActionOk.setEnabled(false);
 
         mActionCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,10 +62,13 @@ public class ChooseInitialDestinationFragment extends DialogFragment implements 
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
                     chosenCards.set(0, true);
+                    numSelected++;
                 }
                 else {
                     chosenCards.set(0, false);
+                    numSelected--;
                 }
+                mActionOk.setEnabled((numSelected > 1));
             }
         });
 
@@ -75,10 +81,13 @@ public class ChooseInitialDestinationFragment extends DialogFragment implements 
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
                     chosenCards.set(1, true);
+                    numSelected++;
                 }
                 else {
                     chosenCards.set(1, false);
+                    numSelected--;
                 }
+                mActionOk.setEnabled((numSelected > 1));
             }
         });
 
@@ -91,10 +100,13 @@ public class ChooseInitialDestinationFragment extends DialogFragment implements 
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
                     chosenCards.set(2, true);
+                    numSelected++;
                 }
                 else {
                     chosenCards.set(2, false);
+                    numSelected--;
                 }
+                mActionOk.setEnabled((numSelected > 1));
             }
         });
 

@@ -33,6 +33,7 @@ public class FragmentSetup extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game_setup_question, container, false);
+        setCancelable(false);
         editText = view.findViewById(R.id.numPlacesText);
         submit = view.findViewById(R.id.button);
         fm = getFragmentManager();
