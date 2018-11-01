@@ -25,6 +25,7 @@ public class GamePresenter implements Observer {
 
     public GamePresenter(GameActivity activity, ClientFacade client) {
         this.view = activity;
+        this.activity = activity;
         this.client = client;
         Model.getInstance().addObserver(this);
     }
