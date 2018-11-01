@@ -109,16 +109,20 @@ public class CommandFactory {
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
                 }
                 List<DestinationCard> data1 = new ArrayList<>();
-                Iterator iterator = ((ArrayList) data.getData().get(0)).iterator();
-                while (iterator.hasNext()) {
-                    data1.add((DestinationCard) deserializeData(CommandType.DRAWDESTINATIONCARDS,
-                            ((LinkedTreeMap) iterator.next())));
-                }
                 List<DestinationCard> data2 = new ArrayList<>();
-                Iterator iterator2 = ((ArrayList) data.getData().get(1)).iterator();
-                while (iterator2.hasNext()) {
-                    data1.add((DestinationCard) deserializeData(CommandType.DRAWDESTINATIONCARDS,
-                            ((LinkedTreeMap) iterator2.next())));
+                if (data.getData().get(0) instanceof ArrayList<?>) {
+                    Iterator iterator = ((ArrayList) data.getData().get(0)).iterator();
+                    while (iterator.hasNext()) {
+                        data1.add((DestinationCard) deserializeData(CommandType.DRAWDESTINATIONCARDS,
+                                ((LinkedTreeMap) iterator.next())));
+                    }
+                }
+                if (data.getData().get(1) instanceof ArrayList<?>) {
+                    Iterator iterator2 = ((ArrayList) data.getData().get(1)).iterator();
+                    while (iterator2.hasNext()) {
+                        data1.add((DestinationCard) deserializeData(CommandType.DRAWDESTINATIONCARDS,
+                                ((LinkedTreeMap) iterator2.next())));
+                    }
                 }
                 return new DrawDestinationCardsCommand(data.getParams().get(0), data.getParams().get(1),
                         data1, data2);
