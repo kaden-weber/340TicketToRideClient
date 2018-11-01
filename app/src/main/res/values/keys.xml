@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<<<<<<< HEAD
-    <string name="map_API_key">AIzaSyCM89OHu0AYvBCQcSxTsy7nfwZJ4gKyI1s</string>
-=======
     <string name="map_API_key">INSERT_KEY_HERE</string>
->>>>>>> 9fcc23300b13221d5902fb64488db4cdad6ea474
 </resources>

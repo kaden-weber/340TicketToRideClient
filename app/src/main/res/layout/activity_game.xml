@@ -38,7 +38,6 @@
             android:text="@string/test"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/map_frame" />
-=======
         <LinearLayout
             android:id="@+id/myInfoBanner"
             android:layout_width="match_parent"
@@ -50,13 +49,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"/>
         </LinearLayout>
->>>>>>> 9077a723c196eac68d06316df5f951739ab4bf29
     </android.support.constraint.ConstraintLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/turn_nav_view"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"

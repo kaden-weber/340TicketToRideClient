@@ -63,16 +63,11 @@ public class GamePresenter implements Observer {
     }
 
     @Override
-    public void update(Observable observable, Object o) {
-        //update claimed routes
-
-=======
     public void update(Observable observable, Object arg) {
         if (arg instanceof Game) {
             Game game = (Game) arg;
             activity.setMyNewValues(game.getPlayer(client.getCurrentUser()).getDestinationCardHand());
         }
->>>>>>> 9077a723c196eac68d06316df5f951739ab4bf29
     }
 
     public void runPhase2Test() {

@@ -52,12 +52,11 @@
     <string name="chat_header">Chat</string>
     <string name="cancel">Cancel</string>
     <string name="ok">Ok</string>
-<<<<<<< HEAD
     <string name="other_players">Other Players</string>
     <string name="chat_menu">Chat</string>
 
-=======
-    <string name="other_players">Players</string>
->>>>>>> 9fcc23300b13221d5902fb64488db4cdad6ea474
+    <!--claim route pop-up-->
+    <string name="confirm_button_label">Confirm</string>
+    <string name="claim_route_button_filler_text">Claim Route?</string>
 
 </resources>
