@@ -52,17 +52,10 @@ public class CommandManager implements iCommandManager {
     }
 
     @Override
-    public List<CommandData> getLatestCommands(String gameID, String lastID) {
+    public List<CommandData> getLatestCommands(String gameID) {
         List<CommandData> toReturn = new ArrayList<CommandData>();
-        int index = 0;
-        boolean get = false;
         for (int i = 0; i < mCommandDataList.get(gameID).size(); i++) {
-            if (get) {
-                toReturn.add(this.mCommandDataList.get(gameID).get(i));
-            }
-            if (this.mCommandDataList.get(gameID).get(i).getCommandID().equals(lastID)) {
-                get = true;
-            }
+            toReturn.add(this.mCommandDataList.get(gameID).get(i));
         }
         return toReturn;
     }
