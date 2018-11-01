@@ -63,7 +63,7 @@ import weber.kaden.myapplication.ui.turnmenu.SeeOtherPlayersFragment;
 
 public class GameActivity extends AppCompatActivity
         implements OnMapReadyCallback, GoogleMap.OnPolylineClickListener, GameViewInterface,
-        ClaimRoute.OnFragmentInteractionListener {
+        ClaimRouteFragment.OnFragmentInteractionListener {
     GameActivity instance = this;
     GameAdapter adapter;
     TrainCardAdapter trainCardAdapter;
@@ -334,10 +334,16 @@ public class GameActivity extends AppCompatActivity
     @Override
     public void onPolylineClick(Polyline polyline) {
         //check if the route can be claimed
-        //otherwise display route length
+//        //otherwise display route length
+        String city1 = getCity1(polyline);
+        String city2 = getCity2(polyline);
         if(mClaimingRouteFlag && mPresenter.routeClaimable(
                 (int)polyline.getTag(), getRouteType(polyline))){ // and route can be claimed...
-            ClaimRoute.newInstance(getCity1(polyline), getCity2(polyline));
+
+            DialogFragment fragment = new ClaimRouteFragment();
+            ((ClaimRouteFragment) fragment).setParams(city1, city2, getRouteType(polyline), (Integer) polyline.getTag());
+            fragment.show(getSupportFragmentManager(), "ClaimRouteFragment");
+
         }
         Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()),
                 Toast.LENGTH_SHORT).show();

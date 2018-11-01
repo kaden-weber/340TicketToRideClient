@@ -26,7 +26,7 @@ public class ClaimRouteCommand implements Command {
             return new GameResults(null, true, null);
         }
         else {
-            return new GenericResults(null, false, "ClaimRouteCommand failed");
+            return new GenericResults(null, false, "Route already claimed");
         }
     }
 

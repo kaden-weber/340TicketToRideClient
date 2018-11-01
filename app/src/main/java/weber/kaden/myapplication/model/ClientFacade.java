@@ -172,6 +172,17 @@ public class ClientFacade {
     public boolean playerCanClaimRoute(int number, TrainCardType type) {
         return Model.getInstance().PlayerCanClaimRoute(number, type);
     }
+
+    public void claimRoute(String gameId, String userId, Route route) throws Exception {
+        List<String> params = new ArrayList<>((Arrays.asList(gameId, userId)));
+        List<Object> data = new ArrayList<>();
+        data.add(route);
+        CommandData commandData = new CommandData(params, CommandType.CLAIMROUTE, data);
+        Results results = ServerProxy.getInstance().sendCommand(commandData);
+        if(!results.success()){
+            throw new Exception(results.getErrorInfo());
+        }
+    }
     public void sendDestinationCards(String playerId, String gameId, List<DestinationCard> keptCards, List<DestinationCard> discarded) throws Exception{
         List<String> params = new ArrayList<>((Arrays.asList(gameId, playerId)));
         List<Object> data = new ArrayList<>();
