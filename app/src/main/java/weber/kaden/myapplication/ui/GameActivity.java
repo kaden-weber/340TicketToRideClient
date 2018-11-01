@@ -36,12 +36,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-<<<<<<< HEAD
 import weber.kaden.common.model.Model;
-=======
 import weber.kaden.common.model.DestinationCard;
 import weber.kaden.common.model.Game;
->>>>>>> 9fcc23300b13221d5902fb64488db4cdad6ea474
+import weber.kaden.common.model.DestinationCard;
+import weber.kaden.common.model.Game;
 import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
 import weber.kaden.myapplication.ui.map.DisplayRoute;
@@ -71,12 +70,12 @@ public class GameActivity extends AppCompatActivity
     private static final float ROUTE_WIDTH = 22;
     private static final double SECOND_ROUTE_OFFSET = 0.6;
 
-
-    Locations mLocations;
-    List<Polyline> mRoutes;
-    List<PatternItem> mClaimedPattern;
-    GamePresenter mPresenter = new GamePresenter(this, new ClientFacade());
-    DrawerLayout mDrawerLayout;
+    private Locations mLocations;
+    private List<Polyline> mRoutes;
+    private List<PatternItem> mClaimedPattern;
+    private GamePresenter mPresenter = new GamePresenter(this, new ClientFacade());
+    private DrawerLayout mDrawerLayout;
+    private boolean mClaimingRouteFlag;
 
     //TEMP FOR PHASE 2
     Button mTestButton;
@@ -129,7 +128,7 @@ public class GameActivity extends AppCompatActivity
                         break;
                     case R.id.turn_menu_claim_route:
                         //Claim route is different since we're not opening up a dialog, we're using the map
-                        //TODO: MAKE A FLAG TO SET AND THEN ON POLYLINE CLICK WILL BE CALLED
+                        mClaimingRouteFlag = true;
                         break;
                     case R.id.turn_menu_see_other_players:
                         DialogFragment seeOtherPlayersFragment = new SeeOtherPlayersFragment();
@@ -148,6 +147,7 @@ public class GameActivity extends AppCompatActivity
         //make claimed route pattern
         List<PatternItem> claimedRoutePattern = Arrays.<PatternItem>asList(
                  new Dash(100) );
+        mClaimingRouteFlag = false;
         //init route list
         mRoutes = new ArrayList<>();
 
@@ -282,6 +282,9 @@ public class GameActivity extends AppCompatActivity
     public void onPolylineClick(Polyline polyline) {
         //check if the route can be claimed
         //otherwise display route length
+        if(mClaimingRouteFlag){ // and route can be claimed...
+
+        }
         Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()), Toast.LENGTH_SHORT).show();
     }
 

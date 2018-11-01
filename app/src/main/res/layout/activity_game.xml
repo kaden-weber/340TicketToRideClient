@@ -15,13 +15,8 @@
         <FrameLayout
             android:id="@+id/map_frame"
             android:layout_width="match_parent"
-<<<<<<< HEAD
             android:layout_height="match_parent"
             android:orientation="horizontal">
-        </fragment>
-    </FrameLayout>
-=======
-            android:layout_height="match_parent">
 
             <fragment
                 android:id="@+id/map"
@@ -43,7 +38,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/map_frame" />
     </android.support.constraint.ConstraintLayout>
->>>>>>> 9fcc23300b13221d5902fb64488db4cdad6ea474
 
     <android.support.design.widget.NavigationView
         android:id="@+id/turn_nav_view"
