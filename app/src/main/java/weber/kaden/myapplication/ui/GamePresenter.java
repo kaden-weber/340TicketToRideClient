@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.util.EventLog;
 
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.TimeUnit;
@@ -14,6 +13,7 @@ import weber.kaden.common.model.City;
 import weber.kaden.common.model.DestinationCard;
 import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Model;
+import weber.kaden.common.model.Player;
 import weber.kaden.common.model.Route;
 import weber.kaden.common.model.TrainCard;
 import weber.kaden.common.model.TrainCardType;
@@ -32,7 +32,7 @@ public class GamePresenter implements Observer {
     }
 
     boolean routeClaimable(int size, TrainCardType type){
-        return client.PlayerCanClaimRoute(size, type);
+        return client.playerCanClaimRoute(size, type);
     }
 
     @Override
@@ -43,7 +43,15 @@ public class GamePresenter implements Observer {
             List<TrainCard> trainCards = game.getPlayer(client.getCurrentUser()).getTrainCards();
             List<Integer> points = new ArrayList<>();
             points.add(game.getPlayer(client.getCurrentUser()).getScore());
+            //TODO: refactor
             activity.setMyNewValues(destCards, trainCards, points);
+            updateClaimedRoutes(game);
+        }
+    }
+
+    private void updateClaimedRoutes(Game game){
+        for( Player player : game.getPlayers()){
+            view.updateClaimedRoutes(player.getColor(), game.RoutesClaimedByPlayer(player.getID()));
         }
     }
 
