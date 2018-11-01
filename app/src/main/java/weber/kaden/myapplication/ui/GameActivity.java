@@ -61,6 +61,7 @@ import weber.kaden.myapplication.ui.turnmenu.ChooseDestinationCardsFragment;
 import weber.kaden.myapplication.ui.turnmenu.ChooseDestinationCardsPresenter;
 import weber.kaden.myapplication.ui.turnmenu.ChooseTrainCardsFragment;
 import weber.kaden.myapplication.ui.turnmenu.ChooseTrainCardsPresenter;
+import weber.kaden.myapplication.ui.turnmenu.GameHistoryFragment;
 import weber.kaden.myapplication.ui.turnmenu.SeeOtherPlayersFragment;
 
 public class GameActivity extends AppCompatActivity
@@ -168,6 +169,9 @@ public class GameActivity extends AppCompatActivity
                         DialogFragment seeOtherPlayersFragment = new SeeOtherPlayersFragment();
                         seeOtherPlayersFragment.show(getSupportFragmentManager(), "ChooseTrainCardsFragment");
                         break;
+                    case R.id.turn_menu_game_history:
+                        DialogFragment gameHistoryFragment = new GameHistoryFragment();
+                        gameHistoryFragment.show(getSupportFragmentManager(), "GameHistoryFragment");
                     case R.id.turn_menu_chat:
                         DialogFragment chatFragment = new ChatFragment();
                         ((ChatFragment) chatFragment).setMessages(Model.getInstance().getCurrentGame().getChat());
