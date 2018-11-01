@@ -119,6 +119,7 @@ public class ClaimRouteFragment extends DialogFragment {
         protected void onPostExecute(Boolean success) {
             super.onPostExecute(success);
             if (!success) printError(errorMessage);
+            else getDialog().dismiss();
         }
 
         @Override
