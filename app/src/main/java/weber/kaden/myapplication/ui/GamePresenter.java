@@ -81,11 +81,11 @@ public class GamePresenter implements Observer {
             client.testDrawDestinationCards();
             delay();
             //view.sendMessage("Removing one of your destination cards");
-            System.out.println(">>");
-            System.out.println("Removing one of your destination cards");
-            System.out.println(">>");
-            client.testRemoveDestinationCardFromPlayer();
-            delay();
+//            System.out.println(">>");
+//            System.out.println("Removing one of your destination cards");
+//            System.out.println(">>");
+//            client.testRemoveDestinationCardFromPlayer();
+//            delay();
             //view.sendMessage("Updating opponent train cards");
             System.out.println(">>");
             System.out.println("Updating opponent train cards");

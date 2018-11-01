@@ -262,16 +262,16 @@ public class ClientFacade {
         ServerProxy.getInstance().sendCommand(commandData);
     }
 
-    public void testRemoveDestinationCardFromPlayer() {
-        DestinationCard card = Model.getInstance().getCurrentGame().getPlayer(Model.getInstance().getCurrentUser()).getDestinationCardHand().get(0);
-        List<String> params = new ArrayList<String>();
-        params.add(Model.getInstance().getCurrentGame().getID());
-        params.add(Model.getInstance().getCurrentUser());
-        List<Object> data = new ArrayList<>();
-        data.add(card);
-        CommandData commandData = new CommandData(params, CommandType.DISCARDDESTINATIONCARD, data);
-        ServerProxy.getInstance().sendCommand(commandData);
-    }
+//    public void testRemoveDestinationCardFromPlayer() {
+//        DestinationCard card = Model.getInstance().getCurrentGame().getPlayer(Model.getInstance().getCurrentUser()).getDestinationCardHand().get(0);
+//        List<String> params = new ArrayList<String>();
+//        params.add(Model.getInstance().getCurrentGame().getID());
+//        params.add(Model.getInstance().getCurrentUser());
+//        List<Object> data = new ArrayList<>();
+//        data.add(card);
+//        CommandData commandData = new CommandData(params, CommandType.DISCARDDESTINATIONCARD, data);
+//        ServerProxy.getInstance().sendCommand(commandData);
+//    }
 
     public void testDealTrainCardsToOpponents() {
         for (int i = 0; i < Model.getInstance().getCurrentGame().getPlayers().size(); i++) {

@@ -138,10 +138,12 @@ public class CommandFactory {
                 TrainCard trainCard = (TrainCard) deserializeData(CommandType.DISCARDTRAINCARD, (LinkedTreeMap<Object,Object>)  data.getData().get(0));
                 return new DiscardTrainCardCommand(data.getParams(), trainCard);
             case DRAWTRAINCARDFROMFACEUP:
-                if (data.getParams().size() < 2 && data.getData().size() < 1){
+                if (data.getParams().size() < 2 && data.getData().size() < 1) {
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
                 }
-                return new DrawTrainCardFromFaceUpCommand(data.getParams(), (Integer)data.getData().get(0));
+                Double dValue = (Double) data.getData().get(0);
+                Integer iValue = dValue.intValue();
+                return new DrawTrainCardFromFaceUpCommand(data.getParams(), iValue);
             case CLAIMROUTE:
                 if (data.getParams().size() < 2 && data.getData().size() < 1){
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
