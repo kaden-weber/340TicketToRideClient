@@ -1,9 +1,12 @@
 package weber.kaden.myapplication.ui;
 
+import android.os.AsyncTask;
+
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.concurrent.TimeUnit;
 
 import weber.kaden.common.model.City;
 import weber.kaden.common.model.DestinationCard;
@@ -43,46 +46,61 @@ public class GamePresenter implements Observer {
         }
     }
 
-    public void runPhase2Test() {
-        //TODO Run test list
-        //TODO: Run in an asynctask so there can be pauses?
-        view.sendMessage("Running Tests");
+    public class runPhase2TestTask extends AsyncTask<Void, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            view.sendMessage("Running Tests");
 
-        view.sendMessage("Adding to your train cards");
-        client.testDrawTrainCard();
-        //delay
-        view.sendMessage("Removing one of your train cards");
-        client.testRemoveTrainCardFromPlayer();
-        view.sendMessage("Adding to your destination cards");
-        client.testDrawDestinationCards();
-        view.sendMessage("Removing one of your destination cards");
-        client.testRemoveDestinationCardFromPlayer();
-        view.sendMessage("Updating opponent train cards");
-        client.testDealTrainCardsToOpponents();
-        view.sendMessage("Updating opponent train cars");
+            view.sendMessage("Adding to your train cards");
+            client.testDrawTrainCard();
+            delay();
+            view.sendMessage("Removing one of your train cards");
+            client.testRemoveTrainCardFromPlayer();
+            view.sendMessage("Adding to your destination cards");
+            client.testDrawDestinationCards();
+            view.sendMessage("Removing one of your destination cards");
+            client.testRemoveDestinationCardFromPlayer();
+            view.sendMessage("Updating opponent train cards");
+            client.testDealTrainCardsToOpponents();
+            view.sendMessage("Updating opponent train cars");
 //        client.changeOpponentsTrainCars();
-        view.sendMessage("Updating opponent destination cards");
+            view.sendMessage("Updating opponent destination cards");
 //        client.dealDestinationCardsToOpponents();
-        view.sendMessage("Updating number of visible train cards in deck");
-        //don't know what to do for these
-        view.sendMessage("Updating number of invisible train cards in deck");
-        //ditto
-        view.sendMessage("Updating number of destination cards in deck");
-        //ditto
-        view.sendMessage("Adding a claimed route: Calgary-Winnipeg");
+            view.sendMessage("Updating number of visible train cards in deck");
+            //don't know what to do for these
+            view.sendMessage("Updating number of invisible train cards in deck");
+            //ditto
+            view.sendMessage("Updating number of destination cards in deck");
+            //ditto
+            view.sendMessage("Adding a claimed route: Calgary-Winnipeg");
 //        client.haveOpponentClaimRoute(new Route(City.CALGARY, City.WINNIPEG, 6, TrainCardType.PASSENGER));
-        view.sendMessage("Adding a chat message");
+            view.sendMessage("Adding a chat message");
 //        ChatPresenter chatPresenter = new ChatPresenter(mock, ); // Looks like we need mocks for this
 //        chatPresenter.sendMessage("Hey guys!");
-        //alternatively:
-        try {
-            client.sendMessage(client.getCurrentGame().getID(), client.getCurrentUser(), "Hey Guys!");
-        } catch (Exception e) {
-            view.sendMessage("Chat failed to send");
-        }
-        view.sendMessage("Advancing turn to next player");
+            //alternatively:
+            try {
+                client.sendMessage(client.getCurrentGame().getID(), client.getCurrentUser(), "Hey Guys!");
+            } catch (Exception e) {
+                view.sendMessage("Chat failed to send");
+            }
+            view.sendMessage("Advancing turn to next player");
 //        client.endTurn(client.getCurrentUser());
 
+            return true;
+        }
+
+        private void delay() {
+            try {
+                TimeUnit.SECONDS.sleep(10);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void runPhase2Test() {
+        runPhase2TestTask task = new runPhase2TestTask();
+        task.execute();
 
 //  For each change, the presenter should:
 //  o Call the view to display a toast describing the change (e.g., “Updating player points”).
