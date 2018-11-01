@@ -41,6 +41,7 @@ public class ChooseDestinationCardsFragment extends DialogFragment {
         setCancelable(false);
         mActionCancel = view.findViewById(R.id.choose_destination_cancel);
         mActionOk = view.findViewById(R.id.choose_destination_ok);
+        mActionOk.setEnabled(false);
 
         mActionCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,12 +67,12 @@ public class ChooseDestinationCardsFragment extends DialogFragment {
                 if (isChecked) {
                     chosenCards.set(0, true);
                     numCardsSelected++;
-                    if (Model.getInstance().getCurrentGame().isSetup()) mActionOk.setEnabled(numCardsSelected >= 2);
+                    if (isSetup) mActionOk.setEnabled(numCardsSelected >= 2);
                 }
                 else {
                     chosenCards.set(0, false);
                     numCardsSelected--;
-                    if (Model.getInstance().getCurrentGame().isSetup()) mActionOk.setEnabled(numCardsSelected >= 2);
+                    if (isSetup) mActionOk.setEnabled(numCardsSelected >= 2);
                 }
             }
         });
@@ -86,12 +87,12 @@ public class ChooseDestinationCardsFragment extends DialogFragment {
                 if (isChecked) {
                     chosenCards.set(1, true);
                     numCardsSelected++;
-                    if (Model.getInstance().getCurrentGame().isSetup()) mActionOk.setEnabled(numCardsSelected >= 2);
+                    if (isSetup) mActionOk.setEnabled(numCardsSelected >= 2);
                 }
                 else {
                     chosenCards.set(1, false);
                     numCardsSelected--;
-                    if (Model.getInstance().getCurrentGame().isSetup()) mActionOk.setEnabled(numCardsSelected >= 2);
+                    if (isSetup) mActionOk.setEnabled(numCardsSelected >= 2);
                 }
             }
         });
@@ -106,12 +107,12 @@ public class ChooseDestinationCardsFragment extends DialogFragment {
                 if (isChecked) {
                     chosenCards.set(2, true);
                     numCardsSelected++;
-                    if (Model.getInstance().getCurrentGame().isSetup()) mActionOk.setEnabled(numCardsSelected >= 2);
+                    if (isSetup) mActionOk.setEnabled(numCardsSelected >= 2);
                 }
                 else {
                     chosenCards.set(2, false);
                     numCardsSelected--;
-                    if (Model.getInstance().getCurrentGame().isSetup()) mActionOk.setEnabled(numCardsSelected >= 2);
+                    if (isSetup) mActionOk.setEnabled(numCardsSelected >= 2);
                 }
             }
         });
