@@ -3,11 +3,16 @@ package weber.kaden.common.command;
 import com.google.gson.JsonObject;
 import com.google.gson.internal.LinkedTreeMap;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
+import com.google.gson.reflect.TypeToken;
 
+import sun.security.krb5.internal.crypto.Des;
 import weber.kaden.common.model.DestinationCard;
 import weber.kaden.common.model.Model;
 import weber.kaden.common.model.Route;
@@ -103,7 +108,20 @@ public class CommandFactory {
                 if (data.getParams().size() < 2 && data.getData().size() < 2) {
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
                 }
-                return new DrawDestinationCardsCommand(data.getParams().get(0), data.getParams().get(1), (List<DestinationCard>)data.getData().get(0), (List<DestinationCard>)data.getData().get(1));
+                List<DestinationCard> data1 = new ArrayList<>();
+                Iterator iterator = ((ArrayList) data.getData().get(0)).iterator();
+                while (iterator.hasNext()) {
+                    data1.add((DestinationCard) deserializeData(CommandType.DRAWDESTINATIONCARDS,
+                            ((LinkedTreeMap) iterator.next())));
+                }
+                List<DestinationCard> data2 = new ArrayList<>();
+                Iterator iterator2 = ((ArrayList) data.getData().get(1)).iterator();
+                while (iterator2.hasNext()) {
+                    data1.add((DestinationCard) deserializeData(CommandType.DRAWDESTINATIONCARDS,
+                            ((LinkedTreeMap) iterator2.next())));
+                }
+                return new DrawDestinationCardsCommand(data.getParams().get(0), data.getParams().get(1),
+                        data1, data2);
             case DRAWTRAINCARDFROMDECK:
                 if (data.getParams().size() < 2){
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
@@ -143,12 +161,14 @@ public class CommandFactory {
 
     public Object deserializeData(CommandType type, LinkedTreeMap<Object, Object> data) throws Exception {
         Gson gson = new Gson();
-        JsonObject jsonObject = gson.toJsonTree(data).getAsJsonObject();
+        JsonObject jsonObject = gson.toJsonTree(data).getAsJsonObject();;
         switch (type) {
             case CLAIMROUTE:
                 return gson.fromJson(jsonObject, Route.class);
             case DISCARDTRAINCARD:
                 return gson.fromJson(jsonObject, TrainCard.class);
+            case DRAWDESTINATIONCARDS:
+                return gson.fromJson(jsonObject, DestinationCard.class);
             default:
                 throw new Exception("dataDeserializer: Not valid object");
         }
