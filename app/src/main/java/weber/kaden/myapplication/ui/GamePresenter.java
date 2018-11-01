@@ -51,6 +51,10 @@ public class GamePresenter implements Observer {
         client.sendDestinationCards(username, gameId, drawnCards, discardedCards);
     }
 
+    boolean routeClaimable(int size, TrainCardType type){
+        return client.PlayerCanClaimRoute(size, type);
+    }
+
     @Override
     public void update(Observable observable, Object o) {
         //update claimed routes
@@ -88,7 +92,12 @@ public class GamePresenter implements Observer {
         view.sendMessage("Adding a chat message");
 //        ChatPresenter chatPresenter = new ChatPresenter(mock, ); // Looks like we need mocks for this
 //        chatPresenter.sendMessage("Hey guys!");
-
+        //alternatively:
+        try {
+            client.sendMessage(client.getCurrentGame().getID(), client.getCurrentUser(), "Hey Guys!");
+        } catch (Exception e) {
+            view.sendMessage("Chat failed to send");
+        }
         view.sendMessage("Advancing turn to next player");
 //        client.endTurn(client.getCurrentUser());
 
