@@ -113,6 +113,9 @@ public class ChooseInitialDestinationFragment extends DialogFragment implements 
         mActionOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //TODO: Make this send data back
+                //getDialog().dismiss();
+                getDialog().dismiss();
                 List<DestinationCard> chosenList = new ArrayList<>();
                 List<DestinationCard> discardedList = new ArrayList<>();
                 for (int i = 0; i < chosenCards.size(); i++) {

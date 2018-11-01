@@ -12,9 +12,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import weber.kaden.common.model.ChatMessage;
+import weber.kaden.common.model.Model;
 import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
 
@@ -23,13 +25,17 @@ public class ChatFragment extends DialogFragment implements ChatViewInterface {
     private Button sendButton, cancelButton;
     private EditText messageInput;
     private ChatAdapter adapter;
-    private List<ChatMessage> messages;
+    private List<ChatMessage> messages = new ArrayList<>();
     private RecyclerView chatWindow;
     private ChatPresenter presenter;
     private SendChatTask chatTask;
     private ChatFragment instance = this;
 
     public ChatFragment() {}
+
+    public void setMessages(List<ChatMessage> messages) {
+        this.messages = messages;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,6 +45,7 @@ public class ChatFragment extends DialogFragment implements ChatViewInterface {
         chatWindow = view.findViewById(R.id.chat_window);
         chatWindow.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new ChatAdapter(getContext(), messages);
+        chatWindow.setAdapter(adapter);
 
         sendButton = view.findViewById(R.id.send_button);
         cancelButton = view.findViewById(R.id.cancel_button);
@@ -47,7 +54,9 @@ public class ChatFragment extends DialogFragment implements ChatViewInterface {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendChat(messageInput.getText().toString());
+                String message = messageInput.getText().toString();
+                messageInput.getText().clear();
+                sendChat(message);
             }
         });
 
@@ -57,6 +66,9 @@ public class ChatFragment extends DialogFragment implements ChatViewInterface {
                 getDialog().dismiss();
             }
         });
+        int width = getResources().getDimensionPixelSize(R.dimen.chat_width);
+        int height = getResources().getDimensionPixelSize(R.dimen.chat_height);
+        getDialog().getWindow().setLayout(width, height);
 
         return view;
     }
@@ -116,7 +128,7 @@ public class ChatFragment extends DialogFragment implements ChatViewInterface {
         @Override
         protected void onPostExecute(Boolean success) {
             super.onPostExecute(success);
-            printChatError(errorMessage);
+            if (!success) printChatError(errorMessage);
         }
 
         @Override
