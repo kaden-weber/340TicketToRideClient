@@ -9,5 +9,5 @@ public interface iCommandManager {
     
     Game getGameByID(String gameID);
 
-    List<CommandData> getLatestCommands(String gameID, String lastID);
+    List<CommandData> getLatestCommands(String gameID);
 }

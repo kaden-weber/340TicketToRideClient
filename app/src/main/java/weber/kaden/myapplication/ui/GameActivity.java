@@ -1,6 +1,7 @@
 package weber.kaden.myapplication.ui;
 
 import android.app.ActionBar;
+import android.net.Uri;
 import android.support.v4.view.GravityCompat;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -37,7 +38,9 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import weber.kaden.common.model.Model;
 import weber.kaden.common.model.DestinationCard;
@@ -47,6 +50,7 @@ import weber.kaden.common.model.TrainCard;
 import weber.kaden.common.model.DestinationCard;
 import weber.kaden.common.model.Game;
 
+import weber.kaden.common.model.TrainCardType;
 import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
 import weber.kaden.myapplication.ui.map.DisplayRoute;
@@ -60,7 +64,8 @@ import weber.kaden.myapplication.ui.turnmenu.ChooseTrainCardsPresenter;
 import weber.kaden.myapplication.ui.turnmenu.SeeOtherPlayersFragment;
 
 public class GameActivity extends AppCompatActivity
-        implements OnMapReadyCallback, GoogleMap.OnPolylineClickListener, GameViewInterface {
+        implements OnMapReadyCallback, GoogleMap.OnPolylineClickListener, GameViewInterface,
+        ClaimRoute.OnFragmentInteractionListener {
     GameActivity instance = this;
     GameAdapter adapter;
     TrainCardAdapter trainCardAdapter;
@@ -84,8 +89,9 @@ public class GameActivity extends AppCompatActivity
     private static final double SECOND_ROUTE_OFFSET = 0.6;
 
     private Locations mLocations;
-    private List<Polyline> mRoutes;
-    private List<PatternItem> mClaimedPattern;
+    private Map mRouteMap;
+    List<PatternItem> unclaimedRoutePattern;
+    private List<PatternItem> claimedRoutePattern;
     private GamePresenter mPresenter = new GamePresenter(this, new ClientFacade());
     private DrawerLayout mDrawerLayout;
     private boolean mClaimingRouteFlag;
@@ -171,13 +177,17 @@ public class GameActivity extends AppCompatActivity
                 return true;
             }
         });
-
+        //make unclaimed route pattern
+        unclaimedRoutePattern = Arrays.<PatternItem>asList(
+                new Gap(10), new Dash(70) );
         //make claimed route pattern
-        List<PatternItem> claimedRoutePattern = Arrays.<PatternItem>asList(
+        claimedRoutePattern = Arrays.<PatternItem>asList(
                  new Dash(100) );
+
         mClaimingRouteFlag = false;
+
         //init route list
-        mRoutes = new ArrayList<>();
+        mRouteMap = new HashMap();
 
         //init test button
         mTestButton = findViewById(R.id.tempTestButton);
@@ -229,54 +239,51 @@ public class GameActivity extends AppCompatActivity
                     .title(location.getCity())
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.steamtrain_dark)));
         }
-        //make unclaimed route pattern
-        List<PatternItem> pattern = Arrays.<PatternItem>asList(
-                new Gap(10), new Dash(70) );
+
+
         //add routes TODO: make double routes look real good, refactor to route creation method
         DisplayRoutes routes = new DisplayRoutes(mLocations);
         for ( DisplayRoute route : routes.getRoutes()){
             String routeColor = route.getColor();
             //check for double route
             if(routeColor.contains(",")){
-                createDoubleRoute(googleMap, route, pattern);
-                routeColor = getFirstColor(routeColor);
+                createDoubleRoute(googleMap, route);
+                route.setColor(getFirstColor(routeColor));
             }
             //add regular route
-            Polyline line = googleMap.addPolyline(new PolylineOptions().clickable(true)
-                .add(route.getCity1().getCoords(), route.getCity2().getCoords())
-                .width(ROUTE_WIDTH)
-                .geodesic(true)
-                .pattern(pattern)
-                .color(getRouteColor(routeColor)));
-            line.setTag(route.getLength());
-            mRoutes.add(line);
+            addRoute(googleMap, route, route.getCity1().getCoords(), route.getCity2().getCoords());
         }
+
         //make routes clickable
         googleMap.setOnPolylineClickListener(this);
 
+    }
+    private void addRoute(GoogleMap googleMap, DisplayRoute route, LatLng loc1, LatLng loc2){
+        Polyline line = googleMap.addPolyline(new PolylineOptions().clickable(true)
+                .add(loc1, loc2)
+                .width(ROUTE_WIDTH)
+                .geodesic(true)
+                .pattern(unclaimedRoutePattern)
+                .color(getRouteColor(route.getColor())));
+        line.setTag(route.getLength());
+        mRouteMap.put(line, route);
     }
 
     private String getFirstColor(String routeColor) {
         return routeColor.substring(0, routeColor.indexOf(","));
     }
 
-    private void createDoubleRoute(GoogleMap googleMap, DisplayRoute route, List<PatternItem> pattern) {
-        String color = getSecondColor(route.getColor());
+    private void createDoubleRoute(GoogleMap googleMap, DisplayRoute route) {
+        route.setColor(getSecondColor(route.getColor()));
         double slope = slope(route.getCity1(), route.getCity2());
-        double perpendicularSlope = -1 / slope;
-        LatLng newCity1 = offsetCoords(route.getCity1().getCoords(), perpendicularSlope);
-        LatLng newCity2 = offsetCoords(route.getCity2().getCoords(), perpendicularSlope);
-        Polyline line = googleMap.addPolyline(new PolylineOptions().clickable(true)
-            .add(newCity1, newCity2)
-            .width(ROUTE_WIDTH)
-            .geodesic(true)
-            .pattern(pattern)
-            .color(getRouteColor(color)));
-        line.setTag(route.getLength());
-        mRoutes.add(line);
+        LatLng newCity1 = offsetCoords(route.getCity1().getCoords(), slope);
+        LatLng newCity2 = offsetCoords(route.getCity2().getCoords(), slope);
+        addRoute(googleMap, route, newCity1, newCity2);
+
     }
 
-    private LatLng offsetCoords(LatLng input, double perpendicularSlope){
+    private LatLng offsetCoords(LatLng input, double slope){
+        double perpendicularSlope = -1/slope;
         double theta = Math.atan(perpendicularSlope);
         double deltaX = SECOND_ROUTE_OFFSET * Math.cos(theta);
         double deltaY = SECOND_ROUTE_OFFSET * Math.sin(theta);
@@ -320,14 +327,58 @@ public class GameActivity extends AppCompatActivity
     public void onPolylineClick(Polyline polyline) {
         //check if the route can be claimed
         //otherwise display route length
-        if(mClaimingRouteFlag){ // and route can be claimed...
-
+        if(mClaimingRouteFlag && mPresenter.routeClaimable(
+                (int)polyline.getTag(), getRouteType(polyline))){ // and route can be claimed...
+            ClaimRoute.newInstance(getCity1(polyline), getCity2(polyline));
         }
         Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()), Toast.LENGTH_SHORT).show();
+    }
+    private TrainCardType getRouteType(Polyline polyline){
+        DisplayRoute route = (DisplayRoute) mRouteMap.get(polyline);
+        String color = route.getColor();
+        switch (color){
+            case "White":
+                return TrainCardType.PASSENGER;
+            case "Black":
+                return TrainCardType.HOPPER;
+            case "Blue":
+                return TrainCardType.TANKER;
+            case "Green":
+                return TrainCardType.CABOOSE;
+            case "Red":
+                return TrainCardType.COAL;
+            case "Purple":
+                return TrainCardType.BOX;
+            case "Orange":
+                return TrainCardType.FREIGHT;
+            case "Yellow":
+                return TrainCardType.REEFER;
+            case "Gray": //??
+                return TrainCardType.LOCOMOTIVE;
+                default:
+                    return TrainCardType.LOCOMOTIVE;
+        }
+    }
+    private String getCity1(Polyline polyline){
+        DisplayRoute route = (DisplayRoute) mRouteMap.get(polyline);
+        return route.getCity1().getCity();
+    }
+    private String getCity2(Polyline polyline){
+        DisplayRoute route = (DisplayRoute) mRouteMap.get(polyline);
+        return route.getCity2().getCity();
     }
 
     public void sendMessage(String message){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 
 

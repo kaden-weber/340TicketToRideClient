@@ -314,4 +314,12 @@ public class ClientFacade {
         CommandData commandData = new CommandData(params, CommandType.CLAIMROUTE, data);
         ServerProxy.getInstance().sendCommand(commandData);
     }
+
+    public List<CommandData> getGameHistory() {
+        List<String> params = new ArrayList<>();
+        params.add(Model.getInstance().getCurrentGame().getID());
+        CommandData commandData = new CommandData(params, CommandType.POLLCOMMANDS);
+        Results results = ServerProxy.getInstance().sendCommand(commandData);
+        return (List<CommandData>)results.getData();
+    }
 }
