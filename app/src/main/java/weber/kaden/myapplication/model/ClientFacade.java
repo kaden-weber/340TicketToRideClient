@@ -169,7 +169,7 @@ public class ClientFacade {
         return Model.getInstance().getCurrentGame().getTopOfDestinationCardDeck();
     }
 
-    public boolean PlayerCanClaimRoute(int number, TrainCardType type) {
+    public boolean playerCanClaimRoute(int number, TrainCardType type) {
         return Model.getInstance().PlayerCanClaimRoute(number, type);
     }
     public void sendDestinationCards(String playerId, String gameId, List<DestinationCard> keptCards, List<DestinationCard> discarded) throws Exception{

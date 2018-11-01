@@ -16,8 +16,16 @@ public class DisplayRoutes {
 
     }
 
-
     public List<DisplayRoute> getRoutes() {
         return mRoutes;
+    }
+
+    public DisplayRoute getRoute(String city1, String city2){
+        for (DisplayRoute route : mRoutes){
+            if(route.getCity1().getCity().equals(city1) && route.getCity2().getCity().equals(city2)){
+                return route;
+            }
+        }
+        return null;
     }
 }

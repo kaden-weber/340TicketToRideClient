@@ -3,7 +3,6 @@ package weber.kaden.myapplication.ui;
 import android.app.ActionBar;
 import android.net.Uri;
 import android.support.v4.view.GravityCompat;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -13,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -44,11 +42,9 @@ import java.util.Map;
 
 import weber.kaden.common.model.Model;
 import weber.kaden.common.model.DestinationCard;
-import weber.kaden.common.model.Game;
-import weber.kaden.common.model.Model;
+import weber.kaden.common.model.PlayerColors;
+import weber.kaden.common.model.Route;
 import weber.kaden.common.model.TrainCard;
-import weber.kaden.common.model.DestinationCard;
-import weber.kaden.common.model.Game;
 
 import weber.kaden.common.model.TrainCardType;
 import weber.kaden.myapplication.R;
@@ -57,6 +53,7 @@ import weber.kaden.myapplication.ui.map.DisplayRoute;
 import weber.kaden.myapplication.ui.map.DisplayRoutes;
 import weber.kaden.myapplication.ui.map.Location;
 import weber.kaden.myapplication.ui.map.Locations;
+import weber.kaden.myapplication.ui.tools.ConstantsDisplayConverter;
 import weber.kaden.myapplication.ui.turnmenu.ChooseDestinationCardsFragment;
 import weber.kaden.myapplication.ui.turnmenu.ChooseDestinationCardsPresenter;
 import weber.kaden.myapplication.ui.turnmenu.ChooseTrainCardsFragment;
@@ -89,9 +86,12 @@ public class GameActivity extends AppCompatActivity
     private static final float ROUTE_WIDTH = 22;
     private static final double SECOND_ROUTE_OFFSET = 0.6;
 
+    private ConstantsDisplayConverter mDisplayConverter;
     private Locations mLocations;
-    private Map mRouteMap;
-    List<PatternItem> unclaimedRoutePattern;
+    private DisplayRoutes mRoutes;
+    private Map mLineRouteMap;
+    private Map mRouteLineMap;
+    private List<PatternItem> unclaimedRoutePattern;
     private List<PatternItem> claimedRoutePattern;
     private GamePresenter mPresenter = new GamePresenter(this, new ClientFacade());
     private DrawerLayout mDrawerLayout;
@@ -190,8 +190,11 @@ public class GameActivity extends AppCompatActivity
 
         mClaimingRouteFlag = false;
 
+        mDisplayConverter = new ConstantsDisplayConverter();
+
         //init route list
-        mRouteMap = new HashMap();
+        mLineRouteMap = new HashMap();
+        mRouteLineMap = new HashMap();
 
         //init test button
         mTestButton = findViewById(R.id.tempTestButton);
@@ -246,8 +249,8 @@ public class GameActivity extends AppCompatActivity
 
 
         //add routes TODO: make double routes look real good, refactor to route creation method
-        DisplayRoutes routes = new DisplayRoutes(mLocations);
-        for ( DisplayRoute route : routes.getRoutes()){
+        mRoutes = new DisplayRoutes(mLocations);
+        for ( DisplayRoute route : mRoutes.getRoutes()){
             String routeColor = route.getColor();
             //check for double route
             if(routeColor.contains(",")){
@@ -270,7 +273,8 @@ public class GameActivity extends AppCompatActivity
                 .pattern(unclaimedRoutePattern)
                 .color(getRouteColor(route.getColor())));
         line.setTag(route.getLength());
-        mRouteMap.put(line, route);
+        mLineRouteMap.put(line, route);
+        mRouteLineMap.put(route, line);
     }
 
     private String getFirstColor(String routeColor) {
@@ -335,10 +339,11 @@ public class GameActivity extends AppCompatActivity
                 (int)polyline.getTag(), getRouteType(polyline))){ // and route can be claimed...
             ClaimRoute.newInstance(getCity1(polyline), getCity2(polyline));
         }
-        Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()),
+                Toast.LENGTH_SHORT).show();
     }
     private TrainCardType getRouteType(Polyline polyline){
-        DisplayRoute route = (DisplayRoute) mRouteMap.get(polyline);
+        DisplayRoute route = (DisplayRoute) mLineRouteMap.get(polyline);
         String color = route.getColor();
         switch (color){
             case "White":
@@ -364,16 +369,45 @@ public class GameActivity extends AppCompatActivity
         }
     }
     private String getCity1(Polyline polyline){
-        DisplayRoute route = (DisplayRoute) mRouteMap.get(polyline);
+        DisplayRoute route = (DisplayRoute) mLineRouteMap.get(polyline);
         return route.getCity1().getCity();
     }
     private String getCity2(Polyline polyline){
-        DisplayRoute route = (DisplayRoute) mRouteMap.get(polyline);
+        DisplayRoute route = (DisplayRoute) mLineRouteMap.get(polyline);
         return route.getCity2().getCity();
     }
 
     public void sendMessage(String message){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void updateClaimedRoutes(PlayerColors color, List<Route> routes) {
+        for (Route route : routes){
+            DisplayRoute displayRoute = mRoutes.getRoute(
+                    mDisplayConverter.displayCity(route.getCity1()),
+                    mDisplayConverter.displayCity(route.getCity2()));
+            Polyline line = (Polyline) mRouteLineMap.get(displayRoute);
+            line.setPattern(claimedRoutePattern);
+            line.setClickable(false);
+            line.setColor(getPlayerColor(color));
+        }
+    }
+    private int getPlayerColor(PlayerColors color){
+        switch (color){
+            case PLAYER_RED:
+                return getResources().getColor(R.color.PLAYER_RED);
+            case PLAYER_BLUE:
+                return getResources().getColor(R.color.PLAYER_BLUE);
+            case PLAYER_BLACK:
+                return getResources().getColor(R.color.PLAYER_BLACK);
+            case PLAYER_GREEN:
+                return getResources().getColor(R.color.PLAYER_GREEN);
+            case PLAYER_YELLOW:
+                return getResources().getColor(R.color.PLAYER_YELLOW);
+                default:
+                    return getResources().getColor(R.color.Gray);
+        }
     }
 
     @Override
