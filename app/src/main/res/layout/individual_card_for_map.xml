@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:minWidth="700dp">
+    <ToggleButton
+            android:id="@+id/destination_card_generic"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:layout_marginEnd="5dp"
+            android:textOn=""
+            android:textOff=""/>
+</LinearLayout>

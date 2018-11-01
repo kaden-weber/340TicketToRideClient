@@ -6,6 +6,7 @@ import java.util.Observer;
 
 import weber.kaden.common.model.City;
 import weber.kaden.common.model.DestinationCard;
+import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Model;
 import weber.kaden.common.model.Route;
 import weber.kaden.common.model.TrainCard;
@@ -16,12 +17,18 @@ public class GamePresenter implements Observer {
     private GameViewInterface view;
     private ClientFacade client;
 
+    private  GameActivity activity;
     public GamePresenter(GameViewInterface view, ClientFacade client) {
         this.view = view;
         this.client = client;
         Model.getInstance().addObserver(this);
     }
 
+    public GamePresenter(GameActivity activity, ClientFacade client) {
+        this.activity = activity;
+        this.client = client;
+        Model.getInstance().addObserver(this);
+    }
     public List<TrainCard> getFaceUpTrainCards() {
 
     	return null;
@@ -59,6 +66,13 @@ public class GamePresenter implements Observer {
     public void update(Observable observable, Object o) {
         //update claimed routes
 
+=======
+    public void update(Observable observable, Object arg) {
+        if (arg instanceof Game) {
+            Game game = (Game) arg;
+            activity.setMyNewValues(game.getPlayer(client.getCurrentUser()).getDestinationCardHand());
+        }
+>>>>>>> 9077a723c196eac68d06316df5f951739ab4bf29
     }
 
     public void runPhase2Test() {
