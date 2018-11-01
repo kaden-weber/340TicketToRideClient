@@ -31,6 +31,6 @@ public class ChatCommand implements Command {
 
     @Override
     public boolean hasID() {
-        return true;
+        return false;
     }
 }

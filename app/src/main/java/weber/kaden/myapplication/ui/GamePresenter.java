@@ -56,30 +56,53 @@ public class GamePresenter implements Observer {
             delay();
             view.sendMessage("Removing one of your train cards");
             client.testRemoveTrainCardFromPlayer();
+            delay();
             view.sendMessage("Adding to your destination cards");
             client.testDrawDestinationCards();
+            delay();
             view.sendMessage("Removing one of your destination cards");
             client.testRemoveDestinationCardFromPlayer();
+            delay();
             view.sendMessage("Updating opponent train cards");
             client.testDealTrainCardsToOpponents();
+            delay();
             view.sendMessage("Updating opponent train cars");
             client.testChangeOpponentsTrainCars();
+            delay();
             view.sendMessage("Updating opponent destination cards");
             client.testDealDestinationCardsToOpponents();
+            delay();
             view.sendMessage("Updating number of visible train cards in deck");
-            //don't know what to do for these
+            try {
+                client.chooseTrainCardFromFaceUpCards(Model.getInstance().getCurrentGame().getID(), Model.getInstance().getCurrentUser(), 0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            delay();
             view.sendMessage("Updating number of invisible train cards in deck");
-            //ditto
+            try {
+                client.chooseTrainCardFromDeck(Model.getInstance().getCurrentGame().getID(), Model.getInstance().getCurrentUser());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            delay();
             view.sendMessage("Updating number of destination cards in deck");
-            //ditto
+            try {
+                client.sendDestinationCards(Model.getInstance().getCurrentGame().getID(), Model.getInstance().getCurrentUser(), Model.getInstance().getCurrentGame().getTopOfDestinationCardDeck(), null);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            delay();
             view.sendMessage("Adding a claimed route: Calgary-Winnipeg");
             client.testHaveOpponentClaimRoute(new Route(City.CALGARY, City.WINNIPEG, 6, TrainCardType.PASSENGER));
+            delay();
             view.sendMessage("Adding a chat message");
             try {
                 client.sendMessage(client.getCurrentGame().getID(), client.getCurrentUser(), "Hey Guys!");
             } catch (Exception e) {
                 view.sendMessage("Chat failed to send");
             }
+            delay();
             view.sendMessage("Advancing turn to next player");
             client.finishTurn();
 

@@ -26,6 +26,6 @@ public class UseTrainCarsCommand implements Command {
 
     @Override
     public boolean hasID() {
-        return false;
+        return true;
     }
 }

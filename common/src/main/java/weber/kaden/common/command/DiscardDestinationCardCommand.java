@@ -31,6 +31,6 @@ public class DiscardDestinationCardCommand implements Command {
 
     @Override
     public boolean hasID() {
-        return false;
+        return true;
     }
 }

@@ -24,6 +24,6 @@ public class FinishTurnCommand implements Command {
 
     @Override
     public boolean hasID() {
-        return false;
+        return true;
     }
 }
