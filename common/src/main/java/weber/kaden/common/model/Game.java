@@ -301,6 +301,7 @@ public class Game {
             } else {
                 this.faceupTrainCardDeck.remove(cardIndex);
             }
+            return true;
         }
         return false;
     }
