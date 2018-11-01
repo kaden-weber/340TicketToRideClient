@@ -5,6 +5,7 @@ import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,12 +28,15 @@ public class FragmentSetup extends DialogFragment {
     Button submit;
     FragmentSetup instance = this;
     EditText editText;
+    FragmentManager fm;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game_setup_question, container, false);
+        setCancelable(false);
         editText = view.findViewById(R.id.numPlacesText);
         submit = view.findViewById(R.id.button);
+        fm = getFragmentManager();
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,6 +46,18 @@ public class FragmentSetup extends DialogFragment {
         });
 
         return view;
+    }
+    public void startCardSelection(){
+        android.support.v4.app.DialogFragment chooseCards = new ChooseInitialDestinationFragment();
+
+        Bundle args = new Bundle();
+        List<DestinationCard> dealtCards = new ClientFacade().getDealtDestinationCardsForCurrentPlayer();
+        if (dealtCards.size() == 0) {
+            dealtCards = Model.getInstance().getGame(Model.getInstance().getCurrentGame().getID()).getTopOfDestinationCardDeck();
+        }
+        args.putSerializable("cards", (Serializable) dealtCards);
+        chooseCards.setArguments(args);
+        chooseCards.show(fm, "ChooseCardFragment");
     }
     public class SendNumberPlaces extends AsyncTask<Void, Void, Boolean> {
 
@@ -57,6 +73,7 @@ public class FragmentSetup extends DialogFragment {
             GameSetupPresenter gameSetupPresenter = new GameSetupPresenter(instance, clientFacade);
             try {
                 gameSetupPresenter.sendNumPlaces(Model.getInstance().getCurrentGame().getID(), Model.getInstance().getCurrentUser(), numPlaces);
+                gameSetupPresenter.setGotTravelRate(true);
             } catch (Exception e) {
                 errorMessage = e.getMessage();
                 return false;
@@ -68,17 +85,6 @@ public class FragmentSetup extends DialogFragment {
         protected void onPostExecute(final Boolean success) {
             if (success){
                 getDialog().dismiss();
-                android.support.v4.app.DialogFragment chooseCards = new ChooseInitialDestinationFragment();
-
-                Bundle args = new Bundle();
-                List<DestinationCard> dealtCards = Model.getInstance().getPlayer(Model.getInstance().getCurrentUser()).getDealtDestinationCards();
-                if (dealtCards.size() == 0) {
-                    dealtCards = Model.getInstance().getGame(Model.getInstance().getCurrentGame().getID()).getTopOfDestinationCardDeck();
-                }
-                args.putSerializable("cards", (Serializable) dealtCards);
-                chooseCards.setArguments(args);
-
-                chooseCards.show(getFragmentManager(), "ChooseCardFragment");
             }else {
                 Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
             }

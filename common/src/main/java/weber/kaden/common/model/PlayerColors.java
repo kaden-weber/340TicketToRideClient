@@ -1,5 +1,5 @@
 package weber.kaden.common.model;
 
 public enum PlayerColors {
-    RED, GREEN, BLUE, BLACK, YELLOW
+    PLAYER_RED, PLAYER_GREEN, PLAYER_BLUE, PLAYER_BLACK, PLAYER_YELLOW
 }

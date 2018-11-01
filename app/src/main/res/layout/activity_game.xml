@@ -2,32 +2,48 @@
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_game_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.GameActivity"
     android:screenOrientation="landscape"
-    android:id="@+id/activity_game_layout">
+    tools:context=".ui.GameActivity">
 
-    <FrameLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/map_frame">
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <FrameLayout
+            android:id="@+id/map_frame"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
-
-        <fragment
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="match_parent"
+<<<<<<< HEAD
             android:layout_height="match_parent"
             android:orientation="horizontal">
         </fragment>
     </FrameLayout>
+=======
+            android:layout_height="match_parent">
+
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+            </fragment>
+
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/tempTestButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="@string/test"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/map_frame" />
+    </android.support.constraint.ConstraintLayout>
+>>>>>>> 9fcc23300b13221d5902fb64488db4cdad6ea474
 
     <android.support.design.widget.NavigationView
         android:id="@+id/turn_nav_view"
@@ -35,8 +51,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:menu="@menu/turn_menu"
-        app:headerLayout="@layout/turn_header">
+        app:headerLayout="@layout/turn_header"
+        app:menu="@menu/turn_menu">
 
     </android.support.design.widget.NavigationView>
 

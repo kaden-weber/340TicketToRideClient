@@ -36,6 +36,8 @@
     <!--city names-->
     <string name="city_chicago">Chicago</string>
 
+    <string name="test">TEST</string>
+
     <!--chat_fragment-->
     <string name="prompt_send_message">Write message here: </string>
     <string name="action_send_message">Send</string>
@@ -45,13 +47,17 @@
     <string name="destination_card">Choose Destination Cards</string>
     <string name="train_card">Choose Train Cards</string>
     <string name="claim_route">Claim Route</string>
-    <string name="see_other_players">See Other Players</string>
+    <string name="see_other_players">View Players</string>
     <string name="turn_header">Select Turn Action:</string>
     <string name="chat_header">Chat</string>
     <string name="cancel">Cancel</string>
     <string name="ok">Ok</string>
+<<<<<<< HEAD
     <string name="other_players">Other Players</string>
     <string name="chat_menu">Chat</string>
 
+=======
+    <string name="other_players">Players</string>
+>>>>>>> 9fcc23300b13221d5902fb64488db4cdad6ea474
 
 </resources>

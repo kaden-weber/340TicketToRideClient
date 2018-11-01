@@ -108,7 +108,7 @@ public class Model extends Observable {
         if (game.getPlayers().size() >=  5 || (game.isSetup() || game.isStarted())) {
             return false;
         }
-        if (this.games.get(this.games.indexOf(game)).addPlayer(player)) {
+        if (this.games.get(this.games.indexOf(game)).addPlayer(new Player(player))) {
             setChanged();
             notifyObservers(this.games);
             return true;
@@ -214,5 +214,17 @@ public class Model extends Observable {
         } else {
             return null;
         }
+    }
+
+    public boolean PlayerCanClaimRoute(int number, TrainCardType type) {
+        return this.currentGame.getPlayer(currentUser).hasTrainCards(number, type);
+    }
+
+    public boolean isCurrentPlayer() {
+        return (this.currentUser.equals(currentGame.getCurrentPlayer().getID()));
+    }
+
+    public List<DestinationCard> getDealtDestinationCards() {
+        return this.currentGame.getPlayer(currentUser).getDealtDestinationCards();
     }
 }

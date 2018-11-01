@@ -13,7 +13,7 @@ public class Game {
     private boolean started;
     private boolean setup;
     private boolean destinationCardsDealt;
-    private List<ChatMessage> chat;
+    private List<ChatMessage> chat = new ArrayList<>();
     private List<DestinationCard> destinationCardDeck;
     private List<DestinationCard> destinationCardDiscard;
     private List<TrainCard> trainCardDeck;
@@ -170,15 +170,15 @@ public class Game {
     }
 
     private void AssignColors() {
-        this.players.get(0).setColor(PlayerColors.BLACK);
+        this.players.get(0).setColor(PlayerColors.PLAYER_BLACK);
         if (this.players.size() > 1) {
-            this.players.get(1).setColor(PlayerColors.BLUE);
+            this.players.get(1).setColor(PlayerColors.PLAYER_BLUE);
             if (this.players.size() > 2) {
-                this.players.get(2).setColor(PlayerColors.GREEN);
+                this.players.get(2).setColor(PlayerColors.PLAYER_GREEN);
                 if (this.players.size() > 3) {
-                    this.players.get(3).setColor(PlayerColors.RED);
+                    this.players.get(3).setColor(PlayerColors.PLAYER_RED);
                     if (this.players.size() > 4) {
-                        this.players.get(4).setColor(PlayerColors.YELLOW);
+                        this.players.get(4).setColor(PlayerColors.PLAYER_YELLOW);
                     }
                 }
             }
@@ -212,8 +212,7 @@ public class Game {
         for (int i = 0; i < this.players.size(); i++) {
             List<TrainCard> cards = new ArrayList<TrainCard>();
             for (int t = 0; t < 4; t++) {
-                cards.add(this.trainCardDeck.get(0));
-                this.trainCardDeck.remove(0);
+                cards.add(this.trainCardDeck.remove(0));
             }
             this.players.get(i).DealTrainCards(cards);
         }
@@ -226,10 +225,7 @@ public class Game {
         }
         List<DestinationCard> cards = new ArrayList<DestinationCard>();
         for (int i = 0; i < NumCards; i++) {
-            cards.add(this.destinationCardDeck.get(i));
-        }
-        for (int i = 0; i < NumCards; i++) {
-            this.destinationCardDeck.remove(0);
+            cards.add(this.destinationCardDeck.remove(0));
         }
         player.DealDestinationCards(cards);
     }
@@ -265,6 +261,9 @@ public class Game {
     }
 
     public boolean DiscardDestionationCards(List<DestinationCard> cards) {
+        if (cards.size() == 0) {
+            return true;
+        }
         this.destinationCardDeck.removeAll(cards);
         return this.destinationCardDiscard.addAll(cards);
     }
@@ -318,7 +317,7 @@ public class Game {
         return this.players.get(currentPlayer);
     }
 
-    private void finishTurn() {
+    public void finishTurn() {
         this.currentPlayer = this.players.indexOf(currentPlayer) + 1;
         if (currentPlayer == this.players.size()) {
             currentPlayer = 0;
@@ -367,5 +366,22 @@ public class Game {
                 Objects.equals(faceupTrainCardDeck, game.faceupTrainCardDeck) &&
                 Objects.equals(claimedRoutes, game.claimedRoutes) &&
                 Objects.equals(unclaimedRoute, game.unclaimedRoute);
+    }
+
+    public boolean PlayerDiscardTrainCard(String playerID, TrainCard card) {
+        return this.getPlayer(playerID).DiscardTrainCard(card);
+    }
+
+    public TrainCard getTopOfTrainCardDeck() {
+        if (this.trainCardDeck.size() == 0) {
+            return null;
+        }
+        else {
+            return this.trainCardDeck.get(0);
+        }
+     }
+
+    public boolean PlayerRemoveDestinationCard(String playerID, DestinationCard card) {
+        return this.getPlayer(playerID).removeDestinationCard(card);
     }
 }

@@ -9,10 +9,31 @@ public class Route {
     private Integer cost;
     private TrainCardType type;
 
-    public Route(City city1, City city2, Integer score, Integer cost, TrainCardType type) {
+    public Route(City city1, City city2, Integer cost, TrainCardType type) {
         this.city1 = city1;
         this.city2 = city2;
-        this.score = score;
+        switch (cost){
+            case 1:
+                score = 1;
+                break;
+            case 2:
+                score = 2;
+                break;
+            case 3:
+                score = 4;
+                break;
+            case 4:
+                score = 7;
+                break;
+            case 5:
+                score = 10;
+                break;
+            case 6:
+                score = 15;
+                break;
+            default:
+                score = 0;
+        }
         this.cost = cost;
         this.type = type;
     }
@@ -47,6 +68,14 @@ public class Route {
 
     public void setCost(Integer cost) {
         this.cost = cost;
+    }
+
+    public TrainCardType getType() {
+        return type;
+    }
+
+    public void setType(TrainCardType type) {
+        this.type = type;
     }
 
     @Override

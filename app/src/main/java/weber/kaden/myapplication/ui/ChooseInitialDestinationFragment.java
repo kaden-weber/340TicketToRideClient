@@ -1,35 +1,44 @@
 package weber.kaden.myapplication.ui;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import weber.kaden.common.model.DestinationCard;
+import weber.kaden.common.model.Model;
 import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
 
 public class ChooseInitialDestinationFragment extends DialogFragment implements GameViewInterface {
     //widgets
     private Button mActionCancel, mActionOk;
+    private ChooseInitialDestinationFragment instance = this;
+    private int numSelected = 0;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dialog_choose_destination_cards, container, false);
+        setCancelable(false); // NOT CANCELABLE BY CLICKING OUTSIDE OF SCREEN
         mActionCancel = view.findViewById(R.id.choose_destination_cancel);
         mActionOk = view.findViewById(R.id.choose_destination_ok);
+        mActionOk.setEnabled(false);
 
         mActionCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,7 +47,6 @@ public class ChooseInitialDestinationFragment extends DialogFragment implements 
             }
         });
         mActionCancel.setEnabled(false);
-
         final List<DestinationCard> dealtCards = (List<DestinationCard>) getArguments().getSerializable("cards");
         final List<Boolean> chosenCards = Arrays.asList(false, false, false);
         ToggleButton mDestinationCard0 = view.findViewById(R.id.destination_card_0);
@@ -54,10 +62,13 @@ public class ChooseInitialDestinationFragment extends DialogFragment implements 
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
                     chosenCards.set(0, true);
+                    numSelected++;
                 }
                 else {
                     chosenCards.set(0, false);
+                    numSelected--;
                 }
+                mActionOk.setEnabled((numSelected > 1));
             }
         });
 
@@ -70,10 +81,13 @@ public class ChooseInitialDestinationFragment extends DialogFragment implements 
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
                     chosenCards.set(1, true);
+                    numSelected++;
                 }
                 else {
                     chosenCards.set(1, false);
+                    numSelected--;
                 }
+                mActionOk.setEnabled((numSelected > 1));
             }
         });
 
@@ -86,19 +100,25 @@ public class ChooseInitialDestinationFragment extends DialogFragment implements 
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
                     chosenCards.set(2, true);
+                    numSelected++;
                 }
                 else {
                     chosenCards.set(2, false);
+                    numSelected--;
                 }
+                mActionOk.setEnabled((numSelected > 1));
             }
         });
 
         mActionOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+<<<<<<< HEAD
                 //TODO: Make this send data back
                 //getDialog().dismiss();
                 getDialog().dismiss();
+=======
+>>>>>>> 9fcc23300b13221d5902fb64488db4cdad6ea474
                 List<DestinationCard> chosenList = new ArrayList<>();
                 List<DestinationCard> discardedList = new ArrayList<>();
                 for (int i = 0; i < chosenCards.size(); i++) {
@@ -109,16 +129,64 @@ public class ChooseInitialDestinationFragment extends DialogFragment implements 
                         discardedList.add(dealtCards.get(i));
                     }
                 }
-                sendCards(chosenList, discardedList);
-                Intent intent = new Intent(getActivity(), GameActivity.class);
-                startActivity(intent);
+                ClientFacade clientFacade = new ClientFacade();
+                SendChosenCards sendChosenCards = new SendChosenCards(clientFacade.getCurrentUser(),
+                        clientFacade.getCurrentGame().getID(), chosenList, discardedList);
+                sendChosenCards.execute();
             }
         });
 
         return view;
     }
 
-    private void sendCards(List<DestinationCard> drawnCards, List<DestinationCard> discardedCards) {
-        new GamePresenter(this, new ClientFacade()).chooseDestinationCards(drawnCards, discardedCards);
+    @Override
+    public void sendMessage(String message) {
+
+    }
+
+    public class SendChosenCards extends AsyncTask<Void, Void, Boolean> {
+
+        private final String username;
+        private final String gameId;
+        private final List<DestinationCard> cardsKept;
+        private final List<DestinationCard> cardsDiscarded;
+
+        private String errorMessage;
+
+        SendChosenCards(String mUsername, String mgameId, List<DestinationCard> mCardsKept, List<DestinationCard> mCardsDiscarded) {
+            username = mUsername;
+            gameId = mgameId;
+            cardsKept = mCardsKept;
+            cardsDiscarded = mCardsDiscarded;
+        }
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            ClientFacade clientFacade = new ClientFacade();
+            InitialDestinationCardPresenter cardPresenter = new InitialDestinationCardPresenter(instance, clientFacade);
+            try {
+                cardPresenter.sendCards(username, gameId, cardsKept, cardsDiscarded);
+            } catch (Exception e) {
+                errorMessage = e.getMessage();
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            if (success){
+                getDialog().dismiss();
+                Intent intent = new Intent(getActivity(), GameActivity.class);
+                startActivity(intent);
+            }else {
+                Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
+        @Override
+        protected void onCancelled() {
+
+        }
     }
 }

@@ -1,4 +1,6 @@
 package weber.kaden.myapplication.model;
+import android.view.Display;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,9 +10,12 @@ import weber.kaden.common.command.Command;
 import weber.kaden.common.command.CommandData;
 import weber.kaden.common.command.CommandFactory;
 import weber.kaden.common.command.CommandType;
+import weber.kaden.common.model.DestinationCard;
 import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Model;
 import weber.kaden.common.model.Player;
+import weber.kaden.common.model.TrainCard;
+import weber.kaden.common.model.TrainCardType;
 import weber.kaden.myapplication.serverProxy.ServerProxy;
 import java.util.UUID;
 
@@ -154,5 +159,91 @@ public class ClientFacade {
             throw new Exception(results.getErrorInfo());
         }
 
+    }
+
+    public List<DestinationCard> getDealtDestinationCardsForCurrentPlayer() {
+        return Model.getInstance().getDealtDestinationCards();
+    }
+    public List<DestinationCard> getDestinationCardsForTurn(){
+        return Model.getInstance().getCurrentGame().getTopOfDestinationCardDeck();
+    }
+
+    public boolean PlayerCanClaimRoute(int number, TrainCardType type) {
+        return Model.getInstance().PlayerCanClaimRoute(number, type);
+    }
+    public void sendDestinationCards(String playerId, String gameId, List<DestinationCard> keptCards, List<DestinationCard> discarded) throws Exception{
+        List<String> params = new ArrayList<>((Arrays.asList(gameId, playerId)));
+        List<Object> data = new ArrayList<>();
+        data.add(keptCards);
+        data.add(discarded);
+        CommandData commandData = new CommandData(params, CommandType.DRAWDESTINATIONCARDS, data);
+        Results results = ServerProxy.getInstance().sendCommand(commandData);
+        if(!results.success()){
+            throw new Exception(results.getErrorInfo());
+        }
+    }
+
+    public boolean isCurrentPlayer() {
+        return Model.getInstance().isCurrentPlayer();
+    }
+
+    public void testDrawDestinationCards() {
+        List<DestinationCard> cards = Model.getInstance().getCurrentGame().getTopOfDestinationCardDeck();
+        List<String> params = new ArrayList<String>();
+        params.add(Model.getInstance().getCurrentGame().getID());
+        params.add(Model.getInstance().getCurrentUser());
+        List<Object> data = new ArrayList<>();
+        data.add(cards);
+        data.add(null);
+        CommandData commandData = new CommandData(params, CommandType.DRAWDESTINATIONCARDS, data);
+        ServerProxy.getInstance().sendCommand(commandData);
+    }
+
+    public void testDrawTrainCard() {
+        TrainCard card = Model.getInstance().getCurrentGame().getTopOfTrainCardDeck();
+        List<String> params = new ArrayList<String>();
+        params.add(Model.getInstance().getCurrentGame().getID());
+        params.add(Model.getInstance().getCurrentUser());
+        List<Object> data = new ArrayList<>();
+        data.add(card);
+        CommandData commandData = new CommandData(params, CommandType.DRAWTRAINCARDFROMDECK, data);
+        ServerProxy.getInstance().sendCommand(commandData);
+    }
+
+    public void testRemoveTrainCardFromPlayer() {
+        TrainCard card = Model.getInstance().getCurrentGame().getPlayer(Model.getInstance().getCurrentUser()).getTrainCards().get(0);
+        List<String> params = new ArrayList<String>();
+        params.add(Model.getInstance().getCurrentGame().getID());
+        params.add(Model.getInstance().getCurrentUser());
+        List<Object> data = new ArrayList<>();
+        data.add(card);
+        CommandData commandData = new CommandData(params, CommandType.DISCARDTRAINCARD, data);
+        ServerProxy.getInstance().sendCommand(commandData);
+    }
+
+    public void testRemoveDestinationCardFromPlayer() {
+        DestinationCard card = Model.getInstance().getCurrentGame().getPlayer(Model.getInstance().getCurrentUser()).getDestinationCardHand().get(0);
+        List<String> params = new ArrayList<String>();
+        params.add(Model.getInstance().getCurrentGame().getID());
+        params.add(Model.getInstance().getCurrentUser());
+        List<Object> data = new ArrayList<>();
+        data.add(card);
+        CommandData commandData = new CommandData(params, CommandType.DISCARDDESTINATIONCARD, data);
+        ServerProxy.getInstance().sendCommand(commandData);
+    }
+
+    public void testDealTrainCardsToOpponents() {
+        for (int i = 0; i < Model.getInstance().getCurrentGame().getPlayers().size(); i++) {
+            if (!Model.getInstance().getCurrentGame().getPlayers().get(i).getID().equals(Model.getInstance().getCurrentUser())) {
+                TrainCard card = Model.getInstance().getCurrentGame().getTopOfTrainCardDeck();
+                List<String> params = new ArrayList<String>();
+                params.add(Model.getInstance().getCurrentGame().getID());
+                params.add(Model.getInstance().getCurrentGame().getPlayers().get(i).getID());
+                List<Object> data = new ArrayList<>();
+                data.add(card);
+                CommandData commandData = new CommandData(params, CommandType.DRAWTRAINCARDFROMDECK, data);
+                ServerProxy.getInstance().sendCommand(commandData);
+            }
+        }
     }
 }
