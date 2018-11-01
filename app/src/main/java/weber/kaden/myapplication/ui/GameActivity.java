@@ -9,6 +9,9 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -30,11 +33,14 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import weber.kaden.common.model.City;
 import weber.kaden.common.model.DestinationCard;
 import weber.kaden.common.model.Game;
+import weber.kaden.common.model.Model;
 import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
 import weber.kaden.myapplication.ui.map.DisplayRoute;
@@ -48,6 +54,8 @@ import weber.kaden.myapplication.ui.turnmenu.SeeOtherPlayersFragment;
 public class GameActivity extends AppCompatActivity
         implements OnMapReadyCallback, GoogleMap.OnPolylineClickListener, GameViewInterface {
     GameActivity instance = this;
+    GameAdapter adapter;
+    List<DestinationCard> destCards = new ArrayList<>();
 
     //map Constants
     private static final float DEFAULT_ZOOM = (float) 4.0;
@@ -73,7 +81,15 @@ public class GameActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
+        destCards.addAll(Model.getInstance().getPlayer(Model.getInstance().getCurrentUser()).getDestinationCardHand());
+        System.out.println(destCards + "<--- THAT WAS THAT");
+        //destCards.add(new DestinationCard(City.KANSAS_CITY,City.OKLAHOMA_CITY, 10 ));
+        // set up the RecyclerView
+        RecyclerView recyclerView = findViewById(R.id.myInfoRecycle);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new GameAdapter(this, destCards);
+        recyclerView.setAdapter(adapter);
+        // end RecyclerView
         // Hide both the navigation bar and the status bar.
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -129,7 +145,11 @@ public class GameActivity extends AppCompatActivity
             }
         });
     }
-
+    public void setMyNewValues(List<DestinationCard> nDestCards){
+        destCards.clear();
+        destCards.addAll(nDestCards);
+        adapter.notifyDataSetChanged();
+    }
     @Override
     public void onMapReady(GoogleMap googleMap) {
         //set map style
