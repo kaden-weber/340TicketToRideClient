@@ -47,11 +47,11 @@
     <string name="destination_card">Choose Destination Cards</string>
     <string name="train_card">Choose Train Cards</string>
     <string name="claim_route">Claim Route</string>
-    <string name="see_other_players">See Other Players</string>
+    <string name="see_other_players">View Players</string>
     <string name="turn_header">Select Turn Action:</string>
     <string name="chat_header">Chat</string>
     <string name="cancel">Cancel</string>
     <string name="ok">Ok</string>
-    <string name="other_players">Other Players</string>
+    <string name="other_players">Players</string>
 
 </resources>

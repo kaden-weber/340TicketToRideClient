@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -70,12 +71,17 @@ public class GameActivity extends AppCompatActivity
     private static final double MAX_WEST = -115;
 
     private static final float ROUTE_WIDTH = 22;
-    private static final double SECOND_ROUTE_OFFSET = 0.2;
+    private static final double SECOND_ROUTE_OFFSET = 0.6;
 
 
     Locations mLocations;
+    List<Polyline> mRoutes;
+    List<PatternItem> mClaimedPattern;
     GamePresenter mPresenter = new GamePresenter(this, new ClientFacade());
     DrawerLayout mDrawerLayout;
+
+    //TEMP FOR PHASE 2
+    Button mTestButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +150,21 @@ public class GameActivity extends AppCompatActivity
                 return true;
             }
         });
+
+        //make claimed route pattern
+        List<PatternItem> claimedRoutePattern = Arrays.<PatternItem>asList(
+                 new Dash(100) );
+        //init route list
+        mRoutes = new ArrayList<>();
+
+        //init test button
+        mTestButton = findViewById(R.id.tempTestButton);
+        mTestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.runPhase2Test();
+            }
+        });
     }
     public void setMyNewValues(List<DestinationCard> nDestCards){
         destCards.clear();
@@ -163,22 +184,16 @@ public class GameActivity extends AppCompatActivity
         //constrain map to game area
         LatLngBounds bounds = new LatLngBounds(new LatLng(MAX_SOUTH, MAX_WEST), new LatLng(MAX_NORTH, MAX_EAST));
         googleMap.setLatLngBoundsForCameraTarget(bounds);
-
-        //add city markers TODO: Change marker icon
+        //add city markers
         for (Location location : mLocations.getLocations()) {
             googleMap.addMarker(new MarkerOptions().position(location.getCoords())
                     .title(location.getCity())
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.steamtrain_dark))
-            );
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.steamtrain_dark)));
         }
-
-        //make route pattern
+        //make unclaimed route pattern
         List<PatternItem> pattern = Arrays.<PatternItem>asList(
                 new Gap(10), new Dash(70) );
-//        List<PatternItem> doublePattern = Arrays.<PatternItem>asList(
-//                new Dash(70), new Gap(10) );
-
-        //add routes TODO: Fix double routes
+        //add routes TODO: make double routes look real good, refactor to route creation method
         DisplayRoutes routes = new DisplayRoutes(mLocations);
         for ( DisplayRoute route : routes.getRoutes()){
             String routeColor = route.getColor();
@@ -195,6 +210,7 @@ public class GameActivity extends AppCompatActivity
                 .pattern(pattern)
                 .color(getRouteColor(routeColor)));
             line.setTag(route.getLength());
+            mRoutes.add(line);
         }
         //make routes clickable
         googleMap.setOnPolylineClickListener(this);
@@ -218,26 +234,21 @@ public class GameActivity extends AppCompatActivity
             .pattern(pattern)
             .color(getRouteColor(color)));
         line.setTag(route.getLength());
+        mRoutes.add(line);
     }
 
     private LatLng offsetCoords(LatLng input, double perpendicularSlope){
-        double x = input.longitude;
-        double y = input.latitude;
-        double intercept = y - (perpendicularSlope * x);
-        double newX = x + SECOND_ROUTE_OFFSET / perpendicularSlope;
-        double newY = perpendicularSlope * newX + intercept;
-
+        double theta = Math.atan(perpendicularSlope);
+        double deltaX = SECOND_ROUTE_OFFSET * Math.cos(theta);
+        double deltaY = SECOND_ROUTE_OFFSET * Math.sin(theta);
+        double newX = input.longitude + deltaX;
+        double newY = input.latitude + deltaY;
         return new LatLng(newY, newX);
-
-//        return new LatLng(input.latitude + (SECOND_ROUTE_OFFSET / perpendicularSlope),
-//                input.longitude + (SECOND_ROUTE_OFFSET * perpendicularSlope));
     }
-
     private double slope(Location location1, Location location2){
         return (location2.getCoords().latitude - location1.getCoords().latitude)
                / (location2.getCoords().longitude - location1.getCoords().longitude);
     }
-
     private String getSecondColor(String routeColor) {
         return routeColor.substring(routeColor.indexOf(" ") + 1);
     }
@@ -272,6 +283,11 @@ public class GameActivity extends AppCompatActivity
         //otherwise display route length
         Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()), Toast.LENGTH_SHORT).show();
     }
+
+    public void sendMessage(String message){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
 
     public class DestinationCardsTask extends AsyncTask<Void, Void, Boolean> {
         private String errorString = "";
