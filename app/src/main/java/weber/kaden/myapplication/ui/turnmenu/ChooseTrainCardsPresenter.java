@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Model;
 import weber.kaden.common.model.TrainCard;
 import weber.kaden.myapplication.model.ClientFacade;
@@ -32,6 +33,9 @@ public class ChooseTrainCardsPresenter implements Observer {
 
     @Override
     public void update(Observable observable, Object o) {
-
+        if (o instanceof Game) {
+            Game game = (Game) o;
+            fragment.updateCards(game.getFaceUpTrainCardDeck());
+        }
     }
 }

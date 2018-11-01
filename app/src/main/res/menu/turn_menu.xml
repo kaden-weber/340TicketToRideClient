@@ -16,6 +16,9 @@
         <item
             android:id="@+id/turn_menu_chat"
             android:title="@string/chat_menu"/>
+        <item
+            android:id="@+id/turn_menu_game_history"
+            android:title="@string/game_history"/>
     </group>
 
 </menu>

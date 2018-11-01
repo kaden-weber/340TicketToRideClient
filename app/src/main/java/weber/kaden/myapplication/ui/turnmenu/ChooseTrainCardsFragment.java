@@ -212,6 +212,7 @@ public class ChooseTrainCardsFragment extends DialogFragment {
 		protected void onPostExecute(Boolean success) {
 			if (success) {
 				numCardsChosen += cardValue;
+				mActionCancel.setEnabled(false);
 
 				if (numCardsChosen == 2) {
 					getDialog().dismiss();

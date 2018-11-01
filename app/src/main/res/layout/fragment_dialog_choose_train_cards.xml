@@ -26,33 +26,39 @@
             android:id="@+id/choose_train_card0"
             android:layout_width="wrap_content"
             android:layout_height="70dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:layout_marginEnd="10dp"/>
         <Button
             android:id="@+id/choose_train_card1"
             android:layout_width="wrap_content"
             android:layout_height="70dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:layout_marginEnd="10dp"/>
         <Button
             android:id="@+id/choose_train_card2"
             android:layout_width="wrap_content"
             android:layout_height="70dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:layout_marginEnd="10dp"/>
         <Button
             android:id="@+id/choose_train_card3"
             android:layout_width="wrap_content"
             android:layout_height="70dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:layout_marginEnd="10dp"/>
         <Button
             android:id="@+id/choose_train_card4"
             android:layout_width="wrap_content"
             android:layout_height="70dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:layout_marginEnd="10dp"/>
         <Button
             android:id="@+id/choose_train_deck"
             android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:layout_weight="5"
-            android:text="Deck"/>
+            android:text="Deck"
+            android:layout_marginEnd="10dp"/>
 
     </LinearLayout>
 

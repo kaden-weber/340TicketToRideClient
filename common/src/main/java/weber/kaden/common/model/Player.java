@@ -181,17 +181,31 @@ public class Player {
     }
 
     public boolean hasTrainCards(int number, TrainCardType type) {
-        int num = 0;
-        for (int i = 0; i < this.trainCards.size(); i++) {
-            if (this.trainCards.get(i).getType().equals(type) || this.trainCards.get(i).getType().equals(TrainCardType.LOCOMOTIVE))
-            {
-                num++;
+        if (type.equals(TrainCardType.GRAY)) {
+            for (TrainCardType localType : TrainCardType.values()) {
+                int num = 0;
+                for (int i = 0; i < this.trainCards.size(); i++) {
+                    if (this.trainCards.get(i).getType().equals(localType)) {
+                        num++;
+                    }
+                }
+                if (num >= number) {
+                    return true;
+                }
             }
+            return false;
+        } else {
+            int num = 0;
+            for (int i = 0; i < this.trainCards.size(); i++) {
+                if (this.trainCards.get(i).getType().equals(type) || this.trainCards.get(i).getType().equals(TrainCardType.LOCOMOTIVE)) {
+                    num++;
+                }
+            }
+            if (num >= number) {
+                return true;
+            }
+            return false;
         }
-        if (num >= number) {
-            return true;
-        }
-        return false;
     }
 
     public boolean removeDestinationCard(DestinationCard card) {
