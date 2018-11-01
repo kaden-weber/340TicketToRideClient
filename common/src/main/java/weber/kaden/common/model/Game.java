@@ -13,7 +13,7 @@ public class Game {
     private boolean started;
     private boolean setup;
     private boolean destinationCardsDealt;
-    private List<ChatMessage> chat;
+    private List<ChatMessage> chat = new ArrayList<>();
     private List<DestinationCard> destinationCardDeck;
     private List<DestinationCard> destinationCardDiscard;
     private List<TrainCard> trainCardDeck;

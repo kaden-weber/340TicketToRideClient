@@ -20,6 +20,7 @@ public class ChatPresenter implements Observer {
         this.view = view;
         this.client = client;
         model = Model.getInstance();
+        model.addObserver(this);
     }
 
     public void sendMessage(String message) {
@@ -35,11 +36,8 @@ public class ChatPresenter implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        if (arg instanceof ArrayList<?>
-                && (!((ArrayList<?>)arg).isEmpty())
-                && ((ArrayList<?>)arg).get(0) instanceof ChatMessage) {
-            List<ChatMessage> chatMessages = (ArrayList<ChatMessage>) arg;
-            view.updateChat(chatMessages);
+        if (arg instanceof Game) {
+            view.updateChat(((Game) arg).getChat());
         }
     }
 }

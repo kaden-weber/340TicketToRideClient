@@ -1,6 +1,7 @@
 package weber.kaden.myapplication.ui;
 
 import android.app.ActionBar;
+import android.support.v4.view.GravityCompat;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -38,10 +39,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import weber.kaden.common.model.City;
+import weber.kaden.common.model.Model;
 import weber.kaden.common.model.DestinationCard;
 import weber.kaden.common.model.Game;
-import weber.kaden.common.model.Model;
+import weber.kaden.common.model.DestinationCard;
+import weber.kaden.common.model.Game;
+
 import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
 import weber.kaden.myapplication.ui.map.DisplayRoute;
@@ -72,7 +75,6 @@ public class GameActivity extends AppCompatActivity
 
     private static final float ROUTE_WIDTH = 22;
     private static final double SECOND_ROUTE_OFFSET = 0.6;
-
 
     private Locations mLocations;
     private List<Polyline> mRoutes;
@@ -146,6 +148,10 @@ public class GameActivity extends AppCompatActivity
                         DialogFragment seeOtherPlayersFragment = new SeeOtherPlayersFragment();
                         seeOtherPlayersFragment.show(getSupportFragmentManager(), "ChooseTrainCardsFragment");
                         break;
+                    case R.id.turn_menu_chat:
+                        DialogFragment chatFragment = new ChatFragment();
+                        ((ChatFragment) chatFragment).setMessages(Model.getInstance().getCurrentGame().getChat());
+                        chatFragment.show(getSupportFragmentManager(), "ChatFragment");
                 }
 
                 return true;
@@ -168,11 +174,23 @@ public class GameActivity extends AppCompatActivity
             }
         });
     }
+
     public void setMyNewValues(List<DestinationCard> nDestCards){
         destCards.clear();
         destCards.addAll(nDestCards);
         adapter.notifyDataSetChanged();
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         //set map style
