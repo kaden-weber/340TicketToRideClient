@@ -63,6 +63,7 @@ public class GamePresenter implements Observer {
             activity.setMyNewValues(game.getPlayer(client.getCurrentUser()).getDestinationCardHand());
         }
     }
+
     public void runPhase2Test() {
         //TODO Run test list
         //TODO: Run in an asynctask so there can be pauses?
