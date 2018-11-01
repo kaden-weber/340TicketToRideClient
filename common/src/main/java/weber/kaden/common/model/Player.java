@@ -38,6 +38,17 @@ public class Player {
         this.score = score;
     }
 
+    public Player(Player player) {
+        this.ID = player.getID();
+        this.password = player.getPassword();
+        this.dealtDestinationCards = new ArrayList<DestinationCard>();
+        this.destinationCardHand = new ArrayList<DestinationCard>();
+        this.trainCards = new ArrayList<TrainCard>();
+        this.routesClaimed = new ArrayList<Route>();
+        this.trainPieces = 40;
+        this.score = 0;
+    }
+
     public String getID() {
         return ID;
     }
