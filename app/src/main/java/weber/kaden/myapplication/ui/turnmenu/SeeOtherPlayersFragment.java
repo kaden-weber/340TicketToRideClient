@@ -20,6 +20,8 @@ import weber.kaden.common.model.Player;
 import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
 
+import static android.graphics.Color.WHITE;
+
 public class SeeOtherPlayersFragment extends DialogFragment {
     //widgets
     private Button mActionCancel, mActionOk;
@@ -115,6 +117,13 @@ public class SeeOtherPlayersFragment extends DialogFragment {
             String playerTrainPieces = "Train Pieces: " + mPlayers.get(position).getNumberOfTrains();
             String playerDestinationCards = "Destination Cards: " + mPlayers.get(position).getNumberOfDestinationCards();
             holder.playerName.setText(playerName);
+            holder.playerName.setBackgroundColor(getContext().getResources().
+                    getColor(getContext().getResources()
+                            .getIdentifier(mPlayers.get(position).getColor().toString(),
+                                    "color", getContext().getPackageName())));
+            if(mPlayers.get(position).getColor().toString().equals("PLAYER_BLACK")){
+                holder.playerName.setTextColor(WHITE);
+            }
             holder.playerScore.setText(playerScore);
             holder.playerTrains.setText(playerTrainPieces);
             holder.playerTrainCards.setText(playerTrainCards);
