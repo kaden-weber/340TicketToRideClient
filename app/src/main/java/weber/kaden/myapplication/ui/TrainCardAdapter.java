@@ -15,16 +15,14 @@ import weber.kaden.common.model.DestinationCard;
 import weber.kaden.common.model.TrainCard;
 import weber.kaden.myapplication.R;
 
-public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder>{
-    private List<DestinationCard> destinationCards;
-    //private  List<TrainCard> trainCards;
+public class TrainCardAdapter extends RecyclerView.Adapter<TrainCardAdapter.ViewHolder>{
+    private  List<TrainCard> trainCards;
     private LayoutInflater mInflater;
 
     // data is passed into the constructor
-    GameAdapter(Context context, List<DestinationCard> destinationCards) {
+    TrainCardAdapter(Context context, List<TrainCard> trainCards) {
         this.mInflater = LayoutInflater.from(context);
-        this.destinationCards = destinationCards;
-        //this.trainCards = trainCards;
+        this.trainCards = trainCards;
     }
 
     // inflates the row layout from xml when needed
@@ -35,8 +33,8 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder>{
     }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        DestinationCard destinationCard =  destinationCards.get(position);
-        String destinationText = destinationCard.getStartCity().toString() + "\nTo\n" + destinationCard.getEndCity().toString();
+        TrainCard trainCard =  trainCards.get(position);
+        String destinationText = trainCard.getType().toString();
         holder.toggleDest.setTextOn(destinationText);
         holder.toggleDest.setTextOff(destinationText);
         holder.toggleDest.setText(destinationText);
@@ -45,7 +43,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder>{
     // total number of rows
     @Override
     public int getItemCount() {
-        return destinationCards.size();
+        return trainCards.size();
     }
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder {
