@@ -154,6 +154,7 @@ public class GameActivity extends AppCompatActivity
                     case R.id.turn_menu_train_cards:
                         ChooseTrainCardsFragment chooseTrainCardsFragment = new ChooseTrainCardsFragment();
                         ChooseTrainCardsPresenter trainCardsPresenter = new ChooseTrainCardsPresenter(chooseTrainCardsFragment, new ClientFacade());
+                        trainCardsPresenter.removeAsObserver();
 
                         Bundle chooseTrainCardArgs = new Bundle();
                         chooseTrainCardArgs.putSerializable("faceUpCards", (Serializable) trainCardsPresenter.getFaceUpTrainCards());

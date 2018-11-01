@@ -19,6 +19,10 @@ public class ChooseTrainCardsPresenter implements Observer {
         Model.getInstance().addObserver(this);
     }
 
+    public void removeAsObserver() {
+    	Model.getInstance().deleteObserver(this);
+    }
+
     public List<TrainCard> getFaceUpTrainCards() {
         return Model.getInstance().getCurrentGame().getFaceUpTrainCardDeck();
     }

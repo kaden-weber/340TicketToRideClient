@@ -29,18 +29,22 @@ public class ChooseTrainCardsFragment extends DialogFragment {
 
     List<TrainCard> faceUpCards;
 
+    ChooseTrainCardsPresenter presenter;
+
     int numCardsChosen = 0;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dialog_choose_train_cards, container, false);
+        presenter = new ChooseTrainCardsPresenter(this, new ClientFacade());
         setCancelable(false);
         mActionCancel = view.findViewById(R.id.choose_train_cancel);
 
         mActionCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+            	presenter.removeAsObserver();
                 getDialog().dismiss();
             }
         });
@@ -173,9 +177,6 @@ public class ChooseTrainCardsFragment extends DialogFragment {
     	private Integer cardIndex;
     	private int cardValue;
 
-    	private ClientFacade client;
-    	private ChooseTrainCardsPresenter presenter;
-
     	private String errormessage;
 
     	public ChooseFaceUpTrainCardTask(String username, String gameId, Integer cardIndex, int value) {
@@ -183,9 +184,6 @@ public class ChooseTrainCardsFragment extends DialogFragment {
 			this.gameId = gameId;
 			this.cardIndex = cardIndex;
 			this.cardValue = value;
-
-			client = new ClientFacade();
-			presenter = new ChooseTrainCardsPresenter(instance, client);
 		}
 
 		@Override
@@ -206,6 +204,7 @@ public class ChooseTrainCardsFragment extends DialogFragment {
 				mActionCancel.setEnabled(false);
 
 				if (numCardsChosen == 2) {
+					presenter.removeAsObserver();
 					getDialog().dismiss();
 				}
 				else {
@@ -231,8 +230,6 @@ public class ChooseTrainCardsFragment extends DialogFragment {
 
 		@Override
 		protected Boolean doInBackground(Void... voids) {
-			ClientFacade client = new ClientFacade();
-			ChooseTrainCardsPresenter presenter = new ChooseTrainCardsPresenter(instance, client);
 			try {
 				presenter.drawTrainCardFromDeck(gameId, username);
 			} catch (Exception e) {
@@ -249,6 +246,7 @@ public class ChooseTrainCardsFragment extends DialogFragment {
 				numCardsChosen += 1;
 
 				if (numCardsChosen == 2) {
+					presenter.removeAsObserver();
 					getDialog().dismiss();
 				}
 			}
