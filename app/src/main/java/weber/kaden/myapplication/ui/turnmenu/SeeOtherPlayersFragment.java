@@ -16,6 +16,7 @@ import android.widget.TextView;
 import java.util.List;
 import java.util.zip.Inflater;
 
+import weber.kaden.common.model.Model;
 import weber.kaden.common.model.Player;
 import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
@@ -111,7 +112,12 @@ public class SeeOtherPlayersFragment extends DialogFragment {
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            String playerName = "Player: " + mPlayers.get(position).getID();
+            String playerName;
+            if(mPlayers.get(position).getID().equals(new ClientFacade().getCurrentGame().getCurrentPlayer().getID())){
+                playerName = "->Player: " + mPlayers.get(position).getID();
+            } else {
+                playerName = "Player: " + mPlayers.get(position).getID();
+            }
             String playerScore = "Score: " + mPlayers.get(position).getScore();
             String playerTrainCards = "Train Cards: " + mPlayers.get(position).getNumberOfTrainCards();
             String playerTrainPieces = "Train Pieces: " + mPlayers.get(position).getNumberOfTrains();
