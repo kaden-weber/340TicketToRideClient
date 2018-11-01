@@ -1,6 +1,12 @@
 package weber.kaden.common.command;
 
+import com.google.gson.JsonObject;
+import com.google.gson.internal.LinkedTreeMap;
+
 import java.util.List;
+
+import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
 
 import weber.kaden.common.model.DestinationCard;
 import weber.kaden.common.model.Model;
@@ -31,7 +37,7 @@ public class CommandFactory {
         mCommandManager = commandManager;
     }
 
-    public Command getCommand(CommandData data) throws InvalidCommandParamsException {
+    public Command getCommand(CommandData data) throws InvalidCommandParamsException, Exception {
         switch (data.getType()) {
             case SETTRAVELERRATE:
                 if(data.getParams().size() < 3){
@@ -107,7 +113,8 @@ public class CommandFactory {
                 if (data.getParams().size() < 2 && data.getData().size() < 1){
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
                 }
-                return new DiscardTrainCardCommand(data.getParams(), (TrainCard)data.getData().get(0));
+                TrainCard trainCard = (TrainCard) deserializeData(CommandType.DISCARDTRAINCARD, (LinkedTreeMap<Object,Object>)  data.getData().get(0));
+                return new DiscardTrainCardCommand(data.getParams(), trainCard);
             case DRAWTRAINCARDFROMFACEUP:
                 if (data.getParams().size() < 2 && data.getData().size() < 1){
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
@@ -117,7 +124,8 @@ public class CommandFactory {
                 if (data.getParams().size() < 2 && data.getData().size() < 1){
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
                 }
-                return new ClaimRouteCommand(data.getParams(), (Route) data.getData().get(0));
+                Route route = (Route) deserializeData(CommandType.CLAIMROUTE, (LinkedTreeMap<Object,Object>)  data.getData().get(0));
+                return new ClaimRouteCommand(data.getParams(), route);
             case FINISHTURN:
                 if (data.getParams().size() < 1) {
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
@@ -132,4 +140,18 @@ public class CommandFactory {
                 return null;
         }
     }
+
+    public Object deserializeData(CommandType type, LinkedTreeMap<Object, Object> data) throws Exception {
+        Gson gson = new Gson();
+        JsonObject jsonObject = gson.toJsonTree(data).getAsJsonObject();
+        switch (type) {
+            case CLAIMROUTE:
+                return gson.fromJson(jsonObject, Route.class);
+            case DISCARDTRAINCARD:
+                return gson.fromJson(jsonObject, TrainCard.class);
+            default:
+                throw new Exception("dataDeserializer: Not valid object");
+        }
+    }
+
 }
