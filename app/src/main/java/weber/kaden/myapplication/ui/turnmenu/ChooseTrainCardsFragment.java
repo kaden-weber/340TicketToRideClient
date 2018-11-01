@@ -37,19 +37,10 @@ public class ChooseTrainCardsFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_dialog_choose_train_cards, container, false);
         setCancelable(false);
         mActionCancel = view.findViewById(R.id.choose_train_cancel);
-        mActionOk = view.findViewById(R.id.choose_train_ok);
 
         mActionCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getDialog().dismiss();
-            }
-        });
-
-        mActionOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO: Make this send data back
                 getDialog().dismiss();
             }
         });
@@ -179,7 +170,7 @@ public class ChooseTrainCardsFragment extends DialogFragment {
     public class ChooseFaceUpTrainCardTask extends AsyncTask<Void, Void, Boolean> {
     	private String username;
     	private String gameId;
-    	private int cardIndex;
+    	private Integer cardIndex;
     	private int cardValue;
 
     	private ClientFacade client;
@@ -187,7 +178,7 @@ public class ChooseTrainCardsFragment extends DialogFragment {
 
     	private String errormessage;
 
-    	public ChooseFaceUpTrainCardTask(String username, String gameId, int cardIndex, int value) {
+    	public ChooseFaceUpTrainCardTask(String username, String gameId, Integer cardIndex, int value) {
 			this.username = username;
 			this.gameId = gameId;
 			this.cardIndex = cardIndex;

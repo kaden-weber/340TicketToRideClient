@@ -81,13 +81,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="12"/>
-
-        <Button
-            android:id="@+id/choose_train_ok"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/ok" />
     </LinearLayout>
 
 </LinearLayout>
