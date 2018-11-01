@@ -38,13 +38,16 @@
             android:text="@string/test"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/map_frame" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="#FFF">
         <LinearLayout
             android:id="@+id/myInfoBanner"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="55dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/myInfoBannerTrains"
-            android:background="#FFF">
+            android:layout_alignParentStart="true">
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/myInfoRecycle"
                 android:layout_width="wrap_content"
@@ -52,16 +55,30 @@
         </LinearLayout>
         <LinearLayout
             android:id="@+id/myInfoBannerTrains"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="55dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:background="#FFF"
-            app:layout_constraintLeft_toRightOf="@+id/myInfoBanner">
+            android:layout_centerInParent="true">
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/myInfoRecycleTrains"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"/>
         </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/myInfoBannerPoints"
+                android:layout_width="100dp"
+                android:layout_height="55dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="68dp">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/myInfoRecyclePoints"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+        </RelativeLayout>
     </android.support.constraint.ConstraintLayout>
 
     <android.support.design.widget.NavigationView
