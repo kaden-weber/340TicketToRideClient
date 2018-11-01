@@ -1,7 +1,9 @@
 package weber.kaden.server;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import weber.kaden.common.Results;
 import weber.kaden.common.command.Command;
@@ -22,16 +24,19 @@ public class CommandManager implements iCommandManager {
         return sCommandManager;
     }
 
-    private List<CommandData> mCommandDataList;
+    private Map<String, List<CommandData>> mCommandDataList;
 
     private CommandManager(){
-        mCommandDataList = new ArrayList<>();
+        mCommandDataList = new HashMap<>();
     }
 
     Results processCommand(CommandData commandData) throws Exception {
         Command command = CommandFactory.getInstance().getCommand(commandData);
         if (command.hasID()) {
-            mCommandDataList.add(commandData);
+            if (mCommandDataList.get(commandData.getParams().get(0)) == null) {
+                mCommandDataList.put(commandData.getParams().get(0), new ArrayList<CommandData>());
+            }
+            mCommandDataList.get(commandData.getParams().get(0)).add(commandData);
         }
         return command.execute();
     }
@@ -50,14 +55,14 @@ public class CommandManager implements iCommandManager {
     public List<CommandData> getLatestCommands(String gameID, String lastID) {
         List<CommandData> toReturn = new ArrayList<CommandData>();
         int index = 0;
-        for (int i = 0; i < mCommandDataList.size(); i++) {
-            if (this.mCommandDataList.get(i).getCommandID().equals(lastID)) {
-                index = i;
-                break;
+        boolean get = false;
+        for (int i = 0; i < mCommandDataList.get(gameID).size(); i++) {
+            if (get) {
+                toReturn.add(this.mCommandDataList.get(gameID).get(i));
             }
-        }
-        for (int i = index + 1; i < mCommandDataList.size(); i++) {
-            toReturn.add(mCommandDataList.get(i));
+            if (this.mCommandDataList.get(gameID).get(i).getCommandID().equals(lastID)) {
+                get = true;
+            }
         }
         return toReturn;
     }

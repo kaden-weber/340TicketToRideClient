@@ -1,10 +1,13 @@
 package weber.kaden.myapplication.ui;
 
 import java.util.ArrayList;
+import android.os.AsyncTask;
+
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.concurrent.TimeUnit;
 
 import weber.kaden.common.model.City;
 import weber.kaden.common.model.DestinationCard;
@@ -18,46 +21,16 @@ import weber.kaden.myapplication.model.ClientFacade;
 public class GamePresenter implements Observer {
     private GameViewInterface view;
     private ClientFacade client;
-
     private  GameActivity activity;
     public GamePresenter(GameViewInterface view, ClientFacade client) {
         this.view = view;
         this.client = client;
         Model.getInstance().addObserver(this);
     }
-
     public GamePresenter(GameActivity activity, ClientFacade client) {
         this.activity = activity;
         this.client = client;
         Model.getInstance().addObserver(this);
-    }
-    public List<TrainCard> getFaceUpTrainCards() {
-
-    	return null;
-    }
-
-    public List<TrainCard> getTrainCardsDeck() {
-
-    	return null;
-    }
-
-    public boolean drawFaceUpTrainCard(TrainCard drawnCard) {
-
-    	return false;
-    }
-
-    public boolean drawTrainCardFromDeck() {
-
-    	return false;
-    }
-
-    public List<DestinationCard> getDrawableDestinationCards() {
-
-        return new ClientFacade().getDestinationCardsForTurn();
-    }
-
-    public void chooseDestinationCards(String username, String gameId, List<DestinationCard> drawnCards, List<DestinationCard> discardedCards) throws Exception{
-        client.sendDestinationCards(username, gameId, drawnCards, discardedCards);
     }
 
     boolean routeClaimable(int size, TrainCardType type){
@@ -76,46 +49,81 @@ public class GamePresenter implements Observer {
         }
     }
 
-    public void runPhase2Test() {
-        //TODO Run test list
-        //TODO: Run in an asynctask so there can be pauses?
-        view.sendMessage("Running Tests");
+    public class runPhase2TestTask extends AsyncTask<Void, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            view.sendMessage("Running Tests");
 
-        view.sendMessage("Adding to your train cards");
-        client.testDrawTrainCard();
-        //delay
-        view.sendMessage("Removing one of your train cards");
-        client.testRemoveTrainCardFromPlayer();
-        view.sendMessage("Adding to your destination cards");
-        client.testDrawDestinationCards();
-        view.sendMessage("Removing one of your destination cards");
-        client.testRemoveDestinationCardFromPlayer();
-        view.sendMessage("Updating opponent train cards");
-        client.testDealTrainCardsToOpponents();
-        view.sendMessage("Updating opponent train cars");
-//        client.changeOpponentsTrainCars();
-        view.sendMessage("Updating opponent destination cards");
-//        client.dealDestinationCardsToOpponents();
-        view.sendMessage("Updating number of visible train cards in deck");
-        //don't know what to do for these
-        view.sendMessage("Updating number of invisible train cards in deck");
-        //ditto
-        view.sendMessage("Updating number of destination cards in deck");
-        //ditto
-        view.sendMessage("Adding a claimed route: Calgary-Winnipeg");
-//        client.haveOpponentClaimRoute(new Route(City.CALGARY, City.WINNIPEG, 6, TrainCardType.PASSENGER));
-        view.sendMessage("Adding a chat message");
-//        ChatPresenter chatPresenter = new ChatPresenter(mock, ); // Looks like we need mocks for this
-//        chatPresenter.sendMessage("Hey guys!");
-        //alternatively:
-        try {
-            client.sendMessage(client.getCurrentGame().getID(), client.getCurrentUser(), "Hey Guys!");
-        } catch (Exception e) {
-            view.sendMessage("Chat failed to send");
+            view.sendMessage("Adding to your train cards");
+            client.testDrawTrainCard();
+            delay();
+            view.sendMessage("Removing one of your train cards");
+            client.testRemoveTrainCardFromPlayer();
+            delay();
+            view.sendMessage("Adding to your destination cards");
+            client.testDrawDestinationCards();
+            delay();
+            view.sendMessage("Removing one of your destination cards");
+            client.testRemoveDestinationCardFromPlayer();
+            delay();
+            view.sendMessage("Updating opponent train cards");
+            client.testDealTrainCardsToOpponents();
+            delay();
+            view.sendMessage("Updating opponent train cars");
+            client.testChangeOpponentsTrainCars();
+            delay();
+            view.sendMessage("Updating opponent destination cards");
+            client.testDealDestinationCardsToOpponents();
+            delay();
+            view.sendMessage("Updating number of visible train cards in deck");
+            try {
+                client.chooseTrainCardFromFaceUpCards(Model.getInstance().getCurrentGame().getID(), Model.getInstance().getCurrentUser(), 0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            delay();
+            view.sendMessage("Updating number of invisible train cards in deck");
+            try {
+                client.chooseTrainCardFromDeck(Model.getInstance().getCurrentGame().getID(), Model.getInstance().getCurrentUser());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            delay();
+            view.sendMessage("Updating number of destination cards in deck");
+            try {
+                client.sendDestinationCards(Model.getInstance().getCurrentGame().getID(), Model.getInstance().getCurrentUser(), Model.getInstance().getCurrentGame().getTopOfDestinationCardDeck(), null);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            delay();
+            view.sendMessage("Adding a claimed route: Calgary-Winnipeg");
+            client.testHaveOpponentClaimRoute(new Route(City.CALGARY, City.WINNIPEG, 6, TrainCardType.PASSENGER));
+            delay();
+            view.sendMessage("Adding a chat message");
+            try {
+                client.sendMessage(client.getCurrentGame().getID(), client.getCurrentUser(), "Hey Guys!");
+            } catch (Exception e) {
+                view.sendMessage("Chat failed to send");
+            }
+            delay();
+            view.sendMessage("Advancing turn to next player");
+            client.finishTurn();
+
+            return true;
         }
-        view.sendMessage("Advancing turn to next player");
-//        client.endTurn(client.getCurrentUser());
 
+        private void delay() {
+            try {
+                TimeUnit.SECONDS.sleep(5);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void runPhase2Test() {
+        runPhase2TestTask task = new runPhase2TestTask();
+        task.execute();
 
 //  For each change, the presenter should:
 //  o Call the view to display a toast describing the change (e.g., “Updating player points”).

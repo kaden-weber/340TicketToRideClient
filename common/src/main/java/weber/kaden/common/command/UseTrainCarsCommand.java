@@ -4,33 +4,28 @@ import java.util.List;
 
 import weber.kaden.common.GenericResults;
 import weber.kaden.common.Results;
-import weber.kaden.common.model.ChatMessage;
 import weber.kaden.common.model.Model;
 
-public class ChatCommand implements Command {
+public class UseTrainCarsCommand implements Command {
     private String gameID;
     private String playerID;
-    private String chatMessage;
 
-    public ChatCommand(List<String> params) {
+    public UseTrainCarsCommand(List<String> params) {
         this.gameID = params.get(0);
         this.playerID = params.get(1);
-        this.chatMessage = params.get(2);
     }
 
     @Override
     public Results execute() {
-        ChatMessage chat = new ChatMessage(this.playerID, this.chatMessage);
-        if (Model.getInstance().getGame(gameID).addChat(chat)) {
+        if (Model.getInstance().getGame(this.gameID).RemoveTrainCarsFromPlayer(playerID)) {
             return new GenericResults(null, true, null);
-        }
-        else {
-            return new GenericResults(null, false, "Chat not added");
+        } else {
+            return new GenericResults(null, false, "Use train cars command failed");
         }
     }
 
     @Override
     public boolean hasID() {
-        return false;
+        return true;
     }
 }

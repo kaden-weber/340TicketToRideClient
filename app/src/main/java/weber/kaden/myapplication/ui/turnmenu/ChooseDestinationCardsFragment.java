@@ -14,7 +14,6 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,13 +22,11 @@ import weber.kaden.common.model.DestinationCard;
 import weber.kaden.common.model.Model;
 import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
-import weber.kaden.myapplication.ui.ChooseInitialDestinationFragment;
 import weber.kaden.myapplication.ui.GameActivity;
 import weber.kaden.myapplication.ui.GamePresenter;
 import weber.kaden.myapplication.ui.GameViewInterface;
-import weber.kaden.myapplication.ui.InitialDestinationCardPresenter;
 
-public class ChooseDestinationCardsFragment extends DialogFragment implements GameViewInterface {
+public class ChooseDestinationCardsFragment extends DialogFragment {
     //widgets
     private ChooseDestinationCardsFragment instance = this;
     private Button mActionCancel, mActionOk;
@@ -38,6 +35,7 @@ public class ChooseDestinationCardsFragment extends DialogFragment implements Ga
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dialog_choose_destination_cards, container, false);
+        setCancelable(false);
         mActionCancel = view.findViewById(R.id.choose_destination_cancel);
         mActionOk = view.findViewById(R.id.choose_destination_ok);
 
@@ -47,6 +45,7 @@ public class ChooseDestinationCardsFragment extends DialogFragment implements Ga
                 getDialog().dismiss();
             }
         });
+        mActionCancel.setEnabled(false);
 
         final List<DestinationCard> dealtCards = (List<DestinationCard>) getArguments().getSerializable("cards");
         final List<Boolean> chosenCards = Arrays.asList(false, false, false);
@@ -119,18 +118,10 @@ public class ChooseDestinationCardsFragment extends DialogFragment implements Ga
                 SendChosenCards sendChosenCards = new SendChosenCards(clientFacade.getCurrentUser(),
                         clientFacade.getCurrentGame().getID(), chosenList, discardedList);
                 sendChosenCards.execute();
-
-                Intent intent = new Intent(getActivity(), GameActivity.class);
-                startActivity(intent);
             }
         });
 
         return view;
-    }
-
-    @Override
-    public void sendMessage(String message) {
-
     }
 
     public class SendChosenCards extends AsyncTask<Void, Void, Boolean> {
@@ -151,7 +142,7 @@ public class ChooseDestinationCardsFragment extends DialogFragment implements Ga
         @Override
         protected Boolean doInBackground(Void... params) {
             ClientFacade clientFacade = new ClientFacade();
-            GamePresenter gamePresenter = new GamePresenter(instance, clientFacade);
+            ChooseDestinationCardsPresenter gamePresenter = new ChooseDestinationCardsPresenter(instance, clientFacade);
             try {
                 gamePresenter.chooseDestinationCards(username, gameId, cardsKept, cardsDiscarded);
             } catch (Exception e) {
@@ -165,8 +156,11 @@ public class ChooseDestinationCardsFragment extends DialogFragment implements Ga
         protected void onPostExecute(final Boolean success) {
             if (success){
                 getDialog().dismiss();
-                Intent intent = new Intent(getActivity(), GameActivity.class);
-                startActivity(intent);
+
+                if (Model.getInstance().getCurrentGame().isSetup()) {
+                    Intent intent = new Intent(getActivity(), GameActivity.class);
+                    startActivity(intent);
+                }
             }else {
                 Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
             }

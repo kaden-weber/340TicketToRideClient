@@ -54,7 +54,9 @@ import weber.kaden.myapplication.ui.map.DisplayRoutes;
 import weber.kaden.myapplication.ui.map.Location;
 import weber.kaden.myapplication.ui.map.Locations;
 import weber.kaden.myapplication.ui.turnmenu.ChooseDestinationCardsFragment;
+import weber.kaden.myapplication.ui.turnmenu.ChooseDestinationCardsPresenter;
 import weber.kaden.myapplication.ui.turnmenu.ChooseTrainCardsFragment;
+import weber.kaden.myapplication.ui.turnmenu.ChooseTrainCardsPresenter;
 import weber.kaden.myapplication.ui.turnmenu.SeeOtherPlayersFragment;
 
 public class GameActivity extends AppCompatActivity
@@ -143,11 +145,11 @@ public class GameActivity extends AppCompatActivity
                         destinationCardsTask.execute();
                         break;
                     case R.id.turn_menu_train_cards:
-                        DialogFragment chooseTrainCardsFragment = new ChooseTrainCardsFragment();
+                        ChooseTrainCardsFragment chooseTrainCardsFragment = new ChooseTrainCardsFragment();
+                        ChooseTrainCardsPresenter trainCardsPresenter = new ChooseTrainCardsPresenter(chooseTrainCardsFragment, new ClientFacade());
 
                         Bundle chooseTrainCardArgs = new Bundle();
-                        chooseTrainCardArgs.putSerializable("faceUpCards", (Serializable) mPresenter.getFaceUpTrainCards());
-                        chooseTrainCardArgs.putSerializable("deck", (Serializable) mPresenter.getTrainCardsDeck());
+                        chooseTrainCardArgs.putSerializable("faceUpCards", (Serializable) trainCardsPresenter.getFaceUpTrainCards());
                         chooseTrainCardsFragment.setArguments(chooseTrainCardArgs);
 
                         chooseTrainCardsFragment.show(getSupportFragmentManager(), "ChooseTrainCardsFragment");
@@ -332,12 +334,14 @@ public class GameActivity extends AppCompatActivity
     public class DestinationCardsTask extends AsyncTask<Void, Void, Boolean> {
         private String errorString = "";
         private List<DestinationCard> destinationCards;
+        private ChooseDestinationCardsFragment fragment = new ChooseDestinationCardsFragment();
+
         DestinationCardsTask() {
         }
         @Override
         protected Boolean doInBackground(Void... params) {
             ClientFacade clientFacade = new ClientFacade();
-            GamePresenter gameListPresenter = new GamePresenter(instance, clientFacade);
+            ChooseDestinationCardsPresenter gameListPresenter = new ChooseDestinationCardsPresenter(fragment, clientFacade);
             try {
                 destinationCards = gameListPresenter.getDrawableDestinationCards();
             } catch (Exception e) {
@@ -350,11 +354,10 @@ public class GameActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(final Boolean success) {
             if(success){
-                DialogFragment chooseDestinationCardsFragment = new ChooseDestinationCardsFragment();
                 Bundle chooseDestinationCardsArgs = new Bundle();
                 chooseDestinationCardsArgs.putSerializable("cards", (Serializable) destinationCards);
-                chooseDestinationCardsFragment.setArguments(chooseDestinationCardsArgs);
-                chooseDestinationCardsFragment.show(getSupportFragmentManager(), "ChooseDestinationCardsFragment");
+                fragment.setArguments(chooseDestinationCardsArgs);
+                fragment.show(getSupportFragmentManager(), "ChooseDestinationCardsFragment");
             } else {
                 Toast.makeText(instance, errorString, Toast.LENGTH_SHORT).show();
             }
