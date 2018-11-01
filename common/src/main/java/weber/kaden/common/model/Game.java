@@ -166,6 +166,7 @@ public class Game {
 
     public boolean start() {
         setStarted(true);
+        setSetup(false);
         return true;
     }
 
@@ -321,11 +322,12 @@ public class Game {
         return this.players.get(currentPlayer);
     }
 
-    public void finishTurn() {
+    public boolean finishTurn() {
         this.currentPlayer = this.players.indexOf(currentPlayer) + 1;
         if (currentPlayer == this.players.size()) {
             currentPlayer = 0;
         }
+        return true;
     }
 
     private void setFirstPlayer() {
@@ -387,5 +389,9 @@ public class Game {
 
     public boolean PlayerRemoveDestinationCard(String playerID, DestinationCard card) {
         return this.getPlayer(playerID).removeDestinationCard(card);
+    }
+
+    public boolean RemoveTrainCarsFromPlayer(String playerID) {
+        return this.getPlayer(playerID).testRemoveTrainCars();
     }
 }

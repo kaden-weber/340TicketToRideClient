@@ -197,4 +197,9 @@ public class Player {
     public boolean removeDestinationCard(DestinationCard card) {
         return this.destinationCardHand.remove(card);
     }
+
+    public boolean testRemoveTrainCars() {
+        this.trainPieces -= 5;
+        return true;
+    }
 }

@@ -118,6 +118,16 @@ public class CommandFactory {
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
                 }
                 return new ClaimRouteCommand(data.getParams(), (Route) data.getData().get(0));
+            case FINISHTURN:
+                if (data.getParams().size() < 1) {
+                    throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
+                }
+                return new FinishTurnCommand(data.getParams());
+            case USETRAINCARS:
+                if (data.getParams().size() < 2) {
+                    throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
+                }
+                return new UseTrainCarsCommand(data.getParams());
             default:
                 return null;
         }

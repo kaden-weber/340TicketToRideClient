@@ -63,9 +63,9 @@ public class GamePresenter implements Observer {
             view.sendMessage("Updating opponent train cards");
             client.testDealTrainCardsToOpponents();
             view.sendMessage("Updating opponent train cars");
-//        client.changeOpponentsTrainCars();
+            client.testChangeOpponentsTrainCars();
             view.sendMessage("Updating opponent destination cards");
-//        client.dealDestinationCardsToOpponents();
+            client.testDealDestinationCardsToOpponents();
             view.sendMessage("Updating number of visible train cards in deck");
             //don't know what to do for these
             view.sendMessage("Updating number of invisible train cards in deck");
@@ -73,18 +73,15 @@ public class GamePresenter implements Observer {
             view.sendMessage("Updating number of destination cards in deck");
             //ditto
             view.sendMessage("Adding a claimed route: Calgary-Winnipeg");
-//        client.haveOpponentClaimRoute(new Route(City.CALGARY, City.WINNIPEG, 6, TrainCardType.PASSENGER));
+            client.testHaveOpponentClaimRoute(new Route(City.CALGARY, City.WINNIPEG, 6, TrainCardType.PASSENGER));
             view.sendMessage("Adding a chat message");
-//        ChatPresenter chatPresenter = new ChatPresenter(mock, ); // Looks like we need mocks for this
-//        chatPresenter.sendMessage("Hey guys!");
-            //alternatively:
             try {
                 client.sendMessage(client.getCurrentGame().getID(), client.getCurrentUser(), "Hey Guys!");
             } catch (Exception e) {
                 view.sendMessage("Chat failed to send");
             }
             view.sendMessage("Advancing turn to next player");
-//        client.endTurn(client.getCurrentUser());
+            client.finishTurn();
 
             return true;
         }

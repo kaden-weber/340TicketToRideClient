@@ -14,6 +14,7 @@ import weber.kaden.common.model.DestinationCard;
 import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Model;
 import weber.kaden.common.model.Player;
+import weber.kaden.common.model.Route;
 import weber.kaden.common.model.TrainCard;
 import weber.kaden.common.model.TrainCardType;
 import weber.kaden.myapplication.serverProxy.ServerProxy;
@@ -207,7 +208,12 @@ public class ClientFacade {
         return Model.getInstance().isCurrentPlayer();
     }
 
-
+    public void finishTurn() {
+       List<String> params = new ArrayList<>();
+       params.add(Model.getInstance().getCurrentGame().getID());
+       CommandData commandData = new CommandData(params, CommandType.FINISHTURN);
+       Results results = ServerProxy.getInstance().sendCommand(commandData);
+    }
 
     //TESTING METHODS--------------------------------------------------------------------------------------------------------------------
 
@@ -269,5 +275,43 @@ public class ClientFacade {
                 ServerProxy.getInstance().sendCommand(commandData);
             }
         }
+    }
+
+    public void testChangeOpponentsTrainCars() {
+        for (int i = 0; i < Model.getInstance().getCurrentGame().getPlayers().size(); i++) {
+            if (!Model.getInstance().getCurrentGame().getPlayers().get(i).getID().equals(Model.getInstance().getCurrentUser())) {
+                List<String> params = new ArrayList<String>();
+                params.add(Model.getInstance().getCurrentGame().getID());
+                params.add(Model.getInstance().getCurrentGame().getPlayers().get(i).getID());
+                CommandData commandData = new CommandData(params, CommandType.USETRAINCARS);
+                ServerProxy.getInstance().sendCommand(commandData);
+            }
+        }
+    }
+
+    public void testDealDestinationCardsToOpponents() {
+        for (int i = 0; i < Model.getInstance().getCurrentGame().getPlayers().size(); i++) {
+            if (!Model.getInstance().getCurrentGame().getPlayers().get(i).getID().equals(Model.getInstance().getCurrentUser())) {
+                List<DestinationCard> cards = Model.getInstance().getCurrentGame().getPlayers().get(i).getDealtDestinationCards();
+                List<String> params = new ArrayList<String>();
+                params.add(Model.getInstance().getCurrentGame().getID());
+                params.add(Model.getInstance().getCurrentGame().getPlayers().get(i).getID());
+                List<Object> data = new ArrayList<>();
+                data.add(cards);
+                data.add(null);
+                CommandData commandData = new CommandData(params, CommandType.DRAWDESTINATIONCARDS, data);
+                ServerProxy.getInstance().sendCommand(commandData);
+            }
+        }
+    }
+
+    public void testHaveOpponentClaimRoute(Route route) {
+        List<String> params = new ArrayList<>();
+        params.add(Model.getInstance().getCurrentGame().getID());
+        params.add(Model.getInstance().getCurrentUser());
+        List<Object> data = new ArrayList<>();
+        data.add(route);
+        CommandData commandData = new CommandData(params, CommandType.CLAIMROUTE, data);
+        ServerProxy.getInstance().sendCommand(commandData);
     }
 }
