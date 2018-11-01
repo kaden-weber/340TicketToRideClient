@@ -48,7 +48,7 @@ public class FragmentSetup extends DialogFragment {
         return view;
     }
     public void startCardSelection(){
-        android.support.v4.app.DialogFragment chooseCards = new ChooseInitialDestinationFragment();
+        android.support.v4.app.DialogFragment chooseCards = new ChooseDestinationCardsFragment();
 
         Bundle args = new Bundle();
         List<DestinationCard> dealtCards = new ClientFacade().getDealtDestinationCardsForCurrentPlayer();

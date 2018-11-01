@@ -277,6 +277,10 @@ public class Game {
         this.trainCardDiscard.clear();
     }
 
+    public List<TrainCard> getFaceUpTrainCardDeck() {
+        return faceupTrainCardDeck;
+    }
+
     public boolean PlayerDrawTrainCardFromDeck(String playerID) {
         if (this.getPlayer(playerID).DrawTrainCard(this.trainCardDeck.remove(0))) {
             if (this.trainCardDeck.size() == 0) {
@@ -287,7 +291,7 @@ public class Game {
         return false;
     }
 
-    public boolean PlayerDrawTrainCardFromFaceUp(String playerID, Integer cardIndex) {
+    public boolean PlayerDrawTrainCardFromFaceUp(String playerID, int cardIndex) {
         if (this.getPlayer(playerID).DrawTrainCard(this.faceupTrainCardDeck.get(cardIndex))) {
             if (this.trainCardDeck.size() > 0) {
                 this.faceupTrainCardDeck.set(cardIndex, this.trainCardDeck.remove(0));

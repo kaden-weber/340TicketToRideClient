@@ -27,34 +27,6 @@ public class GamePresenter implements Observer {
         this.client = client;
         Model.getInstance().addObserver(this);
     }
-    public List<TrainCard> getFaceUpTrainCards() {
-
-    	return null;
-    }
-
-    public List<TrainCard> getTrainCardsDeck() {
-
-    	return null;
-    }
-
-    public boolean drawFaceUpTrainCard(TrainCard drawnCard) {
-
-    	return false;
-    }
-
-    public boolean drawTrainCardFromDeck() {
-
-    	return false;
-    }
-
-    public List<DestinationCard> getDrawableDestinationCards() {
-
-        return new ClientFacade().getDestinationCardsForTurn();
-    }
-
-    public void chooseDestinationCards(String username, String gameId, List<DestinationCard> drawnCards, List<DestinationCard> discardedCards) throws Exception{
-        client.sendDestinationCards(username, gameId, drawnCards, discardedCards);
-    }
 
     boolean routeClaimable(int size, TrainCardType type){
         return client.PlayerCanClaimRoute(size, type);

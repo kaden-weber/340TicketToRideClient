@@ -183,9 +183,33 @@ public class ClientFacade {
         }
     }
 
+    public void chooseTrainCardFromFaceUpCards(String gameId, String playerId, int cardIndex) throws Exception {
+        List<String> params = new ArrayList<>(Arrays.asList(gameId, playerId));
+        List<Object> data = new ArrayList<>();
+        data.add(cardIndex);
+        CommandData commandData = new CommandData(params, CommandType.DRAWTRAINCARDFROMFACEUP, data);
+        Results results = ServerProxy.getInstance().sendCommand(commandData);
+        if (!results.success()) {
+            throw new Exception(results.getErrorInfo());
+        }
+    }
+
+    public void chooseTrainCardFromDeck(String gameId, String playerId) throws Exception {
+        List<String> params = new ArrayList<>(Arrays.asList(gameId, playerId));
+        CommandData commandData = new CommandData(params, CommandType.DRAWTRAINCARDFROMDECK);
+        Results results = ServerProxy.getInstance().sendCommand(commandData);
+        if (!results.success()) {
+            throw new Exception(results.getErrorInfo());
+        }
+    }
+
     public boolean isCurrentPlayer() {
         return Model.getInstance().isCurrentPlayer();
     }
+
+
+
+    //TESTING METHODS--------------------------------------------------------------------------------------------------------------------
 
     public void testDrawDestinationCards() {
         List<DestinationCard> cards = Model.getInstance().getCurrentGame().getTopOfDestinationCardDeck();
