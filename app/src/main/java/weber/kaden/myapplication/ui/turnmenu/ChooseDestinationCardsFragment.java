@@ -31,11 +31,13 @@ public class ChooseDestinationCardsFragment extends DialogFragment {
     private ChooseDestinationCardsFragment instance = this;
     private Button mActionCancel, mActionOk;
     private int numCardsSelected;
+    private boolean isSetup;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dialog_choose_destination_cards, container, false);
+        isSetup = Model.getInstance().getCurrentGame().isSetup();
         setCancelable(false);
         mActionCancel = view.findViewById(R.id.choose_destination_cancel);
         mActionOk = view.findViewById(R.id.choose_destination_ok);
@@ -170,7 +172,7 @@ public class ChooseDestinationCardsFragment extends DialogFragment {
             if (success){
                 getDialog().dismiss();
 
-                if (Model.getInstance().getCurrentGame().isSetup()) {
+                if (isSetup) {
                     Intent intent = new Intent(getActivity(), GameActivity.class);
                     startActivity(intent);
                 }
