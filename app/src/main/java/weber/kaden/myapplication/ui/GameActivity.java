@@ -62,9 +62,10 @@ public class GameActivity extends AppCompatActivity
     GameActivity instance = this;
     GameAdapter adapter;
     TrainCardAdapter trainCardAdapter;
+    PointsAdapter pointsAdapter;
     List<DestinationCard> destCards = new ArrayList<>();
     List<TrainCard> trainCards = new ArrayList<>();
-
+    List<Integer> points = new ArrayList<>();
     //map Constants
     private static final float DEFAULT_ZOOM = (float) 4.0;
     private static final float MIN_ZOOM = (float) 4.0;
@@ -101,9 +102,14 @@ public class GameActivity extends AppCompatActivity
         recyclerView.setAdapter(adapter);
         // set up the RecyclerView
         RecyclerView recyclerViewTrains = findViewById(R.id.myInfoRecycleTrains);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewTrains.setLayoutManager(new LinearLayoutManager(this));
         trainCardAdapter = new TrainCardAdapter(this, trainCards);
         recyclerViewTrains.setAdapter(trainCardAdapter);
+        // set up the RecyclerView
+        RecyclerView recyclerPoints = findViewById(R.id.myInfoRecyclePoints);
+        recyclerPoints.setLayoutManager(new LinearLayoutManager(this));
+        pointsAdapter = new PointsAdapter(this, points);
+        recyclerPoints.setAdapter(pointsAdapter);
         // end RecyclerView
         // Hide both the navigation bar and the status bar.
         View decorView = getWindow().getDecorView();
@@ -180,12 +186,16 @@ public class GameActivity extends AppCompatActivity
             }
         });
     }
-    public void setMyNewValues(List<DestinationCard> nDestCards, List<TrainCard> nTrainCards){
+    public void setMyNewValues(List<DestinationCard> nDestCards, List<TrainCard> nTrainCards, List<Integer> nPoints){
         destCards.clear();
         destCards.addAll(nDestCards);
         trainCards.clear();
         trainCards.addAll(nTrainCards);
+        trainCardAdapter.notifyDataSetChanged();
         adapter.notifyDataSetChanged();
+        points.clear();
+        points.addAll(nPoints);
+        pointsAdapter.notifyDataSetChanged();
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
