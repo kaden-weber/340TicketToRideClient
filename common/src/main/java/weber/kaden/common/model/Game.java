@@ -241,7 +241,7 @@ public class Game {
                     startGame = false;
                 }
             }
-            if (startGame) {
+            if (setup) {
                 this.start();
             }
         }
