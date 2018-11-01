@@ -88,7 +88,7 @@ public class GamePresenter implements Observer {
 
         private void delay() {
             try {
-                TimeUnit.SECONDS.sleep(10);
+                TimeUnit.SECONDS.sleep(5);
             } catch (Exception e) {
                 e.printStackTrace();
             }
