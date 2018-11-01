@@ -22,6 +22,7 @@ public class Game {
     private List<TrainCard> trainCardDiscard;
     private List<TrainCard> faceupTrainCardDeck;
     private List<Route> claimedRoutes;
+    private List<Route> unclaimedRoute;
     private int currentPlayer;
 
     public Game() {
@@ -148,6 +149,7 @@ public class Game {
     }
 
     public boolean setUp() {
+        if (this.getPlayers().size() < 2 || this.getPlayers().size() > 5) {
             return false;
         }
         InitalizeDecks();
