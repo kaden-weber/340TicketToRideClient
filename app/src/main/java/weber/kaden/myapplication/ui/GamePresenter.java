@@ -63,16 +63,16 @@ public class GamePresenter implements Observer {
         view.sendMessage("Running Tests");
 
         view.sendMessage("Adding to your train cards");
-        //client.drawTrainCard(client.getCurrentUser());
+        client.testDrawTrainCard();
         //delay
         view.sendMessage("Removing one of your train cards");
-//        client.removeTrainCardFromPlayer(client.getCurrentUser()); //??
+        client.testRemoveTrainCardFromPlayer();
         view.sendMessage("Adding to your destination cards");
-//        client.drawDestinationCard(client.getCurrentUser());
+        client.testDrawDestinationCards();
         view.sendMessage("Removing one of your destination cards");
-//        client.removeDestinationCardFromPlayer(client.getCurrentUser()); //??
+        client.testRemoveDestinationCardFromPlayer();
         view.sendMessage("Updating opponent train cards");
-//        client.dealTrainCardsToOpponents();
+        client.testDealTrainCardsToOpponents();
         view.sendMessage("Updating opponent train cars");
 //        client.changeOpponentsTrainCars();
         view.sendMessage("Updating opponent destination cards");

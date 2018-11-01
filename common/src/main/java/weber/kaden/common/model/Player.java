@@ -81,6 +81,10 @@ public class Player {
 
     public Integer getNumberOfTrains() {return this.trainPieces;}
 
+    public List<TrainCard> getTrainCards() {
+        return trainCards;
+    }
+
     public Integer getNumberOfDestinationCards() {return this.destinationCardHand.size();}
 
     public List<DestinationCard> getDealtDestinationCards() {
@@ -188,5 +192,9 @@ public class Player {
             return true;
         }
         return false;
+    }
+
+    public boolean removeDestinationCard(DestinationCard card) {
+        return this.destinationCardHand.remove(card);
     }
 }

@@ -367,4 +367,21 @@ public class Game {
                 Objects.equals(claimedRoutes, game.claimedRoutes) &&
                 Objects.equals(unclaimedRoute, game.unclaimedRoute);
     }
+
+    public boolean PlayerDiscardTrainCard(String playerID, TrainCard card) {
+        return this.getPlayer(playerID).DiscardTrainCard(card);
+    }
+
+    public TrainCard getTopOfTrainCardDeck() {
+        if (this.trainCardDeck.size() == 0) {
+            return null;
+        }
+        else {
+            return this.trainCardDeck.get(0);
+        }
+     }
+
+    public boolean PlayerRemoveDestinationCard(String playerID, DestinationCard card) {
+        return this.getPlayer(playerID).removeDestinationCard(card);
+    }
 }
