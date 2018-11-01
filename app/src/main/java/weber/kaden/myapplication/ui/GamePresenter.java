@@ -1,6 +1,7 @@
 package weber.kaden.myapplication.ui;
 
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -64,7 +65,9 @@ public class GamePresenter implements Observer {
     public void update(Observable observable, Object arg) {
         if (arg instanceof Game) {
             Game game = (Game) arg;
-            activity.setMyNewValues(game.getPlayer(client.getCurrentUser()).getDestinationCardHand());
+            List<DestinationCard> destCards = game.getPlayer(client.getCurrentUser()).getDestinationCardHand();
+            List<TrainCard> trainCards = game.getPlayer(client.getCurrentUser()).getTrainCards();
+            activity.setMyNewValues(destCards, trainCards);
         }
     }
 

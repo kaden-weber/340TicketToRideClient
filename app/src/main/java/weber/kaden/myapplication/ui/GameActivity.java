@@ -42,6 +42,7 @@ import weber.kaden.common.model.City;
 import weber.kaden.common.model.DestinationCard;
 import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Model;
+import weber.kaden.common.model.TrainCard;
 import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
 import weber.kaden.myapplication.ui.map.DisplayRoute;
@@ -56,7 +57,9 @@ public class GameActivity extends AppCompatActivity
         implements OnMapReadyCallback, GoogleMap.OnPolylineClickListener, GameViewInterface {
     GameActivity instance = this;
     GameAdapter adapter;
+    TrainCardAdapter trainCardAdapter;
     List<DestinationCard> destCards = new ArrayList<>();
+    List<TrainCard> trainCards = new ArrayList<>();
 
     //map Constants
     private static final float DEFAULT_ZOOM = (float) 4.0;
@@ -88,14 +91,16 @@ public class GameActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        destCards.addAll(Model.getInstance().getPlayer(Model.getInstance().getCurrentUser()).getDestinationCardHand());
-        System.out.println(destCards + "<--- THAT WAS THAT");
-        //destCards.add(new DestinationCard(City.KANSAS_CITY,City.OKLAHOMA_CITY, 10 ));
         // set up the RecyclerView
         RecyclerView recyclerView = findViewById(R.id.myInfoRecycle);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new GameAdapter(this, destCards);
         recyclerView.setAdapter(adapter);
+        // set up the RecyclerView
+        RecyclerView recyclerViewTrains = findViewById(R.id.myInfoRecycleTrains);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        trainCardAdapter = new TrainCardAdapter(this, trainCards);
+        recyclerViewTrains.setAdapter(trainCardAdapter);
         // end RecyclerView
         // Hide both the navigation bar and the status bar.
         View decorView = getWindow().getDecorView();
@@ -168,9 +173,11 @@ public class GameActivity extends AppCompatActivity
             }
         });
     }
-    public void setMyNewValues(List<DestinationCard> nDestCards){
+    public void setMyNewValues(List<DestinationCard> nDestCards, List<TrainCard> nTrainCards){
         destCards.clear();
         destCards.addAll(nDestCards);
+        trainCards.clear();
+        trainCards.addAll(nTrainCards);
         adapter.notifyDataSetChanged();
     }
     @Override
