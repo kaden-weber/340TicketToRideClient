@@ -1,7 +1,6 @@
 package weber.kaden.myapplication.ui.tools;
 
 import weber.kaden.common.model.City;
-import weber.kaden.common.model.PlayerColors;
 
 public class ConstantsDisplayConverter {
 

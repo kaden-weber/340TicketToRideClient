@@ -79,7 +79,7 @@ public class GameActivity extends AppCompatActivity
     private static final double DEFAULT_VIEW_LONG = -98;
     private static final float DEFAULT_VIEW_BEARING = 9;
     private static final double MAX_NORTH = 46;
-    private static final double MAX_EAST = -83;
+    private static final double MAX_EAST = -80;
     private static final double MAX_SOUTH = 34;
     private static final double MAX_WEST = -115;
 
@@ -338,16 +338,17 @@ public class GameActivity extends AppCompatActivity
 //        //otherwise display route length
         String city1 = getCity1(polyline);
         String city2 = getCity2(polyline);
-        if(mClaimingRouteFlag && mPresenter.routeClaimable(
-                (int)polyline.getTag(), getRouteType(polyline))){ // and route can be claimed...
-
-            DialogFragment fragment = new ClaimRouteFragment();
-            ((ClaimRouteFragment) fragment).setParams(city1, city2, getRouteType(polyline), (Integer) polyline.getTag());
-            fragment.show(getSupportFragmentManager(), "ClaimRouteFragment");
-
+        
+        if(mPresenter.routeClaimable((int)polyline.getTag(), getRouteType(polyline))) {
+            if(mClaimingRouteFlag){
+                DialogFragment fragment = new ClaimRouteFragment();
+                ((ClaimRouteFragment) fragment).setParams(city1, city2, getRouteType(polyline), (Integer) polyline.getTag());
+                fragment.show(getSupportFragmentManager(), "ClaimRouteFragment");
+            } else{
+                Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()),
+                        Toast.LENGTH_SHORT).show();
+            }
         }
-        Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()),
-                Toast.LENGTH_SHORT).show();
     }
     private TrainCardType getRouteType(Polyline polyline){
         DisplayRoute route = (DisplayRoute) mLineRouteMap.get(polyline);
