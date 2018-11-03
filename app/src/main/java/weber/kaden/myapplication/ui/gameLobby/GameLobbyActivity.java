@@ -1,4 +1,4 @@
-package weber.kaden.myapplication.ui;
+package weber.kaden.myapplication.ui.gameLobby;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -13,12 +13,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Model;
 import weber.kaden.common.model.Player;
 import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
 import weber.kaden.myapplication.serverProxy.Poller;
+import weber.kaden.myapplication.ui.GameSetupActivity;
 
 public class GameLobbyActivity  extends AppCompatActivity implements GameLobbyViewInterface {
 

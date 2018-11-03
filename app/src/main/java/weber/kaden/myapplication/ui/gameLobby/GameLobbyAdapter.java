@@ -1,55 +1,54 @@
-package weber.kaden.myapplication.ui;
+package weber.kaden.myapplication.ui.gameLobby;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import java.util.List;
 
-import weber.kaden.common.model.DestinationCard;
-import weber.kaden.common.model.TrainCard;
+import weber.kaden.common.model.Player;
 import weber.kaden.myapplication.R;
 
-public class PointsAdapter extends RecyclerView.Adapter<PointsAdapter.ViewHolder>{
-    private  List<Integer> points;
+public class GameLobbyAdapter extends RecyclerView.Adapter<GameLobbyAdapter.ViewHolder> {
+    private List<Player> mData;
     private LayoutInflater mInflater;
 
     // data is passed into the constructor
-    PointsAdapter(Context context, List<Integer> points) {
+    GameLobbyAdapter(Context context, List<Player> data) {
         this.mInflater = LayoutInflater.from(context);
-        this.points = points;
+        this.mData = data;
     }
 
     // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.points_layout, parent, false);
+        View view = mInflater.inflate(R.layout.player_row, parent, false);
         return new ViewHolder(view);
     }
+
+    // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Integer point =  points.get(position);
-        String point_str = point.toString();
-        holder.pointsView.setText(point_str);
+        String player =  (mData.get(position).getID());
+        holder.myTextView.setText(player);
     }
 
     // total number of rows
     @Override
     public int getItemCount() {
-        return points.size();
+        return mData.size();
     }
-    // stores and recycles views as they are scrolled off screen
+
+
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView pointsView;
+        TextView myTextView;
         ViewHolder(View itemView) {
             super(itemView);
-            pointsView = itemView.findViewById(R.id.points);
+            myTextView = itemView.findViewById(R.id.playerName);
         }
+
     }
 }

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:screenOrientation="landscape"
-    tools:context=".ui.GameActivity">
+    tools:context=".ui.gameView.GameActivity">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

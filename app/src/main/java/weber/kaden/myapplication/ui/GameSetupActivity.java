@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
 import weber.kaden.myapplication.R;
+import weber.kaden.myapplication.ui.gameView.GameActivity;
+
 public class GameSetupActivity extends FragmentActivity implements GameSetupViewInterface {
 
     @Override

@@ -1,4 +1,4 @@
-package weber.kaden.myapplication.ui;
+package weber.kaden.myapplication.ui.gameList;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

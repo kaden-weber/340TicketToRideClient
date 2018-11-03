@@ -1,9 +1,8 @@
-package weber.kaden.myapplication.ui;
+package weber.kaden.myapplication.ui.login;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -37,6 +36,7 @@ import java.util.List;
 
 import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
+import weber.kaden.myapplication.ui.gameList.GameListActivity;
 
 import static android.Manifest.permission.READ_CONTACTS;
 

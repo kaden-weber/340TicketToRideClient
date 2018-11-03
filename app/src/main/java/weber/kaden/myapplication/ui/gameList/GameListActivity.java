@@ -1,4 +1,4 @@
-package weber.kaden.myapplication.ui;
+package weber.kaden.myapplication.ui.gameList;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,6 +22,7 @@ import weber.kaden.common.model.Model;
 import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
 import weber.kaden.myapplication.serverProxy.Poller;
+import weber.kaden.myapplication.ui.gameLobby.GameLobbyActivity;
 
 public class GameListActivity extends AppCompatActivity implements GameListAdapter.ItemClickListener, GameListViewInterface{
     private GameListActivity instance = this;

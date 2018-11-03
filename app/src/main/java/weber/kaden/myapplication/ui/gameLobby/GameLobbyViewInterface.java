@@ -1,6 +1,5 @@
-package weber.kaden.myapplication.ui;
+package weber.kaden.myapplication.ui.gameLobby;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import weber.kaden.common.model.Player;

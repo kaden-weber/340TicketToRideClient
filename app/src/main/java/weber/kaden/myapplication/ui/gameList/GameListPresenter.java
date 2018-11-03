@@ -1,4 +1,4 @@
-package weber.kaden.myapplication.ui;
+package weber.kaden.myapplication.ui.gameList;
 
 import java.util.ArrayList;
 import java.util.List;

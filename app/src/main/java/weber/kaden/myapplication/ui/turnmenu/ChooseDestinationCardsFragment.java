@@ -22,9 +22,7 @@ import weber.kaden.common.model.DestinationCard;
 import weber.kaden.common.model.Model;
 import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
-import weber.kaden.myapplication.ui.GameActivity;
-import weber.kaden.myapplication.ui.GamePresenter;
-import weber.kaden.myapplication.ui.GameViewInterface;
+import weber.kaden.myapplication.ui.gameView.GameActivity;
 
 public class ChooseDestinationCardsFragment extends DialogFragment {
     //widgets

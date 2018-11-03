@@ -1,4 +1,4 @@
-package weber.kaden.myapplication.ui;
+package weber.kaden.myapplication.ui.gameLobby;
 
 import java.util.Observable;
 import java.util.Observer;

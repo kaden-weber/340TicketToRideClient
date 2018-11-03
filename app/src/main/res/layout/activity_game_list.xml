@@ -13,7 +13,7 @@
         android:layout_weight = "8.5"
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        tools:context=".ui.GameListActivity" />
+        tools:context=".ui.gameList.GameListActivity" />
 
     <RelativeLayout
         android:layout_weight = "1.5"

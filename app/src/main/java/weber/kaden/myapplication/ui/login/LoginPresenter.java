@@ -1,17 +1,9 @@
-package weber.kaden.myapplication.ui;
+package weber.kaden.myapplication.ui.login;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import weber.kaden.common.command.Command;
-import weber.kaden.common.command.CommandData;
-import weber.kaden.common.command.CommandFactory;
-import weber.kaden.common.command.CommandType;
 import weber.kaden.myapplication.model.ClientFacade;
-import weber.kaden.myapplication.serverProxy.ServerProxy;
 
 public class LoginPresenter implements Observer {
 

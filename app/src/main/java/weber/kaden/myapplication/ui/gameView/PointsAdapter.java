@@ -1,55 +1,51 @@
-package weber.kaden.myapplication.ui;
+package weber.kaden.myapplication.ui.gameView;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+
 import android.widget.TextView;
 
 import java.util.List;
 
-import weber.kaden.common.model.Player;
 import weber.kaden.myapplication.R;
 
-public class GameLobbyAdapter extends RecyclerView.Adapter<GameLobbyAdapter.ViewHolder> {
-    private List<Player> mData;
+public class PointsAdapter extends RecyclerView.Adapter<PointsAdapter.ViewHolder>{
+    private  List<Integer> points;
     private LayoutInflater mInflater;
 
     // data is passed into the constructor
-    GameLobbyAdapter(Context context, List<Player> data) {
+    PointsAdapter(Context context, List<Integer> points) {
         this.mInflater = LayoutInflater.from(context);
-        this.mData = data;
+        this.points = points;
     }
 
     // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.player_row, parent, false);
+        View view = mInflater.inflate(R.layout.points_layout, parent, false);
         return new ViewHolder(view);
     }
-
-    // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String player =  (mData.get(position).getID());
-        holder.myTextView.setText(player);
+        Integer point =  points.get(position);
+        String point_str = point.toString();
+        holder.pointsView.setText(point_str);
     }
 
     // total number of rows
     @Override
     public int getItemCount() {
-        return mData.size();
+        return points.size();
     }
-
-
+    // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView myTextView;
+        TextView pointsView;
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.playerName);
+            pointsView = itemView.findViewById(R.id.points);
         }
-
     }
 }

@@ -1,7 +1,6 @@
-package weber.kaden.myapplication.ui;
+package weber.kaden.myapplication.ui.gameView;
 
 import android.app.ActionBar;
-import android.net.Uri;
 import android.support.v4.view.GravityCompat;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -14,7 +13,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -49,6 +47,8 @@ import weber.kaden.common.model.TrainCard;
 import weber.kaden.common.model.TrainCardType;
 import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
+import weber.kaden.myapplication.ui.ChatFragment;
+import weber.kaden.myapplication.ui.ClaimRouteFragment;
 import weber.kaden.myapplication.ui.map.DisplayRoute;
 import weber.kaden.myapplication.ui.map.DisplayRoutes;
 import weber.kaden.myapplication.ui.map.Location;
@@ -62,8 +62,8 @@ import weber.kaden.myapplication.ui.turnmenu.GameHistoryFragment;
 import weber.kaden.myapplication.ui.turnmenu.SeeOtherPlayersFragment;
 
 public class GameActivity extends AppCompatActivity
-        implements OnMapReadyCallback, GoogleMap.OnPolylineClickListener, GameViewInterface,
-        ClaimRouteFragment.OnFragmentInteractionListener {
+        implements OnMapReadyCallback, GoogleMap.OnPolylineClickListener, GameViewInterface {
+
     GameActivity instance = this;
     GameAdapter adapter;
     TrainCardAdapter trainCardAdapter;
@@ -97,8 +97,6 @@ public class GameActivity extends AppCompatActivity
     private DrawerLayout mDrawerLayout;
     private boolean mClaimingRouteFlag;
 
-    //TEMP FOR PHASE 2
-    Button mTestButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,7 +181,7 @@ public class GameActivity extends AppCompatActivity
             }
         });
         //make unclaimed route pattern
-        unclaimedRoutePattern = Arrays.<PatternItem>asList(
+        unclaimedRoutePattern = Arrays.asList(
                 new Gap(10), new Dash(70) );
         //make claimed route pattern
         claimedRoutePattern = Arrays.<PatternItem>asList(
@@ -196,17 +194,9 @@ public class GameActivity extends AppCompatActivity
         //init route list
         mLineRouteMap = new HashMap();
         mRouteLineMap = new HashMap();
-
-        //init test button
-        mTestButton = findViewById(R.id.tempTestButton);
-        mTestButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.runPhase2Test();
-            }
-        });
     }
-    public void setMyNewValues(List<DestinationCard> nDestCards, List<TrainCard> nTrainCards, List<Integer> nPoints){
+
+    public void setNewValues(List<DestinationCard> nDestCards, List<TrainCard> nTrainCards, List<Integer> nPoints){
         destCards.clear();
         destCards.addAll(nDestCards);
         trainCards.clear();
@@ -217,6 +207,7 @@ public class GameActivity extends AppCompatActivity
         points.addAll(nPoints);
         pointsAdapter.notifyDataSetChanged();
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -248,8 +239,7 @@ public class GameActivity extends AppCompatActivity
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.steamtrain_dark)));
         }
 
-
-        //add routes TODO: make double routes look real good, refactor to route creation method
+        //add routes TODO: make double routes look better
         mRoutes = new DisplayRoutes(mLocations);
         for ( DisplayRoute route : mRoutes.getRoutes()){
             String routeColor = route.getColor();
@@ -338,7 +328,7 @@ public class GameActivity extends AppCompatActivity
 //        //otherwise display route length
         String city1 = getCity1(polyline);
         String city2 = getCity2(polyline);
-        
+
         if(mPresenter.routeClaimable((int)polyline.getTag(), getRouteType(polyline))) {
             if(mClaimingRouteFlag){
                 DialogFragment fragment = new ClaimRouteFragment();
@@ -385,10 +375,6 @@ public class GameActivity extends AppCompatActivity
         return route.getCity2().getCity();
     }
 
-    public void sendMessage(String message){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
     @Override
     public void updateClaimedRoutes(PlayerColors color, List<Route> routes) {
         for (Route route : routes){
@@ -416,15 +402,6 @@ public class GameActivity extends AppCompatActivity
                 default:
                     return getResources().getColor(R.color.Gray);
         }
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
     }
 
 
