@@ -15,10 +15,9 @@ public class CreateGameCommand implements Command {
 
     private String playerID = null;
     private String gameID = null;
-    private String ID = null;
     private String gameName;
 
-    public CreateGameCommand(List<String> params, String ID) {
+    public CreateGameCommand(List<String> params) {
         this.playerID = params.get(0);
         this.gameName = params.get(1);
         if (params.size() > 2) {
@@ -26,7 +25,6 @@ public class CreateGameCommand implements Command {
         } else {
             this.gameID = UUID.randomUUID().toString();
         }
-        this.ID = ID;
     }
 
     @Override
@@ -44,5 +42,8 @@ public class CreateGameCommand implements Command {
         return toReturn;
     }
 
-
+    @Override
+    public boolean hasID() {
+        return false;
+    }
 }

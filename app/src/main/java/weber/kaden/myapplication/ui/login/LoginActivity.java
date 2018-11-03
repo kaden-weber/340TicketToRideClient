@@ -1,9 +1,8 @@
-package weber.kaden.myapplication.ui;
+package weber.kaden.myapplication.ui.login;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -37,13 +36,14 @@ import java.util.List;
 
 import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
+import weber.kaden.myapplication.ui.gameList.GameListActivity;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, LoginViewInterface {
     LoginActivity instance = this;
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -66,6 +66,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login2);
         // Set up the login form.
@@ -163,7 +164,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    private void attemptLogin() {
+    public void attemptLogin() {
         if (mAuthTask != null) {
             return;
         }
@@ -211,7 +212,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         }
     }
-    private void attemptRegister() {
+    public void attemptRegister() {
         if (mAuthTask != null) {
             return;
         }

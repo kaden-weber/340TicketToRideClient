@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item
+            android:id="@+id/turn_menu_destination_cards"
+            android:title="@string/destination_card"/>
+        <item
+            android:id="@+id/turn_menu_train_cards"
+            android:title="@string/train_card"/>
+        <item
+            android:id="@+id/turn_menu_claim_route"
+            android:title="@string/claim_route"/>
+        <item
+            android:id="@+id/turn_menu_see_other_players"
+            android:title="@string/see_other_players"/>
+        <item
+            android:id="@+id/turn_menu_chat"
+            android:title="@string/chat_menu"/>
+        <item
+            android:id="@+id/turn_menu_game_history"
+            android:title="@string/game_history"/>
+    </group>
+
+</menu>

@@ -1,7 +1,5 @@
-package weber.kaden.myapplication.ui;
+package weber.kaden.myapplication.ui.gameLobby;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -11,13 +9,15 @@ import weber.kaden.myapplication.model.ClientFacade;
 
 public class GameLobbyPresenter implements Observer {
 
-    private GameLobbyActivity activity;
+    private GameLobbyViewInterface activity;
     private ClientFacade client;
+    private boolean gameState = false;
 
     public GameLobbyPresenter(GameLobbyActivity activity, ClientFacade client) {
         this.activity = activity;
         this.client = client;
         Model.getInstance().addObserver(this);
+
     }
 
     public void exitLobby() throws Exception {
@@ -35,13 +35,17 @@ public class GameLobbyPresenter implements Observer {
         } else if (client.getCurrentUser() == null) {
             throw new Exception("Error starting game");
         }
-        client.startGame(client.getCurrentUser(), client.getCurrentGame().getID());
+        client.setupGame(client.getCurrentUser(), client.getCurrentGame().getID());
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        if (arg instanceof Game && ((Game) arg).isStarted()) {
-            activity.startGame();
+        if (arg instanceof Game && ((Game) arg).isSetup() && !gameState) {
+            activity.setupGame();
+            gameState = true;
+        } else if (arg instanceof Game){
+            Game game = (Game) arg;
+            activity.updatePlayersList(game.getPlayers());
         }
     }
 }

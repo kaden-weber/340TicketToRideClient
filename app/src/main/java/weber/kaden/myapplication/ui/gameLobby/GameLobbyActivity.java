@@ -1,30 +1,45 @@
-package weber.kaden.myapplication.ui;
+package weber.kaden.myapplication.ui.gameLobby;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import weber.kaden.common.model.Model;
+import weber.kaden.common.model.Player;
 import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
 import weber.kaden.myapplication.serverProxy.Poller;
+import weber.kaden.myapplication.ui.GameSetupActivity;
 
-public class GameLobbyActivity  extends AppCompatActivity {
+public class GameLobbyActivity  extends AppCompatActivity implements GameLobbyViewInterface {
 
     private StartGameTask startGameTask = null;
     private QuitGameTask quitGameTask = null;
     GameLobbyActivity instance = this;
-
+    GameLobbyAdapter adapter;
+    ClientFacade clientFacade = new ClientFacade();
+    GameLobbyPresenter gameLobbyPresenter = new GameLobbyPresenter(this, clientFacade);
+    private List<Player> playerList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        playerList.addAll(Model.getInstance().getCurrentGame().getPlayers());
         setContentView(R.layout.activity_game_lobby);
+        // set up the RecyclerView
+        RecyclerView recyclerView = findViewById(R.id.gamelobby_players);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new GameLobbyAdapter(this, playerList);
+        recyclerView.setAdapter(adapter);
+
         String gameName= getIntent().getStringExtra("GAME_NAME");
         setTitle(gameName);
         final Button quitButton = (Button) findViewById(R.id.exit_game);
@@ -49,14 +64,13 @@ public class GameLobbyActivity  extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        Poller.getInstance(this).startGamesPolling();
+        Poller.getInstance(this).pollGame();
     }
-
     @Override
-    public void onPause() {
-        //Poller.getInstance(this).stopPolling();
-        Poller.getInstance(this).stopGamesPolling();
-        super.onPause();
+    public void updatePlayersList(List<Player> players) {
+        playerList.clear();
+        playerList.addAll(players);
+        adapter.notifyDataSetChanged();
     }
 
     public class StartGameTask extends AsyncTask<Void, Void, Boolean> {
@@ -70,6 +84,8 @@ public class GameLobbyActivity  extends AppCompatActivity {
 
             try {
                 gameLobbyPresenter.startGame();
+                Intent intent = new Intent(instance, GameSetupActivity.class);
+                startActivity(intent);
             } catch (Exception e) {
                 errorString = e.getMessage();
                 return false;
@@ -96,8 +112,11 @@ public class GameLobbyActivity  extends AppCompatActivity {
         }
     }
 
-    public void startGame() {
-        Toast.makeText(GameLobbyActivity.this, "Game Started!", Toast.LENGTH_SHORT).show();
+    public void setupGame() {
+        //Toast.makeText(GameLobbyActivity.this, "Game Started!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(instance, GameSetupActivity.class);
+        startActivity(intent);
+
     }
 
     public class QuitGameTask extends AsyncTask<Void, Void, Boolean> {

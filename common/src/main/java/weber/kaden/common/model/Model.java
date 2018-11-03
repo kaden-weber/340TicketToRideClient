@@ -105,10 +105,10 @@ public class Model extends Observable {
         if (!this.players.contains(player)) {
             return false;
         }
-        if (game.getPlayers().size() >=  5 || game.isStarted()) {
+        if (game.getPlayers().size() >=  5 || (game.isSetup() || game.isStarted())) {
             return false;
         }
-        if (this.games.get(this.games.indexOf(game)).addPlayer(player)) {
+        if (this.games.get(this.games.indexOf(game)).addPlayer(new Player(player))) {
             setChanged();
             notifyObservers(this.games);
             return true;
@@ -182,16 +182,16 @@ public class Model extends Observable {
     }
 
     public Game updateGame(Game game) {
-        for (int i = 0; i < this.games.size(); i++) {
-            if (this.games.get(i).getID().equals(game.getID())) {
-                if (this.games.get(i).isStarted() != game.isStarted()) {
-                    setChanged();
+        if (this.currentGame.getID().equals(game.getID())) {
+            if (!currentGame.equals(game)) {
+                for (int i = 0; i < this.games.size(); i++) {
+                    if (this.games.get(i).getID().equals(game.getID())) {
+                        this.games.set(i, game);
+                    }
                 }
-                if (!this.games.get(i).getPlayers().equals(game.getPlayers())) {
-                    setChanged();
-                }
-                this.games.set(i, game);
-                notifyObservers(this.games.get(i));
+                currentGame = game;
+                setChanged();
+                notifyObservers(game);
                 return game;
             }
         }
@@ -201,9 +201,30 @@ public class Model extends Observable {
     public Game startGame(String gameID) {
         Game game = Model.getInstance().getGame(gameID);
         if (game.start()) {
-            return updateGame(game);
+            return game;
         } else {
             return null;
         }
+    }
+
+    public Game setUpGame(String gameID) {
+        Game game = Model.getInstance().getGame(gameID);
+        if (game.setUp()) {
+            return game;
+        } else {
+            return null;
+        }
+    }
+
+    public boolean PlayerCanClaimRoute(int number, TrainCardType type) {
+        return this.currentGame.getPlayer(currentUser).hasTrainCards(number, type);
+    }
+
+    public boolean isCurrentPlayer() {
+        return (this.currentUser.equals(currentGame.getCurrentPlayer().getID()));
+    }
+
+    public List<DestinationCard> getDealtDestinationCards() {
+        return this.currentGame.getPlayer(currentUser).getDealtDestinationCards();
     }
 }

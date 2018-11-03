@@ -20,9 +20,14 @@ public class PollGamesListCommand implements Command {
     public Results execute() {
         List<Game> games = commandManager.gamesList();
         if (games == null) {
-            return new ListResults(null, false, "incorrect polltype, please use: 'gamesList' or 'currentGame'");
+            return new ListResults(null, false, "incorrect polltype, please use: 'gamesList' or 'getGameByID'");
         } else {
         	return new ListResults(games, true, "");
         }
+    }
+
+    @Override
+    public boolean hasID() {
+        return false;
     }
 }

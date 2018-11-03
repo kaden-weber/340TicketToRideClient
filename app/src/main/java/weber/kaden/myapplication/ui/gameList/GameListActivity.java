@@ -1,4 +1,4 @@
-package weber.kaden.myapplication.ui;
+package weber.kaden.myapplication.ui.gameList;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,15 +22,24 @@ import weber.kaden.common.model.Model;
 import weber.kaden.myapplication.R;
 import weber.kaden.myapplication.model.ClientFacade;
 import weber.kaden.myapplication.serverProxy.Poller;
+import weber.kaden.myapplication.ui.gameLobby.GameLobbyActivity;
 
-public class GameListActivity extends AppCompatActivity implements GameListAdapter.ItemClickListener{
+public class GameListActivity extends AppCompatActivity implements GameListAdapter.ItemClickListener, GameListViewInterface{
     private GameListActivity instance = this;
     private ClientFacade clientFacade = new ClientFacade();
-    private String m_Text = "";
+    String m_Text = "";
     GameListAdapter adapter;
     GameListPresenter gameListPresenter = new GameListPresenter(instance, clientFacade);
-    List<Game> gamesList = new ArrayList<>();
+    private List<Game> gamesList = new ArrayList<>();
     String currentGameName = "";
+
+    @Override
+    public void updateGamesList(List<Game> games) {
+        gamesList.clear();
+        gamesList.addAll(games);
+        adapter.notifyDataSetChanged();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,14 +91,7 @@ public class GameListActivity extends AppCompatActivity implements GameListAdapt
     @Override
     public void onResume() {
         super.onResume();
-        Poller.getInstance(this).startGamesListPolling();
-    }
-
-    @Override
-    public void onPause() {
-        //Poller.getInstance(this).stopPolling();
-        Poller.getInstance(this).startGamesListPolling();
-        super.onPause();
+        Poller.getInstance(this).pollGamesList();
     }
 
     @Override
@@ -120,7 +122,6 @@ public class GameListActivity extends AppCompatActivity implements GameListAdapt
                 Game game = gameListPresenter.createGame(mUsername, mgameName);
             } catch (Exception e) {
                 errorString = e.getMessage();
-                System.out.println(errorString);
                 return false;
             }
             return true;

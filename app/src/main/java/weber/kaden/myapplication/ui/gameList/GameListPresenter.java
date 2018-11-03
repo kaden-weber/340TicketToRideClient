@@ -1,4 +1,4 @@
-package weber.kaden.myapplication.ui;
+package weber.kaden.myapplication.ui.gameList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import weber.kaden.common.model.Model;
 import weber.kaden.myapplication.model.ClientFacade;
 
 public class GameListPresenter implements Observer {
-    private GameListActivity activity;
+    private GameListViewInterface activity;
     private ClientFacade client;
     private Model model = Model.getInstance();
     public GameListPresenter(GameListActivity activity, ClientFacade client) {
@@ -39,9 +39,7 @@ public class GameListPresenter implements Observer {
     public void update(Observable o, Object arg) {
         if (arg instanceof ArrayList<?> && ((ArrayList<Game>)arg).size() > 0 && ((ArrayList<Game>)arg).get(0) instanceof Game) {
             List<Game> games = (ArrayList<Game>) arg;
-            activity.gamesList.clear();
-            activity.gamesList.addAll(games);
-            activity.adapter.notifyDataSetChanged();
+            activity.updateGamesList(games);
         }
     }
 }
