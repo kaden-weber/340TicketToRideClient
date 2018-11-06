@@ -338,6 +338,9 @@ public class GameActivity extends AppCompatActivity
                 Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()),
                         Toast.LENGTH_SHORT).show();
             }
+        } else {
+            Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()),
+                    Toast.LENGTH_SHORT).show();
         }
     }
     private TrainCardType getRouteType(Polyline polyline){
@@ -442,6 +445,4 @@ public class GameActivity extends AppCompatActivity
 
         }
     }
-
-
 }

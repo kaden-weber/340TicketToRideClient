@@ -8,20 +8,14 @@ public class CommandData {
 
     private List<String> params;
     private CommandType type;
-    private List<Object> data;
     private String commandID;
     private static int lastID = 0;
+
+    public CommandData() {}
 
     public CommandData(List<String> params, CommandType type) {
         this.params = params;
         this.type = type;
-        this.commandID = newCommandID();
-    }
-
-    public CommandData(List<String> params, CommandType type, List<Object> data) {
-        this.params = params;
-        this.type = type;
-        this.data = data;
         this.commandID = newCommandID();
     }
 
@@ -39,14 +33,6 @@ public class CommandData {
 
     public void setParams(List<String> data) {
         this.params = data;
-    }
-
-    public List<Object> getData() {
-        return data;
-    }
-
-    public void setData(List<Object> data) {
-        this.data = data;
     }
 
     public String getCommandID() {

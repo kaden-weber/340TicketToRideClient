@@ -3,6 +3,9 @@ package weber.kaden.common;
 import com.google.gson.Gson;
 
 import weber.kaden.common.command.CommandData;
+import weber.kaden.common.command.CommandDataClaimRoute;
+import weber.kaden.common.command.CommandDataDrawDestinationCards;
+import weber.kaden.common.command.CommandDataDrawTrainCardFromFaceUp;
 import weber.kaden.common.command.CommandType;
 
 public class Serializer {
@@ -15,7 +18,19 @@ public class Serializer {
         return gson.toJson(data);
     }
 
-    public CommandData deserializeCommandData(String data) {return gson.fromJson(data, CommandData.class); }
+    public CommandData deserializeCommandData(String data) {
+        CommandData genericData = gson.fromJson(data, CommandData.class);
+        switch (genericData.getType()) {
+            case DRAWDESTINATIONCARDS:
+                return gson.fromJson(data, CommandDataDrawDestinationCards.class);
+            case CLAIMROUTE:
+                return gson.fromJson(data, CommandDataClaimRoute.class);
+            case DRAWTRAINCARDFROMFACEUP:
+                return gson.fromJson(data, CommandDataDrawTrainCardFromFaceUp.class);
+            default:
+                return genericData;
+        }
+    }
 
     public Results deserializeResults(String string, CommandType type) {
         switch (type) {

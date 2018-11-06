@@ -66,11 +66,13 @@ public class ChooseDestinationCardsFragment extends DialogFragment {
                     chosenCards.set(0, true);
                     numCardsSelected++;
                     if (isSetup) mActionOk.setEnabled(numCardsSelected >= 2);
+                    else mActionOk.setEnabled(numCardsSelected >= 1);
                 }
                 else {
                     chosenCards.set(0, false);
                     numCardsSelected--;
                     if (isSetup) mActionOk.setEnabled(numCardsSelected >= 2);
+                    else mActionOk.setEnabled(numCardsSelected >= 1);
                 }
             }
         });
@@ -86,11 +88,13 @@ public class ChooseDestinationCardsFragment extends DialogFragment {
                     chosenCards.set(1, true);
                     numCardsSelected++;
                     if (isSetup) mActionOk.setEnabled(numCardsSelected >= 2);
+                    else mActionOk.setEnabled(numCardsSelected >= 1);
                 }
                 else {
                     chosenCards.set(1, false);
                     numCardsSelected--;
                     if (isSetup) mActionOk.setEnabled(numCardsSelected >= 2);
+                    else mActionOk.setEnabled(numCardsSelected >= 1);
                 }
             }
         });
@@ -106,11 +110,13 @@ public class ChooseDestinationCardsFragment extends DialogFragment {
                     chosenCards.set(2, true);
                     numCardsSelected++;
                     if (isSetup) mActionOk.setEnabled(numCardsSelected >= 2);
+                    else mActionOk.setEnabled(numCardsSelected >= 1);
                 }
                 else {
                     chosenCards.set(2, false);
                     numCardsSelected--;
                     if (isSetup) mActionOk.setEnabled(numCardsSelected >= 2);
+                    else mActionOk.setEnabled(numCardsSelected >= 1);
                 }
             }
         });

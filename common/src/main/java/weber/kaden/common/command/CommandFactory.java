@@ -1,23 +1,5 @@
 package weber.kaden.common.command;
 
-import com.google.gson.JsonObject;
-import com.google.gson.internal.LinkedTreeMap;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import com.google.gson.Gson;
-import com.google.gson.internal.LinkedTreeMap;
-import com.google.gson.reflect.TypeToken;
-
-import sun.security.krb5.internal.crypto.Des;
-import weber.kaden.common.model.DestinationCard;
-import weber.kaden.common.model.Model;
-import weber.kaden.common.model.Route;
-import weber.kaden.common.model.TrainCard;
-
 public class CommandFactory {
     private static CommandFactory commandFactory = null;
     private static iCommandManager mCommandManager;
@@ -42,7 +24,7 @@ public class CommandFactory {
         mCommandManager = commandManager;
     }
 
-    public Command getCommand(CommandData data) throws InvalidCommandParamsException, Exception {
+    public Command getCommand(CommandData data) throws InvalidCommandParamsException {
         switch (data.getType()) {
             case SETTRAVELERRATE:
                 if(data.getParams().size() < 3){
@@ -105,51 +87,23 @@ public class CommandFactory {
                 }
                 return new ChatCommand(data.getParams());
             case DRAWDESTINATIONCARDS:
-                if (data.getParams().size() < 2 && data.getData().size() < 2) {
-                    throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
-                }
-                List<DestinationCard> data1 = new ArrayList<>();
-                List<DestinationCard> data2 = new ArrayList<>();
-                if (data.getData().get(0) instanceof ArrayList<?>) {
-                    Iterator iterator = ((ArrayList) data.getData().get(0)).iterator();
-                    while (iterator.hasNext()) {
-                        data1.add((DestinationCard) deserializeData(CommandType.DRAWDESTINATIONCARDS,
-                                ((LinkedTreeMap) iterator.next())));
-                    }
-                }
-                if (data.getData().get(1) instanceof ArrayList<?>) {
-                    Iterator iterator2 = ((ArrayList) data.getData().get(1)).iterator();
-                    while (iterator2.hasNext()) {
-                        data1.add((DestinationCard) deserializeData(CommandType.DRAWDESTINATIONCARDS,
-                                ((LinkedTreeMap) iterator2.next())));
-                    }
-                }
-                return new DrawDestinationCardsCommand(data.getParams().get(0), data.getParams().get(1),
-                        data1, data2);
+                return new DrawDestinationCardsCommand(data.getParams(),
+                        ((CommandDataDrawDestinationCards) data).getCardsKept(),
+                        ((CommandDataDrawDestinationCards) data).getCardsDiscarded());
             case DRAWTRAINCARDFROMDECK:
                 if (data.getParams().size() < 2){
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
                 }
                 return new DrawTrainCardFromDeckCommand(data.getParams());
             case DISCARDTRAINCARD:
-                if (data.getParams().size() < 2 && data.getData().size() < 1){
-                    throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
-                }
-                TrainCard trainCard = (TrainCard) deserializeData(CommandType.DISCARDTRAINCARD, (LinkedTreeMap<Object,Object>)  data.getData().get(0));
-                return new DiscardTrainCardCommand(data.getParams(), trainCard);
+                return new DiscardTrainCardCommand(data.getParams(),
+                        ((CommandDataDiscardTrainCard) data).getCard());
             case DRAWTRAINCARDFROMFACEUP:
-                if (data.getParams().size() < 2 && data.getData().size() < 1) {
-                    throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
-                }
-                Double dValue = (Double) data.getData().get(0);
-                Integer iValue = dValue.intValue();
-                return new DrawTrainCardFromFaceUpCommand(data.getParams(), iValue);
+                return new DrawTrainCardFromFaceUpCommand(data.getParams(),
+                        ((CommandDataDrawTrainCardFromFaceUp) data).getCardIndex());
             case CLAIMROUTE:
-                if (data.getParams().size() < 2 && data.getData().size() < 1){
-                    throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
-                }
-                Route route = (Route) deserializeData(CommandType.CLAIMROUTE, (LinkedTreeMap<Object,Object>)  data.getData().get(0));
-                return new ClaimRouteCommand(data.getParams(), route);
+                return new ClaimRouteCommand(data.getParams(),
+                        ((CommandDataClaimRoute) data). getRoute());
             case FINISHTURN:
                 if (data.getParams().size() < 1) {
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");
@@ -164,20 +118,4 @@ public class CommandFactory {
                 return null;
         }
     }
-
-    public Object deserializeData(CommandType type, LinkedTreeMap<Object, Object> data) throws Exception {
-        Gson gson = new Gson();
-        JsonObject jsonObject = gson.toJsonTree(data).getAsJsonObject();;
-        switch (type) {
-            case CLAIMROUTE:
-                return gson.fromJson(jsonObject, Route.class);
-            case DISCARDTRAINCARD:
-                return gson.fromJson(jsonObject, TrainCard.class);
-            case DRAWDESTINATIONCARDS:
-                return gson.fromJson(jsonObject, DestinationCard.class);
-            default:
-                throw new Exception("dataDeserializer: Not valid object");
-        }
-    }
-
 }
