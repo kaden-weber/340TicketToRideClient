@@ -328,19 +328,20 @@ public class GameActivity extends AppCompatActivity
 //        //otherwise display route length
         String city1 = getCity1(polyline);
         String city2 = getCity2(polyline);
+        TrainCardType routeType = getRouteType(polyline);
 
-        if(mPresenter.routeClaimable((int)polyline.getTag(), getRouteType(polyline))) {
+        if(mPresenter.routeClaimable((int)polyline.getTag(), routeType)) {
             if(mClaimingRouteFlag){
                 DialogFragment fragment = new ClaimRouteFragment();
-                ((ClaimRouteFragment) fragment).setParams(city1, city2, getRouteType(polyline), (Integer) polyline.getTag());
+                ((ClaimRouteFragment) fragment).setParams(city1, city2, routeType, (Integer) polyline.getTag());
                 fragment.show(getSupportFragmentManager(), "ClaimRouteFragment");
             } else{
-                Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()),
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()) +
+                        " " + routeType + " cards.", Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()),
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()) +
+                    " " + routeType + " cards.", Toast.LENGTH_SHORT).show();
         }
     }
     private TrainCardType getRouteType(Polyline polyline){
