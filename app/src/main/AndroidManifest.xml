@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="weber.kaden.myapplication">
+    package="weber.kaden.ticketToRide">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -22,7 +22,7 @@
 
         <!--this is the activity that will be shown on startup-->
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name="weber.kaden.ticketToRide.ui.login.LoginActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.Launcher">
             <intent-filter>
@@ -32,10 +32,10 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".ui.gameList.GameListActivity" />
-        <activity android:name=".ui.gameLobby.GameLobbyActivity" />
-        <activity android:name=".ui.GameSetupActivity" />
-        <activity android:name=".ui.gameView.GameActivity"
+        <activity android:name="weber.kaden.ticketToRide.ui.gameList.GameListActivity" />
+        <activity android:name="weber.kaden.ticketToRide.ui.gameLobby.GameLobbyActivity" />
+        <activity android:name="weber.kaden.ticketToRide.ui.GameSetupActivity" />
+        <activity android:name="weber.kaden.ticketToRide.ui.gameView.GameActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
 
