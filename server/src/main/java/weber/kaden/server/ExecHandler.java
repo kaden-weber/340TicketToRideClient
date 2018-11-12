@@ -34,7 +34,7 @@ public class ExecHandler implements HttpHandler {
             StreamProcessor.writeString(serializedResults, exchange.getResponseBody());
             exchange.close();
         } catch (Exception e) {
-            throw new IOException();
+            throw new IOException(e.getMessage());
         }
     }
 

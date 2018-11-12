@@ -42,7 +42,7 @@ public class CommandFactory {
         mCommandManager = commandManager;
     }
 
-    public Command getCommand(CommandData data) throws InvalidCommandParamsException, Exception {
+    public Command getCommand(CommandData data) throws Exception {
         switch (data.getType()) {
             case SETTRAVELERRATE:
                 if(data.getParams().size() < 3){
