@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import weber.kaden.common.command.CommandData;
+import weber.kaden.common.command.CommandData.CommandData;
 import weber.kaden.ticketToRide.R;
 import weber.kaden.ticketToRide.model.ClientFacade;
 

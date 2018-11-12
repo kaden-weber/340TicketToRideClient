@@ -1,10 +1,11 @@
-package weber.kaden.common.command;
+package weber.kaden.common.command.CommandClasses;
 
 import java.util.List;
 
 import weber.kaden.common.GameResults;
 import weber.kaden.common.GenericResults;
 import weber.kaden.common.Results;
+import weber.kaden.common.command.Command;
 import weber.kaden.common.model.DestinationCard;
 import weber.kaden.common.model.Model;
 
@@ -14,9 +15,9 @@ public class DrawDestinationCardsCommand implements Command {
     private List<DestinationCard> cardsKept;
     private List<DestinationCard> cardsDiscarded;
 
-    public DrawDestinationCardsCommand(String gameID, String playerID, List<DestinationCard> cardsKept, List<DestinationCard> cardsDiscarded) {
-        this.gameID = gameID;
-        this.playerID = playerID;
+    public DrawDestinationCardsCommand(List<String> params, List<DestinationCard> cardsKept, List<DestinationCard> cardsDiscarded) {
+        this.gameID = params.get(0);
+        this.playerID = params.get(0);
         this.cardsKept = cardsKept;
         this.cardsDiscarded = cardsDiscarded;
     }

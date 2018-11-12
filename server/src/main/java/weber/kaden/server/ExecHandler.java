@@ -10,7 +10,7 @@ import java.util.Date;
 import weber.kaden.common.Results;
 import weber.kaden.common.Serializer;
 import weber.kaden.common.StreamProcessor;
-import weber.kaden.common.command.CommandData;
+import weber.kaden.common.command.CommandData.CommandData;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
@@ -34,7 +34,7 @@ public class ExecHandler implements HttpHandler {
             StreamProcessor.writeString(serializedResults, exchange.getResponseBody());
             exchange.close();
         } catch (Exception e) {
-            throw new IOException();
+            throw new IOException(e.getMessage());
         }
     }
 

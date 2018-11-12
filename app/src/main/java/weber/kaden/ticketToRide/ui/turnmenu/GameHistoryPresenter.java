@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import weber.kaden.common.command.CommandData;
+import weber.kaden.common.command.CommandData.CommandData;
 import weber.kaden.ticketToRide.model.ClientFacade;
 
 public class GameHistoryPresenter implements Observer {
