@@ -7,7 +7,7 @@ import java.util.Map;
 
 import weber.kaden.common.Results;
 import weber.kaden.common.command.Command;
-import weber.kaden.common.command.CommandData;
+import weber.kaden.common.command.CommandData.CommandData;
 import weber.kaden.common.command.CommandFactory;
 import weber.kaden.common.command.iCommandManager;
 import weber.kaden.common.model.Game;

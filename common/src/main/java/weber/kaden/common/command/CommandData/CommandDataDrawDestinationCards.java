@@ -1,7 +1,8 @@
-package weber.kaden.common.command;
+package weber.kaden.common.command.CommandData;
 
 import java.util.List;
 
+import weber.kaden.common.command.CommandType;
 import weber.kaden.common.model.DestinationCard;
 
 public class CommandDataDrawDestinationCards extends CommandData {

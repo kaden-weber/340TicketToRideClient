@@ -1,6 +1,8 @@
-package weber.kaden.common.command;
+package weber.kaden.common.command.CommandData;
 
 import java.util.List;
+
+import weber.kaden.common.command.CommandType;
 
 public class CommandDataDrawTrainCardFromFaceUp extends CommandData {
     private Integer cardIndex;

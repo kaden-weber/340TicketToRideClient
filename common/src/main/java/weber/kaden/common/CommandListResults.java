@@ -2,7 +2,7 @@ package weber.kaden.common;
 
 import java.util.List;
 
-import weber.kaden.common.command.CommandData;
+import weber.kaden.common.command.CommandData.CommandData;
 
 public class CommandListResults implements Results{
     private List<CommandData> data;

@@ -1,19 +1,20 @@
-package weber.kaden.common.command;
+package weber.kaden.common.command.CommandClasses;
 
 import java.util.List;
 
 import weber.kaden.common.GameResults;
 import weber.kaden.common.GenericResults;
 import weber.kaden.common.Results;
+import weber.kaden.common.command.Command;
+import weber.kaden.common.model.DestinationCard;
 import weber.kaden.common.model.Model;
-import weber.kaden.common.model.TrainCard;
 
-public class DiscardTrainCardCommand implements Command {
+public class DiscardDestinationCardCommand implements Command {
     private String gameID;
     private String playerID;
-    private TrainCard card;
+    private DestinationCard card;
 
-    public DiscardTrainCardCommand(List<String> params, TrainCard card) {
+    public DiscardDestinationCardCommand(List<String> params, DestinationCard card) {
         this.gameID = params.get(0);
         this.playerID = params.get(1);
         this.card = card;
@@ -21,7 +22,7 @@ public class DiscardTrainCardCommand implements Command {
 
     @Override
     public Results execute() {
-        if (Model.getInstance().getGame(gameID).PlayerDiscardTrainCard(this.playerID, this.card)) {
+        if (Model.getInstance().getGame(gameID).PlayerRemoveDestinationCard(this.playerID, this.card)) {
             return new GameResults(null, true, null);
         }
         else {

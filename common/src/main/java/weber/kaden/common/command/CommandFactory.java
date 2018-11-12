@@ -1,5 +1,30 @@
 package weber.kaden.common.command;
 
+import weber.kaden.common.command.CommandClasses.ChatCommand;
+import weber.kaden.common.command.CommandClasses.ClaimRouteCommand;
+import weber.kaden.common.command.CommandClasses.CreateGameCommand;
+import weber.kaden.common.command.CommandClasses.DiscardTrainCardCommand;
+import weber.kaden.common.command.CommandClasses.DrawDestinationCardsCommand;
+import weber.kaden.common.command.CommandClasses.DrawTrainCardFromDeckCommand;
+import weber.kaden.common.command.CommandClasses.DrawTrainCardFromFaceUpCommand;
+import weber.kaden.common.command.CommandClasses.FinishTurnCommand;
+import weber.kaden.common.command.CommandClasses.JoinGameCommand;
+import weber.kaden.common.command.CommandClasses.LeaveGameCommand;
+import weber.kaden.common.command.CommandClasses.LoginCommand;
+import weber.kaden.common.command.CommandClasses.PollCommandsCommand;
+import weber.kaden.common.command.CommandClasses.PollGameCommand;
+import weber.kaden.common.command.CommandClasses.PollGamesListCommand;
+import weber.kaden.common.command.CommandClasses.RegisterCommand;
+import weber.kaden.common.command.CommandClasses.SetTravelRateByPlayerCommand;
+import weber.kaden.common.command.CommandClasses.SetUpGameCommand;
+import weber.kaden.common.command.CommandClasses.StartGameCommand;
+import weber.kaden.common.command.CommandClasses.UseTrainCarsCommand;
+import weber.kaden.common.command.CommandData.CommandData;
+import weber.kaden.common.command.CommandData.CommandDataClaimRoute;
+import weber.kaden.common.command.CommandData.CommandDataDiscardTrainCard;
+import weber.kaden.common.command.CommandData.CommandDataDrawDestinationCards;
+import weber.kaden.common.command.CommandData.CommandDataDrawTrainCardFromFaceUp;
+
 public class CommandFactory {
     private static CommandFactory commandFactory = null;
     private static iCommandManager mCommandManager;

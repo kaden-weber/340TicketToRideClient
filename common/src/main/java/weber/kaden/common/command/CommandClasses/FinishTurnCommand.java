@@ -1,26 +1,25 @@
-package weber.kaden.common.command;
+package weber.kaden.common.command.CommandClasses;
 
 import java.util.List;
 
 import weber.kaden.common.GenericResults;
 import weber.kaden.common.Results;
+import weber.kaden.common.command.Command;
 import weber.kaden.common.model.Model;
 
-public class UseTrainCarsCommand implements Command {
+public class FinishTurnCommand implements Command {
     private String gameID;
-    private String playerID;
 
-    public UseTrainCarsCommand(List<String> params) {
+    public FinishTurnCommand(List<String> params) {
         this.gameID = params.get(0);
-        this.playerID = params.get(1);
     }
 
     @Override
     public Results execute() {
-        if (Model.getInstance().getGame(this.gameID).RemoveTrainCarsFromPlayer(playerID)) {
+        if (Model.getInstance().getGame(this.gameID).finishTurn()) {
             return new GenericResults(null, true, null);
         } else {
-            return new GenericResults(null, false, "Use train cars command failed");
+            return new GenericResults(null, false, "Finish Turn Command failed");
         }
     }
 
