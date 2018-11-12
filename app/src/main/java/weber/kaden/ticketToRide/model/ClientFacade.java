@@ -181,6 +181,11 @@ public class ClientFacade {
             throw new Exception(results.getErrorInfo());
         }
     }
+
+    public int getNumberOfPlayersInGame(){
+        return Model.getInstance().getNumberOfPlayersInCurrentGame();
+    }
+
     public void sendDestinationCards(String playerId, String gameId, List<DestinationCard> keptCards, List<DestinationCard> discarded) throws Exception{
         List<String> params = new ArrayList<>((Arrays.asList(gameId, playerId)));
         List<Object> data = new ArrayList<>();

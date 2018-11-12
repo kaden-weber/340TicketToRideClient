@@ -79,10 +79,10 @@ public class GamePresenter implements Observer {
         for( Player player : game.getPlayers()){
             //if this player claimed the route, or there are only 2 players, disable second route
             boolean disableSecond = false;
-            if(player.getID().equals(client.getCurrentUserID())){
+            if(player.getID().equals(client.getCurrentUserID()) || client.getNumberOfPlayersInGame() <= 2 ){
                 disableSecond = true;
             }
-            
+
             view.updateClaimedRoutes(player.getColor(),
                     game.RoutesClaimedByPlayer(player.getID()), disableSecond);
         }
