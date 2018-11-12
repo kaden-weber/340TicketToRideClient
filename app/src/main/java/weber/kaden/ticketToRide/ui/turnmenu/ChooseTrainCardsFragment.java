@@ -116,14 +116,14 @@ public class ChooseTrainCardsFragment extends DialogFragment {
 		}
 		else {
 			ClientFacade client = new ClientFacade();
-			ChooseFaceUpTrainCardTask chooseFaceUpTrainCards = new ChooseFaceUpTrainCardTask(client.getCurrentUser(), client.getCurrentGame().getID(), cardIndex, cardValue);
+			ChooseFaceUpTrainCardTask chooseFaceUpTrainCards = new ChooseFaceUpTrainCardTask(client.getCurrentUserID(), client.getCurrentGame().getID(), cardIndex, cardValue);
 			chooseFaceUpTrainCards.execute();
 		}
 	}
 
 	public void chooseDeck() {
 		ClientFacade client = new ClientFacade();
-		ChooseTrainCardDeckTask chooseTrainCardDeck = new ChooseTrainCardDeckTask(client.getCurrentUser(), client.getCurrentGame().getID());
+		ChooseTrainCardDeckTask chooseTrainCardDeck = new ChooseTrainCardDeckTask(client.getCurrentUserID(), client.getCurrentGame().getID());
 		chooseTrainCardDeck.execute();
 	}
 

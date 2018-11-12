@@ -126,13 +126,13 @@ public class ClientFacade {
     	return Model.getInstance().getCurrentGame();
     }
 
-    public String getCurrentUser() {
+    public String getCurrentUserID() {
         return Model.getInstance().getCurrentUser();
     }
 
     public Game getUpdatedGame(Game game) throws Exception{
         List<String> params = new ArrayList<>();
-        params.add(getCurrentUser());
+        params.add(getCurrentUserID());
         params.add(game.getID());
         CommandData commandData = new CommandData(params, CommandType.POLLGAME);
         Results results = ServerProxy.getInstance().sendCommand(commandData);

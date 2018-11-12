@@ -235,7 +235,7 @@ public class GameActivity extends AppCompatActivity
         //add city markers
         for (Location location : mLocations.getLocations()) {
             googleMap.addMarker(new MarkerOptions().position(location.getCoords())
-                    .title(location.getCity())
+                    .title(location.getCityName())
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.steamtrain_dark)));
         }
 
@@ -368,15 +368,15 @@ public class GameActivity extends AppCompatActivity
     }
     private String getCity1(Polyline polyline){
         DisplayRoute route = (DisplayRoute) mLineRouteMap.get(polyline);
-        return route.getCity1().getCity();
+        return route.getCity1().getCityName();
     }
     private String getCity2(Polyline polyline){
         DisplayRoute route = (DisplayRoute) mLineRouteMap.get(polyline);
-        return route.getCity2().getCity();
+        return route.getCity2().getCityName();
     }
 
     @Override
-    public void updateClaimedRoutes(PlayerColors color, List<Route> routes) {
+    public void updateClaimedRoutes(PlayerColors color, List<Route> routes, boolean disableSecond) {
         for (Route route : routes){
             DisplayRoute displayRoute = mRoutes.getRoute(
                     mDisplayConverter.displayCity(route.getCity1()),
@@ -385,6 +385,15 @@ public class GameActivity extends AppCompatActivity
             line.setPattern(claimedRoutePattern);
             line.setClickable(false);
             line.setColor(getPlayerColor(color));
+            // Also disable second line here if player has claimed this route or there is less than 3 players
+            if(disableSecond) {
+                DisplayRoute doubleRoute = mRoutes.getDoubleRoute(
+                        displayRoute.getCity1().getCityName(), displayRoute.getCity2().getCityName());
+                if (doubleRoute != null){
+
+                }
+            }
+
         }
     }
     private int getPlayerColor(PlayerColors color){

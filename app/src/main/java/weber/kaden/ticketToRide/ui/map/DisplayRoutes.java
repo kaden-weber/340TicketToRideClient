@@ -22,8 +22,24 @@ public class DisplayRoutes {
 
     public DisplayRoute getRoute(String city1, String city2){
         for (DisplayRoute route : mRoutes){
-            if(route.getCity1().getCity().equals(city1) && route.getCity2().getCity().equals(city2)){
+            if(route.getCity1().getCityName().equals(city1) && route.getCity2().getCityName().equals(city2)){
                 return route;
+            }
+        }
+        return null;
+    }
+
+    public DisplayRoute getDoubleRoute(String city1, String city2) {
+        boolean passedOriginalRoute = false;
+        for (int i = 0; i < mRoutes.size(); i++){
+            if (!passedOriginalRoute) {
+                if (mRoutes.get(i).getCity1().getCityName().equals(city1) && mRoutes.get(i).getCity2().getCityName().equals(city2)) {
+                    passedOriginalRoute = true;
+                }
+            } else {
+                if (mRoutes.get(i).getCity1().getCityName().equals(city1) && mRoutes.get(i).getCity2().getCityName().equals(city2)) {
+                    return mRoutes.get(i);
+                }
             }
         }
         return null;
