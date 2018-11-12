@@ -218,8 +218,8 @@ public class ClientFacade {
         }
     }
 
-    public boolean isCurrentPlayer() {
-        return Model.getInstance().isCurrentPlayer();
+    public boolean isMyTurn() {
+        return Model.getInstance().isCurrentPlayerTheActivePlayer();
     }
 
     public void finishTurn() {

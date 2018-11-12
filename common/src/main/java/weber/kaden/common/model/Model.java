@@ -220,7 +220,7 @@ public class Model extends Observable {
         return this.currentGame.getPlayer(currentUser).hasTrainCards(number, type);
     }
 
-    public boolean isCurrentPlayer() {
+    public boolean isCurrentPlayerTheActivePlayer() {
         return (this.currentUser.equals(currentGame.getCurrentPlayer().getID()));
     }
 
