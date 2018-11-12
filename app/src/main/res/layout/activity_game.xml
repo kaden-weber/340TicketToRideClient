@@ -29,15 +29,6 @@
             </fragment>
 
         </FrameLayout>
-
-        <Button
-            android:id="@+id/tempTestButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="@string/test"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/map_frame" />
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
