@@ -60,7 +60,7 @@ public class GamePresenter implements Observer {
     public void update(Observable observable, Object arg) {
         if (arg instanceof Game) {
             Game game = (Game) arg;
-            Player player = game.getPlayer(client.getCurrentUser());
+            Player player = game.getPlayer(client.getCurrentUserID());
             List<DestinationCard> destCards = player.getDestinationCardHand();
             List<TrainCard> trainCards = player.getTrainCards();
             List<Integer> points = new ArrayList<>();
@@ -77,7 +77,14 @@ public class GamePresenter implements Observer {
      */
     private void updateClaimedRoutes(Game game){
         for( Player player : game.getPlayers()){
-            view.updateClaimedRoutes(player.getColor(), game.RoutesClaimedByPlayer(player.getID()));
+            //if this player claimed the route, or there are only 2 players, disable second route
+            boolean disableSecond = false;
+            if(player.getID().equals(client.getCurrentUserID()) || client.getNumberOfPlayersInGame() <= 2 ){
+                disableSecond = true;
+            }
+
+            view.updateClaimedRoutes(player.getColor(),
+                    game.RoutesClaimedByPlayer(player.getID()), disableSecond);
         }
     }
 

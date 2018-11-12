@@ -23,19 +23,19 @@ public class GameLobbyPresenter implements Observer {
     public void exitLobby() throws Exception {
         if (client.getCurrentGame() == null) {
             throw new Exception("Not currently in a game");
-        } else if (client.getCurrentUser() == null) {
+        } else if (client.getCurrentUserID() == null) {
             throw new Exception("Error leaving game");
         }
-        client.exitLobby(client.getCurrentUser(), client.getCurrentGame().getID());
+        client.exitLobby(client.getCurrentUserID(), client.getCurrentGame().getID());
     }
 
     public void startGame() throws Exception {
         if (client.getCurrentGame() == null) {
             throw new Exception("Not currently in a game");
-        } else if (client.getCurrentUser() == null) {
+        } else if (client.getCurrentUserID() == null) {
             throw new Exception("Error starting game");
         }
-        client.setupGame(client.getCurrentUser(), client.getCurrentGame().getID());
+        client.setupGame(client.getCurrentUserID(), client.getCurrentGame().getID());
     }
 
     @Override

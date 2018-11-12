@@ -129,7 +129,7 @@ public class ChooseDestinationCardsFragment extends DialogFragment {
                     }
                 }
                 ClientFacade clientFacade = new ClientFacade();
-                SendChosenCards sendChosenCards = new SendChosenCards(clientFacade.getCurrentUser(),
+                SendChosenCards sendChosenCards = new SendChosenCards(clientFacade.getCurrentUserID(),
                         clientFacade.getCurrentGame().getID(), chosenList, discardedList);
                 sendChosenCards.execute();
             }

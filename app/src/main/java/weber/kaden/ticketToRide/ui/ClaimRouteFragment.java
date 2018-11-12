@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import weber.kaden.common.model.TrainCardType;
@@ -44,6 +45,7 @@ public class ClaimRouteFragment extends DialogFragment {
         client = new ClientFacade();
         presenter = new ClaimRoutePresenter(this, client);
         View view = inflater.inflate(R.layout.fragment_dialog_claim_route, container, false);
+        //TextView cityNames
         actionCancel = view.findViewById(R.id.claim_route_cancel_button);
         actionConfirm = view.findViewById(R.id.claim_route_confirm_button);
 
@@ -69,17 +71,6 @@ public class ClaimRouteFragment extends DialogFragment {
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
         }
     }
 

@@ -2,7 +2,7 @@ package weber.kaden.common;
 
 import com.google.gson.Gson;
 
-import weber.kaden.common.command.CommandData;
+import weber.kaden.common.command.CommandData.CommandData;
 import weber.kaden.common.command.CommandType;
 
 public class Serializer {

@@ -1,9 +1,11 @@
-package weber.kaden.common.command;
+package weber.kaden.common.command.CommandClasses;
 
 import java.util.List;
 
 import weber.kaden.common.ListResults;
 import weber.kaden.common.Results;
+import weber.kaden.common.command.Command;
+import weber.kaden.common.command.iCommandManager;
 import weber.kaden.common.model.Game;
 
 public class PollGamesListCommand implements Command {

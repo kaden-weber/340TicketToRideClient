@@ -1,6 +1,7 @@
 package weber.kaden.ticketToRide.ui.gameView;
 
 import android.app.ActionBar;
+import android.graphics.PorterDuff;
 import android.support.v4.view.GravityCompat;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -235,7 +237,7 @@ public class GameActivity extends AppCompatActivity
         //add city markers
         for (Location location : mLocations.getLocations()) {
             googleMap.addMarker(new MarkerOptions().position(location.getCoords())
-                    .title(location.getCity())
+                    .title(location.getCityName())
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.steamtrain_dark)));
         }
 
@@ -325,7 +327,7 @@ public class GameActivity extends AppCompatActivity
     @Override
     public void onPolylineClick(Polyline polyline) {
         //check if the route can be claimed
-//        //otherwise display route length
+        //otherwise display route length
         String city1 = getCity1(polyline);
         String city2 = getCity2(polyline);
 
@@ -334,12 +336,34 @@ public class GameActivity extends AppCompatActivity
                 DialogFragment fragment = new ClaimRouteFragment();
                 ((ClaimRouteFragment) fragment).setParams(city1, city2, getRouteType(polyline), (Integer) polyline.getTag());
                 fragment.show(getSupportFragmentManager(), "ClaimRouteFragment");
-            } else{
-                Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()),
-                        Toast.LENGTH_SHORT).show();
+            } else {
+                displayRouteCost(polyline);
             }
+        } else {
+            displayRouteCost(polyline);
         }
     }
+
+    private void displayRouteCost(Polyline polyline) {
+        //Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()),
+        //Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()) +
+                " " + getRouteType(polyline) + " cards.", Toast.LENGTH_SHORT);
+        View view = toast.getView();
+        DisplayRoute route = (DisplayRoute) mLineRouteMap.get(polyline);
+        String color = route.getColor();
+        int colorVal = getRouteColor(color);
+        view.getBackground().setColorFilter(colorVal, PorterDuff.Mode.SRC_IN);
+
+        if (colorVal == getResources().getColor(R.color.Hopper)
+                || colorVal == getResources().getColor(R.color.Coal)
+                || colorVal == getResources().getColor(R.color.Gray)) {
+            TextView text = view.findViewById(android.R.id.message);
+            text.setTextColor(getResources().getColor(R.color.Passenger));
+        }
+        toast.show();
+    }
+
     private TrainCardType getRouteType(Polyline polyline){
         DisplayRoute route = (DisplayRoute) mLineRouteMap.get(polyline);
         String color = route.getColor();
@@ -368,15 +392,15 @@ public class GameActivity extends AppCompatActivity
     }
     private String getCity1(Polyline polyline){
         DisplayRoute route = (DisplayRoute) mLineRouteMap.get(polyline);
-        return route.getCity1().getCity();
+        return route.getCity1().getCityName();
     }
     private String getCity2(Polyline polyline){
         DisplayRoute route = (DisplayRoute) mLineRouteMap.get(polyline);
-        return route.getCity2().getCity();
+        return route.getCity2().getCityName();
     }
 
     @Override
-    public void updateClaimedRoutes(PlayerColors color, List<Route> routes) {
+    public void updateClaimedRoutes(PlayerColors color, List<Route> routes, boolean disableSecond) {
         for (Route route : routes){
             DisplayRoute displayRoute = mRoutes.getRoute(
                     mDisplayConverter.displayCity(route.getCity1()),
@@ -385,6 +409,16 @@ public class GameActivity extends AppCompatActivity
             line.setPattern(claimedRoutePattern);
             line.setClickable(false);
             line.setColor(getPlayerColor(color));
+            // Also disable second line here if player has claimed this route or there is less than 3 players
+            if(disableSecond) {
+                DisplayRoute doubleRoute = mRoutes.getDoubleRoute(
+                        displayRoute.getCity1().getCityName(), displayRoute.getCity2().getCityName());
+                if (doubleRoute != null){
+                    Polyline doubleLine = (Polyline) mRouteLineMap.get(doubleRoute);
+                    line.setClickable(false);
+                }
+            }
+
         }
     }
     private int getPlayerColor(PlayerColors color){
