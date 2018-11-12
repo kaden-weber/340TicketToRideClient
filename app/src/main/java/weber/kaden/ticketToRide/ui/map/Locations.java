@@ -52,7 +52,7 @@ public class Locations {
 
     public LatLng coords(String city){
         for (Location location: locations) {
-            if (location.getCity().equals(city)){
+            if (location.getCityName().equals(city)){
                 return location.getCoords();
             }
         }
@@ -61,7 +61,7 @@ public class Locations {
 
     Location getLocation(String city){
         for(Location location: locations){
-            if(location.getCity().equals(city)){
+            if(location.getCityName().equals(city)){
                 return location;
             }
         }

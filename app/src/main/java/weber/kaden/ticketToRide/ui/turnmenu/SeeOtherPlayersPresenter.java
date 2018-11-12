@@ -20,7 +20,7 @@ public class SeeOtherPlayersPresenter implements Observer {
     public List<Player> getPlayers() {
         List<Player> toreturn = client.getCurrentGame().getPlayers();
         /*for (int i = 0; i < toreturn.size(); i++) {
-            if (toreturn.get(i).getID().equals(client.getCurrentUser())) {
+            if (toreturn.get(i).getID().equals(client.getCurrentUserID())) {
                 toreturn.remove(i);
                 i--;
             }

@@ -9,7 +9,7 @@ import weber.kaden.common.model.TrainCard;
 
 public interface GameViewInterface {
 
-    void updateClaimedRoutes(PlayerColors color, List<Route> routes);
+    void updateClaimedRoutes(PlayerColors color, List<Route> routes, boolean disableSecond);
     void setNewValues(List<DestinationCard> nDestCards, List<TrainCard> nTrainCards, List<Integer> nPoints);
 
 }
