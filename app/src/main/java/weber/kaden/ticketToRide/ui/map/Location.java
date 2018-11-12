@@ -16,7 +16,7 @@ public class Location {
         return coords;
     }
 
-    public String getCity() {
+    public String getCityName() {
         return city;
     }
 }

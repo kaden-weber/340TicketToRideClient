@@ -6,7 +6,7 @@ import java.util.List;
 
 import weber.kaden.common.Results;
 import weber.kaden.common.command.Command;
-import weber.kaden.common.command.CommandData;
+import weber.kaden.common.command.CommandData.CommandData;
 import weber.kaden.common.command.CommandFactory;
 import weber.kaden.common.command.CommandType;
 import weber.kaden.common.model.DestinationCard;
@@ -126,13 +126,13 @@ public class ClientFacade {
     	return Model.getInstance().getCurrentGame();
     }
 
-    public String getCurrentUser() {
+    public String getCurrentUserID() {
         return Model.getInstance().getCurrentUser();
     }
 
     public Game getUpdatedGame(Game game) throws Exception{
         List<String> params = new ArrayList<>();
-        params.add(getCurrentUser());
+        params.add(getCurrentUserID());
         params.add(game.getID());
         CommandData commandData = new CommandData(params, CommandType.POLLGAME);
         Results results = ServerProxy.getInstance().sendCommand(commandData);
@@ -181,6 +181,11 @@ public class ClientFacade {
             throw new Exception(results.getErrorInfo());
         }
     }
+
+    public int getNumberOfPlayersInGame(){
+        return Model.getInstance().getNumberOfPlayersInCurrentGame();
+    }
+
     public void sendDestinationCards(String playerId, String gameId, List<DestinationCard> keptCards, List<DestinationCard> discarded) throws Exception{
         List<String> params = new ArrayList<>((Arrays.asList(gameId, playerId)));
         List<Object> data = new ArrayList<>();
@@ -213,8 +218,8 @@ public class ClientFacade {
         }
     }
 
-    public boolean isCurrentPlayer() {
-        return Model.getInstance().isCurrentPlayer();
+    public boolean isMyTurn() {
+        return Model.getInstance().isCurrentPlayerTheActivePlayer();
     }
 
     public void finishTurn() {
