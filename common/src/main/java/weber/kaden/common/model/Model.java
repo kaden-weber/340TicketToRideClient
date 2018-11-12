@@ -227,4 +227,8 @@ public class Model extends Observable {
     public List<DestinationCard> getDealtDestinationCards() {
         return this.currentGame.getPlayer(currentUser).getDealtDestinationCards();
     }
+
+    public int getNumberOfPlayersInCurrentGame() {
+        return this.currentGame.getPlayers().size();
+    }
 }
