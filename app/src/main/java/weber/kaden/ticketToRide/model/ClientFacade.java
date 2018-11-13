@@ -7,6 +7,9 @@ import java.util.List;
 import weber.kaden.common.Results;
 import weber.kaden.common.command.Command;
 import weber.kaden.common.command.CommandData.CommandData;
+import weber.kaden.common.command.CommandData.CommandDataClaimRoute;
+import weber.kaden.common.command.CommandData.CommandDataDrawDestinationCards;
+import weber.kaden.common.command.CommandData.CommandDataDrawTrainCardFromFaceUp;
 import weber.kaden.common.command.CommandFactory;
 import weber.kaden.common.command.CommandType;
 import weber.kaden.common.model.DestinationCard;
@@ -173,9 +176,7 @@ public class ClientFacade {
 
     public void claimRoute(String gameId, String userId, Route route) throws Exception {
         List<String> params = new ArrayList<>((Arrays.asList(gameId, userId)));
-        List<Object> data = new ArrayList<>();
-        data.add(route);
-        CommandData commandData = new CommandData(params, CommandType.CLAIMROUTE, data);
+        CommandData commandData = new CommandDataClaimRoute(params, CommandType.CLAIMROUTE, route);
         Results results = ServerProxy.getInstance().sendCommand(commandData);
         if(!results.success()){
             throw new Exception(results.getErrorInfo());
@@ -188,10 +189,8 @@ public class ClientFacade {
 
     public void sendDestinationCards(String playerId, String gameId, List<DestinationCard> keptCards, List<DestinationCard> discarded) throws Exception{
         List<String> params = new ArrayList<>((Arrays.asList(gameId, playerId)));
-        List<Object> data = new ArrayList<>();
-        data.add(keptCards);
-        data.add(discarded);
-        CommandData commandData = new CommandData(params, CommandType.DRAWDESTINATIONCARDS, data);
+        CommandData commandData = new CommandDataDrawDestinationCards(params, CommandType.DRAWDESTINATIONCARDS,
+                keptCards, discarded);
         Results results = ServerProxy.getInstance().sendCommand(commandData);
         if(!results.success()){
             throw new Exception(results.getErrorInfo());
@@ -202,7 +201,8 @@ public class ClientFacade {
         List<String> params = new ArrayList<>(Arrays.asList(gameId, playerId));
         List<Object> data = new ArrayList<>();
         data.add(cardIndex);
-        CommandData commandData = new CommandData(params, CommandType.DRAWTRAINCARDFROMFACEUP, data);
+        CommandData commandData = new CommandDataDrawTrainCardFromFaceUp(params,
+                CommandType.DRAWTRAINCARDFROMFACEUP, cardIndex);
         Results results = ServerProxy.getInstance().sendCommand(commandData);
         if (!results.success()) {
             throw new Exception(results.getErrorInfo());
