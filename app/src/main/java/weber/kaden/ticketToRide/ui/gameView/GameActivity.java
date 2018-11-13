@@ -345,8 +345,6 @@ public class GameActivity extends AppCompatActivity
     }
 
     private void displayRouteCost(Polyline polyline) {
-        //Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()),
-        //Toast.LENGTH_SHORT).show();
         Toast toast = Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()) +
                 " " + getRouteType(polyline) + " cards.", Toast.LENGTH_SHORT);
         View view = toast.getView();
