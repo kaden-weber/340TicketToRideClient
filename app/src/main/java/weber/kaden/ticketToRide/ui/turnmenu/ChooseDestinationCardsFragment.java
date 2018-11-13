@@ -23,6 +23,7 @@ import weber.kaden.common.model.Model;
 import weber.kaden.ticketToRide.R;
 import weber.kaden.ticketToRide.model.ClientFacade;
 import weber.kaden.ticketToRide.ui.gameView.GameActivity;
+import weber.kaden.ticketToRide.ui.tools.ConstantsDisplayConverter;
 
 public class ChooseDestinationCardsFragment extends DialogFragment {
     //widgets
@@ -48,6 +49,8 @@ public class ChooseDestinationCardsFragment extends DialogFragment {
             }
         });
         mActionCancel.setEnabled(false);
+        //string converter tool
+        ConstantsDisplayConverter converter = new ConstantsDisplayConverter();
 
         final List<DestinationCard> dealtCards = (List<DestinationCard>) getArguments().getSerializable("cards");
         final List<Boolean> chosenCards = Arrays.asList(false, false, false);
@@ -55,7 +58,7 @@ public class ChooseDestinationCardsFragment extends DialogFragment {
         ToggleButton mDestinationCard1 = view.findViewById(R.id.destination_card_1);
         ToggleButton mDestinationCard2 = view.findViewById(R.id.destination_card_2);
 
-        String destination0Text = dealtCards.get(0).getStartCity().toString() + "\nTo\n" + dealtCards.get(0).getEndCity().toString();
+        String destination0Text = converter.getUIStringFor(dealtCards.get(0).getStartCity()) + "\nTo\n" + converter.getUIStringFor(dealtCards.get(0).getEndCity());
         mDestinationCard0.setTextOn(destination0Text);
         mDestinationCard0.setTextOff(destination0Text);
         mDestinationCard0.setText(destination0Text);
@@ -75,7 +78,7 @@ public class ChooseDestinationCardsFragment extends DialogFragment {
             }
         });
 
-        String destination1Text = dealtCards.get(1).getStartCity().toString() + "\nTo\n" + dealtCards.get(1).getEndCity().toString();
+        String destination1Text = converter.getUIStringFor(dealtCards.get(1).getStartCity()) + "\nTo\n" + converter.getUIStringFor(dealtCards.get(1).getEndCity());
         mDestinationCard1.setTextOn(destination1Text);
         mDestinationCard1.setTextOff(destination1Text);
         mDestinationCard1.setText(destination1Text);
@@ -95,7 +98,7 @@ public class ChooseDestinationCardsFragment extends DialogFragment {
             }
         });
 
-        String destination2Text = dealtCards.get(2).getStartCity().toString() + "\nTo\n" + dealtCards.get(2).getEndCity().toString();
+        String destination2Text = converter.getUIStringFor(dealtCards.get(2).getStartCity()) + "\nTo\n" + converter.getUIStringFor(dealtCards.get(2).getEndCity());
         mDestinationCard2.setTextOn(destination2Text);
         mDestinationCard2.setTextOff(destination2Text);
         mDestinationCard2.setText(destination2Text);

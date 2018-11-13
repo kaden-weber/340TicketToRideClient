@@ -8,7 +8,7 @@ public class ConstantsDisplayConverter {
 
     }
 
-    public String displayCity(City city){
+    public String getUIStringFor(City city){
         switch (city){
             case MIAMI:
                 return ("Miami");
