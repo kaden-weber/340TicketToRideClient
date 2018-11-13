@@ -403,8 +403,8 @@ public class GameActivity extends AppCompatActivity
     public void updateClaimedRoutes(PlayerColors color, List<Route> routes, boolean disableSecond) {
         for (Route route : routes){
             DisplayRoute displayRoute = mRoutes.getRoute(
-                    mDisplayConverter.displayCity(route.getCity1()),
-                    mDisplayConverter.displayCity(route.getCity2()));
+                    mDisplayConverter.getUIStringFor(route.getCity1()),
+                    mDisplayConverter.getUIStringFor(route.getCity2()));
             Polyline line = (Polyline) mRouteLineMap.get(displayRoute);
             line.setPattern(claimedRoutePattern);
             line.setClickable(false);

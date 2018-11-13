@@ -12,6 +12,7 @@ import java.util.List;
 
 import weber.kaden.common.model.DestinationCard;
 import weber.kaden.ticketToRide.R;
+import weber.kaden.ticketToRide.ui.tools.ConstantsDisplayConverter;
 
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder>{
     private List<DestinationCard> destinationCards;
@@ -33,8 +34,10 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder>{
     }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        ConstantsDisplayConverter converter = new ConstantsDisplayConverter();
         DestinationCard destinationCard =  destinationCards.get(position);
-        String destinationText = destinationCard.getStartCity().toString() + "\nTo\n" + destinationCard.getEndCity().toString();
+        String destinationText = converter.getUIStringFor(destinationCard.getStartCity()) + "\nTo\n"
+                + converter.getUIStringFor(destinationCard.getEndCity());
         holder.toggleDest.setTextOn(destinationText);
         holder.toggleDest.setTextOff(destinationText);
         holder.toggleDest.setText(destinationText);
