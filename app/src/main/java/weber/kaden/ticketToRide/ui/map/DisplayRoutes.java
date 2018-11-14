@@ -42,9 +42,9 @@ public class DisplayRoutes {
         return mRoutes;
     }
 
-    public DisplayRoute getRoute(String city1, String city2){
+    public DisplayRoute getRoute(String city1, String city2, boolean isSecondRoute){
         for (DisplayRoute route : mRoutes){
-            if(route.getCity1().getCityName().equals(city1) && route.getCity2().getCityName().equals(city2)){
+            if(route.getCity1().getCityName().equals(city1) && route.getCity2().getCityName().equals(city2) && isSecondRoute == route.isSecondRoute()){
                 return route;
             }
         }

@@ -21,7 +21,7 @@ public class ClaimRoutePresenter {
         try {
             City start = City.valueOf(toEnumValue(city1));
             City end = City.valueOf(toEnumValue(city2));
-            Route route = new Route(start, end, cost, type);
+            Route route = new Route(start, end, cost, type, isSecondRoute);
             String gameId = Model.getInstance().getCurrentGame().getID();
             String userId = Model.getInstance().getCurrentUser();
             client.claimRoute(gameId, userId, route);

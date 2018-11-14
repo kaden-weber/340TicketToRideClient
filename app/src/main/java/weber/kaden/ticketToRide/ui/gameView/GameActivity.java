@@ -431,15 +431,15 @@ public class GameActivity extends AppCompatActivity
         for (Route route : routes){
             DisplayRoute displayRoute = mRoutes.getRoute(
                     mDisplayConverter.getUIStringFor(route.getCity1()),
-                    mDisplayConverter.getUIStringFor(route.getCity2()));
+                    mDisplayConverter.getUIStringFor(route.getCity2()), route.isSecondRoute());
             Polyline line = (Polyline) mRouteLineMap.get(displayRoute);
             line.setPattern(claimedRoutePattern);
             line.setClickable(false);
             line.setColor(getPlayerColor(color));
             // Also disable second line here if player has claimed this route or there is less than 3 players
             if(disableSecond) {
-                DisplayRoute doubleRoute = mRoutes.getDoubleRoute(
-                        displayRoute.getCity1().getCityName(), displayRoute.getCity2().getCityName());
+                DisplayRoute doubleRoute = mRoutes.getRoute(
+                        displayRoute.getCity1().getCityName(), displayRoute.getCity2().getCityName(), !route.isSecondRoute());
                 if (doubleRoute != null){
                     Polyline doubleLine = (Polyline) mRouteLineMap.get(doubleRoute);
                     doubleLine.setClickable(false);

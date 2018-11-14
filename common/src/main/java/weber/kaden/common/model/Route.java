@@ -10,7 +10,7 @@ public class Route {
     private TrainCardType type;
     private boolean isSecondRoute;
 
-    public Route(City city1, City city2, Integer cost, TrainCardType type) {
+    public Route(City city1, City city2, Integer cost, TrainCardType type, boolean isSecondRoute) {
         this.city1 = city1;
         this.city2 = city2;
         switch (cost){
@@ -37,6 +37,7 @@ public class Route {
         }
         this.cost = cost;
         this.type = type;
+        this.isSecondRoute = isSecondRoute;
     }
 
     public City getCity1() {
@@ -73,6 +74,14 @@ public class Route {
 
     public void setType(TrainCardType type) {
         this.type = type;
+    }
+
+    public boolean isSecondRoute() {
+        return isSecondRoute;
+    }
+
+    public void setSecondRoute(boolean secondRoute) {
+        isSecondRoute = secondRoute;
     }
 
     @Override
