@@ -2,25 +2,29 @@ package weber.kaden.ticketToRide.ui.gameView;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.ToggleButton;
 
+import java.util.HashMap;
 import java.util.List;
 
 import weber.kaden.common.model.TrainCard;
+import weber.kaden.common.model.TrainCardType;
 import weber.kaden.ticketToRide.R;
 
 import static android.graphics.Color.WHITE;
 
 public class TrainCardAdapter extends RecyclerView.Adapter<TrainCardAdapter.ViewHolder>{
-    private  List<TrainCard> trainCards;
+    private HashMap<TrainCardType, Integer> trainCards;
     private LayoutInflater mInflater;
+    private TrainCardType[] cardTypes = TrainCardType.values();
 
     // data is passed into the constructor
-    TrainCardAdapter(Context context, List<TrainCard> trainCards) {
+    TrainCardAdapter(Context context, HashMap<TrainCardType, Integer> trainCards) {
         this.mInflater = LayoutInflater.from(context);
         this.trainCards = trainCards;
     }
@@ -52,11 +56,14 @@ public class TrainCardAdapter extends RecyclerView.Adapter<TrainCardAdapter.View
     }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        TrainCard trainCard =  trainCards.get(position);
+        TrainCardType type = cardTypes[position];
+        int numOfCards = trainCards.get(cardTypes[position]);
+        TrainCard trainCard =  new TrainCard(type);
         String train = trainCard.getType().toString();
         try {
             String id = train.toLowerCase();
             String newId = convert(id);
+            train += " : " + numOfCards;
             int color = mInflater.getContext().getResources().getColor(mInflater.getContext().getResources().
                     getIdentifier(newId, "color", mInflater.getContext().getPackageName()));
             if (newId.equals("Hopper")){

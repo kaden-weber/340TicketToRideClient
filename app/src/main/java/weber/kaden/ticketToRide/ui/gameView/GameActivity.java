@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.ArrayMap;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -68,11 +69,10 @@ public class GameActivity extends AppCompatActivity
         implements OnMapReadyCallback, GoogleMap.OnPolylineClickListener, GameViewInterface {
 
     GameActivity instance = this;
-    GameAdapter adapter;
-    TrainCardAdapter trainCardAdapter;
     PointsAdapter pointsAdapter;
     List<DestinationCard> destCards = new ArrayList<>();
     List<TrainCard> trainCards = new ArrayList<>();
+    HashMap<TrainCardType, Integer> playerTrainCards = new HashMap<>();
     List<Integer> points = new ArrayList<>();
     //map Constants
     private static final float DEFAULT_ZOOM = (float) 4.0;
@@ -101,12 +101,17 @@ public class GameActivity extends AppCompatActivity
     private boolean mClaimingRouteFlag;
     private TextView claimRoutePrompt;
     private Button showDestCards;
+    private Button showTrainCards;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        //initialize all train card types
+        for (TrainCardType type : TrainCardType.values()){
+            playerTrainCards.put(type, 0);
+        }
         showDestCards = findViewById(R.id.showDestCards);
         showDestCards.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,16 +123,18 @@ public class GameActivity extends AppCompatActivity
                 fragment.show(getSupportFragmentManager(), "ChooseDestinationCardsFragment");
             }
         });
-        // set up the RecyclerVie
-        /*RecyclerView recyclerView = findViewById(R.id.myInfoRecycle);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new GameAdapter(this, destCards);
-        recyclerView.setAdapter(adapter);*/
         // set up the RecyclerView
-        RecyclerView recyclerViewTrains = findViewById(R.id.myInfoRecycleTrains);
-        recyclerViewTrains.setLayoutManager(new LinearLayoutManager(this));
-        trainCardAdapter = new TrainCardAdapter(this, trainCards);
-        recyclerViewTrains.setAdapter(trainCardAdapter);
+        showTrainCards = findViewById(R.id.showTrainCards);
+        showTrainCards.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShowMyTrainCardsFragment fragment = new ShowMyTrainCardsFragment();
+                Bundle showDestinationCardsArgs = new Bundle();
+                showDestinationCardsArgs.putSerializable("cards", (Serializable) playerTrainCards);
+                fragment.setArguments(showDestinationCardsArgs);
+                fragment.show(getSupportFragmentManager(), "ShowTrainCards");
+            }
+        });
         // set up the RecyclerView
         RecyclerView recyclerPoints = findViewById(R.id.myInfoRecyclePoints);
         recyclerPoints.setLayoutManager(new LinearLayoutManager(this));
@@ -233,8 +240,16 @@ public class GameActivity extends AppCompatActivity
         destCards.addAll(nDestCards);
         trainCards.clear();
         trainCards.addAll(nTrainCards);
-        trainCardAdapter.notifyDataSetChanged();
-        //adapter.notifyDataSetChanged();
+        // reset all counts to zero
+        for( TrainCardType type : TrainCardType.values()){
+
+            playerTrainCards.put(type, 0);
+        }
+        for(TrainCard card : nTrainCards){
+            int current = playerTrainCards.get(card.getType());
+            current++;
+            playerTrainCards.put(card.getType(), current);
+        }
         points.clear();
         points.addAll(nPoints);
         pointsAdapter.notifyDataSetChanged();
