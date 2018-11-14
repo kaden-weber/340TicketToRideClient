@@ -21,6 +21,9 @@ public class DisplayRoutes {
                         locations.getLocation(city2), length, getSecondColor(color));
                 secondRoute.setSecondRoute(true);
                 mRoutes.add(secondRoute);
+            } else {
+                mRoutes.add(new DisplayRoute(locations.getLocation(city1),
+                        locations.getLocation(city2), length, color));
             }
 
         }
