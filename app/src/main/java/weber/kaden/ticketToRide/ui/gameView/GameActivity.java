@@ -428,7 +428,7 @@ public class GameActivity extends AppCompatActivity
                         displayRoute.getCity1().getCityName(), displayRoute.getCity2().getCityName());
                 if (doubleRoute != null){
                     Polyline doubleLine = (Polyline) mRouteLineMap.get(doubleRoute);
-                    line.setClickable(false);
+                    doubleLine.setClickable(false);
                 }
             }
 
