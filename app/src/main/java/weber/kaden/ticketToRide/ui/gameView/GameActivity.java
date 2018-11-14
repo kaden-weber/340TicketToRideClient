@@ -354,8 +354,14 @@ public class GameActivity extends AppCompatActivity
     }
 
     private void displayRouteCost(Polyline polyline) {
-        Toast toast = Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()) +
-                " " + getRouteType(polyline) + " cards.", Toast.LENGTH_SHORT);
+        Toast toast;
+        if( getRouteType(polyline) == TrainCardType.LOCOMOTIVE){
+            toast = Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()) +
+                    " " + "matching" + " cards.", Toast.LENGTH_SHORT);
+        } else {
+            toast = Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()) +
+                    " " + getRouteType(polyline) + " cards.", Toast.LENGTH_SHORT);
+        }
         View view = toast.getView();
         DisplayRoute route = (DisplayRoute) mLineRouteMap.get(polyline);
         String color = route.getColor();
