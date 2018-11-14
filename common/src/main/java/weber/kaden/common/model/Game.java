@@ -24,6 +24,7 @@ public class Game {
     private List<Route> claimedRoutes;
     private List<Route> unclaimedRoute;
     private int currentPlayer;
+    private GameState gameState;
 
     public Game() {
         this.players = new ArrayList<Player>();
@@ -396,5 +397,131 @@ public class Game {
 
     public boolean RemoveTrainCarsFromPlayer(String playerID) {
         return this.getPlayer(playerID).testRemoveTrainCars();
+    }
+
+    private abstract class GameState {
+        GameState() {
+
+        }
+
+        abstract boolean isSetup();
+        abstract boolean isStarted();
+        abstract boolean isFinalRound();
+        abstract boolean isGameOver();
+    }
+
+    private class GameNotStartedState extends GameState {
+
+        @Override
+        boolean isSetup() {
+            return false;
+        }
+
+        @Override
+        boolean isStarted() {
+            return false;
+        }
+
+        @Override
+        boolean isFinalRound() {
+            return false;
+        }
+
+        @Override
+        boolean isGameOver() {
+            return false;
+        }
+    }
+
+    private class GameSetupState extends GameState {
+
+        @Override
+        boolean isSetup() {
+            return true;
+        }
+
+        @Override
+        boolean isStarted() {
+            return false;
+        }
+
+        @Override
+        boolean isFinalRound() {
+            return false;
+        }
+
+        @Override
+        boolean isGameOver() {
+            return false;
+        }
+    }
+
+    private class GamePlayingState extends GameState {
+
+        @Override
+        boolean isSetup() {
+            return false;
+        }
+
+        @Override
+        boolean isStarted() {
+            return true;
+        }
+
+        @Override
+        boolean isFinalRound() {
+            return false;
+        }
+
+        @Override
+        boolean isGameOver() {
+            return false;
+        }
+    }
+
+    private class GameLastRoundState extends GameState {
+
+        @Override
+        boolean isSetup() {
+            return false;
+        }
+
+        @Override
+        boolean isStarted() {
+            return false;
+        }
+
+        @Override
+        boolean isFinalRound() {
+            return true;
+        }
+
+        @Override
+        boolean isGameOver() {
+            return false;
+        }
+    }
+
+    private class GameOverState extends GameState {
+
+        @Override
+        boolean isSetup() {
+            return false;
+        }
+
+        @Override
+        boolean isStarted() {
+            return false;
+        }
+
+        @Override
+        boolean isFinalRound() {
+            return false;
+        }
+
+        @Override
+        boolean isGameOver() {
+            return true;
+        }
     }
 }
