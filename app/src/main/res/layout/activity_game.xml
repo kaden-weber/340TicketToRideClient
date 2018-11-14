@@ -52,16 +52,11 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             android:background="#FFF">
-        <LinearLayout
-            android:id="@+id/myInfoBanner"
-            android:layout_width="100dp"
-            android:layout_height="55dp"
-            android:layout_alignParentStart="true">
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/myInfoRecycle"
+            <Button
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
+                android:layout_height="50dp"
+                android:text="Dest Cards"
+                android:id="@+id/showDestCards"/>
         <LinearLayout
             android:id="@+id/myInfoBannerTrains"
             android:layout_width="100dp"

@@ -41,6 +41,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder>{
         holder.toggleDest.setTextOn(destinationText);
         holder.toggleDest.setTextOff(destinationText);
         holder.toggleDest.setText(destinationText);
+        holder.toggleDest.setEnabled(false);
     }
 
     // total number of rows
