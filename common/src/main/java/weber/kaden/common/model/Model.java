@@ -221,7 +221,7 @@ public class Model extends Observable {
     }
 
     public boolean isCurrentPlayerTheActivePlayer() {
-        return (this.currentUser.equals(currentGame.getCurrentPlayer().getID()));
+        return (this.currentUser.equals(currentGame.getCurrentPlayer()));
     }
 
     public List<DestinationCard> getDealtDestinationCards() {

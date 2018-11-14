@@ -26,16 +26,18 @@ public class ClaimRouteFragment extends DialogFragment {
     private String city2;
     private TrainCardType type;
     private Integer cost;
+    private boolean isSecondRoute;
 
     private OnFragmentInteractionListener mListener;
 
     public ClaimRouteFragment() {}
 
-    public void setParams(String city1, String city2, TrainCardType type, Integer cost) {
+    public void setParams(String city1, String city2, TrainCardType type, Integer cost, boolean isSecondRoute) {
         this.city1 = city1;
         this.city2 = city2;
         this.type = type;
         this.cost = cost;
+        this.isSecondRoute = isSecondRoute;
     }
 
     @Override
@@ -46,7 +48,7 @@ public class ClaimRouteFragment extends DialogFragment {
         presenter = new ClaimRoutePresenter(this, client);
         View view = inflater.inflate(R.layout.fragment_dialog_claim_route, container, false);
         TextView claimRoutePrompt = view.findViewById(R.id.claim_route_fragment_text);
-        String prompt = "Claim route from " + city1 + " to " + city2 + "?";
+        String prompt = "Claim " + type + " route from " + city1 + " to " + city2 + "?";
         claimRoutePrompt.setText(prompt);
         actionCancel = view.findViewById(R.id.claim_route_cancel_button);
         actionConfirm = view.findViewById(R.id.claim_route_confirm_button);
@@ -98,7 +100,7 @@ public class ClaimRouteFragment extends DialogFragment {
         @Override
         protected Boolean doInBackground(Void... voids) {
             try {
-                presenter.claimRoute(city1, city2, type, cost);
+                presenter.claimRoute(city1, city2, type, cost, isSecondRoute);
             } catch (Exception e) {
                 errorMessage = e.getMessage();
                 return false;
