@@ -244,14 +244,13 @@ public class GameActivity extends AppCompatActivity
         //add routes TODO: make double routes look better
         mRoutes = new DisplayRoutes(mLocations);
         for ( DisplayRoute route : mRoutes.getRoutes()){
-            String routeColor = route.getColor();
             //check for double route
-            if(routeColor.contains(",")){
+            if(route.isSecondRoute()){
                 createDoubleRoute(googleMap, route);
-                route.setColor(getFirstColor(routeColor));
+            } else {
+                //add regular route
+                addRoute(googleMap, route, route.getCity1().getCoords(), route.getCity2().getCoords());
             }
-            //add regular route
-            addRoute(googleMap, route, route.getCity1().getCoords(), route.getCity2().getCoords());
         }
 
         //make routes clickable
@@ -270,17 +269,11 @@ public class GameActivity extends AppCompatActivity
         mRouteLineMap.put(route, line);
     }
 
-    private String getFirstColor(String routeColor) {
-        return routeColor.substring(0, routeColor.indexOf(","));
-    }
-
     private void createDoubleRoute(GoogleMap googleMap, DisplayRoute route) {
-        route.setColor(getSecondColor(route.getColor()));
         double slope = slope(route.getCity1(), route.getCity2());
         LatLng newCity1 = offsetCoords(route.getCity1().getCoords(), slope);
         LatLng newCity2 = offsetCoords(route.getCity2().getCoords(), slope);
         addRoute(googleMap, route, newCity1, newCity2);
-
     }
 
     private LatLng offsetCoords(LatLng input, double slope){
@@ -295,9 +288,6 @@ public class GameActivity extends AppCompatActivity
     private double slope(Location location1, Location location2){
         return (location2.getCoords().latitude - location1.getCoords().latitude)
                / (location2.getCoords().longitude - location1.getCoords().longitude);
-    }
-    private String getSecondColor(String routeColor) {
-        return routeColor.substring(routeColor.indexOf(" ") + 1);
     }
 
     private int getRouteColor(String color) {

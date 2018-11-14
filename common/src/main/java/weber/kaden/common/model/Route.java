@@ -8,6 +8,7 @@ public class Route {
     private Integer score;
     private Integer cost;
     private TrainCardType type;
+    private boolean isSecondRoute;
 
     public Route(City city1, City city2, Integer cost, TrainCardType type) {
         this.city1 = city1;
@@ -56,10 +57,6 @@ public class Route {
 
     public Integer getScore() {
         return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
     }
 
     public Integer getCost() {
