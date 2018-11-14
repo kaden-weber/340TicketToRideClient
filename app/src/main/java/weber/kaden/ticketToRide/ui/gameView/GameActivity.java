@@ -98,6 +98,7 @@ public class GameActivity extends AppCompatActivity
     private GamePresenter mPresenter = new GamePresenter(this, new ClientFacade());
     private DrawerLayout mDrawerLayout;
     private boolean mClaimingRouteFlag;
+    private TextView claimRoutePrompt;
 
 
     @Override
@@ -130,6 +131,10 @@ public class GameActivity extends AppCompatActivity
         if (actionBar != null) {
             actionBar.hide();
         }
+
+        claimRoutePrompt = findViewById(R.id.claim_route_prompt);
+        if (mClaimingRouteFlag) claimRoutePrompt.setVisibility(View.VISIBLE);
+        else claimRoutePrompt.setVisibility(View.GONE);
 
         //add map
         SupportMapFragment mapFragment =
@@ -165,6 +170,7 @@ public class GameActivity extends AppCompatActivity
                     case R.id.turn_menu_claim_route:
                         //Claim route is different since we're not opening up a dialog, we're using the map
                         mClaimingRouteFlag = true;
+                        claimRoutePrompt.setVisibility(View.VISIBLE);
                         break;
                     case R.id.turn_menu_see_other_players:
                         DialogFragment seeOtherPlayersFragment = new SeeOtherPlayersFragment();
@@ -196,6 +202,17 @@ public class GameActivity extends AppCompatActivity
         //init route list
         mLineRouteMap = new HashMap();
         mRouteLineMap = new HashMap();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if (mClaimingRouteFlag) claimRoutePrompt.setVisibility(View.VISIBLE);
+        else claimRoutePrompt.setVisibility(View.GONE);
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
     }
 
     public void setNewValues(List<DestinationCard> nDestCards, List<TrainCard> nTrainCards, List<Integer> nPoints){
@@ -326,6 +343,8 @@ public class GameActivity extends AppCompatActivity
                 DialogFragment fragment = new ClaimRouteFragment();
                 ((ClaimRouteFragment) fragment).setParams(city1, city2, getRouteType(polyline), (Integer) polyline.getTag());
                 fragment.show(getSupportFragmentManager(), "ClaimRouteFragment");
+                mClaimingRouteFlag = false;
+                claimRoutePrompt.setVisibility(View.GONE);
             } else {
                 displayRouteCost(polyline);
             }
@@ -335,8 +354,6 @@ public class GameActivity extends AppCompatActivity
     }
 
     private void displayRouteCost(Polyline polyline) {
-        //Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()),
-        //Toast.LENGTH_SHORT).show();
         Toast toast = Toast.makeText(this, "Cost: " + String.valueOf(polyline.getTag()) +
                 " " + getRouteType(polyline) + " cards.", Toast.LENGTH_SHORT);
         View view = toast.getView();

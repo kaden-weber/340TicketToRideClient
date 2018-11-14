@@ -45,7 +45,9 @@ public class ClaimRouteFragment extends DialogFragment {
         client = new ClientFacade();
         presenter = new ClaimRoutePresenter(this, client);
         View view = inflater.inflate(R.layout.fragment_dialog_claim_route, container, false);
-        //TextView cityNames
+        TextView claimRoutePrompt = view.findViewById(R.id.claim_route_fragment_text);
+        String prompt = "Claim route from " + city1 + " to " + city2 + "?";
+        claimRoutePrompt.setText(prompt);
         actionCancel = view.findViewById(R.id.claim_route_cancel_button);
         actionConfirm = view.findViewById(R.id.claim_route_confirm_button);
 

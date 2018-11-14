@@ -17,7 +17,7 @@ public class DrawDestinationCardsCommand implements Command {
 
     public DrawDestinationCardsCommand(List<String> params, List<DestinationCard> cardsKept, List<DestinationCard> cardsDiscarded) {
         this.gameID = params.get(0);
-        this.playerID = params.get(0);
+        this.playerID = params.get(1);
         this.cardsKept = cardsKept;
         this.cardsDiscarded = cardsDiscarded;
     }

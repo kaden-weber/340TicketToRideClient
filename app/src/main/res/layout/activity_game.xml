@@ -17,7 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
-            android:layout_height="match_parent">
 
             <fragment
                 android:id="@+id/map"
@@ -27,6 +26,25 @@
                 android:orientation="horizontal">
 
             </fragment>
+
+            <LinearLayout
+                android:id="@+id/validity"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="vertical"
+                android:layout_gravity="top">
+                <TextView
+                    android:id="@+id/claim_route_prompt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/claim_route_flag_text"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:padding="5dp"
+                    android:background="#CC666666"
+                    android:textColor="@android:color/primary_text_dark"
+                    android:layout_gravity="end" />
+            </LinearLayout>
 
         </FrameLayout>
         <RelativeLayout
