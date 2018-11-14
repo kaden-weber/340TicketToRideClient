@@ -236,4 +236,8 @@ public class ClientFacade {
         Results results = ServerProxy.getInstance().sendCommand(commandData);
         return (List<CommandData>)results.getData();
     }
+
+    public String getCurrentTurnPlayer() {
+        return Model.getInstance().getCurrentGame().getCurrentPlayer();
+    }
 }

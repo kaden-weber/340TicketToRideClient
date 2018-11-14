@@ -322,8 +322,8 @@ public class Game {
         return this.getPlayer(playerID).getRoutesClaimed();
     }
 
-    public Player getCurrentPlayer() {
-        return this.players.get(currentPlayer);
+    public String getCurrentPlayer() {
+        return this.players.get(currentPlayer).getID();
     }
 
     public boolean finishTurn() {
