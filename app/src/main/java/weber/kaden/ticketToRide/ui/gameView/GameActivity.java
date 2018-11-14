@@ -354,7 +354,8 @@ public class GameActivity extends AppCompatActivity
         if(mPresenter.routeClaimable((int)polyline.getTag(), getRouteType(polyline))) {
             if(mClaimingRouteFlag){
                 DialogFragment fragment = new ClaimRouteFragment();
-                ((ClaimRouteFragment) fragment).setParams(city1, city2, getRouteType(polyline), (Integer) polyline.getTag());
+                ((ClaimRouteFragment) fragment).setParams(city1, city2, getRouteType(polyline),
+                        (Integer) polyline.getTag(), ((DisplayRoute) mLineRouteMap.get(polyline)).isSecondRoute());
                 fragment.show(getSupportFragmentManager(), "ClaimRouteFragment");
                 mClaimingRouteFlag = false;
                 claimRoutePrompt.setVisibility(View.GONE);

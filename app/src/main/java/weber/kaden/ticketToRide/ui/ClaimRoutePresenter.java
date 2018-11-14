@@ -17,7 +17,7 @@ public class ClaimRoutePresenter {
         this.model = Model.getInstance();
     }
 
-    public void claimRoute(String city1, String city2, TrainCardType type, Integer cost) {
+    public void claimRoute(String city1, String city2, TrainCardType type, Integer cost, boolean isSecondRoute) {
         try {
             City start = City.valueOf(toEnumValue(city1));
             City end = City.valueOf(toEnumValue(city2));
