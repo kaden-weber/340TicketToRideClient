@@ -27,56 +27,10 @@ public class DisplayRoutes {
 
     }
 
-//    //add routes TODO: make double routes look better
-//    mRoutes = new DisplayRoutes(mLocations);
-//        for ( DisplayRoute route : mRoutes.getRoutes()){
-//        String routeColor = route.getColor();
-//        //check for double route
-//        if(routeColor.contains(",")){
-//            createDoubleRoute(googleMap, route);
-//            route.setColor(getFirstColor(routeColor));
-//        }
-//        //add regular route
-//        addRoute(googleMap, route, route.getCity1().getCoords(), route.getCity2().getCoords());
-//    }
-//private void addRoute(GoogleMap googleMap, DisplayRoute route, LatLng loc1, LatLng loc2){
-//    Polyline line = googleMap.addPolyline(new PolylineOptions().clickable(true)
-//            .add(loc1, loc2)
-//            .width(ROUTE_WIDTH)
-//            .geodesic(true)
-//            .pattern(unclaimedRoutePattern)
-//            .color(getRouteColor(route.getColor())));
-//    line.setTag(route.getLength());
-//    mLineRouteMap.put(line, route);
-//    mRouteLineMap.put(route, line);
-//}
-//
     private String getFirstColor(String routeColor) {
         return routeColor.substring(0, routeColor.indexOf(","));
     }
-//
-//    private void createDoubleRoute(GoogleMap googleMap, DisplayRoute route) {
-//        route.setColor(getSecondColor(route.getColor()));
-//        double slope = slope(route.getCity1(), route.getCity2());
-//        LatLng newCity1 = offsetCoords(route.getCity1().getCoords(), slope);
-//        LatLng newCity2 = offsetCoords(route.getCity2().getCoords(), slope);
-//        addRoute(googleMap, route, newCity1, newCity2);
-//
-//    }
-//
-//    private LatLng offsetCoords(LatLng input, double slope){
-//        double perpendicularSlope = -1/slope;
-//        double theta = Math.atan(perpendicularSlope);
-//        double deltaX = SECOND_ROUTE_OFFSET * Math.cos(theta);
-//        double deltaY = SECOND_ROUTE_OFFSET * Math.sin(theta);
-//        double newX = input.longitude + deltaX;
-//        double newY = input.latitude + deltaY;
-//        return new LatLng(newY, newX);
-//    }
-//    private double slope(Location location1, Location location2){
-//        return (location2.getCoords().latitude - location1.getCoords().latitude)
-//                / (location2.getCoords().longitude - location1.getCoords().longitude);
-//    }
+
     private String getSecondColor(String routeColor) {
         return routeColor.substring(routeColor.indexOf(" ") + 1);
     }
