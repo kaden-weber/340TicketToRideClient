@@ -229,15 +229,11 @@ public class ClientFacade {
        Results results = ServerProxy.getInstance().sendCommand(commandData);
     }
 
-    public List<CommandData> getGameHistory() {
-        List<String> params = new ArrayList<>();
-        params.add(Model.getInstance().getCurrentGame().getID());
-        CommandData commandData = new CommandData(params, CommandType.POLLCOMMANDS);
-        Results results = ServerProxy.getInstance().sendCommand(commandData);
-        return (List<CommandData>)results.getData();
-    }
-
     public String getCurrentTurnPlayer() {
         return Model.getInstance().getCurrentGame().getCurrentPlayer();
+    }
+
+    public List<CommandData> getGameHistory() {
+        return Model.getInstance().getGameHistory(Model.getInstance().getCurrentGame().getID());
     }
 }

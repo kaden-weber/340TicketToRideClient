@@ -8,6 +8,8 @@ import java.lang.*;
 import java.util.Objects;
 import java.util.UUID;
 
+import weber.kaden.common.command.CommandData.CommandData;
+
 public class Game {
     private List<Player> players;
     private String ID;
@@ -23,6 +25,7 @@ public class Game {
     private List<Route> unclaimedRoutes;
     private int currentPlayer;
     private GameState gameState;
+    private List<CommandData> gameHistory;
 
     public Game() {
         this.players = new ArrayList<Player>();
@@ -416,6 +419,17 @@ public class Game {
                 gameState = new GameOverState();
                 break;
         }
+    }
+
+    public void addHistory(CommandData history) {
+        if (this.gameHistory == null) {
+            this.gameHistory = new ArrayList<CommandData>();
+        }
+        this.gameHistory.add(history);
+    }
+
+    public List<CommandData> getGameHistory() {
+        return gameHistory;
     }
 
     private class GameState {

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import weber.kaden.common.command.CommandData.CommandData;
+
 public class Model extends Observable {
     private final static Model model = new Model();
     private List<Player> players;
@@ -231,5 +233,13 @@ public class Model extends Observable {
 
     public int getNumberOfPlayersInCurrentGame() {
         return this.currentGame.getPlayers().size();
+    }
+
+    public void addGameHistoryToGame(String gameID, CommandData history){
+        this.getGame(gameID).addHistory(history);
+    }
+
+    public List<CommandData> getGameHistory(String gameID) {
+        return this.getGame(gameID).getGameHistory();
     }
 }

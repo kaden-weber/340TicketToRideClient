@@ -43,7 +43,6 @@ public class GameHistoryFragment extends DialogFragment {
         mInflater = inflater;
         ((TextView) view.findViewById(R.id.see_other_players_header)).setText("Game History");
         mGameHistoryPresenter = new GameHistoryPresenter(this, new ClientFacade());
-        mGameHistoryPresenter.getCommandsTask();
         mActionCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
