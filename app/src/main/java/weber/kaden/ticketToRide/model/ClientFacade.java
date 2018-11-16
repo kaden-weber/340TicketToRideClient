@@ -17,6 +17,7 @@ import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Model;
 import weber.kaden.common.model.Player;
 import weber.kaden.common.model.Route;
+import weber.kaden.common.model.TrainCard;
 import weber.kaden.common.model.TrainCardType;
 import weber.kaden.ticketToRide.serverProxy.ServerProxy;
 import java.util.UUID;
@@ -174,9 +175,9 @@ public class ClientFacade {
         return Model.getInstance().PlayerCanClaimRoute(number, type);
     }
 
-    public void claimRoute(String gameId, String userId, Route route) throws Exception {
+    public void claimRoute(String gameId, String userId, Route route, TrainCardType cardType) throws Exception {
         List<String> params = new ArrayList<>((Arrays.asList(gameId, userId)));
-        CommandData commandData = new CommandDataClaimRoute(params, CommandType.CLAIMROUTE, route);
+        CommandData commandData = new CommandDataClaimRoute(params, CommandType.CLAIMROUTE, route, cardType);
         Results results = ServerProxy.getInstance().sendCommand(commandData);
         if(!results.success()){
             throw new Exception(results.getErrorInfo());
@@ -235,5 +236,9 @@ public class ClientFacade {
 
     public List<CommandData> getGameHistory() {
         return Model.getInstance().getGameHistory(Model.getInstance().getCurrentGame().getID());
+    }
+
+    public List<TrainCard> getCurrentPlayerTrainCardHand() {
+        return Model.getInstance().getPlayerTrainCardHand(Model.getInstance().getCurrentUser());
     }
 }
