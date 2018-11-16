@@ -1,8 +1,11 @@
 package weber.kaden.common.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+
+import weber.kaden.common.command.Command;
 
 public class Player {
     private String ID;
@@ -143,23 +146,6 @@ public class Player {
             return false;
         }
         if(this.routesClaimed.add(routeClaimed)) {
-            int numberOfCards = routeClaimed.getCost();
-            for (int i = 0; i < this.trainCards.size(); i++) {
-                if (numberOfCards > 0 && this.trainCards.get(i).getType().equals(routeClaimed.getType())) {
-                    this.trainCards.remove(i);
-                    numberOfCards--;
-                    i--;
-                }
-            }
-            if (numberOfCards > 0) {
-                for (int i = 0; i < this.trainCards.size(); i++) {
-                    if (numberOfCards > 0 && this.trainCards.get(i).getType().equals(TrainCardType.LOCOMOTIVE)) {
-                        this.trainCards.remove(i);
-                        numberOfCards--;
-                        i--;
-                    }
-                }
-            }
             this.trainPieces -= routeClaimed.getCost();
             this.score += routeClaimed.getScore();
             return true;
@@ -181,6 +167,9 @@ public class Player {
     }
 
     public boolean hasTrainCards(int number, TrainCardType type) {
+        if (this.trainPieces < number) {
+            return false;
+        }
         if (type.equals(TrainCardType.GRAY)) {
             for (TrainCardType localType : TrainCardType.values()) {
                 int num = 0;
@@ -215,5 +204,31 @@ public class Player {
     public boolean testRemoveTrainCars() {
         this.trainPieces -= 5;
         return true;
+    }
+
+    public List<TrainCard> useTrainCards(Route routeClaimed, TrainCardType cardType) {
+        int num = routeClaimed.getCost();
+        List<TrainCard> toReturn = new ArrayList<TrainCard>();
+        for (int i = 0; i < this.trainCards.size(); i++) {
+            if (num > 0) {
+                if (this.trainCards.get(i).getType().equals(cardType)) {
+                    toReturn.add(this.trainCards.remove(i));
+                    i--;
+                    num--;
+                }
+            }
+        }
+        if (num > 0) {
+            for (int i = 0; i < this.trainCards.size(); i++) {
+                if (num > 0) {
+                    if (this.trainCards.get(i).getType().equals(TrainCardType.LOCOMOTIVE)) {
+                        toReturn.add(this.trainCards.remove(i));
+                        i--;
+                        num--;
+                    }
+                }
+            }
+        }
+        return toReturn;
     }
 }

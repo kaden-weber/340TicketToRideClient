@@ -242,4 +242,8 @@ public class Model extends Observable {
     public List<CommandData> getGameHistory(String gameID) {
         return this.getGame(gameID).getGameHistory();
     }
+
+    public List<TrainCard> getPlayerTrainCardHand(String currentUser) {
+        return this.currentGame.getPlayer(currentUser).getTrainCards();
+    }
 }
