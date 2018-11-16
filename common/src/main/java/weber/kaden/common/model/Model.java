@@ -190,6 +190,7 @@ public class Model extends Observable {
                     }
                 }
                 currentGame = game;
+                currentGame.updateGameState();
                 setChanged();
                 notifyObservers(game);
                 return game;

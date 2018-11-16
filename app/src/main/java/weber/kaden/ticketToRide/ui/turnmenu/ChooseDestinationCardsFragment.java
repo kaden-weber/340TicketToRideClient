@@ -22,6 +22,7 @@ import weber.kaden.common.model.DestinationCard;
 import weber.kaden.common.model.Model;
 import weber.kaden.ticketToRide.R;
 import weber.kaden.ticketToRide.model.ClientFacade;
+import weber.kaden.ticketToRide.ui.GameSetupActivity;
 import weber.kaden.ticketToRide.ui.gameView.GameActivity;
 import weber.kaden.ticketToRide.ui.tools.ConstantsDisplayConverter;
 
@@ -181,8 +182,8 @@ public class ChooseDestinationCardsFragment extends DialogFragment {
                 getDialog().dismiss();
 
                 if (isSetup) {
-                    Intent intent = new Intent(getActivity(), GameActivity.class);
-                    startActivity(intent);
+                    GameSetupActivity setupActivity = (GameSetupActivity) getActivity();
+                    setupActivity.startGameActivity();
                 }
             }else {
                 Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();

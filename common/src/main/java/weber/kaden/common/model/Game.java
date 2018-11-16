@@ -233,6 +233,8 @@ public class Game {
     }
 
     public boolean PlayerDrawDestinationCards(String playerID, List<DestinationCard> cards) {
+        this.destinationCardDeck.removeAll(cards);
+        boolean toReturn = this.getPlayer(playerID).DrawDestinationCards(cards);
         if (!isStarted()) {
             boolean startGame = true;
             for (int i = 0; i < this.players.size(); i++) {
@@ -240,12 +242,11 @@ public class Game {
                     startGame = false;
                 }
             }
-            if (gameState.isSetup()) {
+            if (startGame) {
                 this.start();
             }
         }
-        this.destinationCardDeck.removeAll(cards);
-        return this.getPlayer(playerID).DrawDestinationCards(cards);
+        return toReturn;
     }
 
     public List<DestinationCard> getTopOfDestinationCardDeck() {
@@ -397,7 +398,33 @@ public class Game {
         return this.getPlayer(playerID).testRemoveTrainCars();
     }
 
+    public void updateGameState() {
+        switch (gameState.type) {
+            case "GameNotStartedState":
+                gameState = new GameNotStartedState();
+                break;
+            case "GameSetupState":
+                gameState = new GameSetupState();
+                break;
+            case "GamePlayingState":
+                gameState = new GamePlayingState();
+                break;
+            case "GameLastRoundState":
+                gameState = new GameLastRoundState();
+                break;
+            case "GameOverState":
+                gameState = new GameOverState();
+                break;
+        }
+    }
+
     private class GameState {
+        private String type;
+
+        GameState(String type) {
+            this.type = type;
+        }
+
         boolean isSetup() {
         	return false;
         }
@@ -413,10 +440,16 @@ public class Game {
     }
 
     private class GameNotStartedState extends GameState {
-
+        GameNotStartedState() {
+            super("GameNotStartedState");
+        }
     }
 
     private class GameSetupState extends GameState {
+        GameSetupState() {
+            super("GameSetupState");
+        }
+
         @Override
         boolean isSetup() {
             return true;
@@ -424,6 +457,10 @@ public class Game {
     }
 
     private class GamePlayingState extends GameState {
+        GamePlayingState() {
+            super("GamePlayingState");
+        }
+
         @Override
         boolean isStarted() {
             return true;
@@ -431,6 +468,10 @@ public class Game {
     }
 
     private class GameLastRoundState extends GameState {
+        GameLastRoundState() {
+            super("GameLastRoundState");
+        }
+
         @Override
         boolean isFinalRound() {
             return true;
@@ -438,6 +479,10 @@ public class Game {
     }
 
     private class GameOverState extends GameState {
+        GameOverState() {
+            super("GameOverState");
+        }
+
         @Override
         boolean isGameOver() {
             return true;
