@@ -74,6 +74,7 @@ public class GameActivity extends AppCompatActivity
     List<TrainCard> trainCards = new ArrayList<>();
     HashMap<TrainCardType, Integer> playerTrainCards = new HashMap<>();
     List<Integer> points = new ArrayList<>();
+    ClientFacade client = new ClientFacade();
     //map Constants
     private static final float DEFAULT_ZOOM = (float) 4.0;
     private static final float MIN_ZOOM = (float) 4.0;
@@ -173,25 +174,40 @@ public class GameActivity extends AppCompatActivity
 
                 switch (item.getItemId()) {
                     case R.id.turn_menu_destination_cards:
-                        DestinationCardsTask destinationCardsTask = new DestinationCardsTask();
-                        destinationCardsTask.execute();
+                        if (client.getCurrentTurnPlayer().equals(client.getCurrentUserID())){
+                            DestinationCardsTask destinationCardsTask = new DestinationCardsTask();
+                            destinationCardsTask.execute();
+                        } else{
+                            Toast.makeText(instance, "Wait for your turn!", Toast.LENGTH_SHORT).show();
+                        }
+
                         break;
                     case R.id.turn_menu_train_cards:
-                        ChooseTrainCardsFragment chooseTrainCardsFragment = new ChooseTrainCardsFragment();
-                        ChooseTrainCardsPresenter trainCardsPresenter = new ChooseTrainCardsPresenter(chooseTrainCardsFragment, new ClientFacade());
-                        trainCardsPresenter.removeAsObserver();
+                        if (client.getCurrentTurnPlayer().equals(client.getCurrentUserID())) {
+                            ChooseTrainCardsFragment chooseTrainCardsFragment = new ChooseTrainCardsFragment();
+                            ChooseTrainCardsPresenter trainCardsPresenter = new ChooseTrainCardsPresenter(chooseTrainCardsFragment, new ClientFacade());
+                            trainCardsPresenter.removeAsObserver();
 
-                        Bundle chooseTrainCardArgs = new Bundle();
-                        chooseTrainCardArgs.putSerializable("faceUpCards", (Serializable) trainCardsPresenter.getFaceUpTrainCards());
-                        chooseTrainCardsFragment.setArguments(chooseTrainCardArgs);
+                            Bundle chooseTrainCardArgs = new Bundle();
+                            chooseTrainCardArgs.putSerializable("faceUpCards", (Serializable) trainCardsPresenter.getFaceUpTrainCards());
+                            chooseTrainCardsFragment.setArguments(chooseTrainCardArgs);
 
-                        chooseTrainCardsFragment.show(getSupportFragmentManager(), "ChooseTrainCardsFragment");
+                            chooseTrainCardsFragment.show(getSupportFragmentManager(), "ChooseTrainCardsFragment");
+                        } else{
+                            Toast.makeText(instance, "Wait for your turn!", Toast.LENGTH_SHORT).show();
+                        }
                         break;
                     case R.id.turn_menu_claim_route:
-                        //Claim route is different since we're not opening up a dialog, we're using the map
-                        mClaimingRouteFlag = true;
-                        claimRoutePrompt.setVisibility(View.VISIBLE);
+                        if (client.getCurrentTurnPlayer().equals(client.getCurrentUserID())) {
+                            //Claim route is different since we're not opening up a dialog, we're using the map
+                            mClaimingRouteFlag = true;
+                            claimRoutePrompt.setVisibility(View.VISIBLE);
+
+                        } else{
+                            Toast.makeText(instance, "Wait for your turn!", Toast.LENGTH_SHORT).show();
+                        }
                         break;
+
                     case R.id.turn_menu_see_other_players:
                         DialogFragment seeOtherPlayersFragment = new SeeOtherPlayersFragment();
                         seeOtherPlayersFragment.show(getSupportFragmentManager(), "ChooseTrainCardsFragment");
