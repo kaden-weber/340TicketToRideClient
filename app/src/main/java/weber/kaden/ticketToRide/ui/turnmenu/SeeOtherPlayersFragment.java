@@ -110,7 +110,7 @@ public class SeeOtherPlayersFragment extends DialogFragment {
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             String playerName;
-            if(mPlayers.get(position).getID().equals(new ClientFacade().getCurrentGame().getCurrentPlayer())){
+            if(mPlayers.get(position).getID().equals(new ClientFacade().getCurrentTurnPlayer())){
                 playerName = "->Player: " + mPlayers.get(position).getID();
             } else {
                 playerName = "Player: " + mPlayers.get(position).getID();
