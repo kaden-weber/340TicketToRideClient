@@ -22,7 +22,7 @@ public class ClaimRoutePresenter {
             Route route = new Route(start, end, cost, type, isSecondRoute);
             String gameId = Model.getInstance().getCurrentGame().getID();
             String userId = Model.getInstance().getCurrentUser();
-            client.claimRoute(gameId, userId, route);
+            client.claimRoute(gameId, userId, route, type);
         } catch (Exception e) {
             view.printError(e.getMessage());
         }

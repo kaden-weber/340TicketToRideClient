@@ -142,7 +142,7 @@ public class GameActivity extends AppCompatActivity
         // end RecyclerView
         // Hide both the navigation bar and the status bar.
         View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
         decorView.setSystemUiVisibility(uiOptions);
@@ -228,10 +228,6 @@ public class GameActivity extends AppCompatActivity
         super.onResume();
         if (mClaimingRouteFlag) claimRoutePrompt.setVisibility(View.VISIBLE);
         else claimRoutePrompt.setVisibility(View.GONE);
-        ActionBar actionBar = getActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
     }
 
     public void setNewValues(List<DestinationCard> nDestCards, List<TrainCard> nTrainCards, List<Integer> nPoints){

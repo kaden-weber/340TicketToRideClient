@@ -8,6 +8,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ import weber.kaden.common.model.Model;
 import weber.kaden.ticketToRide.R;
 import weber.kaden.ticketToRide.model.ClientFacade;
 import weber.kaden.ticketToRide.ui.setup.GameSetupActivity;
+import weber.kaden.ticketToRide.ui.gameView.GameActivity;
 import weber.kaden.ticketToRide.ui.tools.ConstantsDisplayConverter;
 
 public class ChooseDestinationCardsFragment extends DialogFragment {
@@ -35,6 +37,7 @@ public class ChooseDestinationCardsFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dialog_choose_destination_cards, container, false);
+        this.getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         isSetup = Model.getInstance().getCurrentGame().isSetup();
         setCancelable(false);
         mActionCancel = view.findViewById(R.id.choose_destination_cancel);
@@ -145,6 +148,8 @@ public class ChooseDestinationCardsFragment extends DialogFragment {
 
         return view;
     }
+
+
 
     public class SendChosenCards extends AsyncTask<Void, Void, Boolean> {
 

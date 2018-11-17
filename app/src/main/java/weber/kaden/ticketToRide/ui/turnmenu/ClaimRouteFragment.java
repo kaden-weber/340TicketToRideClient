@@ -7,6 +7,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +47,7 @@ public class ClaimRouteFragment extends DialogFragment {
         client = new ClientFacade();
         presenter = new ClaimRoutePresenter(this, client);
         View view = inflater.inflate(R.layout.fragment_dialog_claim_route, container, false);
+        this.getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         TextView claimRoutePrompt = view.findViewById(R.id.claim_route_fragment_text);
         String prompt = "Claim " + type + " route from " + city1 + " to " + city2 + "?";
         claimRoutePrompt.setText(prompt);
