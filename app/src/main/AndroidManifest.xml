@@ -34,7 +34,7 @@
         </activity>
         <activity android:name="weber.kaden.ticketToRide.ui.gameList.GameListActivity" />
         <activity android:name="weber.kaden.ticketToRide.ui.gameLobby.GameLobbyActivity" />
-        <activity android:name="weber.kaden.ticketToRide.ui.GameSetupActivity" />
+        <activity android:name="weber.kaden.ticketToRide.ui.setup.GameSetupActivity" />
         <activity android:name="weber.kaden.ticketToRide.ui.gameView.GameActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" >

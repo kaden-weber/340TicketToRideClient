@@ -1,6 +1,5 @@
-package weber.kaden.ticketToRide.ui;
+package weber.kaden.ticketToRide.ui.turnmenu;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -63,8 +62,13 @@ public class ClaimRouteFragment extends DialogFragment {
         actionConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClaimRouteTask task = new ClaimRouteTask();
-                task.execute((Void) null);
+                if(type.equals(TrainCardType.GRAY)){
+                    DialogFragment fragment = new ChooseRouteTypeFragment();
+
+                }else {
+                    ClaimRouteTask task = new ClaimRouteTask();
+                    task.execute((Void) null);
+                }
             }
         });
 

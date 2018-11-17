@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.ArrayMap;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -51,8 +50,8 @@ import weber.kaden.common.model.TrainCard;
 import weber.kaden.common.model.TrainCardType;
 import weber.kaden.ticketToRide.R;
 import weber.kaden.ticketToRide.model.ClientFacade;
-import weber.kaden.ticketToRide.ui.ChatFragment;
-import weber.kaden.ticketToRide.ui.ClaimRouteFragment;
+import weber.kaden.ticketToRide.ui.chat.ChatFragment;
+import weber.kaden.ticketToRide.ui.turnmenu.ClaimRouteFragment;
 import weber.kaden.ticketToRide.ui.map.DisplayRoute;
 import weber.kaden.ticketToRide.ui.map.DisplayRoutes;
 import weber.kaden.ticketToRide.ui.map.Location;
@@ -242,7 +241,6 @@ public class GameActivity extends AppCompatActivity
         trainCards.addAll(nTrainCards);
         // reset all counts to zero
         for( TrainCardType type : TrainCardType.values()){
-
             playerTrainCards.put(type, 0);
         }
         for(TrainCard card : nTrainCards){
@@ -285,7 +283,6 @@ public class GameActivity extends AppCompatActivity
                     .title(location.getCityName())
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.steamtrain_dark)));
         }
-
         //add routes TODO: make double routes look better
         mRoutes = new DisplayRoutes(mLocations);
         for ( DisplayRoute route : mRoutes.getRoutes()){
@@ -297,7 +294,6 @@ public class GameActivity extends AppCompatActivity
                 addRoute(googleMap, route, route.getCity1().getCoords(), route.getCity2().getCoords());
             }
         }
-
         //make routes clickable
         googleMap.setOnPolylineClickListener(this);
 
@@ -313,14 +309,12 @@ public class GameActivity extends AppCompatActivity
         mLineRouteMap.put(line, route);
         mRouteLineMap.put(route, line);
     }
-
     private void createDoubleRoute(GoogleMap googleMap, DisplayRoute route) {
         double slope = slope(route.getCity1(), route.getCity2());
         LatLng newCity1 = offsetCoords(route.getCity1().getCoords(), slope);
         LatLng newCity2 = offsetCoords(route.getCity2().getCoords(), slope);
         addRoute(googleMap, route, newCity1, newCity2);
     }
-
     private LatLng offsetCoords(LatLng input, double slope){
         double perpendicularSlope = -1/slope;
         double theta = Math.atan(perpendicularSlope);
@@ -334,7 +328,6 @@ public class GameActivity extends AppCompatActivity
         return (location2.getCoords().latitude - location1.getCoords().latitude)
                / (location2.getCoords().longitude - location1.getCoords().longitude);
     }
-
     private int getRouteColor(String color) {
         switch (color){
             case "White":
@@ -432,6 +425,7 @@ public class GameActivity extends AppCompatActivity
                     return TrainCardType.LOCOMOTIVE;
         }
     }
+    //refactor
     private String getCity1(Polyline polyline){
         DisplayRoute route = (DisplayRoute) mLineRouteMap.get(polyline);
         return route.getCity1().getCityName();

@@ -1,4 +1,4 @@
-package weber.kaden.ticketToRide.ui;
+package weber.kaden.ticketToRide.ui.chat;
 
 import java.util.Observable;
 import java.util.Observer;

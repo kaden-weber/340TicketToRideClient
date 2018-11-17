@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.GameSetupActivity">
+    tools:context=".ui.setup.GameSetupActivity">
     <FrameLayout
         android:id="@+id/game_setup_container"
         android:layout_width="wrap_content"

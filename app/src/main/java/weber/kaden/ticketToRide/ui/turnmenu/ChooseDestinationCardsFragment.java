@@ -1,6 +1,5 @@
 package weber.kaden.ticketToRide.ui.turnmenu;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,8 +21,7 @@ import weber.kaden.common.model.DestinationCard;
 import weber.kaden.common.model.Model;
 import weber.kaden.ticketToRide.R;
 import weber.kaden.ticketToRide.model.ClientFacade;
-import weber.kaden.ticketToRide.ui.GameSetupActivity;
-import weber.kaden.ticketToRide.ui.gameView.GameActivity;
+import weber.kaden.ticketToRide.ui.setup.GameSetupActivity;
 import weber.kaden.ticketToRide.ui.tools.ConstantsDisplayConverter;
 
 public class ChooseDestinationCardsFragment extends DialogFragment {

@@ -1,4 +1,4 @@
-package weber.kaden.ticketToRide.ui;
+package weber.kaden.ticketToRide.ui.turnmenu;
 
 import weber.kaden.common.model.City;
 import weber.kaden.common.model.Model;
@@ -9,12 +9,10 @@ import weber.kaden.ticketToRide.model.ClientFacade;
 public class ClaimRoutePresenter {
     private ClaimRouteFragment view;
     private ClientFacade client;
-    private Model model;
 
     public ClaimRoutePresenter(ClaimRouteFragment view, ClientFacade client) {
         this.view = view;
         this.client = client;
-        this.model = Model.getInstance();
     }
 
     public void claimRoute(String city1, String city2, TrainCardType type, Integer cost, boolean isSecondRoute) {
