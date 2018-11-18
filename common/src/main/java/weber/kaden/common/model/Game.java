@@ -324,9 +324,16 @@ public class Game {
     public String getCurrentPlayer() {
         return this.players.get(currentPlayer).getID();
     }
+    public void setCurrentPlayer(String player){
+        for(int i = 0; i < this.players.size(); i++){
+            if (player.equals(players.get(i))){
+                this.currentPlayer = i;
+            }
+        }
+    }
 
     public boolean finishTurn() {
-        this.currentPlayer = this.players.indexOf(currentPlayer) + 1;
+        this.currentPlayer++;
         if (currentPlayer == this.players.size()) {
             currentPlayer = 0;
         }
