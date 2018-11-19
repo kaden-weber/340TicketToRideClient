@@ -9,20 +9,19 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/title_gamelist"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:screenOrientation="landscape"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="AllowBackup,GoogleAppIndexingWarning"
-        android:screenOrientation="landscape">
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
-        <!--this is the activity that will be shown on startup-->
+        <!-- this is the activity that will be shown on startup -->
         <activity
-            android:name="weber.kaden.ticketToRide.ui.login.LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.Launcher">
             <intent-filter>
@@ -30,27 +29,27 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-        <activity android:name="weber.kaden.ticketToRide.ui.gameList.GameListActivity" />
-        <activity android:name="weber.kaden.ticketToRide.ui.gameLobby.GameLobbyActivity" />
-        <activity android:name="weber.kaden.ticketToRide.ui.setup.GameSetupActivity" />
-        <activity android:name="weber.kaden.ticketToRide.ui.gameView.GameActivity"
+        <activity android:name=".ui.gameList.GameListActivity" />
+        <activity android:name=".ui.gameLobby.GameLobbyActivity" />
+        <activity android:name=".ui.setup.GameSetupActivity" />
+        <activity
+            android:name=".ui.gameView.GameActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
-
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/map_API_key"/>
+            android:value="@string/map_API_key" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
 
+        <activity android:name=".ui.gameOver.GameOverActivity"></activity>
     </application>
 
 </manifest>

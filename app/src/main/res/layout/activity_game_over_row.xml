@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/game_over_player_place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1st Place: "/>
+
+    <TextView
+        android:id="@+id/game_over_player_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="samfrysauce"/>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:id="@+id/game_over_player_points_gained"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Points from DC: 100"/>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:id="@+id/game_over_player_points_lost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Points Lost from DC: 0"/>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+    
+    <TextView
+        android:id="@+id/game_over_player_points_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total Points: 110"/>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+    <ImageView
+        android:id="@+id/game_over_player_longest_award"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_star_black"
+        android:visibility="invisible"/>
+</LinearLayout>
