@@ -43,6 +43,7 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/game_over_quit_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/game_over_players_list"

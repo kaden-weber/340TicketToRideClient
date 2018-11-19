@@ -36,7 +36,8 @@
         <activity
             android:name=".ui.gameView.GameActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".ui.gameOver.GameOverActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -48,8 +49,6 @@
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
-
-        <activity android:name=".ui.gameOver.GameOverActivity"></activity>
     </application>
 
 </manifest>
