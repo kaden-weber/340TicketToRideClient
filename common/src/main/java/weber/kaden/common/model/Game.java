@@ -189,6 +189,7 @@ public class Game {
 
     private void InitalizeDecks() {
         this.destinationCardDeck = new ArrayList<DestinationCard>(InitialGameSetUpVariables.getDestinationCards());
+        Collections.shuffle(this.destinationCardDeck);
         this.destinationCardDiscard = new ArrayList<DestinationCard>();
 
         this.trainCardDeck = new ArrayList<TrainCard>(InitialGameSetUpVariables.getTrainCards());
