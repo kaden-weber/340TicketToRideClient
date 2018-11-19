@@ -23,7 +23,6 @@ import weber.kaden.common.model.Model;
 import weber.kaden.ticketToRide.R;
 import weber.kaden.ticketToRide.model.ClientFacade;
 import weber.kaden.ticketToRide.ui.setup.GameSetupActivity;
-import weber.kaden.ticketToRide.ui.gameView.GameActivity;
 import weber.kaden.ticketToRide.ui.tools.ConstantsDisplayConverter;
 
 public class ChooseDestinationCardsFragment extends DialogFragment {
