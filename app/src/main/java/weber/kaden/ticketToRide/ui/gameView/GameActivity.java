@@ -416,9 +416,9 @@ public class GameActivity extends AppCompatActivity
             case "Yellow":
                 return TrainCardType.REEFER;
             case "Gray": //??
-                return TrainCardType.LOCOMOTIVE;
+                return TrainCardType.GRAY;
                 default:
-                    return TrainCardType.LOCOMOTIVE;
+                    return TrainCardType.GRAY;
         }
     }
     //refactor
