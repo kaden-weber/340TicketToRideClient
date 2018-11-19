@@ -21,7 +21,7 @@ public class DrawTrainCardFromDeckCommand implements Command {
     @Override
     public Results execute() {
         if (Model.getInstance().getGame(gameID).PlayerDrawTrainCardFromDeck(playerID)) {
-            Model.getInstance().getGame(gameID).finishTurn();
+            //Model.getInstance().getGame(gameID).finishTurn();
             return new GameResults(null, true, null);
         }
         else {
