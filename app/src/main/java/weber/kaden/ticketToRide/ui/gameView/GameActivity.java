@@ -281,6 +281,10 @@ public class GameActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    public void updateTextView(String player) {
+        TextView textView = (TextView) findViewById(R.id.currentPlayer);
+        textView.setText(player);
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {

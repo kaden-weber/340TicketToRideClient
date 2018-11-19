@@ -67,6 +67,8 @@ public class GamePresenter implements Observer {
             points.add(player.getScore());
             view.setNewValues(destCards, trainCards, points);
             updateClaimedRoutes(game);
+            view.updateTextView("Current Player: " + client.getCurrentTurnPlayer());
+
         }
     }
 
