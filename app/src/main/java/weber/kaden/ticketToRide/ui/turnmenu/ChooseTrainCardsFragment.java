@@ -206,7 +206,7 @@ public class ChooseTrainCardsFragment extends DialogFragment {
 				if (numCardsChosen == 2) {
 					presenter.removeAsObserver();
 					getDialog().dismiss();
-					new ClientFacade().finishTurn();
+					new FinishTurnTask().execute();
 				}
 				else {
 					updateCards(presenter.getFaceUpTrainCards());
@@ -254,6 +254,19 @@ public class ChooseTrainCardsFragment extends DialogFragment {
 			else {
 				Toast.makeText(getActivity(), errormessage, Toast.LENGTH_SHORT).show();
 			}
+		}
+	}
+
+	public class FinishTurnTask extends AsyncTask<Void, Void, Boolean> {
+		@Override
+		protected void onPostExecute(Boolean aBoolean) {
+			super.onPostExecute(aBoolean);
+		}
+
+		@Override
+		protected Boolean doInBackground(Void... voids) {
+			new ClientFacade().finishTurn();
+			return null;
 		}
 	}
 }
