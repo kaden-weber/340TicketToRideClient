@@ -185,7 +185,7 @@ public class Player {
             for (TrainCardType localType : TrainCardType.values()) {
                 int num = 0;
                 for (int i = 0; i < this.trainCards.size(); i++) {
-                    if (this.trainCards.get(i).getType().equals(localType)) {
+                    if (this.trainCards.get(i).getType().equals(localType) || this.trainCards.get(i).getType().equals(TrainCardType.LOCOMOTIVE)) {
                         num++;
                     }
                 }
