@@ -15,6 +15,7 @@ public class Player {
     private Integer score;
     private PlayerColors color;
     private Integer TravelRate = null;
+    private boolean hasLongestPath = false;
 
     public Player(String ID, String password) {
         this.ID = ID;
@@ -215,5 +216,66 @@ public class Player {
     public boolean testRemoveTrainCars() {
         this.trainPieces -= 5;
         return true;
+    }
+
+    public int getFinalScore() {
+        // add in base score
+        int finalScore = this.score;
+        finalScore += this.scoreRoutes();
+        // add in completed routes
+        if (hasLongestPath) {
+            this.score += 10;
+        }
+        // minus incomplete routes
+        return finalScore;
+    }
+
+    private int scoreRoutes() {
+        int toReturn = 0;
+        for (int i = 0; i < this.destinationCardHand.size(); i++) {
+            boolean pathComplete = false;
+            DestinationCard card = this.destinationCardHand.get(i);
+
+            boolean hasCity = false;
+
+            for (int t = 0; t < this.routesClaimed.size(); t++) {
+                if (this.routesClaimed.get(t).getCity1().equals(card.getStartCity()) || this.routesClaimed.get(t).getCity2().equals(card.getStartCity()))  {
+                    hasCity = true;
+                }
+            }
+
+            if (hasCity) {
+                List<City> cities = new ArrayList<City>();
+                cities.add(card.getStartCity());
+                boolean notDone = true;
+                while (notDone) {
+                    notDone = false;
+                    for (int t = 0; t < this.routesClaimed.size(); t++) {
+                        if (cities.contains(this.routesClaimed.get(t).getCity1()) && !cities.contains(this.routesClaimed.get(t).getCity2())) {
+                            cities.add(this.routesClaimed.get(t).getCity2());
+                            notDone = true;
+                        }
+                        else if (!cities.contains(this.routesClaimed.get(t).getCity1()) && cities.contains(this.routesClaimed.get(t).getCity2())) {
+                            cities.add(this.routesClaimed.get(t).getCity1());
+                            notDone = true;
+                        }
+                    }
+                }
+                if (cities.contains(card.getEndCity())) {
+                    pathComplete = true;
+                }
+            }
+
+            if (pathComplete) {
+                toReturn += card.getPoints();
+            } else {
+                toReturn -= card.getPoints();
+            }
+        }
+        return toReturn;
+    }
+
+    public void setLongestPath(boolean b) {
+        this.hasLongestPath = b;
     }
 }

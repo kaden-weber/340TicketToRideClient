@@ -9,6 +9,7 @@ public class Route {
     private Integer cost;
     private TrainCardType type;
     private boolean isSecondRoute;
+    private boolean visited = false;
 
     public Route(City city1, City city2, Integer cost, TrainCardType type, boolean isSecondRoute) {
         this.city1 = city1;
@@ -82,6 +83,14 @@ public class Route {
 
     public void setSecondRoute(boolean secondRoute) {
         isSecondRoute = secondRoute;
+    }
+
+    public boolean isVisited() {
+        return visited;
+    }
+
+    public void setVisited(boolean visited) {
+        this.visited = visited;
     }
 
     @Override
