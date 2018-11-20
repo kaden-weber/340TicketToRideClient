@@ -60,6 +60,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private EditText mconfirmPasswordView;
+    private EditText mServerIPView;
+    private EditText mServerPortView;
     private View mProgressView;
     private View mLoginFormView;
     private LoginPresenter presenter;
@@ -95,6 +97,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
         });
+
+        mServerIPView = (EditText) findViewById(R.id.ip_address);
+        mServerPortView = (EditText) findViewById(R.id.port_number);
 
         Button signInButton = (Button) findViewById(R.id.email_sign_in_button);
         signInButton.setOnClickListener(new OnClickListener() {
@@ -173,10 +178,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailView.setError(null);
         mPasswordView.setError(null);
         mconfirmPasswordView.setError(null);
+        mServerIPView.setError(null);
+        mServerPortView.setError(null);
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
+        String serverIP = mServerIPView.getText().toString();
+        String serverPortNumber = mServerPortView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -207,7 +216,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+
+            mAuthTask = new UserLoginTask(email, password, serverIP, serverPortNumber);
             mAuthTask.execute((Void) null);
 
         }
@@ -221,11 +231,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailView.setError(null);
         mPasswordView.setError(null);
         mconfirmPasswordView.setError(null);
+        mServerIPView.setError(null);
+        mServerPortView.setError(null);
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
         String confirmPassword = mconfirmPasswordView.getText().toString();
+        String serverIP = mServerIPView.getText().toString();
+        String serverPortNumber = mServerPortView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -261,7 +275,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mRegisterTask = new UserRegisterTask(email, password, confirmPassword);
+            mRegisterTask = new UserRegisterTask(email, password, confirmPassword, serverIP, serverPortNumber);
             mRegisterTask.execute((Void) null);
         }
     }
@@ -375,12 +389,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         private final String mEmail;
         private final String mPassword;
         private String errorString = "";
+        private final String mServerIP;
+        private final String mServerPort;
 
 
 
-        UserLoginTask(String email, String password) {
+        UserLoginTask(String email, String password, String serverIP, String serverPort) {
             mEmail = email;
             mPassword = password;
+            mServerIP = serverIP;
+            mServerPort = serverPort;
         }
         @Override
         protected Boolean doInBackground(Void... params) {
@@ -388,7 +406,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             LoginPresenter loginPresenter = new LoginPresenter(instance, clientFacade);
 
             try {
-                loginPresenter.login(mEmail, mPassword);
+                loginPresenter.login(mEmail, mPassword, mServerIP, mServerPort);
             } catch (Exception e) {
                 errorString = e.getMessage();
                 return false;
@@ -423,20 +441,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         private final String mconfirmPassword;
         //error string in case login/register fails
         private String errorString = "";
+        private final String mServerIP;
+        private final String mServerPort;
 
 
-        UserRegisterTask(String email, String password, String confirmPassword) {
+        UserRegisterTask(String email, String password, String confirmPassword, String serverIP, String serverPort) {
             mEmail = email;
             mPassword = password;
             mconfirmPassword = confirmPassword;
-
+            mServerIP = serverIP;
+            mServerPort = serverPort;
         }
         @Override
         protected Boolean doInBackground(Void... params) {
             ClientFacade clientFacade = new ClientFacade();
             LoginPresenter loginPresenter = new LoginPresenter(instance, clientFacade);
             try {
-                loginPresenter.register(mEmail, mPassword, mconfirmPassword);
+                loginPresenter.register(mEmail, mPassword, mconfirmPassword, mServerIP, mServerPort);
             } catch (Exception e) {
                 errorString = e.getMessage();
                 return false;

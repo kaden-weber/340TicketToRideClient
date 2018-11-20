@@ -10,6 +10,8 @@
     <string name="prompt_email">Username</string>
     <string name="prompt_password">Password (required)</string>
     <string name="prompt_confirm_password"> Confirm Password (for registering)</string>
+    <string name="prompt_server_ip">Server\'s IP address</string>
+    <string name="prompt_server_port">Server\'s port number</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_register">Register</string>
     <string name="action_sign_in_short">Sign in</string>
