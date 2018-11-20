@@ -69,6 +69,7 @@ public class ClaimRouteFragment extends DialogFragment {
                     DialogFragment fragment = new ChooseRouteTypeFragment();
                     ((ChooseRouteTypeFragment) fragment).setParams(city1, city2, type, cost, isSecondRoute);
                     fragment.show(getFragmentManager(), "ChooseRouteTypeFragment");
+                    getFragmentManager().beginTransaction().remove(ClaimRouteFragment.this).commit();
                 }else {
                     ClaimRouteTask task = new ClaimRouteTask();
                     task.execute((Void) null);
