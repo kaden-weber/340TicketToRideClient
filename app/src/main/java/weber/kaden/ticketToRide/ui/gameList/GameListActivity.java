@@ -96,7 +96,7 @@ public class GameListActivity extends AppCompatActivity implements GameListAdapt
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(this, "Joining " + adapter.getItem(0), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Joining " + adapter.getItem(0).getGameName(), Toast.LENGTH_SHORT).show();
         //set current game to game
         Model model = Model.getInstance();
         model.setCurrentGame(adapter.getItem(position));

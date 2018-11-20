@@ -77,14 +77,14 @@ public class GameActivity extends AppCompatActivity
     //map Constants
     private static final float DEFAULT_ZOOM = (float) 4.0;
     private static final float MIN_ZOOM = (float) 4.0;
-    private static final float MAX_ZOOM = (float) 5.5;
+    private static final float MAX_ZOOM = (float) 6.0;
     private static final double DEFAULT_VIEW_LAT = 40;
     private static final double DEFAULT_VIEW_LONG = -98;
     private static final float DEFAULT_VIEW_BEARING = 9;
-    private static final double MAX_NORTH = 46;
-    private static final double MAX_EAST = -80;
-    private static final double MAX_SOUTH = 34;
-    private static final double MAX_WEST = -115;
+    private static final double MAX_NORTH = 50; // 46
+    private static final double MAX_EAST = -72; // -80
+    private static final double MAX_SOUTH = 28; // 34
+    private static final double MAX_WEST = -122; // -115
 
     private static final float ROUTE_WIDTH = 22;
     private static final double SECOND_ROUTE_OFFSET = 0.6;
