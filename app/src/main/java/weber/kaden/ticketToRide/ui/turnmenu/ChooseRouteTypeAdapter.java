@@ -14,10 +14,12 @@ import weber.kaden.ticketToRide.R;
 
 public class ChooseRouteTypeAdapter extends RecyclerView.Adapter<ChooseRouteTypeAdapter.ViewHolder> {
     private List<TrainCardType> mAvailableTypes;
+    private Context mContext;
     private LayoutInflater mLayoutInflater;
 
     ChooseRouteTypeAdapter(Context context, List<TrainCardType> types) {
-        this.mLayoutInflater = LayoutInflater.from(context);
+        mContext = context;
+        this.mLayoutInflater = LayoutInflater.from(mContext);
         mAvailableTypes = types;
     }
 
@@ -40,7 +42,35 @@ public class ChooseRouteTypeAdapter extends RecyclerView.Adapter<ChooseRouteType
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         TrainCardType type = mAvailableTypes.get(position);
         //add logic here
-
+        switch (type) {
+            case BOX:
+                holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.Box));
+                break;
+            case PASSENGER:
+                holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.Passenger));
+                break;
+            case TANKER:
+                holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.Tanker));
+                break;
+            case REEFER:
+                holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.Reefer));
+                break;
+            case FREIGHT:
+                holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.Freight));
+                break;
+            case HOPPER:
+                holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.Hopper));
+                break;
+            case COAL:
+                holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.Coal));
+                break;
+            case CABOOSE:
+                holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.Caboose));
+                break;
+            case LOCOMOTIVE:
+                holder.itemView.setBackground(mContext.getResources().getDrawable(R.drawable.locomotive_button));
+                break;
+        }
     }
 
     @Override
