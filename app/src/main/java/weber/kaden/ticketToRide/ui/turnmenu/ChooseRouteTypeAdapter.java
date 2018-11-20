@@ -16,32 +16,33 @@ public class ChooseRouteTypeAdapter extends RecyclerView.Adapter<ChooseRouteType
     private List<TrainCardType> mAvailableTypes;
     private Context mContext;
     private LayoutInflater mLayoutInflater;
+    private ChooseRouteTypeFragment mFragment;
 
-    ChooseRouteTypeAdapter(Context context, List<TrainCardType> types) {
+    ChooseRouteTypeAdapter(Context context, List<TrainCardType> types, ChooseRouteTypeFragment fragment) {
         mContext = context;
-        this.mLayoutInflater = LayoutInflater.from(mContext);
+        mLayoutInflater = LayoutInflater.from(mContext);
         mAvailableTypes = types;
+        mFragment = fragment;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mLayoutInflater.inflate(R.layout.card_type_button, parent, false);
-
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
+    public ViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, int viewType) {
+        final View view = mLayoutInflater.inflate(R.layout.card_type_button, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        TrainCardType type = mAvailableTypes.get(position);
+        final TrainCardType type = mAvailableTypes.get(position);
         //add logic here
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mFragment.claimRoute(type);
+            }
+        });
+
         switch (type) {
             case BOX:
                 holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.Box));
@@ -86,4 +87,6 @@ public class ChooseRouteTypeAdapter extends RecyclerView.Adapter<ChooseRouteType
         @Override
         public void onClick(View v) {}
     }
+
+
 }

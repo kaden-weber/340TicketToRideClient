@@ -66,7 +66,7 @@ public class ClaimRouteFragment extends DialogFragment {
             public void onClick(View v) {
                 if(type.equals(TrainCardType.GRAY)){
                     DialogFragment fragment = new ChooseRouteTypeFragment();
-                    ((ChooseRouteTypeFragment) fragment).setParams(cost);
+                    ((ChooseRouteTypeFragment) fragment).setParams(city1, city2, type, cost, isSecondRoute);
                     fragment.show(getFragmentManager(), "ChooseRouteTypeFragment");
                 }else {
                     ClaimRouteTask task = new ClaimRouteTask();
