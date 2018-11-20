@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.util.List;
 
@@ -44,31 +45,31 @@ public class ChooseRouteTypeAdapter extends RecyclerView.Adapter<ChooseRouteType
         //add logic here
         switch (type) {
             case BOX:
-                holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.Box));
+                holder.cardButton.setBackgroundColor(mContext.getResources().getColor(R.color.Box));
                 break;
             case PASSENGER:
-                holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.Passenger));
+                holder.cardButton.setBackgroundColor(mContext.getResources().getColor(R.color.Passenger));
                 break;
             case TANKER:
-                holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.Tanker));
+                holder.cardButton.setBackgroundColor(mContext.getResources().getColor(R.color.Tanker));
                 break;
             case REEFER:
-                holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.Reefer));
+                holder.cardButton.setBackgroundColor(mContext.getResources().getColor(R.color.Reefer));
                 break;
             case FREIGHT:
-                holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.Freight));
+                holder.cardButton.setBackgroundColor(mContext.getResources().getColor(R.color.Freight));
                 break;
             case HOPPER:
-                holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.Hopper));
+                holder.cardButton.setBackgroundColor(mContext.getResources().getColor(R.color.Hopper));
                 break;
             case COAL:
-                holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.Coal));
+                holder.cardButton.setBackgroundColor(mContext.getResources().getColor(R.color.Coal));
                 break;
             case CABOOSE:
-                holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.Caboose));
+                holder.cardButton.setBackgroundColor(mContext.getResources().getColor(R.color.Caboose));
                 break;
             case LOCOMOTIVE:
-                holder.itemView.setBackground(mContext.getResources().getDrawable(R.drawable.locomotive_button));
+                holder.cardButton.setBackground(mContext.getResources().getDrawable(R.drawable.locomotive_button));
                 break;
         }
     }
@@ -79,9 +80,11 @@ public class ChooseRouteTypeAdapter extends RecyclerView.Adapter<ChooseRouteType
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        Button cardButton;
+
         ViewHolder(View view){
             super(view);
-            //??
+            cardButton = view.findViewById(R.id.card_button);
         }
         @Override
         public void onClick(View v) {}
