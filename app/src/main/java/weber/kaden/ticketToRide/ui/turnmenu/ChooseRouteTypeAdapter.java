@@ -37,7 +37,7 @@ public class ChooseRouteTypeAdapter extends RecyclerView.Adapter<ChooseRouteType
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final TrainCardType type = mAvailableTypes.get(position);
         //add logic here
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.cardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mFragment.claimRoute(type);

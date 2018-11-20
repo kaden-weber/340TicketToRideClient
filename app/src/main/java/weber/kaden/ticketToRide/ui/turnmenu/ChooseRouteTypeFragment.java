@@ -57,11 +57,12 @@ public class ChooseRouteTypeFragment extends DialogFragment {
     }
 
     void claimRoute(TrainCardType type) {
+        this.type = type;  // very important
         ClaimRouteTask task = new ClaimRouteTask();
         task.execute((Void) null);
     }
 
-    public class ClaimRouteTask extends AsyncTask<Void, Void, Boolean> {
+    public class ClaimRouteTask extends AsyncTask<Void, Void, Boolean> {  // refactor to use same method from claim route fragment
         private String errorMessage;
 
         @Override
