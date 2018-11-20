@@ -1,13 +1,14 @@
-package weber.kaden.ticketToRide.ui;
+package weber.kaden.ticketToRide.ui.turnmenu;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +48,7 @@ public class ClaimRouteFragment extends DialogFragment {
         client = new ClientFacade();
         presenter = new ClaimRoutePresenter(this, client);
         View view = inflater.inflate(R.layout.fragment_dialog_claim_route, container, false);
+        this.getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         TextView claimRoutePrompt = view.findViewById(R.id.claim_route_fragment_text);
         String prompt = "Claim " + type + " route from " + city1 + " to " + city2 + "?";
         claimRoutePrompt.setText(prompt);
@@ -63,8 +65,15 @@ public class ClaimRouteFragment extends DialogFragment {
         actionConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClaimRouteTask task = new ClaimRouteTask();
-                task.execute((Void) null);
+                if(type.equals(TrainCardType.GRAY)){
+                    DialogFragment fragment = new ChooseRouteTypeFragment();
+                    ((ChooseRouteTypeFragment) fragment).setParams(city1, city2, type, cost, isSecondRoute);
+                    fragment.show(getFragmentManager(), "ChooseRouteTypeFragment");
+                    getFragmentManager().beginTransaction().remove(ClaimRouteFragment.this).commit();
+                }else {
+                    ClaimRouteTask task = new ClaimRouteTask();
+                    task.execute((Void) null);
+                }
             }
         });
 

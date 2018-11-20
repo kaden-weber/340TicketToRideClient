@@ -7,6 +7,7 @@ import weber.kaden.common.Results;
 import weber.kaden.common.command.Command;
 import weber.kaden.common.model.Model;
 
+@Deprecated
 public class UseTrainCarsCommand implements Command {
     private String gameID;
     private String playerID;

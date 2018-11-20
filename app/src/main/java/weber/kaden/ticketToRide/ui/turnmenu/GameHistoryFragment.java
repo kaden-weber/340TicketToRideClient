@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -38,12 +39,12 @@ public class GameHistoryFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dialog_see_other_players, container, false);
+        this.getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         mActionCancel = view.findViewById(R.id.see_other_players_cancel);
         mActionOk = view.findViewById(R.id.see_other_players_ok);
         mInflater = inflater;
         ((TextView) view.findViewById(R.id.see_other_players_header)).setText("Game History");
         mGameHistoryPresenter = new GameHistoryPresenter(this, new ClientFacade());
-        mGameHistoryPresenter.getCommandsTask();
         mActionCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

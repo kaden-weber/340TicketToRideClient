@@ -8,6 +8,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -37,7 +38,9 @@ public class ChooseTrainCardsFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dialog_choose_train_cards, container, false);
-        presenter = new ChooseTrainCardsPresenter(this, new ClientFacade());
+		this.getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+		presenter = new ChooseTrainCardsPresenter(this, new ClientFacade());
         setCancelable(false);
         mActionCancel = view.findViewById(R.id.choose_train_cancel);
 

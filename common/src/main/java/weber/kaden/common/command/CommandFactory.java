@@ -128,7 +128,7 @@ public class CommandFactory {
                         ((CommandDataDrawTrainCardFromFaceUp) data).getCardIndex());
             case CLAIMROUTE:
                 return new ClaimRouteCommand(data.getParams(),
-                        ((CommandDataClaimRoute) data). getRoute());
+                        ((CommandDataClaimRoute) data). getRoute(), ((CommandDataClaimRoute) data).getCardType());
             case FINISHTURN:
                 if (data.getParams().size() < 1) {
                     throw new InvalidCommandParamsException("Not enough parameters provided to command constructor");

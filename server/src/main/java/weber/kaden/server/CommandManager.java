@@ -37,11 +37,7 @@ public class CommandManager implements iCommandManager {
         return sCommandManager;
     }
 
-    private Map<String, List<CommandData>> mCommandDataList;
-
-    private CommandManager(){
-        mCommandDataList = new HashMap<>();
-    }
+    private CommandManager(){}
 
     /**
      * @param commandData CommandData holding the command to execute and the data for the command
@@ -55,10 +51,7 @@ public class CommandManager implements iCommandManager {
     public Results processCommand(CommandData commandData) throws Exception {
         Command command = CommandFactory.getInstance().getCommand(commandData);
         if (command.hasID()) {
-            if (mCommandDataList.get(commandData.getParams().get(0)) == null) {
-                mCommandDataList.put(commandData.getParams().get(0), new ArrayList<CommandData>());
-            }
-            mCommandDataList.get(commandData.getParams().get(0)).add(commandData);
+            Model.getInstance().addGameHistoryToGame(commandData.getParams().get(0), commandData);
         }
         return command.execute();
     }
@@ -93,8 +86,9 @@ public class CommandManager implements iCommandManager {
      * @return List<CommandData> the list of CommandData that have created commands to be executed on the game
      * */
     @Override
+    @Deprecated
     public List<CommandData> getLatestCommands(String gameID) {
-        List<CommandData> toReturn = new ArrayList<CommandData>(mCommandDataList.get(gameID));
+        List<CommandData> toReturn = new ArrayList<CommandData>();
         return toReturn;
     }
 }

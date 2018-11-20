@@ -62,5 +62,7 @@
 
     <!--game_misc-->
     <string name="claim_route_flag_text">Select a route to claim.</string>
+    <string name="game_over">Game Over</string>
+    <string name="game_over_legend">= Had longest continuous train route</string>
 
 </resources>

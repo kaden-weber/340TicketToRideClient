@@ -18,7 +18,7 @@ import weber.kaden.common.model.Player;
 import weber.kaden.ticketToRide.R;
 import weber.kaden.ticketToRide.model.ClientFacade;
 import weber.kaden.ticketToRide.serverProxy.Poller;
-import weber.kaden.ticketToRide.ui.GameSetupActivity;
+import weber.kaden.ticketToRide.ui.setup.GameSetupActivity;
 
 public class GameLobbyActivity  extends AppCompatActivity implements GameLobbyViewInterface {
 

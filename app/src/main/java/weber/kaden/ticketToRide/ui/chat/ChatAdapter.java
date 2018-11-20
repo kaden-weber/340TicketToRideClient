@@ -1,4 +1,4 @@
-package weber.kaden.ticketToRide.ui;
+package weber.kaden.ticketToRide.ui.chat;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

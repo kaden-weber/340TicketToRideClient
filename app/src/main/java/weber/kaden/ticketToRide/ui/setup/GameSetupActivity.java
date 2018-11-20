@@ -1,4 +1,4 @@
-package weber.kaden.ticketToRide.ui;
+package weber.kaden.ticketToRide.ui.setup;
 
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;

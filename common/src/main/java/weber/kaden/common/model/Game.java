@@ -8,6 +8,8 @@ import java.lang.*;
 import java.util.Objects;
 import java.util.UUID;
 
+import weber.kaden.common.command.CommandData.CommandData;
+
 public class Game {
     private List<Player> players;
     private String ID;
@@ -23,6 +25,7 @@ public class Game {
     private List<Route> unclaimedRoutes;
     private int currentPlayer;
     private GameState gameState;
+    private List<CommandData> gameHistory;
 
     public Game() {
         this.players = new ArrayList<Player>();
@@ -196,11 +199,7 @@ public class Game {
         Collections.shuffle(this.trainCardDeck);
         this.trainCardDiscard = new ArrayList<TrainCard>();
         this.faceupTrainCardDeck = new ArrayList<TrainCard>();
-
-        for (int i = 0; i < 5; i++) {
-            this.faceupTrainCardDeck.add(this.trainCardDeck.get(0));
-            this.trainCardDeck.remove(0);
-        }
+        this.dealFaceUpCards();
 
         this.claimedRoutes = new ArrayList<Route>();
     }
@@ -302,17 +301,49 @@ public class Game {
             } else {
                 this.faceupTrainCardDeck.remove(cardIndex);
             }
+            this.checkFaceUpCards();
             return true;
         }
         return false;
     }
 
-    public boolean PlayerClaimRoute(String playerID, Route routeClaimed) {
+    private void checkFaceUpCards() {
+        if (this.faceupTrainCardDeck.size() > 3) {
+            int num = 0;
+            for (int i = 0; i < this.faceupTrainCardDeck.size(); i++) {
+                if (this.faceupTrainCardDeck.get(i).getType().equals(TrainCardType.LOCOMOTIVE)) {
+                    num++;
+                }
+            }
+            if (num >= 3) {
+                this.trainCardDiscard.addAll(this.faceupTrainCardDeck);
+                this.faceupTrainCardDeck.clear();
+                this.dealFaceUpCards();
+            }
+        }
+    }
+
+    public void dealFaceUpCards() {
+        int num = 5;
+        if (this.trainCardDeck.size() < 5) {
+            num = this.trainCardDeck.size();
+        }
+        for (int i = 0; i < num; i++) {
+            this.faceupTrainCardDeck.add(this.trainCardDeck.get(0));
+            this.trainCardDeck.remove(0);
+        }
+        if (this.trainCardDeck.size() == 0) {
+            reshuffleDiscardedTrainCards();
+        }
+    }
+
+    public boolean PlayerClaimRoute(String playerID, Route routeClaimed, TrainCardType cardType) {
         if (this.claimedRoutes.contains(routeClaimed)) {
             return false;
         }
         if(this.getPlayer(playerID).ClaimRoute(routeClaimed)) {
             this.claimedRoutes.add(routeClaimed);
+            this.trainCardDiscard.addAll(this.getPlayer(playerID).useTrainCards(routeClaimed, cardType));
             return true;
         }
         return false;
@@ -476,6 +507,17 @@ public class Game {
                 gameState = new GameOverState();
                 break;
         }
+    }
+
+    public void addHistory(CommandData history) {
+        if (this.gameHistory == null) {
+            this.gameHistory = new ArrayList<CommandData>();
+        }
+        this.gameHistory.add(history);
+    }
+
+    public List<CommandData> getGameHistory() {
+        return gameHistory;
     }
 
     private class GameState {
