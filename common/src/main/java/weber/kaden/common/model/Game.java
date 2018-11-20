@@ -406,6 +406,58 @@ public class Game {
         return this.getPlayer(playerID).testRemoveTrainCars();
     }
 
+    public boolean endGame() {
+        //calculate longest route
+        int playerWithLongestPath = 0;
+        int longestPathSoFar = 0;
+        for (int i = 0; i < this.players.size(); i++) {
+            for (Route startRoute : this.players.get(i).getRoutesClaimed()) {
+                int score = getLongestPath(startRoute, i, startRoute.getCity1());
+                int score2 = getLongestPath(startRoute, i, startRoute.getCity2());
+                if (score2 > score) {
+                    score = score2;
+                }
+                if (score > longestPathSoFar) {
+                    longestPathSoFar = score;
+                    playerWithLongestPath = i;
+                }
+            }
+        }
+        this.players.get(playerWithLongestPath).setLongestPath(true);
+        return true;
+    }
+
+    private int getLongestPath(Route startRoute, int playerInt, City parentCity) {
+        int max = 0;
+        int dist = 0;
+        City newParentCity;
+        if (startRoute.getCity1().equals(parentCity)) {
+            newParentCity = startRoute.getCity2();
+        } else {
+            newParentCity = startRoute.getCity1();
+        }
+        startRoute.setVisited(true);
+        for (Route otherRoute : this.players.get(playerInt).getRoutesClaimed()) {
+            if (!otherRoute.isVisited()) {
+                if (this.routesAreConnected(startRoute, otherRoute, parentCity)) {
+                    dist = otherRoute.getScore() + getLongestPath(otherRoute, playerInt, newParentCity);
+                    if (dist > max) {
+                        max = dist;
+                    }
+                }
+            }
+        }
+        startRoute.setVisited(false);
+        return max;
+    }
+
+    private boolean routesAreConnected(Route startRoute, Route otherRoute, City parentCity) {
+        return ((startRoute.getCity1().equals(otherRoute.getCity1()) && !startRoute.getCity1().equals(parentCity))||
+                (startRoute.getCity2().equals(otherRoute.getCity1())  && !startRoute.getCity2().equals(parentCity)) ||
+                (startRoute.getCity1().equals(otherRoute.getCity2())  && !startRoute.getCity1().equals(parentCity)) ||
+                (startRoute.getCity2().equals(otherRoute.getCity2())  && !startRoute.getCity2().equals(parentCity)));
+    }
+
     public void updateGameState() {
         switch (gameState.type) {
             case "GameNotStartedState":
