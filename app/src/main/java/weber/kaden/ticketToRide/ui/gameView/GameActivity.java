@@ -415,7 +415,7 @@ public class GameActivity extends AppCompatActivity
                 return TrainCardType.FREIGHT;
             case "Yellow":
                 return TrainCardType.REEFER;
-            case "Gray": //??
+            case "Gray":
                 return TrainCardType.GRAY;
                 default:
                     return TrainCardType.GRAY;
