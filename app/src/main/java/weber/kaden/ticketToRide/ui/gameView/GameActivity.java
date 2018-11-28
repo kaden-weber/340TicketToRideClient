@@ -214,6 +214,7 @@ public class GameActivity extends AppCompatActivity
                     case R.id.turn_menu_game_history:
                         DialogFragment gameHistoryFragment = new GameHistoryFragment();
                         gameHistoryFragment.show(getSupportFragmentManager(), "GameHistoryFragment");
+                        break;
                     case R.id.turn_menu_chat:
                         DialogFragment chatFragment = new ChatFragment();
                         ((ChatFragment) chatFragment).setMessages(Model.getInstance().getCurrentGame().getChat());
