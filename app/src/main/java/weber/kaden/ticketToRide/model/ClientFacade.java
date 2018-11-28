@@ -19,6 +19,7 @@ import weber.kaden.common.model.Player;
 import weber.kaden.common.model.Route;
 import weber.kaden.common.model.TrainCard;
 import weber.kaden.common.model.TrainCardType;
+import weber.kaden.ticketToRide.serverProxy.ClientCommunicator;
 import weber.kaden.ticketToRide.serverProxy.ServerCommunicationInfo;
 import weber.kaden.ticketToRide.serverProxy.ServerProxy;
 import java.util.UUID;
@@ -28,11 +29,13 @@ public class ClientFacade {
     public void login(String username, String password, String serverIP, String serverPort) throws Exception {
         ServerCommunicationInfo.setServerIPAddress(serverIP);
         ServerCommunicationInfo.setServerPort(serverPort);
+        ClientCommunicator.getInstance().setServerIP(serverIP);
+        ClientCommunicator.getInstance().setServerPort(serverPort);
         List<String> credentials = new ArrayList<>(Arrays.asList(username, password));
         CommandData commandData = new CommandData(credentials, CommandType.LOGIN);
         Results results = ServerProxy.getInstance().sendCommand(commandData);
         if (results == null) {
-        	throw new Exception("Login resulted in null");
+        	throw new Exception("Login unsuccessful");
         }
         if(!results.success()){
             throw new Exception(results.getErrorInfo());
@@ -47,12 +50,14 @@ public class ClientFacade {
     public void register(String username, String password, String serverIP, String serverPort) throws Exception {
         ServerCommunicationInfo.setServerIPAddress(serverIP);
         ServerCommunicationInfo.setServerPort(serverPort);
+        ClientCommunicator.getInstance().setServerIP(serverIP);
+        ClientCommunicator.getInstance().setServerPort(serverPort);
         List<String> credentials = new ArrayList<>(Arrays.asList(username, password));
         CommandData commandData = new CommandData(credentials, CommandType.REGISTER);
-        executeLocalCommand(commandData);
+        //executeLocalCommand(commandData);
         Results results = ServerProxy.getInstance().sendCommand(commandData);
         if (results == null) {
-        	throw new Exception("Register resulted in null");
+        	throw new Exception("Register unsuccessful");
         }
         if(!results.success()){
             throw new Exception(results.getErrorInfo());
