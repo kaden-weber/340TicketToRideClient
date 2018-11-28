@@ -1,6 +1,7 @@
 package weber.kaden.ticketToRide.ui.gameView;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.support.v4.view.GravityCompat;
 import android.os.AsyncTask;
@@ -51,6 +52,7 @@ import weber.kaden.common.model.TrainCardType;
 import weber.kaden.ticketToRide.R;
 import weber.kaden.ticketToRide.model.ClientFacade;
 import weber.kaden.ticketToRide.ui.chat.ChatFragment;
+import weber.kaden.ticketToRide.ui.gameOver.GameOverActivity;
 import weber.kaden.ticketToRide.ui.turnmenu.ClaimRouteFragment;
 import weber.kaden.ticketToRide.ui.map.DisplayRoute;
 import weber.kaden.ticketToRide.ui.map.DisplayRoutes;
@@ -488,6 +490,11 @@ public class GameActivity extends AppCompatActivity
                 default:
                     return getResources().getColor(R.color.Gray);
         }
+    }
+
+    public void finishGame() {
+	    Intent intent = new Intent(instance, GameOverActivity.class);
+	    startActivity(intent);
     }
 
 

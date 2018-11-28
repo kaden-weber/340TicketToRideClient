@@ -95,6 +95,26 @@ public class Game {
         }
     }
 
+    public boolean isFinalRound() {
+    	return gameState.isFinalRound();
+    }
+
+    public void setIsFinalRound(boolean finalRound) {
+    	if (finalRound) {
+    		this.gameState = new GameLastRoundState();
+	    }
+    }
+
+    public boolean isGameOver() {
+    	return this.gameState.isGameOver();
+    }
+
+    public void setGameOver(boolean gameOver) {
+    	if (gameOver) {
+    		this.gameState = new GameOverState();
+	    }
+    }
+
     public String getLastPlayer() {
         return lastPlayer;
     }
