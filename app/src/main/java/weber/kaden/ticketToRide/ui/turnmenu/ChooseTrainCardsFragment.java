@@ -252,6 +252,7 @@ public class ChooseTrainCardsFragment extends DialogFragment {
 				if (numCardsChosen == 2) {
 					presenter.removeAsObserver();
 					getDialog().dismiss();
+					new FinishTurnTask().execute();
 				}
 			}
 			else {
