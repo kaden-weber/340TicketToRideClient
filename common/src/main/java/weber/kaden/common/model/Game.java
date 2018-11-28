@@ -26,6 +26,7 @@ public class Game {
     private int currentPlayer;
     private GameState gameState;
     private List<CommandData> gameHistory;
+    private String lastPlayer;
 
     public Game() {
         this.players = new ArrayList<Player>();
@@ -39,6 +40,7 @@ public class Game {
         this.gameName = gameName;
         this.destinationCardsDealt = false;
         this.gameState = new GameNotStartedState();
+        this.lastPlayer = null;
     }
 
     public List<Player> getPlayers() {
@@ -79,7 +81,7 @@ public class Game {
 
     public void setSetup(boolean setup) {
         if (setup) {
-        	gameState = new GameSetupState();
+        	this.gameState = new GameSetupState();
         }
     }
 
@@ -89,8 +91,16 @@ public class Game {
 
     public void setStarted(boolean started) {
         if (started) {
-        	gameState = new GamePlayingState();
+        	this.gameState = new GamePlayingState();
         }
+    }
+
+    public String getLastPlayer() {
+        return lastPlayer;
+    }
+
+    public void setLastPlayer(String lastPlayer) {
+        this.lastPlayer = lastPlayer;
     }
 
     public boolean isDestinationCardsDealt() {
@@ -344,9 +354,17 @@ public class Game {
         if(this.getPlayer(playerID).ClaimRoute(routeClaimed)) {
             this.claimedRoutes.add(routeClaimed);
             this.trainCardDiscard.addAll(this.getPlayer(playerID).useTrainCards(routeClaimed, cardType));
+            checkLastTurn(playerID);
             return true;
         }
         return false;
+    }
+
+    private void checkLastTurn(String playerID) {
+        if (this.getPlayer(playerID).getNumberOfTrains() < 4) {
+            this.gameState = new GameLastRoundState();
+            this.setLastPlayer(playerID);
+        }
     }
 
     public List<Route> RoutesClaimedByPlayer(String playerID) {
@@ -368,6 +386,10 @@ public class Game {
         this.currentPlayer++;
         if (currentPlayer == this.players.size()) {
             currentPlayer = 0;
+        }
+        if (this.players.get(currentPlayer).getID().equals(this.lastPlayer)) {
+            this.gameState = new GameOverState();
+            this.endGame();
         }
         return true;
     }
