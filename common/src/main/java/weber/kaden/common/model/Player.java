@@ -268,6 +268,10 @@ public class Player {
         this.hasLongestPath = b;
     }
 
+    public boolean isHasLongestPath() {
+        return hasLongestPath;
+    }
+
     public List<TrainCard> useTrainCards(Route routeClaimed, TrainCardType cardType) {
         int num = routeClaimed.getCost();
         List<TrainCard> toReturn = new ArrayList<TrainCard>();
