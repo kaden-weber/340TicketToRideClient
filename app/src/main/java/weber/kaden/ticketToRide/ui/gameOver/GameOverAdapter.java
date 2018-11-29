@@ -55,11 +55,11 @@ public class GameOverAdapter extends RecyclerView.Adapter<GameOverAdapter.ViewHo
 		}
 
 		holder.playerNameText.setText(getPlayerName(position));
-		//TODO: Set Text from players points
-		holder.pointsGainedText.setText("Points from DC: ");
-		holder.pointsLostText.setText("Points lost form DC: ");
-		holder.totalPointsText.setText("Total points: ");
-		holder.longestRouteStar.setVisibility(View.VISIBLE);
+		holder.totalPointsText.setText("Total points: " + mPlayers.get(position).getFinalScore());
+
+		if (mPlayers.get(position).isHasLongestPath()) {
+			holder.longestRouteStar.setVisibility(View.VISIBLE);
+		}
 	}
 
 	@Override
