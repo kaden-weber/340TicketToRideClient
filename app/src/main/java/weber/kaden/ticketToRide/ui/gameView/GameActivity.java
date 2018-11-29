@@ -51,6 +51,7 @@ import weber.kaden.common.model.TrainCard;
 import weber.kaden.common.model.TrainCardType;
 import weber.kaden.ticketToRide.R;
 import weber.kaden.ticketToRide.model.ClientFacade;
+import weber.kaden.ticketToRide.serverProxy.Poller;
 import weber.kaden.ticketToRide.ui.chat.ChatFragment;
 import weber.kaden.ticketToRide.ui.gameOver.GameOverActivity;
 import weber.kaden.ticketToRide.ui.turnmenu.ClaimRouteFragment;
@@ -496,6 +497,7 @@ public class GameActivity extends AppCompatActivity
     public void finishGame() {
 	    Intent intent = new Intent(instance, GameOverActivity.class);
 	    startActivity(intent);
+        Poller.getInstance(this).stopPolling();
     }
 
 

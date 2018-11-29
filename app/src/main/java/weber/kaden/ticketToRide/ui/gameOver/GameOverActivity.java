@@ -16,6 +16,7 @@ import java.util.List;
 import weber.kaden.common.model.Player;
 import weber.kaden.ticketToRide.R;
 import weber.kaden.ticketToRide.model.ClientFacade;
+import weber.kaden.ticketToRide.serverProxy.Poller;
 import weber.kaden.ticketToRide.ui.gameList.GameListActivity;
 
 public class GameOverActivity extends AppCompatActivity implements GameOverViewInterface {
@@ -70,6 +71,7 @@ public class GameOverActivity extends AppCompatActivity implements GameOverViewI
 		    if (success) {
 		    	Intent intent = new Intent(instance, GameListActivity.class);
 		    	startActivity(intent);
+		    	Poller.getInstance(instance).pollGamesList();
 		    }
 		    else {
 		    	Toast.makeText(instance, errorString, Toast.LENGTH_SHORT).show();
