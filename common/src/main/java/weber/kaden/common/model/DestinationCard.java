@@ -2,6 +2,7 @@ package weber.kaden.common.model;
 
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class DestinationCard implements Serializable {
     private City startCity;
@@ -36,5 +37,21 @@ public class DestinationCard implements Serializable {
 
     public void setPoints(Integer points) {
         this.points = points;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DestinationCard)) return false;
+        DestinationCard that = (DestinationCard) o;
+        return startCity == that.startCity &&
+                endCity == that.endCity &&
+                Objects.equals(points, that.points);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(startCity, endCity, points);
     }
 }
