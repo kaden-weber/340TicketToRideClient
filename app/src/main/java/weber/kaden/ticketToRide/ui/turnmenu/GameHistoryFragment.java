@@ -97,7 +97,7 @@ public class GameHistoryFragment extends DialogFragment {
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             holder.commandRow.setText(mCommandData.get(position).getType().toString());
-            holder.userRow.setText(mCommandData.get(position).getParams().get(0));
+            holder.userRow.setText(mCommandData.get(position).getParams().get(1));
         }
     }
 }
