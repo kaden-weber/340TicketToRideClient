@@ -32,13 +32,15 @@ public class GameOverActivity extends AppCompatActivity implements GameOverViewI
 
 	    RecyclerView recyclerView = findViewById(R.id.game_over_players_list);
 	    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+		playerList = gameOverPresenter.getPlayers();
 	    adapter = new GameOverAdapter(this, playerList);
 	    recyclerView.setAdapter(adapter);
 	    Button quitGameButton = findViewById(R.id.game_over_quit_button);
 	    quitGameButton.setOnClickListener(new View.OnClickListener() {
 		    @Override
 		    public void onClick(View v) {
-
+				QuitGameTask task = new QuitGameTask("","");
+				task.execute((Void) null);
 		    }
 	    });
     }
