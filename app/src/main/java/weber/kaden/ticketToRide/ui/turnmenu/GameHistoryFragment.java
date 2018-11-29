@@ -69,12 +69,10 @@ public class GameHistoryFragment extends DialogFragment {
 
         class ViewHolder extends RecyclerView.ViewHolder {
             TextView commandRow;
-            TextView userRow;
 
             public ViewHolder(View itemView) {
                 super(itemView);
                 this.commandRow = itemView.findViewById(R.id.command_row);
-                this.userRow = itemView.findViewById(R.id.user_row);
             }
         }
 
@@ -97,7 +95,6 @@ public class GameHistoryFragment extends DialogFragment {
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             holder.commandRow.setText(mCommandData.get(position).getType().toString());
-            holder.userRow.setText(mCommandData.get(position).getParams().get(1));
         }
     }
 }
