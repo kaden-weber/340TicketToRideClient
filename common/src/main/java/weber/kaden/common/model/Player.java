@@ -233,16 +233,18 @@ public class Player {
         return true;
     }
 
-    public int getFinalScore() {
+    public void endScore() {
         // add in base score
-        int finalScore = this.score;
-        finalScore += this.scoreRoutes();
+        this.score += this.scoreRoutes();
         // add in completed routes
         if (hasLongestPath) {
             this.score += 10;
         }
         // minus incomplete routes
-        return finalScore;
+    }
+
+    public int getFinalScore() {
+        return this.score;
     }
 
     private int scoreRoutes() {

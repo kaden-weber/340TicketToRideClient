@@ -182,7 +182,7 @@ public class Game {
     }
 
     public boolean setUp() {
-        if (this.getPlayers().size() < 2 || this.getPlayers().size() > 5) {
+        if (this.getPlayers().size() < 1 || this.getPlayers().size() > 5) {
             return false;
         }
         InitalizeDecks();
@@ -497,6 +497,9 @@ public class Game {
             }
         }
         this.players.get(playerWithLongestPath).setLongestPath(true);
+        for (int i = 0; i < this.players.size(); i++) {
+            this.players.get(i).endScore();
+        }
         return true;
     }
 
