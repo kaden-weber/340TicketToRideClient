@@ -55,6 +55,8 @@ public class GameOverAdapter extends RecyclerView.Adapter<GameOverAdapter.ViewHo
 		}
 
 		holder.playerNameText.setText(getPlayerName(position));
+		holder.pointsGainedText.setText("Points from DC: " + mPlayers.get(position).getDestinationCardPoints());
+		holder.pointsLostText.setText("Points Lost from DC: " + mPlayers.get(position).getDestinationCardPointsLost());
 		holder.totalPointsText.setText("Total points: " + mPlayers.get(position).getFinalScore());
 
 		if (mPlayers.get(position).isHasLongestPath()) {
