@@ -46,6 +46,8 @@ public class Player {
         this.routesClaimed = routes;
         this.trainPieces = trainPieces;
         this.score = score;
+        this.destinationCardPoints = 0;
+        this.destinationCardPointsLost = 0;
     }
 
     public Player(Player player) {
@@ -57,6 +59,8 @@ public class Player {
         this.routesClaimed = new ArrayList<Route>();
         this.trainPieces = STARTING_TRAIN_PIECES;
         this.score = 0;
+        this.destinationCardPoints = 0;
+        this.destinationCardPointsLost = 0;
     }
 
     public String getID() {
