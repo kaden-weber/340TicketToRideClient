@@ -19,8 +19,8 @@ public class Player {
     private PlayerColors color;
     private Integer TravelRate = null;
     private boolean hasLongestPath = false;
-    private Integer destinationCardPoints;
-    private Integer destinationCardPointsLost;
+    private int destinationCardPoints;
+    private int destinationCardPointsLost;
 
     public Player(String ID, String password) {
         this.ID = ID;
