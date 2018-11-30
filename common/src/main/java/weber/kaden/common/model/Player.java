@@ -8,6 +8,8 @@ import java.util.Objects;
 import weber.kaden.common.command.Command;
 
 public class Player {
+    private static final int STARTING_TRAIN_PIECES = 10;
+
     private String ID;
     private String password;
     private List<DestinationCard> dealtDestinationCards;
@@ -29,7 +31,7 @@ public class Player {
         this.destinationCardHand = new ArrayList<DestinationCard>();
         this.trainCards = new ArrayList<TrainCard>();
         this.routesClaimed = new ArrayList<Route>();
-        this.trainPieces = 40;
+        this.trainPieces = STARTING_TRAIN_PIECES;
         this.score = 0;
         this.destinationCardPoints = 0;
         this.destinationCardPointsLost = 0;
@@ -53,7 +55,7 @@ public class Player {
         this.destinationCardHand = new ArrayList<DestinationCard>();
         this.trainCards = new ArrayList<TrainCard>();
         this.routesClaimed = new ArrayList<Route>();
-        this.trainPieces = 40;
+        this.trainPieces = STARTING_TRAIN_PIECES;
         this.score = 0;
     }
 
