@@ -8,6 +8,8 @@ import java.util.Objects;
 import weber.kaden.common.command.Command;
 
 public class Player {
+    private static final int STARTING_TRAIN_PIECES = 10;
+
     private String ID;
     private String password;
     private List<DestinationCard> dealtDestinationCards;
@@ -19,6 +21,8 @@ public class Player {
     private PlayerColors color;
     private Integer TravelRate = null;
     private boolean hasLongestPath = false;
+    private int destinationCardPoints;
+    private int destinationCardPointsLost;
 
     public Player(String ID, String password) {
         this.ID = ID;
@@ -27,8 +31,10 @@ public class Player {
         this.destinationCardHand = new ArrayList<DestinationCard>();
         this.trainCards = new ArrayList<TrainCard>();
         this.routesClaimed = new ArrayList<Route>();
-        this.trainPieces = 40;
+        this.trainPieces = STARTING_TRAIN_PIECES;
         this.score = 0;
+        this.destinationCardPoints = 0;
+        this.destinationCardPointsLost = 0;
     }
 
     public Player(String ID, String password, List<DestinationCard> dealtDestinationCards, List<DestinationCard> destinationCardHand, List<TrainCard> trainCards, List<Route> routes, Integer trainPieces, Integer score) {
@@ -40,6 +46,8 @@ public class Player {
         this.routesClaimed = routes;
         this.trainPieces = trainPieces;
         this.score = score;
+        this.destinationCardPoints = 0;
+        this.destinationCardPointsLost = 0;
     }
 
     public Player(Player player) {
@@ -49,8 +57,10 @@ public class Player {
         this.destinationCardHand = new ArrayList<DestinationCard>();
         this.trainCards = new ArrayList<TrainCard>();
         this.routesClaimed = new ArrayList<Route>();
-        this.trainPieces = 40;
+        this.trainPieces = STARTING_TRAIN_PIECES;
         this.score = 0;
+        this.destinationCardPoints = 0;
+        this.destinationCardPointsLost = 0;
     }
 
     public String getID() {
@@ -105,6 +115,22 @@ public class Player {
 
     public void setDestinationCardHand(List<DestinationCard> destinationCardHand) {
         this.destinationCardHand = destinationCardHand;
+    }
+
+    public Integer getDestinationCardPoints() {
+        return destinationCardPoints;
+    }
+
+    public void setDestinationCardPoints(Integer destinationCardPoints) {
+        this.destinationCardPoints = destinationCardPoints;
+    }
+
+    public Integer getDestinationCardPointsLost() {
+        return destinationCardPointsLost;
+    }
+
+    public void setDestinationCardPointsLost(Integer destinationCardPointsLost) {
+        this.destinationCardPointsLost = destinationCardPointsLost;
     }
 
     @Override
@@ -207,16 +233,18 @@ public class Player {
         return true;
     }
 
-    public int getFinalScore() {
+    public void endScore() {
         // add in base score
-        int finalScore = this.score;
-        finalScore += this.scoreRoutes();
+        this.score += this.scoreRoutes();
         // add in completed routes
         if (hasLongestPath) {
             this.score += 10;
         }
         // minus incomplete routes
-        return finalScore;
+    }
+
+    public int getFinalScore() {
+        return this.score;
     }
 
     private int scoreRoutes() {
@@ -256,8 +284,10 @@ public class Player {
             }
 
             if (pathComplete) {
+                this.destinationCardPoints += card.getPoints();
                 toReturn += card.getPoints();
             } else {
+                this.destinationCardPointsLost += card.getPoints();
                 toReturn -= card.getPoints();
             }
         }
@@ -266,6 +296,10 @@ public class Player {
 
     public void setLongestPath(boolean b) {
         this.hasLongestPath = b;
+    }
+
+    public boolean isHasLongestPath() {
+        return hasLongestPath;
     }
 
     public List<TrainCard> useTrainCards(Route routeClaimed, TrainCardType cardType) {

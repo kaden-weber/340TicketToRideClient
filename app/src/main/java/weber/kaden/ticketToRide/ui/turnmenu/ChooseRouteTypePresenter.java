@@ -70,6 +70,7 @@ public class ChooseRouteTypePresenter {
 
     private String toEnumValue(String str) {
         str = str.replaceAll(" ", "_").toUpperCase();
+        str = str.replace(".", "");
         return str;
     }
 

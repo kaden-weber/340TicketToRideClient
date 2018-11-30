@@ -28,9 +28,7 @@ public class GameHistoryPresenter implements Observer {
 
     @Override
     public void update(Observable observable, Object o) {
-        if (o instanceof Game) {
-            this.commands = ((Game) o).getGameHistory();
-        }
+
     }
 
     public List<CommandData> getCommands() {

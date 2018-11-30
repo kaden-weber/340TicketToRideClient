@@ -69,6 +69,9 @@ public class GamePresenter implements Observer {
             updateClaimedRoutes(game);
             view.updateTextView("Current Player: " + client.getCurrentTurnPlayer());
 
+            if (game.isGameOver()) {
+				view.finishGame();
+            }
         }
     }
 

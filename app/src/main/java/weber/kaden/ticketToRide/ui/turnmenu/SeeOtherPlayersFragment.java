@@ -56,7 +56,6 @@ public class SeeOtherPlayersFragment extends DialogFragment {
         mActionOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: Make this send data back
                 getDialog().dismiss();
             }
         });

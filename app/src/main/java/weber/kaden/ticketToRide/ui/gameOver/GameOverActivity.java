@@ -16,6 +16,7 @@ import java.util.List;
 import weber.kaden.common.model.Player;
 import weber.kaden.ticketToRide.R;
 import weber.kaden.ticketToRide.model.ClientFacade;
+import weber.kaden.ticketToRide.serverProxy.Poller;
 import weber.kaden.ticketToRide.ui.gameList.GameListActivity;
 
 public class GameOverActivity extends AppCompatActivity implements GameOverViewInterface {
@@ -31,13 +32,15 @@ public class GameOverActivity extends AppCompatActivity implements GameOverViewI
 
 	    RecyclerView recyclerView = findViewById(R.id.game_over_players_list);
 	    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+		playerList = gameOverPresenter.getPlayers();
 	    adapter = new GameOverAdapter(this, playerList);
 	    recyclerView.setAdapter(adapter);
 	    Button quitGameButton = findViewById(R.id.game_over_quit_button);
 	    quitGameButton.setOnClickListener(new View.OnClickListener() {
 		    @Override
 		    public void onClick(View v) {
-
+				QuitGameTask task = new QuitGameTask("","");
+				task.execute((Void) null);
 		    }
 	    });
     }
@@ -70,6 +73,7 @@ public class GameOverActivity extends AppCompatActivity implements GameOverViewI
 		    if (success) {
 		    	Intent intent = new Intent(instance, GameListActivity.class);
 		    	startActivity(intent);
+		    	Poller.getInstance(instance).pollGamesList();
 		    }
 		    else {
 		    	Toast.makeText(instance, errorString, Toast.LENGTH_SHORT).show();

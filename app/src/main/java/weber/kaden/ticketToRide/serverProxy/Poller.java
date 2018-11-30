@@ -44,6 +44,10 @@ public class Poller {
     	currentState.pollGamesList();
     }
 
+    public void stopPolling() {
+    	currentState.stopPolling();
+	}
+
     public void setState(PollerState state) {
 		if (currentState != null) {
 			currentState.exit();
@@ -119,6 +123,9 @@ public class Poller {
 
 		//called when the user joins a game
 		public abstract void pollGame();
+
+		//called when the user finishes a game
+		public abstract void stopPolling();
 	}
 
 	private class PollGameState extends PollerState {
@@ -145,6 +152,11 @@ public class Poller {
 		public void pollGame() {
 			gameThread.start();
 		}
+
+		@Override
+		public void stopPolling() {
+			setState(new NotPollingState());
+		}
 	}
 
 	private class PollGamesListState extends PollerState {
@@ -170,6 +182,40 @@ public class Poller {
 		public void pollGame() {
 			setState(new PollGameState());
 			currentState.pollGame();
+		}
+
+		@Override
+		public void stopPolling() {
+			setState(new NotPollingState());
+		}
+	}
+
+	private class NotPollingState extends PollerState {
+		@Override
+		public void enter() {
+
+		}
+
+		@Override
+		public void exit() {
+
+		}
+
+		@Override
+		public void pollGamesList() {
+			setState(new PollGamesListState());
+			currentState.pollGamesList();
+		}
+
+		@Override
+		public void pollGame() {
+			setState(new PollGameState());
+			currentState.pollGame();
+		}
+
+		@Override
+		public void stopPolling() {
+
 		}
 	}
 
