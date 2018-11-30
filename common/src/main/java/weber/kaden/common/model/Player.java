@@ -19,6 +19,8 @@ public class Player {
     private PlayerColors color;
     private Integer TravelRate = null;
     private boolean hasLongestPath = false;
+    private Integer destinationCardPoints;
+    private Integer destinationCardPointsLost;
 
     public Player(String ID, String password) {
         this.ID = ID;
@@ -29,6 +31,8 @@ public class Player {
         this.routesClaimed = new ArrayList<Route>();
         this.trainPieces = 40;
         this.score = 0;
+        this.destinationCardPoints = 0;
+        this.destinationCardPointsLost = 0;
     }
 
     public Player(String ID, String password, List<DestinationCard> dealtDestinationCards, List<DestinationCard> destinationCardHand, List<TrainCard> trainCards, List<Route> routes, Integer trainPieces, Integer score) {
@@ -105,6 +109,22 @@ public class Player {
 
     public void setDestinationCardHand(List<DestinationCard> destinationCardHand) {
         this.destinationCardHand = destinationCardHand;
+    }
+
+    public Integer getDestinationCardPoints() {
+        return destinationCardPoints;
+    }
+
+    public void setDestinationCardPoints(Integer destinationCardPoints) {
+        this.destinationCardPoints = destinationCardPoints;
+    }
+
+    public Integer getDestinationCardPointsLost() {
+        return destinationCardPointsLost;
+    }
+
+    public void setDestinationCardPointsLost(Integer destinationCardPointsLost) {
+        this.destinationCardPointsLost = destinationCardPointsLost;
     }
 
     @Override
@@ -256,8 +276,10 @@ public class Player {
             }
 
             if (pathComplete) {
+                this.destinationCardPoints += card.getPoints();
                 toReturn += card.getPoints();
             } else {
+                this.destinationCardPointsLost += card.getPoints();
                 toReturn -= card.getPoints();
             }
         }
