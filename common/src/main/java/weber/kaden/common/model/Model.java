@@ -15,6 +15,7 @@ public class Model extends Observable {
     private int deltaValue;
     private int deltaCount;
     private List<CommandData> deltaCommandData;
+    private PersistanceManager persistanceManager;
 
     public static Model getInstance() {
         return model;
@@ -261,8 +262,18 @@ public class Model extends Observable {
         }
     }
 
+    public PersistanceManager getPersistanceManager() {
+        return persistanceManager;
+    }
+
+    public void setPersistanceManager(PersistanceManager persistanceManager) {
+        this.persistanceManager = persistanceManager;
+    }
+
     public void saveToDb() {
         this.deltaCount = 0;
         this.deltaCommandData.clear();
+        this.persistanceManager.getUserDao().save(this.players);
+        this.persistanceManager.getGameDao().save(this.games);
     }
 }
