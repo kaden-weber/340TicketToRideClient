@@ -8,8 +8,10 @@ public class Route {
     private Integer score;
     private Integer cost;
     private TrainCardType type;
+    private boolean isSecondRoute;
+    private boolean visited = false;
 
-    public Route(City city1, City city2, Integer cost, TrainCardType type) {
+    public Route(City city1, City city2, Integer cost, TrainCardType type, boolean isSecondRoute) {
         this.city1 = city1;
         this.city2 = city2;
         switch (cost){
@@ -36,6 +38,7 @@ public class Route {
         }
         this.cost = cost;
         this.type = type;
+        this.isSecondRoute = isSecondRoute;
     }
 
     public City getCity1() {
@@ -58,10 +61,6 @@ public class Route {
         return score;
     }
 
-    public void setScore(Integer score) {
-        this.score = score;
-    }
-
     public Integer getCost() {
         return cost;
     }
@@ -76,6 +75,22 @@ public class Route {
 
     public void setType(TrainCardType type) {
         this.type = type;
+    }
+
+    public boolean isSecondRoute() {
+        return isSecondRoute;
+    }
+
+    public void setSecondRoute(boolean secondRoute) {
+        isSecondRoute = secondRoute;
+    }
+
+    public boolean isVisited() {
+        return visited;
+    }
+
+    public void setVisited(boolean visited) {
+        this.visited = visited;
     }
 
     @Override

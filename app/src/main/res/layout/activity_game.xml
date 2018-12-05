@@ -17,7 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
-            android:layout_height="match_parent">
 
             <fragment
                 android:id="@+id/map"
@@ -28,55 +27,70 @@
 
             </fragment>
 
-        </FrameLayout>
+            <LinearLayout
+                android:id="@+id/validity"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="vertical"
+                android:layout_gravity="top">
+                <TextView
+                    android:id="@+id/claim_route_prompt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/claim_route_flag_text"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:padding="5dp"
+                    android:background="#CC666666"
+                    android:textColor="@android:color/primary_text_dark"
+                    android:layout_gravity="end" />
+            </LinearLayout>
 
-        <Button
-            android:id="@+id/tempTestButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="@string/test"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/map_frame" />
+        </FrameLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             android:background="#FFF">
-        <LinearLayout
-            android:id="@+id/myInfoBanner"
-            android:layout_width="100dp"
-            android:layout_height="55dp"
-            android:layout_alignParentStart="true">
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/myInfoRecycle"
+            <Button
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/myInfoBannerTrains"
-            android:layout_width="100dp"
-            android:layout_height="55dp"
-            android:layout_centerInParent="true">
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/myInfoRecycleTrains"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
+                android:layout_height="50dp"
+                android:text="Dest Cards"
+                android:id="@+id/showDestCards"/>
 
+            <Button
+                android:id="@+id/showTrainCards"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="111dp"
+                android:text="Train Cards" />
+
+            <TextView
+                android:id="@+id/currentPlayer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="123dp"
+                android:background="#FFF"
+                android:text="Current Player: "
+                android:textSize="20dp" />
             <LinearLayout
                 android:id="@+id/myInfoBannerPoints"
-                android:layout_width="100dp"
+                android:layout_width="55dp"
                 android:layout_height="55dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="0dp"
-                android:layout_marginRight="68dp">
+                android:layout_alignRight="@+id/showTrainCards">
+
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/myInfoRecyclePoints"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" />
+
             </LinearLayout>
         </RelativeLayout>
     </android.support.constraint.ConstraintLayout>

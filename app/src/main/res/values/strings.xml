@@ -10,6 +10,8 @@
     <string name="prompt_email">Username</string>
     <string name="prompt_password">Password (required)</string>
     <string name="prompt_confirm_password"> Confirm Password (for registering)</string>
+    <string name="prompt_server_ip">Server\'s IP address</string>
+    <string name="prompt_server_port">Server\'s port number</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_register">Register</string>
     <string name="action_sign_in_short">Sign in</string>
@@ -59,5 +61,10 @@
     <!--claim route pop-up-->
     <string name="confirm_button_label">Confirm</string>
     <string name="claim_route_button_filler_text">Claim Route?</string>
+
+    <!--game_misc-->
+    <string name="claim_route_flag_text">Select a route to claim.</string>
+    <string name="game_over">Game Over</string>
+    <string name="game_over_legend">= Had longest continuous train route</string>
 
 </resources>

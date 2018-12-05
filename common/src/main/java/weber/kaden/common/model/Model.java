@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import weber.kaden.common.command.CommandData.CommandData;
+
 public class Model extends Observable {
     private final static Model model = new Model();
     private List<Player> players;
     private List<Game> games;
     private String currentUser;
     private Game currentGame;
+    private int deltaValue;
+    private int deltaCount;
+    private List<CommandData> deltaCommandData;
 
     public static Model getInstance() {
         return model;
@@ -190,6 +195,7 @@ public class Model extends Observable {
                     }
                 }
                 currentGame = game;
+                currentGame.updateGameState();
                 setChanged();
                 notifyObservers(game);
                 return game;
@@ -220,11 +226,43 @@ public class Model extends Observable {
         return this.currentGame.getPlayer(currentUser).hasTrainCards(number, type);
     }
 
-    public boolean isCurrentPlayer() {
-        return (this.currentUser.equals(currentGame.getCurrentPlayer().getID()));
+    public boolean isCurrentPlayerTheActivePlayer() {
+        return (this.currentUser.equals(currentGame.getCurrentPlayer()));
     }
 
     public List<DestinationCard> getDealtDestinationCards() {
         return this.currentGame.getPlayer(currentUser).getDealtDestinationCards();
+    }
+
+    public int getNumberOfPlayersInCurrentGame() {
+        return this.currentGame.getPlayers().size();
+    }
+
+    public void addGameHistoryToGame(String gameID, CommandData history){
+        this.getGame(gameID).addHistory(history);
+    }
+
+    public List<CommandData> getGameHistory(String gameID) {
+        return this.getGame(gameID).getGameHistory();
+    }
+
+    public List<TrainCard> getPlayerTrainCardHand(String currentUser) {
+        return this.currentGame.getPlayer(currentUser).getTrainCards();
+    }
+
+    public void update(CommandData data) {
+        this.deltaCount++;
+        if (this.deltaCommandData == null) {
+            this.deltaCommandData = new ArrayList<CommandData>();
+        }
+        this.deltaCommandData.add(data);
+        if (this.deltaCount == this.deltaValue) {
+            this.saveToDb();
+        }
+    }
+
+    public void saveToDb() {
+        this.deltaCount = 0;
+        this.deltaCommandData.clear();
     }
 }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="weber.kaden.ticketToRide.ui.gameOver.GameOverActivity">
+
+    <TextView
+        android:id="@+id/game_over_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/game_over"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/game_over_players_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/game_over_header"/>
+
+
+    <LinearLayout
+        android:id="@+id/game_over_legend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_below="@id/game_over_players_list">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_star_black"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/game_over_legend"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/game_over_quit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/game_over_players_list"
+        android:layout_alignParentEnd="true"
+        android:text="@string/exit_game_button"/>
+
+
+</RelativeLayout>

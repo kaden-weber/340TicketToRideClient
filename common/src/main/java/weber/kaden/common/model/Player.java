@@ -1,10 +1,15 @@
 package weber.kaden.common.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
+import weber.kaden.common.command.Command;
+
 public class Player {
+    private static final int STARTING_TRAIN_PIECES = 10;
+
     private String ID;
     private String password;
     private List<DestinationCard> dealtDestinationCards;
@@ -15,6 +20,9 @@ public class Player {
     private Integer score;
     private PlayerColors color;
     private Integer TravelRate = null;
+    private boolean hasLongestPath = false;
+    private int destinationCardPoints;
+    private int destinationCardPointsLost;
 
     public Player(String ID, String password) {
         this.ID = ID;
@@ -23,8 +31,10 @@ public class Player {
         this.destinationCardHand = new ArrayList<DestinationCard>();
         this.trainCards = new ArrayList<TrainCard>();
         this.routesClaimed = new ArrayList<Route>();
-        this.trainPieces = 40;
+        this.trainPieces = STARTING_TRAIN_PIECES;
         this.score = 0;
+        this.destinationCardPoints = 0;
+        this.destinationCardPointsLost = 0;
     }
 
     public Player(String ID, String password, List<DestinationCard> dealtDestinationCards, List<DestinationCard> destinationCardHand, List<TrainCard> trainCards, List<Route> routes, Integer trainPieces, Integer score) {
@@ -36,6 +46,8 @@ public class Player {
         this.routesClaimed = routes;
         this.trainPieces = trainPieces;
         this.score = score;
+        this.destinationCardPoints = 0;
+        this.destinationCardPointsLost = 0;
     }
 
     public Player(Player player) {
@@ -45,8 +57,10 @@ public class Player {
         this.destinationCardHand = new ArrayList<DestinationCard>();
         this.trainCards = new ArrayList<TrainCard>();
         this.routesClaimed = new ArrayList<Route>();
-        this.trainPieces = 40;
+        this.trainPieces = STARTING_TRAIN_PIECES;
         this.score = 0;
+        this.destinationCardPoints = 0;
+        this.destinationCardPointsLost = 0;
     }
 
     public String getID() {
@@ -103,6 +117,22 @@ public class Player {
         this.destinationCardHand = destinationCardHand;
     }
 
+    public Integer getDestinationCardPoints() {
+        return destinationCardPoints;
+    }
+
+    public void setDestinationCardPoints(Integer destinationCardPoints) {
+        this.destinationCardPoints = destinationCardPoints;
+    }
+
+    public Integer getDestinationCardPointsLost() {
+        return destinationCardPointsLost;
+    }
+
+    public void setDestinationCardPointsLost(Integer destinationCardPointsLost) {
+        this.destinationCardPointsLost = destinationCardPointsLost;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -143,23 +173,6 @@ public class Player {
             return false;
         }
         if(this.routesClaimed.add(routeClaimed)) {
-            int numberOfCards = routeClaimed.getCost();
-            for (int i = 0; i < this.trainCards.size(); i++) {
-                if (numberOfCards > 0 && this.trainCards.get(i).getType().equals(routeClaimed.getType())) {
-                    this.trainCards.remove(i);
-                    numberOfCards--;
-                    i--;
-                }
-            }
-            if (numberOfCards > 0) {
-                for (int i = 0; i < this.trainCards.size(); i++) {
-                    if (numberOfCards > 0 && this.trainCards.get(i).getType().equals(TrainCardType.LOCOMOTIVE)) {
-                        this.trainCards.remove(i);
-                        numberOfCards--;
-                        i--;
-                    }
-                }
-            }
             this.trainPieces -= routeClaimed.getCost();
             this.score += routeClaimed.getScore();
             return true;
@@ -181,11 +194,14 @@ public class Player {
     }
 
     public boolean hasTrainCards(int number, TrainCardType type) {
+        if (this.trainPieces < number) {
+            return false;
+        }
         if (type.equals(TrainCardType.GRAY)) {
             for (TrainCardType localType : TrainCardType.values()) {
                 int num = 0;
                 for (int i = 0; i < this.trainCards.size(); i++) {
-                    if (this.trainCards.get(i).getType().equals(localType)) {
+                    if (this.trainCards.get(i).getType().equals(localType) || this.trainCards.get(i).getType().equals(TrainCardType.LOCOMOTIVE)) {
                         num++;
                     }
                 }
@@ -215,5 +231,100 @@ public class Player {
     public boolean testRemoveTrainCars() {
         this.trainPieces -= 5;
         return true;
+    }
+
+    public void endScore() {
+        // add in base score
+        this.score += this.scoreRoutes();
+        // add in completed routes
+        if (hasLongestPath) {
+            this.score += 10;
+        }
+        // minus incomplete routes
+    }
+
+    public int getFinalScore() {
+        return this.score;
+    }
+
+    private int scoreRoutes() {
+        int toReturn = 0;
+        for (int i = 0; i < this.destinationCardHand.size(); i++) {
+            boolean pathComplete = false;
+            DestinationCard card = this.destinationCardHand.get(i);
+
+            boolean hasCity = false;
+
+            for (int t = 0; t < this.routesClaimed.size(); t++) {
+                if (this.routesClaimed.get(t).getCity1().equals(card.getStartCity()) || this.routesClaimed.get(t).getCity2().equals(card.getStartCity()))  {
+                    hasCity = true;
+                }
+            }
+
+            if (hasCity) {
+                List<City> cities = new ArrayList<City>();
+                cities.add(card.getStartCity());
+                boolean notDone = true;
+                while (notDone) {
+                    notDone = false;
+                    for (int t = 0; t < this.routesClaimed.size(); t++) {
+                        if (cities.contains(this.routesClaimed.get(t).getCity1()) && !cities.contains(this.routesClaimed.get(t).getCity2())) {
+                            cities.add(this.routesClaimed.get(t).getCity2());
+                            notDone = true;
+                        }
+                        else if (!cities.contains(this.routesClaimed.get(t).getCity1()) && cities.contains(this.routesClaimed.get(t).getCity2())) {
+                            cities.add(this.routesClaimed.get(t).getCity1());
+                            notDone = true;
+                        }
+                    }
+                }
+                if (cities.contains(card.getEndCity())) {
+                    pathComplete = true;
+                }
+            }
+
+            if (pathComplete) {
+                this.destinationCardPoints += card.getPoints();
+                toReturn += card.getPoints();
+            } else {
+                this.destinationCardPointsLost += card.getPoints();
+                toReturn -= card.getPoints();
+            }
+        }
+        return toReturn;
+    }
+
+    public void setLongestPath(boolean b) {
+        this.hasLongestPath = b;
+    }
+
+    public boolean isHasLongestPath() {
+        return hasLongestPath;
+    }
+
+    public List<TrainCard> useTrainCards(Route routeClaimed, TrainCardType cardType) {
+        int num = routeClaimed.getCost();
+        List<TrainCard> toReturn = new ArrayList<TrainCard>();
+        for (int i = 0; i < this.trainCards.size(); i++) {
+            if (num > 0) {
+                if (this.trainCards.get(i).getType().equals(cardType)) {
+                    toReturn.add(this.trainCards.remove(i));
+                    i--;
+                    num--;
+                }
+            }
+        }
+        if (num > 0) {
+            for (int i = 0; i < this.trainCards.size(); i++) {
+                if (num > 0) {
+                    if (this.trainCards.get(i).getType().equals(TrainCardType.LOCOMOTIVE)) {
+                        toReturn.add(this.trainCards.remove(i));
+                        i--;
+                        num--;
+                    }
+                }
+            }
+        }
+        return toReturn;
     }
 }
