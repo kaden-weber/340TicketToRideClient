@@ -1,14 +1,14 @@
-package weber.kaden.common;
+package weber.kaden.common.results;
 
-public class GenericResults implements Results {
+import weber.kaden.common.model.Game;
 
-    private Object data;
+public class GameResults implements Results{
+
+    private Game data;
     private boolean success;
     private String errorInfo;
 
-    public GenericResults() {}
-
-    public GenericResults(Object data, boolean success, String errorInfo) {
+    public GameResults(Game data, boolean success, String errorInfo) {
         this.data = data;
         this.success = success;
         this.errorInfo = errorInfo;
@@ -18,7 +18,7 @@ public class GenericResults implements Results {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(Game data) {
         this.data = data;
     }
 

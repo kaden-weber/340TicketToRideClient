@@ -1,6 +1,6 @@
 package weber.kaden.ticketToRide.serverProxy;
 
-import weber.kaden.common.Results;
+import weber.kaden.common.results.Results;
 import weber.kaden.common.command.CommandData.CommandData;
 
 public class ServerProxy {

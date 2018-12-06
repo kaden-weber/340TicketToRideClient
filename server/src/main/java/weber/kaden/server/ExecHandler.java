@@ -7,14 +7,23 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import weber.kaden.common.Results;
+import weber.kaden.common.results.Results;
 import weber.kaden.common.Serializer;
 import weber.kaden.common.StreamProcessor;
 import weber.kaden.common.command.CommandData.CommandData;
+import weber.kaden.common.model.Model;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
 public class ExecHandler implements HttpHandler {
+
+    protected ExecHandler(String persistenceType, int number_of_checkpoints) {
+        PersistenceManager.getInstance().setDeltaValue(number_of_checkpoints);
+        // TODO: assign persistence stuff to Model here
+        // PersistenceManager.getInstance.setFactory(FlatDaoFactory);
+        // PersistenceManager.getInstance.setFactory(SQLDaoFactory);
+        // PersistenceManager.loadFromDB();
+    }
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {

@@ -1,4 +1,4 @@
-package weber.kaden.common;
+package weber.kaden.common.results;
 
 public interface Results {
 

@@ -9,7 +9,7 @@ import java.net.URL;
 import weber.kaden.common.Serializer;
 import weber.kaden.common.StreamProcessor;
 import weber.kaden.common.command.CommandData.CommandData;
-import weber.kaden.common.Results;
+import weber.kaden.common.results.Results;
 
 public class ClientCommunicator {
     private static ClientCommunicator single_instance = null;

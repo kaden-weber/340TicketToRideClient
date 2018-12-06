@@ -2,13 +2,12 @@ package weber.kaden.common.command.CommandClasses;
 
 import java.util.List;
 
-import weber.kaden.common.GameResults;
-import weber.kaden.common.GenericResults;
-import weber.kaden.common.Results;
+import weber.kaden.common.results.GameResults;
+import weber.kaden.common.results.GenericResults;
+import weber.kaden.common.results.Results;
 import weber.kaden.common.command.Command;
 import weber.kaden.common.model.Model;
 import weber.kaden.common.model.Route;
-import weber.kaden.common.model.TrainCard;
 import weber.kaden.common.model.TrainCardType;
 
 public class ClaimRouteCommand implements Command {

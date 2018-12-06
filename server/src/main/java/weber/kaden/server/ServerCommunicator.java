@@ -8,7 +8,7 @@ import java.net.InetSocketAddress;
 public class ServerCommunicator {
     private static final int MAX_WAITING_CONNECTIONS = 12;
 
-    private void run(String portNumber){
+    private void run(String portNumber, String persistenceType, int number_of_checkpoints){
         System.out.println("Initializing Http server");
         HttpServer httpServer;
         try {
@@ -21,7 +21,7 @@ public class ServerCommunicator {
         httpServer.setExecutor(null);
 
         System.out.println("Creating contexts");
-        httpServer.createContext("/", new ExecHandler());
+        httpServer.createContext("/", new ExecHandler (persistenceType, number_of_checkpoints));
         System.out.println("Starting server");
         httpServer.start();
         System.out.println("Server started");
@@ -29,7 +29,10 @@ public class ServerCommunicator {
 
     public static void main(String[] args){
         String portNumber = args[0];
-        new ServerCommunicator().run(portNumber);
+        // TODO: get plugin arguments
+        String persistenceType = "";//args[1];
+        int number_of_checkpoints = 0;//args[2]
+        new ServerCommunicator().run(portNumber, persistenceType, number_of_checkpoints);
     }
 
 }

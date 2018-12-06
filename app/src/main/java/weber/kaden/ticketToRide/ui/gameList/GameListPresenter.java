@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import weber.kaden.common.Results;
+import weber.kaden.common.results.Results;
 import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Model;
 import weber.kaden.ticketToRide.model.ClientFacade;

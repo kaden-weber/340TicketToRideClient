@@ -4,10 +4,8 @@ package weber.kaden.common.command.CommandClasses;
 
 import java.util.List;
 
-import javax.jws.WebParam;
-
-import weber.kaden.common.GameResults;
-import weber.kaden.common.Results;
+import weber.kaden.common.results.GameResults;
+import weber.kaden.common.results.Results;
 import weber.kaden.common.command.Command;
 import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Model;

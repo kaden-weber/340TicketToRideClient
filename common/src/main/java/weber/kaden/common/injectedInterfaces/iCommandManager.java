@@ -1,4 +1,4 @@
-package weber.kaden.common.command;
+package weber.kaden.common.injectedInterfaces;
 
 import java.util.List;
 

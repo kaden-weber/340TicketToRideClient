@@ -1,15 +1,13 @@
 package weber.kaden.server;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import weber.kaden.common.Results;
+import weber.kaden.common.results.Results;
 import weber.kaden.common.command.Command;
 import weber.kaden.common.command.CommandData.CommandData;
 import weber.kaden.common.command.CommandFactory;
-import weber.kaden.common.command.iCommandManager;
+import weber.kaden.common.injectedInterfaces.iCommandManager;
 import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Model;
 
@@ -53,7 +51,11 @@ public class CommandManager implements iCommandManager {
         if (command.hasID()) {
             Model.getInstance().addGameHistoryToGame(commandData.getParams().get(0), commandData);
         }
-        return command.execute();
+        Results results = command.execute();
+        if (results.success()) {
+            PersistenceManager.getInstance().update(commandData);
+        }
+        return results;
     }
 
     /**

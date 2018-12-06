@@ -8,6 +8,11 @@ import weber.kaden.common.command.CommandData.CommandDataDiscardTrainCard;
 import weber.kaden.common.command.CommandData.CommandDataDrawDestinationCards;
 import weber.kaden.common.command.CommandData.CommandDataDrawTrainCardFromFaceUp;
 import weber.kaden.common.command.CommandType;
+import weber.kaden.common.results.CommandListResults;
+import weber.kaden.common.results.GameResults;
+import weber.kaden.common.results.GenericResults;
+import weber.kaden.common.results.ListResults;
+import weber.kaden.common.results.Results;
 
 public class Serializer {
     private Gson gson;

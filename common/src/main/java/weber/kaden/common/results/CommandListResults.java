@@ -1,16 +1,15 @@
-package weber.kaden.common;
+package weber.kaden.common.results;
 
 import java.util.List;
 
-import weber.kaden.common.model.Game;
+import weber.kaden.common.command.CommandData.CommandData;
 
-public class ListResults implements Results{
-
-    private List<Game> data;
+public class CommandListResults implements Results{
+    private List<CommandData> data;
     private boolean success;
     private String errorInfo;
 
-    public ListResults(List<Game> data, boolean success, String errorInfo) {
+    public CommandListResults(List<CommandData> data, boolean success, String errorInfo) {
         this.data = data;
         this.success = success;
         this.errorInfo = errorInfo;
@@ -20,7 +19,7 @@ public class ListResults implements Results{
         return data;
     }
 
-    public void setData(List<Game> data) {
+    public void setData(List<CommandData> data) {
         this.data = data;
     }
 

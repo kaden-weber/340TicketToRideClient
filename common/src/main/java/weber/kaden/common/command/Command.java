@@ -1,7 +1,7 @@
 package weber.kaden.common.command;
 
 
-import weber.kaden.common.Results;
+import weber.kaden.common.results.Results;
 
 public interface Command {
 

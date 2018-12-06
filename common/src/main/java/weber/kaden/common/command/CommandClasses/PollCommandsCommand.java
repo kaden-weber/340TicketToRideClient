@@ -2,12 +2,12 @@ package weber.kaden.common.command.CommandClasses;
 
 import java.util.List;
 
-import weber.kaden.common.CommandListResults;
-import weber.kaden.common.GenericResults;
-import weber.kaden.common.Results;
+import weber.kaden.common.results.CommandListResults;
+import weber.kaden.common.results.GenericResults;
+import weber.kaden.common.results.Results;
 import weber.kaden.common.command.Command;
 import weber.kaden.common.command.CommandData.CommandData;
-import weber.kaden.common.command.iCommandManager;
+import weber.kaden.common.injectedInterfaces.iCommandManager;
 
 @Deprecated
 public class PollCommandsCommand implements Command {
