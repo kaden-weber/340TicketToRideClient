@@ -11,6 +11,10 @@ import weber.kaden.common.injectedInterfaces.iCommandManager;
 import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Model;
 
+import static weber.kaden.common.command.CommandType.POLLCOMMANDS;
+import static weber.kaden.common.command.CommandType.POLLGAME;
+import static weber.kaden.common.command.CommandType.POLLGAMESLIST;
+
 public class CommandManager implements iCommandManager {
 
     private static CommandManager sCommandManager;
@@ -52,7 +56,7 @@ public class CommandManager implements iCommandManager {
             Model.getInstance().addGameHistoryToGame(commandData.getParams().get(0), commandData);
         }
         Results results = command.execute();
-        if (results.success()) {
+        if (results.success() && !(commandData.getType().equals(POLLGAMESLIST) || commandData.getType().equals(POLLGAME) || commandData.getType().equals(POLLCOMMANDS))) {
             PersistenceManager.getInstance().update(commandData);
         }
         return results;
