@@ -8,7 +8,7 @@ import java.net.InetSocketAddress;
 public class ServerCommunicator {
     private static final int MAX_WAITING_CONNECTIONS = 12;
 
-    private void run(String portNumber, String persistenceType, int number_of_checkpoints){
+    private void run(String portNumber){
         System.out.println("Initializing Http server");
         HttpServer httpServer;
         try {
@@ -37,7 +37,7 @@ public class ServerCommunicator {
         // PersistenceManager.getInstance.setFactory(FlatDaoFactory);
         // PersistenceManager.getInstance.setFactory(SQLDaoFactory);
         // PersistenceManager.loadFromDB();
-        new ServerCommunicator().run(portNumber, persistenceType, number_of_checkpoints);
+        new ServerCommunicator().run(portNumber);
     }
 
 }
