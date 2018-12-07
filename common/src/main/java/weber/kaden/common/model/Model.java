@@ -12,6 +12,9 @@ public class Model extends Observable {
     private List<Game> games;
     private String currentUser;
     private Game currentGame;
+    private int deltaValue;
+    private int deltaCount;
+    private List<CommandData> deltaCommandData;
 
     public static Model getInstance() {
         return model;
@@ -245,5 +248,21 @@ public class Model extends Observable {
 
     public List<TrainCard> getPlayerTrainCardHand(String currentUser) {
         return this.currentGame.getPlayer(currentUser).getTrainCards();
+    }
+
+    public void update(CommandData data) {
+        this.deltaCount++;
+        if (this.deltaCommandData == null) {
+            this.deltaCommandData = new ArrayList<CommandData>();
+        }
+        this.deltaCommandData.add(data);
+        if (this.deltaCount == this.deltaValue) {
+            this.saveToDb();
+        }
+    }
+
+    public void saveToDb() {
+        this.deltaCount = 0;
+        this.deltaCommandData.clear();
     }
 }
