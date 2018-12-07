@@ -17,12 +17,7 @@ import static java.net.HttpURLConnection.HTTP_OK;
 
 public class ExecHandler implements HttpHandler {
 
-    protected ExecHandler(String persistenceType, int number_of_checkpoints) {
-        PersistenceManager.getInstance().setDeltaValue(number_of_checkpoints);
-        // TODO: assign persistence stuff to Model here
-        // PersistenceManager.getInstance.setFactory(FlatDaoFactory);
-        // PersistenceManager.getInstance.setFactory(SQLDaoFactory);
-        // PersistenceManager.loadFromDB();
+    protected ExecHandler() {
     }
 
     @Override

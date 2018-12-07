@@ -21,7 +21,7 @@ public class ServerCommunicator {
         httpServer.setExecutor(null);
 
         System.out.println("Creating contexts");
-        httpServer.createContext("/", new ExecHandler (persistenceType, number_of_checkpoints));
+        httpServer.createContext("/", new ExecHandler ());
         System.out.println("Starting server");
         httpServer.start();
         System.out.println("Server started");
@@ -32,6 +32,11 @@ public class ServerCommunicator {
         // TODO: get plugin arguments
         String persistenceType = "";//args[1];
         int number_of_checkpoints = 0;//args[2]
+        PersistenceManager.getInstance().setDeltaValue(number_of_checkpoints);
+        // TODO: assign persistence stuff to Model here
+        // PersistenceManager.getInstance.setFactory(FlatDaoFactory);
+        // PersistenceManager.getInstance.setFactory(SQLDaoFactory);
+        // PersistenceManager.loadFromDB();
         new ServerCommunicator().run(portNumber, persistenceType, number_of_checkpoints);
     }
 
