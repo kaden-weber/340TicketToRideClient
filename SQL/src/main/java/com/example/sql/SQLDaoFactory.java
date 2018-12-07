@@ -16,14 +16,14 @@ public class SQLDaoFactory implements DaoFactory {
         return;
     }
 
-    private void closeConnection(Sqlconnection) {
-        Sqlconnection.close();
+    private void closeConnection() {//Sqlconnection) {
+        //Sqlconnection.close();
         return;
     }
 
-    private void clearConnection(SQLconnection) {
-        SQLConnection.clear();
-        SQLConnection.rollback();
+    private void clearConnection() {//SQLconnection) {
+        //SQLConnection.clear();
+        //SQLConnection.rollback();
         return;
     }
 
@@ -35,11 +35,12 @@ public class SQLDaoFactory implements DaoFactory {
             if (userDao.save(users)) {
                 return true;
             }
-            return false;
             closeConnection();
+            return false;
         } catch (Exception e) {
             clearConnection();
             closeConnection();
+            return false;
         }
     }
 
