@@ -6,7 +6,7 @@ import weber.kaden.common.command.CommandData.CommandData;
 import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Player;
 
-public class DaoFactory implements weber.kaden.common.injectedInterfaces.persistence.DaoFactory {
+public class FlatFileDaoFactory implements weber.kaden.common.injectedInterfaces.persistence.DaoFactory {
     @Override
     public boolean saveUsers(List<Player> users) {
         return false;
