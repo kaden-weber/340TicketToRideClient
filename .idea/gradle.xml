@@ -8,10 +8,10 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/FlatFile" />
             <option value="$PROJECT_DIR$/SQL" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/common" />
-            <option value="$PROJECT_DIR$/flatFile" />
             <option value="$PROJECT_DIR$/server" />
           </set>
         </option>

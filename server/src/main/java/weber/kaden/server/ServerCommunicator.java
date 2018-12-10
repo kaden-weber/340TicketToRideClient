@@ -2,8 +2,15 @@ package weber.kaden.server;
 
 import com.sun.net.httpserver.HttpServer;
 
+import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.InetSocketAddress;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+
+import weber.kaden.common.injectedInterfaces.persistence.DaoFactory;
 
 public class ServerCommunicator {
     private static final int MAX_WAITING_CONNECTIONS = 12;
@@ -29,15 +36,48 @@ public class ServerCommunicator {
 
     public static void main(String[] args){
         String portNumber = args[0];
-        // TODO: get plugin arguments
-        String persistenceType = "";//args[1];
-        int number_of_checkpoints = 0;//args[2]
+
+        String persistenceType = args[1]; //args[1];
+        int number_of_checkpoints = Integer.valueOf(args[2]);//args[2]
+
         PersistenceManager.getInstance().setDeltaValue(number_of_checkpoints);
+        assignPersistencePlugin(persistenceType);
+        
         // TODO: assign persistence stuff to Model here
-        // PersistenceManager.getInstance.setFactory(FlatDaoFactory);
-        // PersistenceManager.getInstance.setFactory(SQLDaoFactory);
-        // PersistenceManager.loadFromDB();
+        PersistenceManager.getInstance().loadFromDB();
+
         new ServerCommunicator().run(portNumber);
+    }
+
+    private static void assignPersistencePlugin(String pluginName){
+        // make directory name, jar name and class name TODO: figure out how to get the right strings
+        String directory = "/" + pluginName; //??
+        String jarName = pluginName + ".jar";
+        String className = pluginName + "DaoFactory";
+
+        File pluginJarFile = new File(jarName);
+        try {
+            URL pluginURL = pluginJarFile.toURI().toURL();
+            URLClassLoader loader = new URLClassLoader(new URL[]{pluginURL});
+            Class<? extends DaoFactory> factoryClass = (Class<DaoFactory>) loader.loadClass(className);
+            PersistenceManager.getInstance().setDaoFactory(factoryClass.getDeclaredConstructor(null).newInstance());
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+
+        // PersistenceManager.loadFromDB();
     }
 
 }
