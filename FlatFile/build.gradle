@@ -3,6 +3,8 @@ apply plugin: 'java-library'
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':common')
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'org.junit.jupiter:junit-jupiter-api:5.3.2'
 }
 
 sourceCompatibility = "7"
