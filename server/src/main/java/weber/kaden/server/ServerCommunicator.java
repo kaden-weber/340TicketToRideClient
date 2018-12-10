@@ -42,7 +42,7 @@ public class ServerCommunicator {
 
         PersistenceManager.getInstance().setDeltaValue(number_of_checkpoints);
         assignPersistencePlugin(persistenceType);
-        
+
         // TODO: assign persistence stuff to Model here
         PersistenceManager.getInstance().loadFromDB();
 
@@ -51,11 +51,10 @@ public class ServerCommunicator {
 
     private static void assignPersistencePlugin(String pluginName){
         // make directory name, jar name and class name TODO: figure out how to get the right strings
-        String directory = "/" + pluginName; //??
+        String directory = "server/plugins/"; //??
         String jarName = pluginName + ".jar";
-        String className = pluginName + "DaoFactory";
-
-        File pluginJarFile = new File(jarName);
+        String className = "com.example.sql." + pluginName + "DaoFactory";
+        File pluginJarFile = new File(directory + jarName);
         try {
             URL pluginURL = pluginJarFile.toURI().toURL();
             URLClassLoader loader = new URLClassLoader(new URL[]{pluginURL});
@@ -76,8 +75,6 @@ public class ServerCommunicator {
             e.printStackTrace();
         }
 
-
-        // PersistenceManager.loadFromDB();
     }
 
 }
