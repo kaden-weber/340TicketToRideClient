@@ -5,7 +5,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,25 +27,13 @@ public class Serializer {
     }
 
     public List<Game> deserializeGames(String serializedData) {
-        Gson gson = new Gson();
-        try {
-            Games games = gson.fromJson(serializedData, Games.class);
-            return games.getGames();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+        Type listType = new TypeToken<ArrayList<Game>>(){}.getType();
+        return new Gson().fromJson(serializedData, listType);
     }
 
     public List<Player> deserializePlayers(String serializedData) {
-        Gson gson = new Gson();
-        try {
-            Players players = gson.fromJson(serializedData, Players.class);
-            return players.getPlayers();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+        Type listType = new TypeToken<ArrayList<Player>>(){}.getType();
+        return new Gson().fromJson(serializedData, listType);
     }
 
     public List<CommandData> deserializeCommandData(String data) {
