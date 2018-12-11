@@ -1,8 +1,9 @@
 package com.example.flatfile;
 
-import com.google.gson.Gson;
-
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -28,8 +29,26 @@ public class PlayerDao implements weber.kaden.common.injectedInterfaces.persiste
 
     @Override
     public boolean save(List<Player> players) {
-        //String serializer.serialize(players);
-        return false;
+        String serializedData = serializer.serialize(players);
+        // write to file
+        BufferedWriter writer = null;
+        boolean success = false;
+        try {
+            writer = new BufferedWriter(new FileWriter(file));
+            writer.write(serializedData);
+            success = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(writer != null)
+                    writer.close();
+            } catch (Exception e) {
+                System.out.println("Error in closing the BufferedWriter" + e);
+                success = false;
+            }
+        }
+        return success;
     }
 
     @Override

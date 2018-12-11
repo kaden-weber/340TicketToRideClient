@@ -1,11 +1,7 @@
 package com.example.flatfile;
 
-import com.google.gson.Gson;
-
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,8 +14,10 @@ public class GameDao implements weber.kaden.common.injectedInterfaces.persistenc
 
     private String filePath;
     private File file;
+    private Serializer serializer;
 
     GameDao(String filePath) {
+        serializer = new Serializer();
         this.filePath = filePath;
         file = new File(filePath);
         try {
@@ -31,15 +29,13 @@ public class GameDao implements weber.kaden.common.injectedInterfaces.persistenc
 
     @Override
     public boolean save(List<Game> games) {
-        // serialize list of games
-        Serializer serializer = new Serializer();
-        String serializedGames = serializer.serialize(games);
+        String serializedData = serializer.serialize(games);
         // write to file
         BufferedWriter writer = null;
         boolean success = false;
         try {
             writer = new BufferedWriter(new FileWriter(file));
-            writer.write(serializedGames);
+            writer.write(serializedData);
             success = true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,12 +53,10 @@ public class GameDao implements weber.kaden.common.injectedInterfaces.persistenc
 
     @Override
     public List<Game> getGames() {
-        Gson gson = new Gson();
         try {
-            String serializedGames = new String(Files.readAllBytes(Paths.get(filePath)));
-            return gson.fromJson(serializedGames, List.class);
+            String serializedData = new String(Files.readAllBytes(Paths.get(filePath)));
+            return serializer.deserializeGames(serializedData);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
         return null;
