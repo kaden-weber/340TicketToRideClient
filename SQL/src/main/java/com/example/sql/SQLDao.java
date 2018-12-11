@@ -10,4 +10,8 @@ public class SQLDao {
     public SQLDao(Connection connection) {
         this.connection = connection;
     }
+
+    public Connection getConnection() {
+        return connection;
+    }
 }
