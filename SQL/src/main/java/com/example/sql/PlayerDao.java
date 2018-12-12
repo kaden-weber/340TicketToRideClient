@@ -127,12 +127,72 @@ public class PlayerDao extends Dao implements weber.kaden.common.injectedInterfa
             rs.close();
             pstmt.close();
 
-            if (!returnPlayers.isEmpty()) {
-                return returnPlayers;
+            return returnPlayers;
+        }
+        catch (SQLException e) {
+            System.err.println("Error while loading players");
+            return null;
+        }
+    }
+
+    public List<Player> getPlayersByListOfIDs(List<String> playerIDs) {
+        try {
+            String sql = "SELECT * FROM Player WHERE ";
+
+            for (int i = 0; i < playerIDs.size(); i++) {
+                if (i != playerIDs.size() - 1) {
+                    sql += "id=" + playerIDs.get(i) + "AND ";
+                }
+                else {
+                    sql += "id=" + playerIDs.get(i);
+                }
             }
-            else {
-                return null;
+
+            PreparedStatement pstmt = getConnection().prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+
+            List<Player> returnPlayers = new ArrayList<>();
+            while(rs.next()) {
+                String id = rs.getString("id");
+                String password = rs.getString("password");
+                Gson gson = new Gson();
+
+                String dealtDestinationCards = rs.getString("dealtDestinationCards");
+                Type destinationCardListType = new TypeToken<ArrayList<DestinationCard>>(){}.getType();
+                List<DestinationCard> dealtDestinationCardList = gson.fromJson(dealtDestinationCards, destinationCardListType);
+
+                String destinationCardHand = rs.getString("destinationCardHand");
+                List<DestinationCard> destinationCardHandList = gson.fromJson(destinationCardHand, destinationCardListType);
+
+                String trainCards = rs.getString("trainCards");
+                Type trainCardListType = new TypeToken<ArrayList<TrainCard>>(){}.getType();
+                List<TrainCard> trainCardList = gson.fromJson(trainCards, trainCardListType);
+
+                String routesClaimed = rs.getString("routesClaimed");
+                Type routesClaimedListType = new TypeToken<ArrayList<Route>>(){}.getType();
+                List<Route> routesClaimedList = gson.fromJson(routesClaimed, routesClaimedListType);
+
+                String color = rs.getString("color");
+
+                int trainPieces = rs.getInt("trainPieces");
+                int score = rs.getInt("score");
+                int travelRate = rs.getInt("travelRate");
+                int destinationCardPoints = rs.getInt("destinationCardPoints");
+                int destinationCardPointsLost = rs.getInt("destinationCardPointsLost");
+
+                Player newPlayer = new Player(id, password, dealtDestinationCardList, destinationCardHandList, trainCardList, routesClaimedList, trainPieces, score);
+                newPlayer.setColor(PlayerColors.valueOf(color));
+                newPlayer.setTravelRate(travelRate);
+                newPlayer.setDestinationCardPoints(destinationCardPoints);
+                newPlayer.setDestinationCardPointsLost(destinationCardPointsLost);
+
+                returnPlayers.add(newPlayer);
             }
+
+            rs.close();
+            pstmt.close();
+
+            return returnPlayers;
         }
         catch (SQLException e) {
             System.err.println("Error while loading players");

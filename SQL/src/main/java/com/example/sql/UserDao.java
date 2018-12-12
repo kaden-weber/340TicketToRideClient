@@ -56,12 +56,7 @@ public class UserDao extends Dao implements weber.kaden.common.injectedInterface
             rs.close();
             pstmt.close();
 
-            if (!returnUsers.isEmpty()) {
-                return returnUsers;
-            }
-            else {
-                return null;
-            }
+            return returnUsers;
         }
         catch (SQLException e) {
             System.err.println("Error while loading users");
