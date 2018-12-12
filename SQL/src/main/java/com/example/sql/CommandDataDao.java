@@ -1,6 +1,7 @@
 package com.example.sql;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import weber.kaden.common.command.CommandData.CommandData;
@@ -27,6 +28,6 @@ public class CommandDataDao extends Dao implements weber.kaden.common.injectedIn
 
     @Override
     public List<CommandData> getCommands() {
-        return null;
+        return new ArrayList<>();
     }
 }
