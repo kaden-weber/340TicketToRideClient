@@ -1,8 +1,18 @@
 package com.example.sql;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
+import weber.kaden.common.Serializer;
 import weber.kaden.common.command.CommandData.CommandData;
 
 public class CommandDataDao extends Dao implements weber.kaden.common.injectedInterfaces.persistence.CommandDataDao {
@@ -12,12 +22,36 @@ public class CommandDataDao extends Dao implements weber.kaden.common.injectedIn
 
     @Override
     public boolean save(List<CommandData> data) {
-        return false;
+        Serializer serializer = new Serializer();
+        String sql = "INSERT INTO Command(data) VALUES (?)";
+        try {
+            for (int i = 0; i < data.size(); i++) {
+                String commandData = serializer.serializeCommandData(data.get(i));
+                PreparedStatement pstmt = getConnection().prepareStatement(sql);
+                pstmt.setString(1, commandData);
+                pstmt.executeUpdate();
+                pstmt.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     @Override
     public boolean clear() {
-        return false;
+        String sql = "DELETE FROM Command";
+        Statement stmt = null;
+        try {
+            stmt = getConnection().createStatement();
+            stmt.executeQuery(sql);
+            stmt.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -27,6 +61,27 @@ public class CommandDataDao extends Dao implements weber.kaden.common.injectedIn
 
     @Override
     public List<CommandData> getCommands() {
-        return null;
+        Serializer serializer = new Serializer();
+        try {
+            String sql = "SELECT * FROM Command";
+
+            PreparedStatement pstmt = getConnection().prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+
+            List<CommandData> returnCommands = new ArrayList<>();
+            while(rs.next()) {
+                String data = rs.getString("data");
+                CommandData commandData = serializer.deserializeCommandData(data);
+                returnCommands.add(commandData);
+            }
+            rs.close();
+            pstmt.close();
+            return returnCommands;
+        }
+        catch (SQLException e) {
+            System.err.println("Error while loading players");
+            return new ArrayList<CommandData>();
+        }
     }
 }
+
