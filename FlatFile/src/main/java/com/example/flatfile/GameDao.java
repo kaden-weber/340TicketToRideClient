@@ -23,7 +23,7 @@ public class GameDao implements weber.kaden.common.injectedInterfaces.persistenc
         try {
             file.createNewFile();
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 

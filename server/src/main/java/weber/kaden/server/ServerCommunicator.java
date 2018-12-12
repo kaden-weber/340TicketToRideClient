@@ -43,7 +43,6 @@ public class ServerCommunicator {
         PersistenceManager.getInstance().setDeltaValue(number_of_checkpoints);
         assignPersistencePlugin(persistenceType);
 
-        // TODO: assign persistence stuff to Model here
         PersistenceManager.getInstance().loadFromDB();
 
         new ServerCommunicator().run(portNumber);

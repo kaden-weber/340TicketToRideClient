@@ -23,7 +23,7 @@ public class PlayerDao implements weber.kaden.common.injectedInterfaces.persiste
         try {
             file.createNewFile();
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 

@@ -1,6 +1,5 @@
 package com.example.flatfile;
 
-import java.io.File;
 import java.util.List;
 
 import weber.kaden.common.command.CommandData.CommandData;
@@ -9,53 +8,50 @@ import weber.kaden.common.model.Player;
 
 public class DaoFactory implements weber.kaden.common.injectedInterfaces.persistence.DaoFactory {
 
-    private String filePath;
-    private File file;
+    private String getGamePath() {
+        return "games.json";
+    }
 
-    DaoFactory() {}
+    private String getUsersPath() {
+        return "users.json";
+    }
 
-    DaoFactory(String filePath) {
-        this.filePath = filePath;
-        file = new File(filePath);
-        try {
-            file.createNewFile();
-        } catch (Exception e) {
-
-        }
+    private String getCommandsPath() {
+        return "commands.json";
     }
 
     @Override
     public boolean saveUsers(List<Player> users) {
-        return false;
+        return new UserDao(getUsersPath()).save(users);
     }
 
     @Override
     public boolean saveGames(List<Game> games) {
-        return false;
+        return new GameDao(getGamePath()).save(games);
     }
 
     @Override
     public boolean clearCommandDeltas() {
-        return false;
+        return new CommandDataDao(getCommandsPath()).clear();
     }
 
     @Override
     public List<Player> getUsers() {
-        return null;
+        return new UserDao(getUsersPath()).getUsers();
     }
 
     @Override
     public List<Game> getGames() {
-        return null;
+        return new GameDao(getGamePath()).getGames();
     }
 
     @Override
     public List<CommandData> getCommands() {
-        return null;
+        return new CommandDataDao(getCommandsPath()).getCommands();
     }
 
     @Override
     public boolean addCommandData(CommandData commandData) {
-        return false;
+        return new CommandDataDao(getCommandsPath()).add(commandData);
     }
 }
