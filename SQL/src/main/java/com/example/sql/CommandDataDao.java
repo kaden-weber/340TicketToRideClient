@@ -4,10 +4,9 @@ import java.sql.Connection;
 import java.util.List;
 
 import weber.kaden.common.command.CommandData.CommandData;
-import weber.kaden.common.injectedInterfaces.persistence.CommandDataDao;
 
-public class SQLCommandDataDao extends SQLDao implements CommandDataDao {
-    public SQLCommandDataDao(Connection connection) {
+public class CommandDataDao extends Dao implements weber.kaden.common.injectedInterfaces.persistence.CommandDataDao {
+    public CommandDataDao(Connection connection) {
         super(connection);
     }
 

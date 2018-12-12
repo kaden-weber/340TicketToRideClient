@@ -50,17 +50,15 @@ public class ServerCommunicator {
     }
 
     private static void assignPersistencePlugin(String pluginName){
-        // make directory name, jar name and class name TODO: figure out how to get the right strings
-        String directory = "server/plugins/"; //??
+        String directory = "server/plugins/";
         String jarName = pluginName + ".jar";
-        String className = "com.example.sql." + pluginName + "DaoFactory";
+        String className = "com.example." + pluginName.toLowerCase() + "." + "DaoFactory";
         File pluginJarFile = new File(directory + jarName);
         try {
             URL pluginURL = pluginJarFile.toURI().toURL();
             URLClassLoader loader = new URLClassLoader(new URL[]{pluginURL});
             Class<? extends DaoFactory> factoryClass = (Class<DaoFactory>) loader.loadClass(className);
             PersistenceManager.getInstance().setDaoFactory(factoryClass.getDeclaredConstructor(null).newInstance());
-
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

@@ -7,11 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import weber.kaden.common.injectedInterfaces.persistence.UserDao;
 import weber.kaden.common.model.Player;
 
-public class SQLUserDao extends SQLDao implements UserDao {
-    public SQLUserDao(Connection connection) {
+public class UserDao extends Dao implements weber.kaden.common.injectedInterfaces.persistence.UserDao {
+    public UserDao(Connection connection) {
         super(connection);
     }
 

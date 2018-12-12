@@ -12,6 +12,8 @@ public class DaoFactory implements weber.kaden.common.injectedInterfaces.persist
     private String filePath;
     private File file;
 
+    DaoFactory() {}
+
     DaoFactory(String filePath) {
         this.filePath = filePath;
         file = new File(filePath);

@@ -4,10 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class SQLDao {
+public class Dao {
     private Connection connection;
 
-    public SQLDao(Connection connection) {
+    public Dao(Connection connection) {
         this.connection = connection;
     }
 

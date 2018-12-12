@@ -6,14 +6,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 import weber.kaden.common.command.CommandData.CommandData;
-import weber.kaden.common.injectedInterfaces.persistence.CommandDataDao;
-import weber.kaden.common.injectedInterfaces.persistence.DaoFactory;
-import weber.kaden.common.injectedInterfaces.persistence.GameDao;
-import weber.kaden.common.injectedInterfaces.persistence.UserDao;
 import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Player;
 
-public class SQLDaoFactory implements DaoFactory {
+public class DaoFactory implements weber.kaden.common.injectedInterfaces.persistence.DaoFactory {
     private Connection createConnection() {
         Connection connection = null;
 
@@ -43,7 +39,7 @@ public class SQLDaoFactory implements DaoFactory {
     @Override
     public boolean saveUsers(List<Player> users) {
         Connection connection = createConnection();
-        UserDao userDao = new SQLUserDao(connection);
+        weber.kaden.common.injectedInterfaces.persistence.UserDao userDao = new UserDao(connection);
         boolean success = userDao.save(users);
         closeConnection(connection);
         return success;
@@ -52,7 +48,7 @@ public class SQLDaoFactory implements DaoFactory {
     @Override
     public boolean saveGames(List<Game> games) {
         Connection connection = createConnection();
-        GameDao gameDao = new SQLGameDao(connection);
+        weber.kaden.common.injectedInterfaces.persistence.GameDao gameDao = new GameDao(connection);
         boolean success = gameDao.save(games);
         closeConnection(connection);
         return success;
@@ -61,7 +57,7 @@ public class SQLDaoFactory implements DaoFactory {
     @Override
     public boolean clearCommandDeltas() {
         Connection connection = createConnection();
-        CommandDataDao commandDataDao = new SQLCommandDataDao(connection);
+        weber.kaden.common.injectedInterfaces.persistence.CommandDataDao commandDataDao = new CommandDataDao(connection);
         boolean success = commandDataDao.clear();
         closeConnection(connection);
         return success;
@@ -70,7 +66,7 @@ public class SQLDaoFactory implements DaoFactory {
     @Override
     public List<Player> getUsers() {
         Connection connection = createConnection();
-        UserDao userDao = new SQLUserDao(connection);
+        weber.kaden.common.injectedInterfaces.persistence.UserDao userDao = new UserDao(connection);
         List<Player> users = userDao.getUsers();
         closeConnection(connection);
         return users;
@@ -79,7 +75,7 @@ public class SQLDaoFactory implements DaoFactory {
     @Override
     public List<Game> getGames() {
         Connection connection = createConnection();
-        GameDao gameDao = new SQLGameDao(connection);
+        weber.kaden.common.injectedInterfaces.persistence.GameDao gameDao = new GameDao(connection);
         List<Game> games = gameDao.getGames();
         closeConnection(connection);
         return games;
@@ -88,7 +84,7 @@ public class SQLDaoFactory implements DaoFactory {
     @Override
     public List<CommandData> getCommands() {
         Connection connection = createConnection();
-        CommandDataDao commandDataDao = new SQLCommandDataDao(connection);
+        weber.kaden.common.injectedInterfaces.persistence.CommandDataDao commandDataDao = new CommandDataDao(connection);
         List<CommandData> commands = commandDataDao.getCommands();
         closeConnection(connection);
         return commands;
@@ -97,7 +93,7 @@ public class SQLDaoFactory implements DaoFactory {
     @Override
     public boolean addCommandData(CommandData commandData) {
         Connection connection = createConnection();
-        CommandDataDao commandDataDao = new SQLCommandDataDao(connection);
+        weber.kaden.common.injectedInterfaces.persistence.CommandDataDao commandDataDao = new CommandDataDao(connection);
         boolean success = commandDataDao.add(commandData);
         closeConnection(connection);
         return success;

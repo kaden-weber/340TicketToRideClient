@@ -7,12 +7,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-import weber.kaden.common.injectedInterfaces.persistence.GameDao;
-import weber.kaden.common.model.ChatMessage;
 import weber.kaden.common.model.Game;
 
-public class SQLGameDao extends SQLDao implements GameDao {
-    public SQLGameDao(Connection connection) {
+public class GameDao extends Dao implements weber.kaden.common.injectedInterfaces.persistence.GameDao {
+    public GameDao(Connection connection) {
         super(connection);
     }
 

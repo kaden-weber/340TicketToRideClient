@@ -11,15 +11,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import weber.kaden.common.injectedInterfaces.persistence.PlayerDao;
 import weber.kaden.common.model.DestinationCard;
 import weber.kaden.common.model.Player;
 import weber.kaden.common.model.PlayerColors;
 import weber.kaden.common.model.Route;
 import weber.kaden.common.model.TrainCard;
 
-public class SQLPlayerDao extends SQLDao implements PlayerDao {
-    public SQLPlayerDao(Connection connection) {
+public class PlayerDao extends Dao implements weber.kaden.common.injectedInterfaces.persistence.PlayerDao {
+    public PlayerDao(Connection connection) {
         super(connection);
     }
 
