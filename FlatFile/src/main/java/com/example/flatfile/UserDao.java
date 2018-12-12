@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import weber.kaden.common.model.Player;
@@ -55,10 +56,12 @@ public class UserDao implements weber.kaden.common.injectedInterfaces.persistenc
     public List<Player> getUsers() {
         try {
             String serializedData = new String(Files.readAllBytes(Paths.get(filePath)));
-            return serializer.deserializePlayers(serializedData);
+            List<Player> users = serializer.deserializePlayers(serializedData);
+            if (users == null) return new ArrayList<>();
+            return users;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return new ArrayList<>();
     }
 }

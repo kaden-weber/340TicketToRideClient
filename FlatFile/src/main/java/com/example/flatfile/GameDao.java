@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import weber.kaden.common.model.Game;
@@ -55,10 +56,12 @@ public class GameDao implements weber.kaden.common.injectedInterfaces.persistenc
     public List<Game> getGames() {
         try {
             String serializedData = new String(Files.readAllBytes(Paths.get(filePath)));
+            List<Game> games = serializer.deserializeGames(serializedData);
+            if (games == null) return new ArrayList<>();
             return serializer.deserializeGames(serializedData);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return new ArrayList<>();
     }
 }

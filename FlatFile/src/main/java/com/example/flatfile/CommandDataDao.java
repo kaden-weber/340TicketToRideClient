@@ -80,16 +80,14 @@ public class CommandDataDao implements weber.kaden.common.injectedInterfaces.per
             currentData.add(data);
             File f = new File("commands.json");
             f.delete();
-            save(currentData);
+            return save(currentData);
 
         } catch (Exception e){
             System.out.println("File not created yet");
             List<CommandData> currentData = new ArrayList<>();
             currentData.add(data);
-            save(currentData);
+            return save(currentData);
         }
-
-        return false;
     }
 
     @Override

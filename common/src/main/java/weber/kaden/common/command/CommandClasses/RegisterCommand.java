@@ -20,7 +20,8 @@ public class RegisterCommand implements Command {
 
     @Override
     public Results execute() {
-        if(Model.getInstance().addPlayer(new Player(username, password))){
+        Player test = new Player(username, password);
+        if(Model.getInstance().addPlayer(test)){
             return new GenericResults(null, true, null);
         } else {
             // At this point if the player can't be added, the username must already be taken
