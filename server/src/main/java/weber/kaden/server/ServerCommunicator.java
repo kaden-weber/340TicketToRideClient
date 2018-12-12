@@ -43,7 +43,11 @@ public class ServerCommunicator {
         PersistenceManager.getInstance().setDeltaValue(number_of_checkpoints);
         assignPersistencePlugin(persistenceType);
 
-        PersistenceManager.getInstance().loadFromDB();
+        if (args.length == 4 && args[3].equals("-wipe")) {
+            PersistenceManager.getInstance().wipeDB();
+        } else {
+            PersistenceManager.getInstance().loadFromDB();
+        }
 
         new ServerCommunicator().run(portNumber);
     }

@@ -64,4 +64,9 @@ public class UserDao implements weber.kaden.common.injectedInterfaces.persistenc
         }
         return new ArrayList<>();
     }
+
+    @Override
+    public boolean clear() {
+        return file.delete();
+    }
 }

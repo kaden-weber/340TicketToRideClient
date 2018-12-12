@@ -54,4 +54,11 @@ public class DaoFactory implements weber.kaden.common.injectedInterfaces.persist
     public boolean addCommandData(CommandData commandData) {
         return new CommandDataDao(getCommandsPath()).add(commandData);
     }
+
+    @Override
+    public boolean clear() {
+        return new GameDao(getGamePath()).clear()
+                && new UserDao(getUsersPath()).clear()
+                && new CommandDataDao(getCommandsPath()).clear();
+    }
 }

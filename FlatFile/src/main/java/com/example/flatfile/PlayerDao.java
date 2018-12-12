@@ -61,4 +61,9 @@ public class PlayerDao implements weber.kaden.common.injectedInterfaces.persiste
         }
         return null;
     }
+
+    @Override
+    public boolean clear() {
+        return file.delete();
+    }
 }

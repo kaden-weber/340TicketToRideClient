@@ -16,4 +16,5 @@ public interface DaoFactory {
     List<CommandData> getCommands();
 
     boolean addCommandData(CommandData commandData);
+    boolean clear();
 }

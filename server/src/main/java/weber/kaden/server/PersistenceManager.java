@@ -67,4 +67,8 @@ public class PersistenceManager {
         }
         this.daoFactory.clearCommandDeltas();
     }
+
+    public void wipeDB(){
+        this.daoFactory.clear();
+    }
 }

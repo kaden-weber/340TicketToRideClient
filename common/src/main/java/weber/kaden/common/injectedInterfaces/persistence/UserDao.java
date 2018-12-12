@@ -7,4 +7,5 @@ import weber.kaden.common.model.Player;
 public interface UserDao {
     boolean save(List<Player> users);
     List<Player> getUsers();
+    boolean clear();
 }
