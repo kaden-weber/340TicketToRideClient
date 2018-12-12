@@ -75,6 +75,26 @@ public class Game {
         this.gameName = gameName;
     }
 
+    public List<DestinationCard> getDestinationCardDeck() {
+        return destinationCardDeck;
+    }
+
+    public List<DestinationCard> getDestinationCardDiscard() {
+        return destinationCardDiscard;
+    }
+
+    public List<TrainCard> getTrainCardDeck() {
+        return trainCardDeck;
+    }
+
+    public List<TrainCard> getTrainCardDiscard() {
+        return trainCardDiscard;
+    }
+
+    public List<Route> getClaimedRoutes() {
+        return claimedRoutes;
+    }
+
     public boolean isSetup() {
         return gameState.isSetup();
     }
@@ -113,6 +133,10 @@ public class Game {
     	if (gameOver) {
     		this.gameState = new GameOverState();
 	    }
+    }
+
+    public GameState getGameState() {
+        return gameState;
     }
 
     public String getLastPlayer() {
@@ -394,6 +418,11 @@ public class Game {
     public String getCurrentPlayer() {
         return this.players.get(currentPlayer).getID();
     }
+
+    public int getCurrentPlayerIndex() {
+        return this.currentPlayer;
+    }
+
     public void setCurrentPlayer(String player){
         for(int i = 0; i < this.players.size(); i++){
             if (player.equals(players.get(i))){
@@ -565,7 +594,7 @@ public class Game {
         return gameHistory;
     }
 
-    private class GameState {
+    public class GameState {
         private String type;
 
         GameState(String type) {
@@ -583,6 +612,10 @@ public class Game {
         }
         boolean isGameOver() {
         	return false;
+        }
+
+        public String toString() {
+            return type;
         }
     }
 
