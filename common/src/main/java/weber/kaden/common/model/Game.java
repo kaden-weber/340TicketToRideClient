@@ -8,6 +8,9 @@ import java.lang.*;
 import java.util.Objects;
 import java.util.UUID;
 
+import javax.print.attribute.standard.Destination;
+
+import sun.security.krb5.internal.crypto.Des;
 import weber.kaden.common.command.CommandData.CommandData;
 
 public class Game {
@@ -79,20 +82,40 @@ public class Game {
         return destinationCardDeck;
     }
 
+    public void setDestinationCardDeck(List<DestinationCard> destinationCardDeck) {
+        this.destinationCardDeck = destinationCardDeck;
+    }
+
     public List<DestinationCard> getDestinationCardDiscard() {
         return destinationCardDiscard;
+    }
+
+    public void setDestinationCardDiscard(List<DestinationCard> destinationCardDiscard) {
+        this.destinationCardDiscard = destinationCardDiscard;
     }
 
     public List<TrainCard> getTrainCardDeck() {
         return trainCardDeck;
     }
 
+    public void setTrainCardDeck(List<TrainCard> trainCardDeck) {
+        this.trainCardDeck = trainCardDeck;
+    }
+
     public List<TrainCard> getTrainCardDiscard() {
         return trainCardDiscard;
     }
 
+    public void setTrainCardDiscard(List<TrainCard> trainCardDiscard) {
+        this.trainCardDiscard = trainCardDiscard;
+    }
+
     public List<Route> getClaimedRoutes() {
         return claimedRoutes;
+    }
+
+    public void setClaimedRoutes(List<Route> claimedRoutes) {
+        this.claimedRoutes = claimedRoutes;
     }
 
     public boolean isSetup() {
@@ -137,6 +160,11 @@ public class Game {
 
     public GameState getGameState() {
         return gameState;
+    }
+
+    public void setGameState(GameState state) {
+        gameState = state;
+        updateGameState();
     }
 
     public String getLastPlayer() {
@@ -338,6 +366,10 @@ public class Game {
         return faceupTrainCardDeck;
     }
 
+    public void setFaceupTrainCardDeck(List<TrainCard> faceupTrainCardDeck) {
+        this.faceupTrainCardDeck = faceupTrainCardDeck;
+    }
+
     public boolean PlayerDrawTrainCardFromDeck(String playerID) {
         if (this.getPlayer(playerID).DrawTrainCard(this.trainCardDeck.remove(0))) {
             if (this.trainCardDeck.size() == 0) {
@@ -425,10 +457,14 @@ public class Game {
 
     public void setCurrentPlayer(String player){
         for(int i = 0; i < this.players.size(); i++){
-            if (player.equals(players.get(i))){
+            if (player.equals(players.get(i).getID())){
                 this.currentPlayer = i;
             }
         }
+    }
+
+    public void setCurrentPlayer(int playerIndex) {
+        this.currentPlayer = playerIndex;
     }
 
     public boolean finishTurn() {
@@ -594,10 +630,14 @@ public class Game {
         return gameHistory;
     }
 
-    public class GameState {
+    public void setGameHistory(List<CommandData> gameHistory) {
+        this.gameHistory = gameHistory;
+    }
+
+    public static class GameState {
         private String type;
 
-        GameState(String type) {
+        public GameState(String type) {
             this.type = type;
         }
 

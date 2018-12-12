@@ -1,16 +1,24 @@
 package com.example.sql;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import weber.kaden.common.command.CommandData.CommandData;
+import weber.kaden.common.model.ChatMessage;
+import weber.kaden.common.model.DestinationCard;
 import weber.kaden.common.model.Game;
 import weber.kaden.common.model.Player;
+import weber.kaden.common.model.Route;
+import weber.kaden.common.model.TrainCard;
 
 public class GameDao extends Dao implements weber.kaden.common.injectedInterfaces.persistence.GameDao {
     public GameDao(Connection connection) {
@@ -89,8 +97,9 @@ public class GameDao extends Dao implements weber.kaden.common.injectedInterface
 
             List<Game> returnGames = new ArrayList<>();
             while (rs.next()) {
-                String id, gameName, gameState, playersList, lastPlayer, chat, destinationCardDeck, destinationCardDiscard, trainCardDeck, trainCardDiscard, faceupTrainCardDeck, claimedRoutes, gameHistory;
-                int currentPlayer, destinationCardsDealt;
+                String id, gameName, gameState, lastPlayer;
+                int currentPlayer;
+                boolean destinationCardsDealt;
 
                 id = rs.getString("id");
                 gameName = rs.getString("gameName");
@@ -98,22 +107,58 @@ public class GameDao extends Dao implements weber.kaden.common.injectedInterface
 
                 Gson gson = new Gson();
 
-                playersList = rs.getString("playersList");
+                String playersString = rs.getString("playersList");
+                Type playerIDsListType = new TypeToken<ArrayList<String>>(){}.getType();
+                List<String> playerIDsList = gson.fromJson(playersString, playerIDsListType);
+                List<Player> players = getPlayersByIDs(playerIDsList);
+
                 lastPlayer = rs.getString("lastPlayer");
-                chat = rs.getString("chat");
-                destinationCardDeck = rs.getString("destinationCardDeck");
-                destinationCardDiscard = rs.getString("destinationCardDiscard");
-                trainCardDeck = rs.getString("trainCardDeck");
-                trainCardDiscard = rs.getString("trainCardDiscard");
-                faceupTrainCardDeck = rs.getString("faceupTrainCardDeck");
-                claimedRoutes = rs.getString("claimedRoutes");
-                gameHistory = rs.getString("gameHistory");
+                String chatString = rs.getString("chat");
+                Type chatListType = new TypeToken<ArrayList<ChatMessage>>(){}.getType();
+                List<ChatMessage> chat = gson.fromJson(chatString, chatListType);
+
+                String destinationCardDeckString = rs.getString("destinationCardDeck");
+                Type destinationCardDeckListType = new TypeToken<ArrayList<DestinationCard>>(){}.getType();
+                List<DestinationCard> destinationCardDeck = gson.fromJson(destinationCardDeckString, destinationCardDeckListType);
+
+                String destinationCardDiscardString = rs.getString("destinationCardDiscard");
+                List<DestinationCard> destinationCardDiscard = gson.fromJson(destinationCardDiscardString, destinationCardDeckListType);
+
+                String trainCardDeckString = rs.getString("trainCardDeck");
+                Type trainCardDeckListType = new TypeToken<ArrayList<TrainCard>>(){}.getType();
+                List<TrainCard> trainCardDeck = gson.fromJson(trainCardDeckString, trainCardDeckListType);
+
+                String trainCardDiscardString = rs.getString("trainCardDiscard");
+                List<TrainCard> trainCardDiscard = gson.fromJson(trainCardDiscardString, trainCardDeckListType);
+
+                String faceupTrainCardDeckString = rs.getString("faceupTrainCardDeck");
+                List<TrainCard> faceupTrainCardDeck = gson.fromJson(faceupTrainCardDeckString, trainCardDeckListType);
+
+                String claimedRoutesString = rs.getString("claimedRoutes");
+                Type routeListType = new TypeToken<ArrayList<Route>>(){}.getType();
+                List<Route> claimedRoutes = gson.fromJson(claimedRoutesString, routeListType);
+
+                String gameHistoryString = rs.getString("gameHistory");
+                Type gameHistoryListType = new TypeToken<ArrayList<CommandData>>(){}.getType();
+                List<CommandData> gameHistory = gson.fromJson(gameHistoryString, gameHistoryListType);
 
                 currentPlayer = rs.getInt("currentPlayer");
-                destinationCardsDealt = rs.getInt("destinationCardsDealt");
+                destinationCardsDealt = rs.getInt("destinationCardsDealt") == 1;
 
 
-
+                Game newGame = new Game(players, id, gameName);
+                newGame.setGameState(new Game.GameState(gameState));
+                newGame.setLastPlayer(lastPlayer);
+                newGame.setChat(chat);
+                newGame.setDestinationCardDeck(destinationCardDeck);
+                newGame.setDestinationCardDiscard(destinationCardDiscard);
+                newGame.setTrainCardDeck(trainCardDeck);
+                newGame.setTrainCardDiscard(trainCardDiscard);
+                newGame.setFaceupTrainCardDeck(faceupTrainCardDeck);
+                newGame.setClaimedRoutes(claimedRoutes);
+                newGame.setGameHistory(gameHistory);
+                newGame.setCurrentPlayer(currentPlayer);
+                newGame.setDestinationCardsDealt(destinationCardsDealt);
             }
 
             return returnGames;
@@ -123,6 +168,20 @@ public class GameDao extends Dao implements weber.kaden.common.injectedInterface
             System.err.println("Error while saving games");
             return null;
         }
+    }
+
+    @Override
+    public boolean clear() {
+        String sql = "DELETE FROM Game";
+        try {
+            Statement stmt = getConnection().createStatement();
+            stmt.execute(sql);
+            stmt.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     private List<String> savePlayersFromGame(List<Player> players) {
@@ -135,7 +194,7 @@ public class GameDao extends Dao implements weber.kaden.common.injectedInterface
         return playerIDs;
     }
 
-    private List<Player> getPlayersForGame(List<String> playerIDs) {
+    private List<Player> getPlayersByIDs(List<String> playerIDs) {
         PlayerDao playerDao = new PlayerDao(getConnection());
         return playerDao.getPlayersByListOfIDs(playerIDs);
     }

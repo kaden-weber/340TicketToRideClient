@@ -39,10 +39,9 @@ public class CommandDataDao extends Dao implements weber.kaden.common.injectedIn
     @Override
     public boolean clear() {
         String sql = "DELETE FROM Command";
-        Statement stmt = null;
         try {
-            stmt = getConnection().createStatement();
-            stmt.executeQuery(sql);
+            Statement stmt = getConnection().createStatement();
+            stmt.execute(sql);
             stmt.close();
         } catch (Exception e) {
             e.printStackTrace();

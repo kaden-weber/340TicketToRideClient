@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -133,6 +134,20 @@ public class PlayerDao extends Dao implements weber.kaden.common.injectedInterfa
             System.err.println("Error while loading players");
             return null;
         }
+    }
+
+    @Override
+    public boolean clear() {
+        String sql = "DELETE FROM Player";
+        try {
+            Statement stmt = getConnection().createStatement();
+            stmt.execute(sql);
+            stmt.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     public List<Player> getPlayersByListOfIDs(List<String> playerIDs) {
