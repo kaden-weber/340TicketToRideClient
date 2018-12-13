@@ -159,7 +159,7 @@ public class PlayerDao extends Dao implements weber.kaden.common.injectedInterfa
 
             for (int i = 0; i < playerIDs.size(); i++) {
                 if (i != playerIDs.size() - 1) {
-                    sql += "id='" + playerIDs.get(i) + "' AND ";
+                    sql += "id='" + playerIDs.get(i) + "' OR ";
                 }
                 else {
                     sql += "id='" + playerIDs.get(i) + "'";
