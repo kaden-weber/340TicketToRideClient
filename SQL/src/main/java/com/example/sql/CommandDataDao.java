@@ -53,7 +53,21 @@ public class CommandDataDao extends Dao implements weber.kaden.common.injectedIn
 
     @Override
     public boolean add(CommandData data) {
-        return false;
+        Serializer serializer = new Serializer();
+        String sql = "INSERT INTO Command(data) VALUES(?)";
+        try {
+        	String commandData = serializer.serializeCommandData(data);
+        	PreparedStatement pstmt = getConnection().prepareStatement(sql);
+        	pstmt.setString(1, commandData);
+        	pstmt.executeUpdate();
+        	pstmt.close();
+        }
+        catch (SQLException e) {
+        	System.err.println("Error while saving command");
+        	e.printStackTrace();
+        	return false;
+        }
+        return true;
     }
 
     @Override
