@@ -25,6 +25,7 @@ public class PlayerDao extends Dao implements weber.kaden.common.injectedInterfa
 
     @Override
     public boolean save(List<Player> players) {
+        clear();
         for (int i = 0; i < players.size(); i++) {
             String sql = "INSERT INTO Player(id, password, dealtDestinationCards, destinationCardHand, trainCards, routesClaimed, trainPieces, score, color, travelRate, destinationCardPoints, destinationCardPointsLost) " +
                     "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -72,6 +73,7 @@ public class PlayerDao extends Dao implements weber.kaden.common.injectedInterfa
             }
             catch (SQLException e) {
                 System.err.println("Error while saving players");
+                e.printStackTrace();
                 return false;
             }
         }
@@ -132,6 +134,7 @@ public class PlayerDao extends Dao implements weber.kaden.common.injectedInterfa
         }
         catch (SQLException e) {
             System.err.println("Error while loading players");
+            e.printStackTrace();
             return null;
         }
     }
@@ -156,10 +159,10 @@ public class PlayerDao extends Dao implements weber.kaden.common.injectedInterfa
 
             for (int i = 0; i < playerIDs.size(); i++) {
                 if (i != playerIDs.size() - 1) {
-                    sql += "id=" + playerIDs.get(i) + "AND ";
+                    sql += "id='" + playerIDs.get(i) + "' AND ";
                 }
                 else {
-                    sql += "id=" + playerIDs.get(i);
+                    sql += "id='" + playerIDs.get(i) + "'";
                 }
             }
 
@@ -211,6 +214,7 @@ public class PlayerDao extends Dao implements weber.kaden.common.injectedInterfa
         }
         catch (SQLException e) {
             System.err.println("Error while loading players");
+            e.printStackTrace();
             return null;
         }
     }

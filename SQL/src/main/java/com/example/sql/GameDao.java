@@ -27,9 +27,10 @@ public class GameDao extends Dao implements weber.kaden.common.injectedInterface
 
     @Override
     public boolean save(List<Game> games) {
+        clear();
         for (int i = 0; i < games.size(); i++) {
             String sql = "INSERT INTO Game(id, gameName, gameState, playerIDs, lastPlayer, currentPlayer, destinationCardsDealt, chat, destinationCardDeck, destinationCardDiscard, trainCardDeck, trainCardDiscard, faceupTrainCardDeck, claimedRoutes, gameHistory) " +
-                    "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
             try {
                 String id, gameName, gameState, playersList, lastPlayer, chat, destinationCardDeck, destinationCardDiscard, trainCardDeck, trainCardDiscard, faceupTrainCardDeck, claimedRoutes, gameHistory;
@@ -80,6 +81,7 @@ public class GameDao extends Dao implements weber.kaden.common.injectedInterface
             }
             catch (SQLException e) {
                 System.err.println("Error while saving games");
+                e.printStackTrace();
                 return false;
             }
         }
@@ -107,7 +109,7 @@ public class GameDao extends Dao implements weber.kaden.common.injectedInterface
 
                 Gson gson = new Gson();
 
-                String playersString = rs.getString("playersList");
+                String playersString = rs.getString("playerIDs");
                 Type playerIDsListType = new TypeToken<ArrayList<String>>(){}.getType();
                 List<String> playerIDsList = gson.fromJson(playersString, playerIDsListType);
                 List<Player> players = getPlayersByIDs(playerIDsList);
@@ -159,6 +161,8 @@ public class GameDao extends Dao implements weber.kaden.common.injectedInterface
                 newGame.setGameHistory(gameHistory);
                 newGame.setCurrentPlayer(currentPlayer);
                 newGame.setDestinationCardsDealt(destinationCardsDealt);
+
+                returnGames.add(newGame);
             }
 
             return returnGames;
@@ -166,6 +170,7 @@ public class GameDao extends Dao implements weber.kaden.common.injectedInterface
         }
         catch (SQLException e) {
             System.err.println("Error while saving games");
+            e.printStackTrace();
             return null;
         }
     }

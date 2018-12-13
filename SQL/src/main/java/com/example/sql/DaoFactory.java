@@ -84,6 +84,7 @@ public class DaoFactory implements weber.kaden.common.injectedInterfaces.persist
 
     @Override
     public boolean saveUsers(List<Player> users) {
+        System.out.println("Saving users");
         Connection connection = createConnection();
         weber.kaden.common.injectedInterfaces.persistence.UserDao userDao = new UserDao(connection);
         boolean success = userDao.save(users);
@@ -93,6 +94,7 @@ public class DaoFactory implements weber.kaden.common.injectedInterfaces.persist
 
     @Override
     public boolean saveGames(List<Game> games) {
+        System.out.println("Saving games");
         Connection connection = createConnection();
         weber.kaden.common.injectedInterfaces.persistence.GameDao gameDao = new GameDao(connection);
         boolean success = gameDao.save(games);

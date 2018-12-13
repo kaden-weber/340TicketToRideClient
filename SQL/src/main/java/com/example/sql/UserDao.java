@@ -17,6 +17,7 @@ public class UserDao extends Dao implements weber.kaden.common.injectedInterface
 
     @Override
     public boolean save(List<Player> users) {
+        clear();
         for (int i = 0; i < users.size(); i++) {
             String sql = "INSERT INTO User(id, password) " +
                     "VALUES(?,?)";
@@ -30,6 +31,7 @@ public class UserDao extends Dao implements weber.kaden.common.injectedInterface
                 pstmt.close();
             } catch (SQLException e) {
                 System.err.println("Error while saving user: " + users.get(i).getID());
+                e.printStackTrace();
                 return false;
             }
         }
@@ -61,6 +63,7 @@ public class UserDao extends Dao implements weber.kaden.common.injectedInterface
         }
         catch (SQLException e) {
             System.err.println("Error while loading users");
+            e.printStackTrace();
             return null;
         }
     }
